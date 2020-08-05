@@ -1,5 +1,5 @@
 import cv2
-import KALMUS.src.measure_utils  as measure_utils
+import src.measure_utils  as measure_utils
 
 
 def compare_two_barcodes(barcode_1, barcode_2):

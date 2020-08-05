@@ -1,5 +1,5 @@
 import tkinter
-from KALMUS.src.tkinter_windows.KALMUS_utils import get_comparison_result_text
+from src.tkinter_windows.KALMUS_utils import get_comparison_result_text
 import copy
 from PIL import ImageTk, Image
 

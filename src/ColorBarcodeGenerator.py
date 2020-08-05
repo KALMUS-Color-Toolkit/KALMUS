@@ -1,4 +1,4 @@
-import KALMUS.src.Artist as Artist
+import src.Artist as Artist
 import cv2
 import numpy as np
 import json
