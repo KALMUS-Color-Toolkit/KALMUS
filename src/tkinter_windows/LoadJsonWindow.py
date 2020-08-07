@@ -1,6 +1,6 @@
 from src.tkinter_windows.KALMUS_utils import get_comparison_result_text
-from PIL import ImageTk,Image
-import tkinter
+from PIL import ImageTk, Image
+import tkinter.filedialog
 import copy
 
 

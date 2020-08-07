@@ -1,18 +1,19 @@
 from PIL import ImageTk, Image
 import tkinter
 from src.tkinter_windows.PlotBarcodeWindow import PlotBarcodeWindow
-from src.tkinter_windows import GenerateBarcodeWindow
+from src.tkinter_windows.GenerateBarcodeWindow import GenerateBarcodeWindow
 from src.tkinter_windows.SaveBarcodeWindow import SaveBarcodeWindow
 from src.tkinter_windows.LoadStackWindow import LoadStackWindow
 from src.tkinter_windows.LoadJsonWindow import LoadJsonWindow
 from src.tkinter_windows.KALMUS_utils import get_comparison_result_text
+from src.tkinter_windows.ReshapeBarcodeWindow import ReshapeBarcodeWindow
 import copy
 
 
 class MainWindow():
     def __init__(self, barcode_tmp, barcode_gn):
         self.root = tkinter.Tk()
-        self.root.geometry("1050x450")
+        self.root.geometry("1050x480")
 
         background_image = ImageTk.PhotoImage(Image.open("src/tkinter_windows/window_images/background_image.jpg"))
         background_label = tkinter.Label(self.root, image=background_image)
@@ -28,11 +29,11 @@ class MainWindow():
 
         self.root.barcode_display_1 = ImageTk.PhotoImage(Image.fromarray(self.barcode_1.get_barcode().astype("uint8")))
         self.display_1 = tkinter.Label(self.root, image=self.root.barcode_display_1)
-        self.display_1.grid(row=0, column=1, pady=15, padx=10, columnspan=3, rowspan=3)
+        self.display_1.grid(row=0, column=1, pady=20, padx=10, columnspan=3, rowspan=4)
 
         self.root.barcode_display_2 = ImageTk.PhotoImage(Image.fromarray(self.barcode_2.get_barcode().astype("uint8")))
         self.display_2 = tkinter.Label(self.root, image=self.root.barcode_display_2)
-        self.display_2.grid(row=3, column=1, pady=15, padx=10, columnspan=3, rowspan=3)
+        self.display_2.grid(row=4, column=1, pady=20, padx=10, columnspan=3, rowspan=4)
 
         button_load_1 = tkinter.Button(master=self.root, text="Load from JSON",
                                        command=self.load_json_barcode_1)
@@ -40,7 +41,7 @@ class MainWindow():
 
         button_load_2 = tkinter.Button(master=self.root, text="Load from JSON",
                                        command=self.load_json_barcode_2)
-        button_load_2.grid(row=3, column=5)
+        button_load_2.grid(row=4, column=5)
 
         button_load_stack_1 = tkinter.Button(master=self.root, text="Load from Stack",
                                              command=self.load_stack_barcode_1)
@@ -48,32 +49,41 @@ class MainWindow():
 
         button_load_stack_2 = tkinter.Button(master=self.root, text="Load from Stack",
                                              command=self.load_stack_barcode_2)
-        button_load_stack_2.grid(row=4, column=5)
+        button_load_stack_2.grid(row=5, column=5)
 
         button_barcode_1 = tkinter.Button(master=self.root, text="Inspect Barcode",
                                           command=self.show_barcode_1)
         button_barcode_1.grid(row=2, column=5)
+
         button_barcode_2 = tkinter.Button(master=self.root, text="Inspect Barcode",
                                           command=self.show_barcode_2)
-        button_barcode_2.grid(row=5, column=5)
+        button_barcode_2.grid(row=6, column=5)
+
+        button_reshape_barcode_1 = tkinter.Button(master=self.root, text="Reshape Barcode",
+                                                  command=self.reshape_barcode_1)
+        button_reshape_barcode_1.grid(row=3, column=5, pady=10)
+
+        button_reshape_barcode_2 = tkinter.Button(master=self.root, text="Reshape Barcode",
+                                                  command=self.reshape_barcode_2)
+        button_reshape_barcode_2.grid(row=7, column=5)
 
         button_generate = tkinter.Button(master=self.root, text="Generate Barcode",
                                          command=self.generate_barcode)
-        button_generate.grid(row=6, column=2)
+        button_generate.grid(row=8, column=2)
 
         button_save = tkinter.Button(master=self.root, text="Save Barcode",
                                      command=self.save_barcode_on_stack)
-        button_save.grid(row=6, column=3, sticky=tkinter.W)
+        button_save.grid(row=8, column=3, sticky=tkinter.W)
 
         button_quit = tkinter.Button(master=self.root, text="Quit", command=self.quit)
-        button_quit.grid(row=7, column=5)
+        button_quit.grid(row=9, column=5)
 
         # Comparison Info panel
 
         result_text = get_comparison_result_text(self.barcode_1, self.barcode_2)
 
         self.info_label = tkinter.Label(self.root, text=result_text, width=35, bg='white', anchor='w')
-        self.info_label.grid(row=0, column=0, rowspan=6, padx=10, pady=20, sticky=tkinter.W)
+        self.info_label.grid(row=0, column=0, rowspan=8, padx=10, pady=20, sticky=tkinter.W)
 
         self.root.mainloop()
 
@@ -105,6 +115,14 @@ class MainWindow():
     def load_stack_barcode_2(self):
         LoadStackWindow(self.barcodes_stack, self.barcode_2, self.display_2, self.root.barcode_display_2,
                         self.barcode_1, self.info_label)
+
+    def reshape_barcode_1(self):
+        ReshapeBarcodeWindow(self.barcode_1, self.display_1, self.root.barcode_display_1,
+                             self.barcode_2, self.info_label)
+
+    def reshape_barcode_2(self):
+        ReshapeBarcodeWindow(self.barcode_2, self.display_2, self.root.barcode_display_2,
+                             self.barcode_1, self.info_label)
 
     def generate_barcode(self):
         GenerateBarcodeWindow(self.barcode_gn, self.barcodes_stack)

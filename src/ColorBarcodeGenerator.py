@@ -2,6 +2,8 @@ import src.Artist as Artist
 import cv2
 import numpy as np
 import json
+import copy
+
 
 color_metrics = ["Average", "Median", "Mode", "Top-dominant", "Weighted-dominant",
                  "Brightest", "Bright"]
@@ -279,7 +281,12 @@ class Barcode():
         self.find_film_letterbox()
 
     def save_as_json(self, filename=None):
-        barcode_dict = self.__dict__.copy()
+        if self.barcode is None:
+            self.reshape_barcode()
+        # This cv2 captured video is not pickled therefore not able to be pickled for deepcopy
+        # Delete it from the object first
+        self.video = None
+        barcode_dict = copy.deepcopy(self.__dict__)
         barcode_dict['barcode'] = barcode_dict['barcode'].tolist()
         if isinstance(self, ColorBarcode):
             barcode_dict['colors'] = barcode_dict['colors'].tolist()
