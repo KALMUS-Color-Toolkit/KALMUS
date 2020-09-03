@@ -1,2 +1,6 @@
 test_films
 __pycache__
+build
+dist
+.idea
+kalmus.spec

@@ -15,7 +15,7 @@ class MainWindow():
         self.root = tkinter.Tk()
         self.root.geometry("1050x480")
 
-        background_image = ImageTk.PhotoImage(Image.open("src/tkinter_windows/window_images/background_image.jpg"))
+        background_image = ImageTk.PhotoImage(Image.open("init_data/background_image.jpg"))
         background_label = tkinter.Label(self.root, image=background_image)
         background_label.place(x=0, y=0, relwidth=1, relheight=1, bordermode="outside")
 
