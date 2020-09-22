@@ -14,7 +14,7 @@ class ReshapeBarcodeWindow():
         self.info_box = info_box
 
         self.window = tkinter.Tk()
-        self.window.geometry("320x150")
+        self.window.geometry("330x150")
         self.window.wm_title("Reshape/Resize Barcode Config")
 
         # Reshape/Resize option
@@ -42,8 +42,11 @@ class ReshapeBarcodeWindow():
         self.resize_y_entry = tkinter.Entry(self.window, textvariable="-3", width=5, state="disabled")
         self.resize_y_entry.grid(row=3, column=1, padx=15)
 
+        self.size_label = tkinter.Label(self.window, text="Current Width = {:d}\nCurrent Height = {:d}"
+                                        .format(self.barcode.barcode.shape[1], self.barcode.barcode.shape[0]))
+        self.size_label.grid(row=4, column=0, columnspan=1)
         self.process_button = tkinter.Button(self.window, text="Process", command=self.reshape_resize_barcode)
-        self.process_button.grid(row=4, column=1)
+        self.process_button.grid(row=4, column=2, sticky=tkinter.W)
 
         config_label = tkinter.Label(self.window, text="Config options: ")
         config_label.grid(row=0, column=2, columnspan=1)
@@ -79,7 +82,7 @@ class ReshapeBarcodeWindow():
 
     def resize(self):
         self.resize_x_label['text'] = "Resize Width to (pixels): "
-        self.resize_y_label['text'] = "Resize Height by (pixels): "
+        self.resize_y_label['text'] = "Resize Height to (pixels): "
 
         self.column_length_entry.config(state='disabled')
         self.resize_x_entry.config(state='normal')

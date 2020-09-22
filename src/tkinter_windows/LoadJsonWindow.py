@@ -49,7 +49,6 @@ class LoadJsonWindow():
         self.filename_entry.insert(0, filename)
 
     def build_barcode(self):
-        self.button_build_barcode['text'] = 'Processing...'
         filename = self.filename_entry.get()
         self.barcode_generator.generate_barcode_from_json(filename, self.variable.get())
         self.barcode.__dict__ = self.barcode_generator.get_barcode().__dict__.copy()

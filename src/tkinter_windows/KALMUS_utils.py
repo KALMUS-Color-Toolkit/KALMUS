@@ -7,10 +7,10 @@ def compare_two_barcodes(barcode_1, barcode_2):
     target_barcode_2 = barcode_2.get_barcode().astype("float64")
     if target_barcode_1.size <= target_barcode_2.size:
         target_barcode_1 = cv2.resize(target_barcode_1, dsize=target_barcode_2.shape[:2][::-1],
-                                      interpolation=cv2.INTER_NEAREST)
+                                      interpolation=cv2.INTER_LINEAR)
     elif target_barcode_1.size > target_barcode_2.size:
         target_barcode_2 = cv2.resize(target_barcode_2, dsize=target_barcode_1.shape[:2][::-1],
-                                      interpolation=cv2.INTER_NEAREST)
+                                      interpolation=cv2.INTER_LINEAR)
 
     cross_corre = measure_utils.cross_correlation(target_barcode_1.astype("float64"),
                                                   target_barcode_2.astype("float64"))
