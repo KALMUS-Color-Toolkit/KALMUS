@@ -35,7 +35,7 @@ class LoadJsonWindow():
         dropdown_type = tkinter.OptionMenu(self.window, self.variable, "Color", "Brightness")
         dropdown_type.grid(row=1, column=1, sticky=tkinter.W)
 
-        self.button_build_barcode = tkinter.Button(self.window, text="Generate", command=self.build_barcode)
+        self.button_build_barcode = tkinter.Button(self.window, text="Load", command=self.build_barcode)
         self.button_build_barcode.grid(row=2, column=1, columnspan=1)
 
         self.button_browse_folder = tkinter.Button(self.window, text="Browse", command=self.browse_folder)

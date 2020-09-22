@@ -45,10 +45,10 @@ class GenerateBarcodeWindow():
         dropdown_color_metric.grid(row=2, column=1)
 
         # Acquisition setup
-        self.skip_over_label = tkinter.Label(self.window, text="Skip-over frames: ")
+        self.skip_over_label = tkinter.Label(self.window, text="Start at (frames): ")
         self.skip_over_label.grid(row=0, column=2)
 
-        self.sampled_rate_label = tkinter.Label(self.window, text="Sampled frame rate: ")
+        self.sampled_rate_label = tkinter.Label(self.window, text="Sampled every (frames): ")
         self.sampled_rate_label.grid(row=1, column=2)
 
         self.total_frames_label = tkinter.Label(self.window, text="Total frames: ")
@@ -145,8 +145,8 @@ class GenerateBarcodeWindow():
         self.total_frames_label['text'] = "End at (mins:secs): "
 
     def frame_unit(self):
-        self.skip_over_label['text'] = "Skip-over frames: "
-        self.sampled_rate_label['text'] = "Sampled frame rate: "
+        self.skip_over_label['text'] = "Start at (frames): "
+        self.sampled_rate_label['text'] = "Sampled every (frames): "
         self.total_frames_label['text'] = "Total frames: "
 
     def browse_folder(self):

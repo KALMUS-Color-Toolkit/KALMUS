@@ -13,7 +13,7 @@ class SaveBarcodeWindow():
 
         for barcode_names in self.barcode_stack.keys():
             self.listbox.insert(tkinter.END, barcode_names)
-        self.button_load = tkinter.Button(master=self.window, text="Saved Selected Barcode", command=self.load_stack)
+        self.button_load = tkinter.Button(master=self.window, text="Saved Selected Barcode into JSON", command=self.load_stack)
         self.button_load.grid(row=1, column=0, sticky=tkinter.W)
 
     def load_stack(self):
@@ -21,6 +21,6 @@ class SaveBarcodeWindow():
         self.button_load['text'] = 'Processing...'
         for barcode_name in selected_barcode_names:
             barcode = self.barcode_stack[barcode_name]
-            barcode.save_as_json(barcode_name + ".json")
+            barcode.save_as_json("saved_json_barcode/" + barcode_name + ".json")
 
         self.window.destroy()

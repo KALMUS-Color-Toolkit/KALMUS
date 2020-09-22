@@ -43,11 +43,11 @@ class MainWindow():
                                        command=self.load_json_barcode_2)
         button_load_2.grid(row=4, column=5)
 
-        button_load_stack_1 = tkinter.Button(master=self.root, text="Load from Stack",
+        button_load_stack_1 = tkinter.Button(master=self.root, text="Load from Memory",
                                              command=self.load_stack_barcode_1)
         button_load_stack_1.grid(row=1, column=5)
 
-        button_load_stack_2 = tkinter.Button(master=self.root, text="Load from Stack",
+        button_load_stack_2 = tkinter.Button(master=self.root, text="Load from Memory",
                                              command=self.load_stack_barcode_2)
         button_load_stack_2.grid(row=5, column=5)
 
@@ -71,7 +71,7 @@ class MainWindow():
                                          command=self.generate_barcode)
         button_generate.grid(row=8, column=2)
 
-        button_save = tkinter.Button(master=self.root, text="Save Barcode",
+        button_save = tkinter.Button(master=self.root, text="Save JSON file",
                                      command=self.save_barcode_on_stack)
         button_save.grid(row=8, column=3, sticky=tkinter.W)
 
