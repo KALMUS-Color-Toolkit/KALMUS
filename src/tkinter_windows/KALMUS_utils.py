@@ -1,5 +1,7 @@
 import cv2
 import src.measure_utils  as measure_utils
+import os
+import sys
 
 
 def compare_two_barcodes(barcode_1, barcode_2):
@@ -52,3 +54,12 @@ def get_comparison_result_text(barcode_1, barcode_2):
                   "Smith Waterman Similarity:     {:10.4f}".format(nrmse, ssim, cross_corre, loc_cross_corre,
                                                                    needleman, smith)
     return result_text
+
+
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)

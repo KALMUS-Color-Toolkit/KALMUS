@@ -7,6 +7,7 @@ from src.tkinter_windows.LoadStackWindow import LoadStackWindow
 from src.tkinter_windows.LoadJsonWindow import LoadJsonWindow
 from src.tkinter_windows.KALMUS_utils import get_comparison_result_text
 from src.tkinter_windows.ReshapeBarcodeWindow import ReshapeBarcodeWindow
+from src.tkinter_windows.KALMUS_utils import resource_path
 import copy
 
 
@@ -15,7 +16,8 @@ class MainWindow():
         self.root = tkinter.Tk()
         self.root.geometry("1050x480")
 
-        background_image = ImageTk.PhotoImage(Image.open("init_data/background_image.jpg"))
+        image_path = resource_path("background_image.jpg")
+        background_image = ImageTk.PhotoImage(Image.open(image_path))
         background_label = tkinter.Label(self.root, image=background_image)
         background_label.place(x=0, y=0, relwidth=1, relheight=1, bordermode="outside")
 
