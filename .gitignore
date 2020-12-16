@@ -1,14 +1,13 @@
 test_films
-*__pycache__
+!**/__pycache__/
 
 build
 dist
 
-KALMUS_version0.1\.idea
-KALMUS_version0.1\add_data.txt
-KALMUS_version0.1\example_json_barcodes
-KALMUS_version0.1\saved_json_barcode
-src\__pycache__
+/KALMUS_version0.1/.idea
+/KALMUS_version0.1/add_data.txt
+/KALMUS_version0.1/example_json_barcodes
+/KALMUS_version0.1/saved_json_barcode
 
 .idea
 add_data.txt
@@ -16,3 +15,4 @@ requirements.txt
 
 kalmus.spec
 kalmus0_2_tutorial.mp4
+/KALMUS_version0.1/example_json_barcodes/
