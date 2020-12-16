@@ -1,9 +1,5 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Sep 14 20:08:12 2019
+""" Utility Artist """
 
-@author: YidaChen
-"""
 import numpy as np
 import cv2
 import csv
@@ -12,8 +8,6 @@ from skimage.morphology import watershed, disk, remove_small_objects
 from skimage.filters import rank, sobel
 from skimage.future import graph
 import scipy.stats as stats
-
-"""Utility Artist"""
 
 
 def compute_dominant_color(image, n_clusters=3, max_iter=10, threshold_error=1.0, attempts=10):
@@ -123,14 +117,19 @@ def compute_median_color(image):
     return median_color
 
 
-def compute_brightest_color_and_brightness(grey_image, color_image, return_min=False):
+def compute_brightest_color_and_brightness(grey_image, color_image, return_min=False,
+                                           gaussian_blur=False, blur_radius=15):
     """
     Find the brightest pixel in an image and return the color and brightness at that pixel
+    :param blur_radius: The radius of the gaussian filter
+    :param gaussian_blur: Whether to apply a gaussian filter before finding the brightest point the grey image
     :param grey_image: The greyscale image. single channel 2D image. Expected shape==(row/height, col/width)
     :param color_image: The corresponding color image. Expected shape==(row/height, col/width, channels)
     :param return_min: If true return the color and brightness of the darkest pixel as well
     :return: The color and brightness of the brightest pixel (, color and brightness of the darkest pixel)
     """
+    if gaussian_blur:
+        grey_image = cv2.GaussianBlur(grey_image.copy(), (blur_radius, blur_radius), 0)
     min_brightness, max_brightness, min_loc, max_loc = cv2.minMaxLoc(grey_image)
     if return_min:
         return color_image[max_loc[::-1]], max_brightness, max_loc[::-1],\

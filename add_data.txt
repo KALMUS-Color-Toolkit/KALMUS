@@ -1,3 +1,3 @@
 # To add the initialization data add this line to the .spec file.
 
-a.datas += [("background_image.jpg", "E:\\build_KALMUS\\background_image.jpg", "DATA"), ("mission_impossible_Bright_Whole_frame_Color.json", "E:\\build_KALMUS\\mission_impossible_Bright_Whole_frame_Color.json", "DATA")]
+a.datas += [("mission_impossible_Bright_Whole_frame_Color.json", "E:\\KALMUS_version0.2\\mission_impossible_Bright_Whole_frame_Color.json", "DATA"), ("kalmus_icon.ico", "E:\\KALMUS_version0.2\\kalmus_icon.ico", "DATA")]

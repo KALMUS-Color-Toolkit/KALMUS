@@ -1,9 +1,12 @@
+""" Visualization Utility """
+
 import numpy as np
 import matplotlib.pyplot as plt
+from src.Barcode import get_contrast_matrix_and_labeled_image
 
 
 def show_color(color, figure_size=(9, 6), title="Undefined Test",
-                   axis_off=False, save_image=False, file_name="test.png"):
+               axis_off=False, save_image=False, file_name="test.png"):
     """
     Plot the rgb color.
     :param color: 1D array contains the R, G, and B channel values
@@ -31,7 +34,7 @@ def show_color(color, figure_size=(9, 6), title="Undefined Test",
 
 
 def show_colors_in_sequence(colors, figure_size=(9, 6), title="Undefined Test", axis_off=False, \
-                        save_image=False, file_name="test.png", horizontal=True):
+                            save_image=False, file_name="test.png", horizontal=True):
     """
     Plot a sequence of RGB colors either horizontally or vertically in line
     :param colors: 2D array of RGB colors. Expected sequence shape==Number of colors x channels (3)
@@ -150,7 +153,7 @@ def show_image(img, title="Undefined Test", figure_size=(9, 6), axis_off=False):
     plt.show()
 
 
-def show_colors_in_cube(colors, figure_size=(8, 8), return_figure=False):
+def show_colors_in_cube(colors, figure_size=(8, 8), return_figure=False, sampling=-1):
     """
     Show a sequence of RGB colors in cubic RGB space (e.g. R axis (x axis), G axis (y axis),
     and B axis (z axis))
@@ -164,12 +167,16 @@ def show_colors_in_cube(colors, figure_size=(8, 8), return_figure=False):
     fig = plt.figure(figsize=figure_size)
     ax = fig.add_subplot(111, projection='3d')
 
+    if sampling > 0:
+        sample_indices = np.random.choice(np.arange(colors.size // colors.shape[-1]), sampling, replace=False)
+        colors = colors[sample_indices]
+
     # Colors is the N*M x 3 version of the image.
-    colors = np.concatenate([np.expand_dims(IC, axis = 1) for IC in
-                        [colors[...,0].ravel(), colors[...,1].ravel(), colors[...,2].ravel()]], axis = 1)
+    colors = np.concatenate([np.expand_dims(IC, axis=1) for IC in
+                             [colors[..., 0].ravel(), colors[..., 1].ravel(), colors[..., 2].ravel()]], axis=1)
 
     if colors.max() > 1:
-        ax.scatter(colors[...,0], colors[...,1], colors[...,2], c=colors[..., :].astype("float32") / 255)
+        ax.scatter(colors[..., 0], colors[..., 1], colors[..., 2], c=colors[..., :].astype("float32") / 255)
     else:
         ax.scatter(colors[..., 0], colors[..., 1], colors[..., 2], c=colors[..., :])
 
@@ -182,3 +189,66 @@ def show_colors_in_cube(colors, figure_size=(8, 8), return_figure=False):
         return fig, ax
 
     plt.show()
+
+
+def show_high_contrast_region(image, minimum_segment_size=0.0004, figsize=(6, 4)):
+    """
+    Plot the high contrast region (brightness contrast) of the image.
+    image is segmented using the gradient based watershed segmentation
+    :param image: input color image shape=(row (height), col (width), channel(3))
+    :param minimum_segment_size: The minimum size (in relative ratio [0, 1]) for the segments in the segmented image
+    :param figsize: the size of the plot figure
+    :return:
+    """
+    contrast_matrix, labeled_image = get_contrast_matrix_and_labeled_image(image,
+                                                                           minimum_segment_size=minimum_segment_size)
+    high_contrast_region_index = np.sum(contrast_matrix, axis=1).argmax()
+
+    contrast_part = extract_region_with_index(image, high_contrast_region_index + 1, labeled_image)
+
+    plt.figure(figsize=figsize)
+    plt.imshow(contrast_part)
+    plt.show()
+
+
+def show_low_contrast_region(image, minimum_segment_size=0.0004, figsize=(6, 4)):
+    """
+        Plot the low contrast region (brightness contrast) of the image.
+        image is segmented using the gradient based watershed segmentation
+        :param image: input color image shape=(row (height), col (width), channel(3))
+        :param minimum_segment_size: The minimum size (in relative ratio [0, 1]) for the segments in the segmented image
+        :param figsize: the size of the plot figure
+        :return:
+        """
+    contrast_matrix, labeled_image = get_contrast_matrix_and_labeled_image(image,
+                                                                           minimum_segment_size=minimum_segment_size)
+    low_contrast_region_index = np.sum(contrast_matrix, axis=1).argmin()
+
+    contrast_part = extract_region_with_index(image, low_contrast_region_index + 1, labeled_image)
+
+    plt.figure(figsize=figsize)
+    plt.imshow(contrast_part)
+    plt.show()
+
+
+def extract_region_with_index(image, region_index, labeled_image):
+    """
+    Helper function that masked the labeled image on the input image, and extract the
+    region with corresponding region index in the labeled image from the input image
+    :param image: input image shape=(row(height), col(width))
+    :param region_index: the extracted region index in the labeled image
+    :param labeled_image: the labeled image of the corresponding input image shape=image.shape
+    :return:
+    """
+    extract_part = image.copy()
+    if np.average(image[labeled_image == region_index]) / float(image.max()) > 0.5:
+        extract_part[labeled_image != region_index] = np.array([0, 0, 0], dtype=image.dtype)
+    else:
+        max = image.max()
+        if max <= 1:
+            max = 1
+        else:
+            max = 255
+        extract_part[labeled_image != region_index] = np.array([max, max, max], dtype=image.dtype)
+
+    return extract_part
