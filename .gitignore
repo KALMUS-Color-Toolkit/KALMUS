@@ -1,5 +1,5 @@
 test_films
-!**/__pycache__/
+**/__pycache__/
 
 build
 dist
