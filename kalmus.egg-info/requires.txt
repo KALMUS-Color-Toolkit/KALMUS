@@ -1,0 +1,7 @@
+numpy
+opencv-python
+scikit-image==0.16.2
+matplotlib==3.2.2
+scikit-learn
+biopython
+scipy

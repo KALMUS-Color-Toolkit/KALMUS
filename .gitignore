@@ -16,6 +16,7 @@ dist
 /KALMUS_version0.1/test_films/
 
 .idea
+.egg-info
 add_data.txt
 requirements.txt
 
