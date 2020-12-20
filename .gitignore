@@ -17,6 +17,7 @@ dist
 
 .idea
 .egg-info
+kalmus.egg-info
 add_data.txt
 requirements.txt
 
