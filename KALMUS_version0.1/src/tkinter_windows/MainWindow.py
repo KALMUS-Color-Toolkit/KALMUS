@@ -1,13 +1,13 @@
 from PIL import ImageTk, Image
 import tkinter
-from src.tkinter_windows.PlotBarcodeWindow import PlotBarcodeWindow
-from src.tkinter_windows.GenerateBarcodeWindow import GenerateBarcodeWindow
-from src.tkinter_windows.SaveBarcodeWindow import SaveBarcodeWindow
-from src.tkinter_windows.LoadStackWindow import LoadStackWindow
-from src.tkinter_windows.LoadJsonWindow import LoadJsonWindow
-from src.tkinter_windows.KALMUS_utils import get_comparison_result_text
-from src.tkinter_windows.ReshapeBarcodeWindow import ReshapeBarcodeWindow
-from src.tkinter_windows.KALMUS_utils import resource_path
+from kalmus.tkinter_windows.PlotBarcodeWindow import PlotBarcodeWindow
+from kalmus.tkinter_windows.GenerateBarcodeWindow import GenerateBarcodeWindow
+from kalmus.tkinter_windows.SaveBarcodeWindow import SaveBarcodeWindow
+from kalmus.tkinter_windows.LoadStackWindow import LoadStackWindow
+from kalmus.tkinter_windows.LoadJsonWindow import LoadJsonWindow
+from kalmus.tkinter_windows.KALMUS_utils import get_comparison_result_text
+from kalmus.tkinter_windows.ReshapeBarcodeWindow import ReshapeBarcodeWindow
+from kalmus.tkinter_windows.KALMUS_utils import resource_path
 import copy
 
 

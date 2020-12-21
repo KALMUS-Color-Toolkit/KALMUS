@@ -1,5 +1,5 @@
 import cv2
-import src.measure_utils  as measure_utils
+import kalmus.measure_utils  as measure_utils
 import os
 import sys
 

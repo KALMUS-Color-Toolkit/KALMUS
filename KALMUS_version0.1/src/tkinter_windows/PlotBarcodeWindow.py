@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
 from skimage.color import rgb2hsv, hsv2rgb
 import numpy as np
-from src.visualization_utils import show_colors_in_cube
+from kalmus.visualization_utils import show_colors_in_cube
 
 
 class PlotBarcodeWindow():

@@ -1,8 +1,8 @@
 """ Main function of the kalmus software """
 
-from src.BarcodeGenerator import BarcodeGenerator
-from src.tkinter_windows.MainWindowVersion2 import MainWindow
-from src.tkinter_windows.KALMUS_utils import resource_path
+from kalmus.BarcodeGenerator import BarcodeGenerator
+from kalmus.tkinter_windows.MainWindowVersion2 import MainWindow
+from kalmus.tkinter_windows.KALMUS_utils import resource_path
 
 
 # Instantiate the barcode generator object
@@ -10,7 +10,7 @@ barcode_gn = BarcodeGenerator()
 # Build the default barcode from the default json file
 json_path = resource_path("mission_impossible_Bright_Whole_frame_Color.json")
 barcode_gn.generate_barcode_from_json(json_file_path=json_path,
-                                     barcode_type="Color")
+                                      barcode_type="Color")
 
 # Get the default barcode
 barcode_tmp = barcode_gn.get_barcode()

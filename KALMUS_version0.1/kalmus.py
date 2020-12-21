@@ -1,6 +1,6 @@
-from src.ColorBarcodeGenerator import BarcodeGenerator
-from src.tkinter_windows.MainWindow import MainWindow
-from src.tkinter_windows.KALMUS_utils import resource_path
+from kalmus.ColorBarcodeGenerator import BarcodeGenerator
+from kalmus.tkinter_windows.MainWindow import MainWindow
+from kalmus.tkinter_windows.KALMUS_utils import resource_path
 
 
 barcode_gn = BarcodeGenerator()
