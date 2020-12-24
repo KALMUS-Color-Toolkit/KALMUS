@@ -57,6 +57,11 @@ def build_barcode_from_json(path_to_json, barcode_type="Color"):
 
     barcode.film_length_in_frames = int(object_dict["film_length_in_frames"])
 
+    if "save_frames_in_generation" in object_dict.keys():
+        if object_dict["save_frames_in_generation"]:
+            barcode.save_frames_in_generationa = object_dict["save_frames_in_generation"]
+            barcode.saved_frames = np.array(object_dict["saved_frames"])
+
     return barcode
 
 
@@ -108,7 +113,8 @@ class BarcodeGenerator():
                                              self.skip_over, self.total_frames, barcode_type="Brightness")
 
     def generate_barcode(self, video_file_path, user_defined_letterbox=False,
-                         low_ver=-1, high_ver=-1, left_hor=-1, right_hor=-1, num_thread=None):
+                         low_ver=-1, high_ver=-1, left_hor=-1, right_hor=-1,
+                         num_thread=None, save_frames=False):
         """
         Generate the barcode
         :param video_file_path: The path to the video file
@@ -119,12 +125,15 @@ class BarcodeGenerator():
         :param left_hor: The left horizontal letterbox given by user
         :param right_hor: The right horizontal letterbox given by user
         :param num_thread: Number of thread for computation. None == Single thread. num_thread > 1: multi-thread
+        :param save_frames: Whether to save the frames during the barcode generation
         :return:
         """
         self.instantiate_barcode()
         if user_defined_letterbox:
             self.barcode.set_letterbox_bound(up_vertical_bound=high_ver, down_vertical_bound=low_ver,
                                              left_horizontal_bound=left_hor, right_horizontal_bound=right_hor)
+        if save_frames:
+            self.barcode.enable_save_frames()
 
         if self.barcode_type == "Color":
             if num_thread is not None:

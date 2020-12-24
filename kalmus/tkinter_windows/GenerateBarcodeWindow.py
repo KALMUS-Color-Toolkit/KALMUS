@@ -173,7 +173,7 @@ class GenerateBarcodeWindow():
         self.right_hor_entry = tkinter.Entry(self.window, textvariable="-4", width=4, state="disabled")
         self.right_hor_entry.grid(row=6, column=4, columnspan=1)
 
-        # Variable that stores the number of threads used for the barcode generation
+        # Variable that stores 0 for single thread generation 1 for multi-thread generation
         self.var_multi_thread = tkinter.IntVar(self.window)
 
         # Checkbox for the user to choose whether use the multi-thread or not for barcode generation
@@ -182,6 +182,16 @@ class GenerateBarcodeWindow():
                                                          onvalue=1, offvalue=0, command=self.update_thread_entry)
 
         self.checkbox_multi_thread.grid(row=7, column=0)
+
+        # Variable that stores 0 for not saving frames during the generation 1 for saving frames during the generation
+        self.var_saved_frame = tkinter.IntVar(self.window)
+
+        # Checkbox for the user to choose whether save the frames or not during barcode generation
+        self.checkbox_saved_frame = tkinter.Checkbutton(self.window, text="Save Frames",
+                                                        variable=self.var_saved_frame,
+                                                        onvalue=1, offvalue=0)
+
+        self.checkbox_saved_frame.grid(row=8, column=0)
 
         # Text entry for the thread specification
         self.thread_entry = tkinter.Entry(self.window, textvariable="-6", width=4, state="normal")
@@ -272,26 +282,42 @@ class GenerateBarcodeWindow():
 
         # Get the correct acquisition parameters based on the acqusition unit
         if unit_type == "Frame":
-            skip_over = int(self.skip_over_entry.get())
+            skip_over_str = self.skip_over_entry.get()
+            if len(skip_over_str) == 0 or skip_over_str.lower() == "start":
+                skip_over = 0
+            else:
+                skip_over = int(self.skip_over_entry.get())
+
+            total_frames_str = self.total_frames_entry.get()
+            if len(total_frames_str) == 0 or total_frames_str.lower() == "end":
+                total_frames = int(1e8)
+            else:
+                total_frames = int(self.total_frames_entry.get())
+
             sampled_frame_rate = int(self.sampled_rate_entry.get())
-            total_frames = int(self.total_frames_entry.get())
         elif unit_type == "Time":
             self.video = cv2.VideoCapture(video_filename)
             fps = self.video.get(cv2.CAP_PROP_FPS)
 
             skip_over_str = str(self.skip_over_entry.get())
-            split_pos = skip_over_str.find(":")
-            skip_over = int((int(skip_over_str[:split_pos]) * 60 + int(skip_over_str[split_pos + 1:])) * fps)
+            if len(skip_over_str) == 0 or skip_over_str.lower() == "start":
+                skip_over = 0
+            else:
+                split_pos = skip_over_str.find(":")
+                skip_over = int((int(skip_over_str[:split_pos]) * 60 + int(skip_over_str[split_pos + 1:])) * fps)
 
             sampled_frame_rate_str = str(self.sampled_rate_entry.get())
             sampled_frame_rate = int(round(float(sampled_frame_rate_str) * fps))
 
             total_frames_str = str(self.total_frames_entry.get())
-            split_pos = total_frames_str.find(":")
-            total_frames = (int(total_frames_str[:split_pos]) * 60 + int(total_frames_str[split_pos + 1:])) * fps
-            total_frames -= skip_over
-            total_frames = int(total_frames)
-            total_frames //= sampled_frame_rate
+            if len(total_frames_str) == 0 or total_frames_str.lower() == "end":
+                total_frames = int(1e8)
+            else:
+                split_pos = total_frames_str.find(":")
+                total_frames = (int(total_frames_str[:split_pos]) * 60 + int(total_frames_str[split_pos + 1:])) * fps
+                total_frames -= skip_over
+                total_frames = int(total_frames)
+                total_frames //= sampled_frame_rate
 
         # Make sure the sampled frame rate >= 1 and the skip over >= 0 and total frame >= 0
         if sampled_frame_rate < 1:
@@ -319,6 +345,12 @@ class GenerateBarcodeWindow():
             # If user choose to use the multi-thread, then get the number of threads that will be used
             multi_thread = int(self.thread_entry.get())
 
+        # Check if user choose to save the frames or not
+        if self.var_saved_frame.get() == 1:
+            save_frames = True
+        else:
+            save_frames = False
+
         # Check if user choose to define the letter box region manually
         if self.letterbox_option.get() == "Manual":
             # Update the letter box parameters, if user choose Manual
@@ -329,10 +361,11 @@ class GenerateBarcodeWindow():
             # Start the generation
             self.barcode_generator.generate_barcode(video_filename, user_defined_letterbox=True,
                                                     low_ver=low_ver, high_ver=high_ver,
-                                                    left_hor=left_hor, right_hor=right_hor, num_thread=multi_thread)
+                                                    left_hor=left_hor, right_hor=right_hor,
+                                                    num_thread=multi_thread, save_frames=save_frames)
         elif self.letterbox_option.get() == "Auto":
             # If not, start the generation. The letter box will be automatically found during the generation process
-            self.barcode_generator.generate_barcode(video_filename, num_thread=multi_thread)
+            self.barcode_generator.generate_barcode(video_filename, num_thread=multi_thread, save_frames=save_frames)
 
         # Get the key of the barcode, which will be later stored in the memory stack (dictionary)
         start_pos = video_filename.rfind("/") + 1

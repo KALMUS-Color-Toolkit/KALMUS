@@ -1,5 +1,6 @@
 test_films
 example_json_barcodes
+saved_barcodes
 
 **/__pycache__/
 __pycache__

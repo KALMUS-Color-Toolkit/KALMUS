@@ -2,6 +2,7 @@
 PlotBarcodeWindow Class
 ColorHistogramWindow Class
 RGBColorCubeWindow Class
+OutputCSVWindow Class
 """
 
 import tkinter
@@ -155,7 +156,10 @@ class RGBColorCubeWindow():
         self.window.iconbitmap(resource_path("kalmus_icon.ico"))
 
         # Set up the plotted figure
-        fig, ax = show_colors_in_cube(self.barcode.colors, return_figure=True, figure_size=(6, 6), sampling=6000)
+        sampling = 6000
+        if sampling > self.barcode.colors.shape[0]:
+            sampling = self.barcode.colors.shape[0]
+        fig, ax = show_colors_in_cube(self.barcode.colors, return_figure=True, figure_size=(6, 6), sampling=sampling)
 
         # Set up the canvas
         canvas = FigureCanvasTkAgg(fig, master=self.window)  # A tk.DrawingArea.

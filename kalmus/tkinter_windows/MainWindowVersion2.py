@@ -15,6 +15,7 @@ from kalmus.tkinter_windows.WhichBarcodeInpsectWindow import WhichBarcodeInspect
 from kalmus.tkinter_windows.StatsInfoWindow import StatsInfoWindow
 from kalmus.tkinter_windows.SaveImageWindow import SaveImageWindow
 from kalmus.tkinter_windows.WhichBarcodeCheckMeta import WhichBarcodeCheckMeta
+from kalmus.tkinter_windows.CheckTimePointWindow import CheckTimePointWindow
 
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
@@ -67,7 +68,7 @@ class MainWindow():
         self.root = tkinter.Tk()
 
         self.root.configure(bg='#85C1FA')
-        self.root.wm_title("KALMUS Version 0.2")
+        self.root.wm_title("KALMUS Version 1.3.0")
         self.root.iconbitmap(resource_path("kalmus_icon.ico"))
 
         # Initialize the figure
@@ -117,6 +118,8 @@ class MainWindow():
         # Draw the canvas
         self.canvas = FigureCanvasTkAgg(self.fig, master=self.root)  # A tk.DrawingArea.
         self.canvas.draw()
+
+        self.canvas.mpl_connect('button_press_event', self.time_pick)
 
         # Use tkinter Frame to organize the figure widget
         toolbarFrame = tkinter.Frame(master=self.root)
@@ -252,3 +255,21 @@ class MainWindow():
         :return:
         """
         SaveImageWindow(self.barcode_1, self.barcode_2)
+
+    def time_pick(self,event):
+        if event.dblclick:
+            try:
+                ix, iy = int(event.xdata + 0.5), int(event.ydata + 0.5)
+                # print('x, y of mouse: {:d},{:d}'.format(int(ix), int(iy)))\
+            except Exception:
+                pass
+
+            for i, axe in enumerate(self.ax[:, 0]):
+                if axe == event.inaxes:
+                    if i == 0:
+                        barcode = self.barcode_1
+                    else:
+                        barcode = self.barcode_2
+                    barcode_shape = barcode.get_barcode().shape
+                    if 0 <= iy < barcode_shape[0] and 0 <= ix < barcode_shape[1]:
+                        CheckTimePointWindow(barcode, mouse_x=ix, mouse_y=iy)
