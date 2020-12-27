@@ -176,6 +176,14 @@ def update_graph(barcode_1, barcode_2, axes, bin_step=5):
     else:
         axes[1][0].imshow(barcode_2.get_barcode().astype("uint8"))
 
+    # Rescale the axis range
+    # And update the plot
+    axes[0][0].relim()
+    axes[0][0].autoscale_view()
+
+    axes[1][0].relim()
+    axes[1][0].autoscale_view()
+
     # Update the title of the plotted axes
     update_axes_title(axes, barcode_1, barcode_2)
 

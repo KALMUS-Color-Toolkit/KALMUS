@@ -170,29 +170,87 @@ class ReshapeBarcodeWindow():
         elif self.barcode_option.get() == "Barcode 2":
             barcode = self.barcode_2
 
+        # Save the current barcode size
+        old_barcode_size = barcode.get_barcode().shape[0] * barcode.get_barcode().shape[1]
+
         # Reshape/resize the currently selected barcode using the given type with parameters
         if option == "Reshape":
-            frames_per_column = int(self.column_length_entry.get())
+            frames_per_column_str = self.column_length_entry.get()
+
+            # Check if the reshape parameter is given
+            # If not given, return and do not process the reshape
+            if len(frames_per_column_str) == 0:
+                return
+
+            frames_per_column = int(frames_per_column_str)
             barcode.reshape_barcode(frames_per_column)
 
+            self.update_scale_factor(barcode, old_barcode_size)
             self.updated_new_barcode()
         elif option == "Resize":
+            barcode_shape = barcode.get_barcode().shape
+            resize_x, resize_y = self._check_resize_entry(barcode_shape[1], barcode_shape[0])
+            if resize_x is None:
+                return
+
             resized_barcode = cv2.resize(barcode.get_barcode(),
-                                         dsize=(int(self.resize_x_entry.get()), int(self.resize_y_entry.get())),
+                                         dsize=(int(resize_x), int(resize_y)),
                                          interpolation=cv2.INTER_NEAREST)
             barcode.barcode = resized_barcode
+
+            self.update_scale_factor(barcode, old_barcode_size)
             self.updated_new_barcode()
         elif option == "Scaling":
+            resize_x, resize_y = self._check_resize_entry(1, 1)
+            if resize_x is None:
+                return
+
             resized_barcode = cv2.resize(barcode.get_barcode(),
                                          dsize=(0, 0),
-                                         fx=float(self.resize_x_entry.get()),
-                                         fy=float(self.resize_y_entry.get()),
+                                         fx=float(resize_x),
+                                         fy=float(resize_y),
                                          interpolation=cv2.INTER_NEAREST)
             barcode.barcode = resized_barcode
+
+            self.update_scale_factor(barcode, old_barcode_size)
             self.updated_new_barcode()
 
         # Quit the window
         self.window.destroy()
+
+    def _check_resize_entry(self, default_x, default_y):
+        """
+        Check if the resize parameter is given
+        If one of the parameter is not given assume that dimension is unchanged
+        If both are not given, return and do not process the resize.
+        :param default_x: Default x dimension
+        :param default_y: Default y dimension
+        :return:
+        """
+        resize_x_str = self.resize_x_entry.get()
+        resize_y_str = self.resize_y_entry.get()
+
+        if len(resize_x_str) == 0 and len(resize_y_str) == 0:
+            return None, None
+        if len(resize_x_str) == 0:
+            resize_x = str(default_x)
+        else:
+            resize_x = resize_x_str
+        if len(resize_y_str) == 0:
+            resize_y = str(default_y)
+        else:
+            resize_y = resize_y_str
+
+        return resize_x, resize_y
+
+    def update_scale_factor(self, barcode, old_barcode_size):
+        """
+        Update the scale factor of the barcode
+        :param barcode: The barcode to update
+        :param old_barcode_size: The old size of that barcode
+        :return:
+        """
+        barcode.scale_factor *= (old_barcode_size / (barcode.get_barcode().shape[0] * barcode.get_barcode().shape[1]))
 
     def updated_new_barcode(self):
         """

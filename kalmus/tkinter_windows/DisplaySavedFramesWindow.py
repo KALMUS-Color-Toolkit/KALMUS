@@ -7,7 +7,7 @@ import numpy as np
 
 
 class DisplaySavedFramesWindow():
-    def __init__(self, barcode, mouse_x, mouse_y, figsize=(9, 2), dpi=120):
+    def __init__(self, barcode, mouse_x, mouse_y, figsize=(10, 2), dpi=100):
         self.barcode = barcode
 
         # Initialize the window

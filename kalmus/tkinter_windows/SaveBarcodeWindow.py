@@ -67,10 +67,12 @@ class SaveBarcodeWindow():
         """
         # Get the dictionary key of the selected barcode
         selected_barcode_names = [self.listbox.get(idx) for idx in self.listbox.curselection()]
-        self.button_save['text'] = 'Processing...'
 
         # Get the file name/path to the saved json file from the user input
         filename = self.filename_entry.get()
+
+        if len(filename) == 0:
+            filename = None
 
         # Saved the barcode
         for barcode_name in selected_barcode_names:

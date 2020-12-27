@@ -57,7 +57,49 @@ class MetaInfoWindow():
                 if key in self.barcode.meta_data.keys():
                     format_string = "{: <s}   {:s}\n".format(str(key) + ":", str(self.barcode.meta_data[key]))
                     meta_text += format_string
+
+        film_length, start_time, end_time = self.get_time_str()
+        fps = self.barcode.fps
+        meta_text += "\n{: <s}   {:s}\n{: <s}  {:s}\n{: <s}  {:s}\n\n{: <s}  {:.1f}"\
+            .format("Film Length:", film_length,
+                    "Barcode starts at", start_time,
+                    "Barcode ends at", end_time,
+                    "Frame rate (FPS):", fps)
         self.meta_info_label["text"] = meta_text
+
+    def get_time_str(self):
+        """
+        Get string for film length in hrs:mins:secs
+                       clip start time in hrs:mins:secs
+                   and clip end time in hrs:mins:secs
+        :return:
+        """
+        if self.barcode.fps is None:
+            self.barcode.fps = 29.8
+
+        film_length_in_secs = round(self.barcode.film_length_in_frames / self.barcode.fps)
+
+        hrs, mins, secs = self.get_hr_min_sec_from_tot_sec(film_length_in_secs)
+        film_length_str = "{:02d}:{:02d}:{:02d}".format(hrs, mins, secs)
+
+        barcode_clip_length_secs = round(self.barcode.total_frames
+                                         * (self.barcode.sampled_frame_rate / self.barcode.fps))
+        clip_start_time_secs = round(self.barcode.skip_over / self.barcode.fps)
+
+        hrs, mins, secs = self.get_hr_min_sec_from_tot_sec(clip_start_time_secs)
+        clip_start_time_str = "{:02d}:{:02d}:{:02d}".format(hrs, mins, secs)
+
+        clip_end_time_secs = clip_start_time_secs + barcode_clip_length_secs
+        hrs, mins, secs = self.get_hr_min_sec_from_tot_sec(clip_end_time_secs)
+        clip_end_time_str = "{:02d}:{:02d}:{:02d}".format(hrs, mins, secs)
+
+        return film_length_str, clip_start_time_str, clip_end_time_str
+
+    def get_hr_min_sec_from_tot_sec(self, tot_seconds):
+        secs = tot_seconds % 60
+        mins = int(tot_seconds / 60) % 60
+        hrs = int(tot_seconds / 3600) % 60
+        return hrs, mins, secs
 
     def update_meta_info(self):
         """

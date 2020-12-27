@@ -254,8 +254,8 @@ class Barcode():
             pos = np.argwhere(grey_frame == grey_frame.max())[0]
             color = frame[pos[0], pos[1]].copy().astype("uint8")
         elif self.color_metric == "Bright":
-            labels, bright_locations, domiance = Artist.find_bright_spots(frame, n_clusters=3, return_all_pos=True)
-            top_bright = np.argsort(domiance)[-1]
+            labels, bright_locations, dominance = Artist.find_bright_spots(frame, n_clusters=3, return_all_pos=True)
+            top_bright = np.argsort(dominance)[-1]
             top_bright_pos = (labels == top_bright)[:, 0]
             pos = bright_locations[top_bright_pos]
             frame = frame[pos[:, 0], pos[:, 1]].reshape(pos.shape[0], 1, 3)
@@ -314,7 +314,7 @@ class Barcode():
             self.meta_data = {}
         self.meta_data[key] = value
 
-    def enable_save_frames(self):
+    def enable_save_frames(self, sampled_rate=4):
         """
         Set the save frame in the generation of barcode to be True.
         This attribute, saved_frames_in_generation, should only be modified before the generation of barcode.
@@ -324,20 +324,25 @@ class Barcode():
         self.save_frames_in_generation = True
         self.saved_frames = []
 
+        self.saved_frames_sampled_rate = sampled_rate
+
     def _determine_save_frame_param(self):
         """
         Private method
         Determine the parameters of saving frame during the generation process.
         At most 900 Frames will be saved for each barcode
-        Save frame rate >= (4 * sampled frame rate)
+        Save frame rate is, by default, saving one frame every 4 seconds
         Frame will resized to the width of 100 pixels with the same aspect ratio
         :return:
         """
         assert self.video is not None, "Video must be read before determining the save frame rate"
         assert self.fps is not None, "FPS must be determined before determining the save frame rate"
-        self.saved_frames_sampled_rate = round(self.total_frames / self.sampled_frame_rate / 900)
-        if self.saved_frames_sampled_rate < 4:
-            self.saved_frames_sampled_rate = int(self.sampled_frame_rate * 4)
+        self.saved_frames_sampled_rate = round(self.fps * self.saved_frames_sampled_rate / self.sampled_frame_rate)
+        sampled_rate_upper_bound = round(self.total_frames / (self.sampled_frame_rate * 900))
+        print(self.saved_frames_sampled_rate)
+        if self.saved_frames_sampled_rate < sampled_rate_upper_bound:
+            self.saved_frames_sampled_rate = sampled_rate_upper_bound
+            print(self.saved_frames_sampled_rate)
 
         height = self.high_bound_ver - self.low_bound_ver
         width = self.high_bound_hor - self.low_bound_hor
@@ -374,7 +379,8 @@ class Barcode():
         self.video = None
         barcode_dict = copy.deepcopy(self.__dict__)
         barcode_dict['barcode'] = barcode_dict['barcode'].tolist()
-        barcode_dict['saved_frames'] = barcode_dict['saved_frames'].tolist()
+        if self.save_frames_in_generation:
+            barcode_dict['saved_frames'] = barcode_dict['saved_frames'].tolist()
         if isinstance(self, ColorBarcode):
             barcode_dict['colors'] = barcode_dict['colors'].tolist()
             barcode_type = "Color"
@@ -450,6 +456,15 @@ class ColorBarcode(Barcode):
             self.saved_frames = np.array(self.saved_frames)
 
     def multi_thread_collect_colors(self, video_path_name, num_thread=4):
+        """
+        Collect the color of the input video using Multi-thread method
+        :param video_path_name: The path to the input video
+        :param num_thread: Number of threads to collect the brightness
+        :return:
+        """
+        # Correct the total frames temporarily for the multi-thread generation in order to
+        # be according with the definition of total frames in single thread generation
+        # where total frames == self.colors.size / 3 (channels)
         self.total_frames *= self.sampled_frame_rate
         self.read_videos(video_path_name)
 
@@ -485,6 +500,9 @@ class ColorBarcode(Barcode):
 
         for i in range(num_thread):
             threads[i].join()
+
+        # Now change the total frames back to the original input
+        self.total_frames = int(self.total_frames / self.sampled_frame_rate)
 
         colors_sequence = [thread_results[0]]
         for i in range(1, num_thread):
@@ -536,7 +554,8 @@ class ColorBarcode(Barcode):
             success, frame = video.read()
 
         results[tid] = colors_sequence
-        frame_saved[tid] = frame_sequence
+        if self.save_frames_in_generation:
+            frame_saved[tid] = frame_sequence
 
     def reshape_barcode(self, frames_per_column=160):
         """
@@ -623,6 +642,9 @@ class BrightnessBarcode(Barcode):
         :param num_thread: Number of threads to collect the brightness
         :return:
         """
+        # Correct the total frames temporarily for the multi-thread generation in order to
+        # be according with the definition of total frames in single thread generation
+        # where total frames == self.colors.size / 3 (channels)
         self.total_frames *= self.sampled_frame_rate
         self.read_videos(video_path_name)
 
@@ -658,6 +680,9 @@ class BrightnessBarcode(Barcode):
 
         for i in range(num_thread):
             threads[i].join()
+
+        # Now change the total frames back to the original input
+        self.total_frames = int(self.total_frames / self.sampled_frame_rate)
 
         brightness_sequence = [thread_results[0]]
         for i in range(1, num_thread):
@@ -716,7 +741,8 @@ class BrightnessBarcode(Barcode):
             success, frame = video.read()
 
         results[tid] = brightness_sequence
-        frame_saved[tid] = frame_sequence
+        if self.save_frames_in_generation:
+            frame_saved[tid] = frame_sequence
 
     def reshape_barcode(self, frames_per_column=160):
         """

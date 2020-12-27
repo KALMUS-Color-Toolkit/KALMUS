@@ -3,7 +3,10 @@
 import cv2
 import tkinter
 import tkinter.filedialog
+from tkinter.messagebox import showerror
 import copy
+import os
+
 from kalmus.tkinter_windows.SpecifyMetaDataWindow import SpecifyMetaDataWindow
 from kalmus.tkinter_windows.KALMUS_utils import resource_path
 
@@ -173,6 +176,15 @@ class GenerateBarcodeWindow():
         self.right_hor_entry = tkinter.Entry(self.window, textvariable="-4", width=4, state="disabled")
         self.right_hor_entry.grid(row=6, column=4, columnspan=1)
 
+        # Variable that stores 0 for not saving frames during the generation 1 for saving frames during the generation
+        self.var_saved_frame = tkinter.IntVar(self.window)
+
+        # Checkbox for the user to choose whether save the frames or not during barcode generation
+        self.checkbox_saved_frame = tkinter.Checkbutton(self.window, text="Save Frames  ",
+                                                        variable=self.var_saved_frame,
+                                                        onvalue=1, offvalue=0)
+        self.checkbox_saved_frame.grid(row=7, column=0)
+
         # Variable that stores 0 for single thread generation 1 for multi-thread generation
         self.var_multi_thread = tkinter.IntVar(self.window)
 
@@ -181,21 +193,11 @@ class GenerateBarcodeWindow():
                                                          variable=self.var_multi_thread,
                                                          onvalue=1, offvalue=0, command=self.update_thread_entry)
 
-        self.checkbox_multi_thread.grid(row=7, column=0)
-
-        # Variable that stores 0 for not saving frames during the generation 1 for saving frames during the generation
-        self.var_saved_frame = tkinter.IntVar(self.window)
-
-        # Checkbox for the user to choose whether save the frames or not during barcode generation
-        self.checkbox_saved_frame = tkinter.Checkbutton(self.window, text="Save Frames",
-                                                        variable=self.var_saved_frame,
-                                                        onvalue=1, offvalue=0)
-
-        self.checkbox_saved_frame.grid(row=8, column=0)
+        self.checkbox_multi_thread.grid(row=8, column=0)
 
         # Text entry for the thread specification
         self.thread_entry = tkinter.Entry(self.window, textvariable="-6", width=4, state="normal")
-        self.thread_entry.grid(row=7, column=1, sticky=tkinter.W)
+        self.thread_entry.grid(row=8, column=1, sticky=tkinter.W)
         self.thread_entry.delete(0, tkinter.END)
         self.thread_entry.insert(0, "4")
         self.thread_entry.config(state="disabled")
@@ -203,12 +205,12 @@ class GenerateBarcodeWindow():
         # Button to generate the barcode
         self.generate_button = tkinter.Button(master=self.window, text="Generate Barcode",
                                               command=self.generate_barcode)
-        self.generate_button.grid(row=7, column=2, sticky=tkinter.W)
+        self.generate_button.grid(row=7, column=2, sticky=tkinter.W, rowspan=2)
 
         # Button to specify the meta data of the generated barcode
         self.specify_data_button = tkinter.Button(master=self.window, text="Specify Meta Data",
                                                   command=self.specify_data)
-        self.specify_data_button.grid(row=7, column=3, sticky=tkinter.W)
+        self.specify_data_button.grid(row=7, column=3, sticky=tkinter.W, rowspan=2)
 
         # Start the window
         self.window.mainloop()
@@ -279,6 +281,10 @@ class GenerateBarcodeWindow():
 
         # Get the file name/path of the input video
         video_filename = str(self.video_filename_entry.get())
+
+        if not os.path.exists(video_filename):
+            showerror("Video File Not Exists", "Video file not found!\nPlease check the file path.")
+            return
 
         # Get the correct acquisition parameters based on the acqusition unit
         if unit_type == "Frame":
@@ -366,6 +372,9 @@ class GenerateBarcodeWindow():
         elif self.letterbox_option.get() == "Auto":
             # If not, start the generation. The letter box will be automatically found during the generation process
             self.barcode_generator.generate_barcode(video_filename, num_thread=multi_thread, save_frames=save_frames)
+
+        # Correct the total frames
+        total_frames = self.barcode_generator.get_barcode().total_frames
 
         # Get the key of the barcode, which will be later stored in the memory stack (dictionary)
         start_pos = video_filename.rfind("/") + 1

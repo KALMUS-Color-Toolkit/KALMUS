@@ -43,7 +43,6 @@ class CheckTimePointWindow():
             color_label.grid(row=0, column=3, rowspan=2, padx=5, pady=5)
         elif self.barcode.barcode_type == "Brightness":
             r = g = b = barcode.get_barcode().astype("uint8")[self.y_pos, self.x_pos]
-            print(r, g, b)
             brightness_value_label = tkinter.Label(master=self.window, text="Brightness: {:d}".format(r))
             brightness_value_label.grid(row=0, column=0, sticky=tkinter.E)
 
