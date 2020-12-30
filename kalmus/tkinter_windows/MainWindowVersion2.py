@@ -203,7 +203,7 @@ class MainWindow():
         Instantiate the WhichBarcodeInspectWindow
         :return:
         """
-        WhichBarcodeInspectWindow(self.barcode_1, self.barcode_2, dpi=100)
+        WhichBarcodeInspectWindow(self.barcode_1, self.barcode_2, dpi=100, figsize=(7, 4))
 
     def load_json_barcode(self):
         """
@@ -260,9 +260,8 @@ class MainWindow():
         if event.dblclick:
             try:
                 ix, iy = int(event.xdata + 0.5), int(event.ydata + 0.5)
-                # print('x, y of mouse: {:d},{:d}'.format(int(ix), int(iy)))\
             except Exception:
-                pass
+                return
 
             for i, axe in enumerate(self.ax[:, 0]):
                 if axe == event.inaxes:

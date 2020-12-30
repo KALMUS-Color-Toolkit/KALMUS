@@ -1,7 +1,10 @@
 """ LoadJsonWindow Class """
 
 import tkinter.filedialog
+from tkinter.messagebox import showerror
 import copy
+import os
+
 from kalmus.tkinter_windows.KALMUS_utils import resource_path, update_graph
 
 
@@ -100,8 +103,21 @@ class LoadJsonWindow():
         # Get the file name/path to the json file
         filename = self.filename_entry.get()
 
-        # Generate the barcode from json file use the barcode generator
-        self.barcode_generator.generate_barcode_from_json(filename, self.type_variable.get())
+        # Check if the filename is given
+        if not os.path.exists(filename):
+            showerror("JSON File Not Exists", "JSON file not exists.\n"
+                                              "Please check the JSON file path.")
+            return
+
+        try:
+            # Generate the barcode from json file use the barcode generator
+            self.barcode_generator.generate_barcode_from_json(filename, self.type_variable.get())
+        except:
+            showerror("Error Occurred in Loading JSON Barcode", "An error occurred in loading the JSON barcode.\n\n"
+                                                                "Please make sure the type of Barcode saved\n"
+                                                                "in the JSON file is correctly specified.\n"
+                                                                "Color or Brightness")
+            return
 
         # Get the name of the json file
         start_pos = filename.rfind("/") + 1

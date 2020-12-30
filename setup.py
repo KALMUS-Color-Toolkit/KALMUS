@@ -9,7 +9,7 @@ with open(path_to_md, encoding='utf-8') as f:
 f.close()
 
 setup(name='kalmus',
-      version='1.3.1',
+      version='1.3.3',
       description='kalmus film color analysis tool',
       keywords='film, color analysis, data visualization',
       long_description=readme,
@@ -31,7 +31,7 @@ setup(name='kalmus',
       ],
       packages=find_packages(),
       python_requires='>=3.7',
-      install_requires=['numpy', 'opencv-python', 'scikit-image>=0.16.2', 'matplotlib>=3.2.2',
+      install_requires=['numpy', 'opencv-python', 'scikit-image==0.16.2', 'matplotlib==3.2.2',
                         'scikit-learn', 'biopython', 'scipy', 'kiwisolver>=1.3.1'],
       entry_points={
           'console_scripts': ['kalmus-gui=kalmus.command_line_gui:main'],

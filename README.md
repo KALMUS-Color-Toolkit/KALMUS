@@ -2,7 +2,34 @@
 
 KALMUS is a Python package for the computational analysis of colors in films. It addresses how to best describe a film's color.  This package is optimized for two purposes:  (1) various ways to measure, calculate and compare a film's color and (2) various ways to visualize a film's color.
 
-# Update 1.3.1
+# update 1.3.3
+
+**Add features**
+
+- More indicative **Error Detection/Exception Handling** in KALMUS graphic user interface.  
+Now in the generate barcode, Load JSON window, Save JSON window, and Save Barcode Image window 
+error or warning message box with issue message will pop up if any handled/unresolved exception occurred in the process.
+
+**Changes**
+
+- Layout of **Inspect Barcode** window has been redesigned. Now buttons are all on the same row, and the displayed 
+barcode image are more compact with respect to the window.
+- KALMUS GUI now loads different formats of icon image under different OS environment. (.ico format for Windows and
+ POSIX Mac, .xbm for POSIX system)
+- Now the histogram plots in the Main window will also be auto-rescaled after 
+loading new barcodes into the main window.
+- Threaded Barcode generation. Barcode generation now won't block the mainloop process of the KALMUS GUI.
+
+**Fixes**
+
+- Dependencies fixes. The required versions of dependent modules **matplotlib** and **scikit-image** now retreat to
+more stable releases. **matplotlib**==3.2.2 and **scikit-image**==0.16.2
+- Barcodes with less than 160 frames now can be correctly loaded and displayed in the KALMUS GUI.
+
+- Unexpected print statements in the barcode generation has been removed.
+
+---
+### Update 1.3.1
 
 **Add features**
 

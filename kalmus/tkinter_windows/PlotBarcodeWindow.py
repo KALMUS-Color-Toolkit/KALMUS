@@ -45,32 +45,42 @@ class PlotBarcodeWindow():
         else:
             plt.imshow(barcode.get_barcode().astype("uint8"))
         plt.axis("off")
+        plt.tight_layout()
 
         # Set up the canvas for the figure
         self.canvas = FigureCanvasTkAgg(self.fig, master=self.plot_window)  # A tk.DrawingArea.
         self.canvas.draw()
-        self.canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
+
+        # Dynamic layout based on the type of the inspected barcode
+        if barcode.barcode_type == "Color":
+            column_span = 3
+        else:
+            column_span = 2
+        self.canvas.get_tk_widget().grid(row=0, column=0, columnspan=column_span, pady=3)
+
+        # Use tkinter Frame to organize the figure widget
+        toolbarFrame = tkinter.Frame(master=self.plot_window)
+        toolbarFrame.grid(row=2, column=0, columnspan=column_span, sticky=tkinter.W, pady=6)
 
         # Initialize the plotting tool bar
-        self.toolbar = NavigationToolbar2Tk(self.canvas, self.plot_window)
+        self.toolbar = NavigationToolbar2Tk(self.canvas, toolbarFrame)
         self.toolbar.update()
-        self.canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
 
         # Button to output the data in the barcode to a csv file
         self.button_output_csv = tkinter.Button(master=self.plot_window, text="Output CSV",
                                                 command=self.output_csv)
-        self.button_output_csv.pack(side=tkinter.BOTTOM)
+        self.button_output_csv.grid(row=1, column=0, padx=18)
+
+        # Button to check the histogram distribution of the barcode's hue/brightness value
+        self.button_hist = tkinter.Button(master=self.plot_window, text="Show Histogram",
+                                              command=self.show_color_histogram)
+        self.button_hist.grid(row=1, column=1, padx=14)
 
         # If the barcode is a color barcode, allow user to inspect the RGB color distribution in a RGB cube
         if barcode.barcode_type == "Color":
             self.button_cube = tkinter.Button(master=self.plot_window, text="Show Color in RGB Cube",
                                               command=self.show_RGB_color_in_cube)
-            self.button_cube.pack(side=tkinter.BOTTOM)
-
-        # Button to check the histogram distribution of the barcode's hue/brightness value
-        self.button_hist = tkinter.Button(master=self.plot_window, text="Show Histogram",
-                                              command=self.show_color_histogram)
-        self.button_hist.pack(side=tkinter.BOTTOM)
+            self.button_cube.grid(row=1, column=2)
 
         # Start the window
         self.plot_window.mainloop()

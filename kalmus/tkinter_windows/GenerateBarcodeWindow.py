@@ -3,9 +3,10 @@
 import cv2
 import tkinter
 import tkinter.filedialog
-from tkinter.messagebox import showerror
+from tkinter.messagebox import showerror, showwarning
 import copy
 import os
+import threading
 
 from kalmus.tkinter_windows.SpecifyMetaDataWindow import SpecifyMetaDataWindow
 from kalmus.tkinter_windows.KALMUS_utils import resource_path
@@ -204,7 +205,7 @@ class GenerateBarcodeWindow():
 
         # Button to generate the barcode
         self.generate_button = tkinter.Button(master=self.window, text="Generate Barcode",
-                                              command=self.generate_barcode)
+                                              command=self.generate_barcode_thread)
         self.generate_button.grid(row=7, column=2, sticky=tkinter.W, rowspan=2)
 
         # Button to specify the meta data of the generated barcode
@@ -266,9 +267,17 @@ class GenerateBarcodeWindow():
         self.video_filename_entry.delete(0, tkinter.END)
         self.video_filename_entry.insert(0, filename)
 
-    def generate_barcode(self):
+    def generate_barcode_thread(self):
         """
-        Generate the barcode using the given parameters
+        Generate the barcode in a another thread
+        to avoid the frozen tkinter window issue
+        :return:
+        """
+        threading.Thread(target=self.generate_barcode).start()
+
+    def acquire_generation_param(self):
+        """
+        Acquire the barcode generation parameters
         :return:
         """
         # Get barcode type, frame sampling type, and color/brightness metric
@@ -284,7 +293,7 @@ class GenerateBarcodeWindow():
 
         if not os.path.exists(video_filename):
             showerror("Video File Not Exists", "Video file not found!\nPlease check the file path.")
-            return
+            raise FileNotFoundError()
 
         # Get the correct acquisition parameters based on the acqusition unit
         if unit_type == "Frame":
@@ -300,7 +309,13 @@ class GenerateBarcodeWindow():
             else:
                 total_frames = int(self.total_frames_entry.get())
 
-            sampled_frame_rate = int(self.sampled_rate_entry.get())
+            sampled_frame_rate_str = self.sampled_rate_entry.get()
+            if len(sampled_frame_rate_str) == 0:
+                showwarning("Sample Frame not Specified", "Sample frame rate is not given.\n"
+                                                          "Default sample rate 1 frame every input frame is used.")
+                sampled_frame_rate = 1
+            else:
+                sampled_frame_rate = int(sampled_frame_rate_str)
         elif unit_type == "Time":
             self.video = cv2.VideoCapture(video_filename)
             fps = self.video.get(cv2.CAP_PROP_FPS)
@@ -313,7 +328,12 @@ class GenerateBarcodeWindow():
                 skip_over = int((int(skip_over_str[:split_pos]) * 60 + int(skip_over_str[split_pos + 1:])) * fps)
 
             sampled_frame_rate_str = str(self.sampled_rate_entry.get())
-            sampled_frame_rate = int(round(float(sampled_frame_rate_str) * fps))
+            if len(sampled_frame_rate_str) == 0:
+                showwarning("Sample Frame not Specified", "Sample frame rate is not given.\n"
+                                                          "Default sample rate 1 frame every input frame is used.")
+                sampled_frame_rate = 1
+            else:
+                sampled_frame_rate = int(round(float(sampled_frame_rate_str) * fps))
 
             total_frames_str = str(self.total_frames_entry.get())
             if len(total_frames_str) == 0 or total_frames_str.lower() == "end":
@@ -327,11 +347,43 @@ class GenerateBarcodeWindow():
 
         # Make sure the sampled frame rate >= 1 and the skip over >= 0 and total frame >= 0
         if sampled_frame_rate < 1:
+            showwarning("Frame Sample Rate too Small", "The frame sample rate is too small.\n"
+                                                       "It has been adjusted to the Minimum valid sample rate,\n"
+                                                       "Sample 1 frame every frame (==use all frames)")
             sampled_frame_rate = 1
         if skip_over < 0:
+            showwarning("Invalid Start time", "Invalid start time for the barcode generation.\n"
+                                              "Start frames/time has been set to 0/00:00 (== start of film)")
             skip_over = 0
         if total_frames < 0:
+            showwarning("Invalid Total Frames", "Invalid total frames\n"
+                                                "or Barcode starts after it ends.\n"
+                                                "Total frames has been adjusted to 0.")
             total_frames = 0
+
+        return barcode_type, frame_type, color_metric, sampled_frame_rate, skip_over, total_frames, video_filename
+
+    def generate_barcode(self):
+        """
+        Generate the barcode using the given parameters
+        :return:
+        """
+        self.disable_generate_button()
+        try:
+            barcode_type, frame_type, color_metric, sampled_frame_rate, skip_over, total_frames, video_filename = \
+                self.acquire_generation_param()
+        except FileNotFoundError:
+            self.enable_generate_button()
+            return
+        except:
+            showerror("Acquisition Parameters", "An unknown Error occurred when reading\n"
+                                                "the acquisition parameters.\n"
+                                                "Please make sure all parameters are positive\n"
+                                                "Frames unit must be an integer\n"
+                                                "In Time unit, mins:secs in Start and End at must be integers\n"
+                                                "Sample every (secs) can be decimals but not fraction.")
+            self.enable_generate_button()
+            return
 
         # Update all the parameters to the barcode generator
         self.barcode_generator.barcode_type = barcode_type
@@ -341,16 +393,22 @@ class GenerateBarcodeWindow():
         self.barcode_generator.skip_over = skip_over
         self.barcode_generator.total_frames = total_frames
 
-        # Update the generate button text to the processing
-        self.generate_button["text"] = "Processing..."
-
         # Check if user choose the multi-thread or not
         if self.var_multi_thread.get() == 0:
             multi_thread = None
         elif self.var_multi_thread.get() == 1:
             # If user choose to use the multi-thread, then get the number of threads that will be used
-            multi_thread = int(self.thread_entry.get())
-
+            try:
+                multi_thread = int(self.thread_entry.get())
+                if multi_thread < 1:
+                    showwarning("Non Positive Thread Number", "Number of threads has been adjusted to 1.\n"
+                                                              "Degenerated to single thread generation.")
+                    multi_thread = 1
+            except:
+                showerror("Invalid Thread Number", "Invalid number of threads.\n"
+                                                   "Number of threads must be an integer")
+                self.enable_generate_button()
+                return
         # Check if user choose to save the frames or not
         if self.var_saved_frame.get() == 1:
             save_frames = True
@@ -359,19 +417,35 @@ class GenerateBarcodeWindow():
 
         # Check if user choose to define the letter box region manually
         if self.letterbox_option.get() == "Manual":
-            # Update the letter box parameters, if user choose Manual
-            high_ver = int(self.high_ver_entry.get())
-            low_ver = int(self.low_ver_entry.get())
-            left_hor = int(self.left_hor_entry.get())
-            right_hor = int(self.right_hor_entry.get())
-            # Start the generation
-            self.barcode_generator.generate_barcode(video_filename, user_defined_letterbox=True,
-                                                    low_ver=low_ver, high_ver=high_ver,
-                                                    left_hor=left_hor, right_hor=right_hor,
-                                                    num_thread=multi_thread, save_frames=save_frames)
+            try:
+                # Update the letter box parameters, if user choose Manual
+                high_ver = int(self.high_ver_entry.get())
+                low_ver = int(self.low_ver_entry.get())
+                left_hor = int(self.left_hor_entry.get())
+                right_hor = int(self.right_hor_entry.get())
+                # Start the generation
+                self.barcode_generator.generate_barcode(video_filename, user_defined_letterbox=True,
+                                                        low_ver=low_ver, high_ver=high_ver,
+                                                        left_hor=left_hor, right_hor=right_hor,
+                                                        num_thread=multi_thread, save_frames=save_frames)
+            except:
+                showwarning("Error Occurred in Barcode Generation", "An unknown Error occurred in the barcode "
+                                                                    "generation.\nPlease check the letterbox set up"
+                                                                    " and the other parameters' specification.")
+                self.enable_generate_button()
+                return
         elif self.letterbox_option.get() == "Auto":
-            # If not, start the generation. The letter box will be automatically found during the generation process
-            self.barcode_generator.generate_barcode(video_filename, num_thread=multi_thread, save_frames=save_frames)
+            try:
+                # If not, start the generation.
+                # The letter box will be automatically found during the generation process
+                self.barcode_generator.generate_barcode(video_filename, num_thread=multi_thread,
+                                                        save_frames=save_frames)
+            except:
+                showwarning("Error Occurred in Barcode Generation", "An unknown Error occurred in the barcode "
+                                                                    "generation.\nPlease check the parameters' "
+                                                                    "specification.")
+                self.enable_generate_button()
+                return
 
         # Correct the total frames
         total_frames = self.barcode_generator.get_barcode().total_frames
@@ -398,6 +472,26 @@ class GenerateBarcodeWindow():
 
         # Quit the window
         self.window.destroy()
+
+    def disable_generate_button(self):
+        """
+        Disable the generate button and Specify Meta Data button once generation starts
+        :return:
+        """
+        # Update the generate button text to the processing
+        self.generate_button["text"] = "  Processing... "
+        self.generate_button.config(state="disabled")
+        self.specify_data_button.config(state="disabled")
+
+    def enable_generate_button(self):
+        """
+        Enable the generate button and Specify Meta Data button in case of failed generation
+        :return:
+        """
+        # Change the button text back to Generate Barcode
+        self.generate_button["text"] = "Generate Barcode"
+        self.generate_button.config(state="normal")
+        self.specify_data_button.config(state="normal")
 
     def disable_setup(self):
         """

@@ -1,9 +1,11 @@
 """ SaveImageWindow Class """
 
 import tkinter
+from tkinter.messagebox import showerror
 import tkinter.filedialog
 import matplotlib.pyplot as plt
 import cv2
+import os
 
 from kalmus.tkinter_windows.KALMUS_utils import resource_path
 
@@ -120,6 +122,12 @@ class SaveImageWindow():
         Save the currently selected barcode into the image with the given size
         :return:
         """
+        # Check if the filename is given
+        filename = self.filename_entry.get()
+        if len(filename) == 0:
+            showerror("File Name is Not Given", "Please specify the path to the saved image.")
+            return
+
         # Get which barcode to save
         if self.barcode_option.get() == "Barcode 1":
             barcode = self.barcode_1.get_barcode().astype("uint8")
@@ -134,9 +142,9 @@ class SaveImageWindow():
 
         # Save the barcode with desirable color map based on its barcode type
         if barcode_type == "Color":
-            plt.imsave(self.filename_entry.get(), barcode)
+            plt.imsave(filename, barcode)
         else:
-            plt.imsave(self.filename_entry.get(), barcode, cmap="gray")
+            plt.imsave(filename, barcode, cmap="gray")
 
         # Quit the window
         self.window.destroy()

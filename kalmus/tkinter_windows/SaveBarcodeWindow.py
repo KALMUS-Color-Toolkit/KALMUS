@@ -2,6 +2,8 @@
 
 import tkinter
 import tkinter.filedialog
+from tkinter.messagebox import showwarning
+
 from kalmus.tkinter_windows.KALMUS_utils import resource_path
 
 
@@ -72,6 +74,10 @@ class SaveBarcodeWindow():
         filename = self.filename_entry.get()
 
         if len(filename) == 0:
+            showwarning("Default Saved JSON Path is Used", "Path to the saved JSON file is not specified.\n"
+                                                           "Default save path is used.\n"
+                                                           "File will be saved in the current working directory.\n"
+                                                           "It is recommended to specify the file path.")
             filename = None
 
         # Saved the barcode

@@ -339,10 +339,8 @@ class Barcode():
         assert self.fps is not None, "FPS must be determined before determining the save frame rate"
         self.saved_frames_sampled_rate = round(self.fps * self.saved_frames_sampled_rate / self.sampled_frame_rate)
         sampled_rate_upper_bound = round(self.total_frames / (self.sampled_frame_rate * 900))
-        print(self.saved_frames_sampled_rate)
         if self.saved_frames_sampled_rate < sampled_rate_upper_bound:
             self.saved_frames_sampled_rate = sampled_rate_upper_bound
-            print(self.saved_frames_sampled_rate)
 
         height = self.high_bound_ver - self.low_bound_ver
         width = self.high_bound_hor - self.low_bound_hor
@@ -565,6 +563,8 @@ class ColorBarcode(Barcode):
         """
         if len(self.colors) % frames_per_column == 0:
             self.barcode = self.colors.reshape(frames_per_column, -1, self.colors.shape[-1], order='F')
+        elif len(self.colors) < frames_per_column:
+            self.barcode = self.colors.reshape(-1, 1, self.colors.shape[-1], order='F')
         else:
             truncate_bound = int(len(self.colors) / frames_per_column) * frames_per_column
             self.barcode = self.colors[:truncate_bound].reshape(frames_per_column, -1,
@@ -752,6 +752,8 @@ class BrightnessBarcode(Barcode):
         """
         if len(self.brightness) % frames_per_column == 0:
             self.barcode = self.brightness.reshape(frames_per_column, -1, order='F')
+        elif len(self.brightness) < frames_per_column:
+            self.barcode = self.brightness.reshape(-1, 1, order='F')
         else:
             truncate_bound = int(len(self.brightness) / frames_per_column) * frames_per_column
             self.barcode = self.brightness[:truncate_bound].reshape(frames_per_column, -1, order='F')

@@ -1,6 +1,7 @@
 """ StatsInfoWindow Class """
 
 import tkinter
+
 from kalmus.tkinter_windows.KALMUS_utils import get_comparison_result_text, resource_path
 
 
@@ -22,11 +23,10 @@ class StatsInfoWindow():
         # Initialize the window
         self.window = tkinter.Tk()
         self.window.wm_title("Barcodes Similarity Statistics")
+        self.window.iconbitmap(resource_path("kalmus_icon.ico"))
 
         # Get the comparison result (in string) between two barcodes
         result_text = get_comparison_result_text(self.barcode_1, self.barcode_2)
-
-        self.window.iconbitmap(resource_path("kalmus_icon.ico"))
 
         # Show the result in a Label (text panel)
         self.info_label = tkinter.Label(self.window, text=result_text, width=35, bg='white', anchor='w',

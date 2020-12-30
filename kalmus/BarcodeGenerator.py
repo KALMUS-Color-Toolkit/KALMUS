@@ -87,7 +87,6 @@ class BarcodeGenerator():
                                               "including {:s}".format(str(color_metrics))
         assert barcode_type in barcode_types, "Invalid barcode type. Two types of barcode are available " \
                                               "including {:s}".format(str(barcode_types))
-
         assert not (color_metric == "Bright" and frame_type in frame_types[1:]), \
             "Color metric Bright can not be used when the frame acquisition " \
             "methods are {:s}".format(str(frame_types[1:]))

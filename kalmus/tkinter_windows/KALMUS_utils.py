@@ -2,6 +2,7 @@
 
 import cv2
 import kalmus.measure_utils as measure_utils
+from tkinter import PhotoImage
 import os
 import sys
 import numpy as np
@@ -167,22 +168,20 @@ def update_graph(barcode_1, barcode_2, axes, bin_step=5):
     """
     # Plot the barcode with the correct color map based on their barcode types
     if barcode_1.barcode_type == "Brightness":
-        axes[0][0].imshow(barcode_1.get_barcode().astype("uint8"), cmap='gray')
+        axes[0][0].imshow(barcode_1.get_barcode().astype("uint8"), cmap='gray', vmin=0, vmax=255)
     else:
         axes[0][0].imshow(barcode_1.get_barcode().astype("uint8"))
 
     if barcode_2.barcode_type == "Brightness":
-        axes[1][0].imshow(barcode_2.get_barcode().astype("uint8"), cmap='gray')
+        axes[1][0].imshow(barcode_2.get_barcode().astype("uint8"), cmap='gray', vmin=0, vmax=255)
     else:
         axes[1][0].imshow(barcode_2.get_barcode().astype("uint8"))
 
     # Rescale the axis range
     # And update the plot
-    axes[0][0].relim()
-    axes[0][0].autoscale_view()
-
-    axes[1][0].relim()
-    axes[1][0].autoscale_view()
+    for axis in axes.ravel():
+        axis.relim()
+        axis.autoscale_view()
 
     # Update the title of the plotted axes
     update_axes_title(axes, barcode_1, barcode_2)
@@ -273,9 +272,17 @@ def resource_path(relative_path):
         base_path = sys._MEIPASS
     except Exception:
         # Otherwise use the absolute path
-        # base_path = os.path.abspath(".")
+        if relative_path.endswith(".ico"):
+            if os.name != "nt":
+                relative_path = relative_path[:-3]
+                relative_path += "xbm"
+
         base_path = os.path.abspath(os.path.dirname(__file__))
         base_path = os.path.join(base_path, '..')
+
+        if relative_path.endswith(".xbm"):
+            if os.name != "nt":
+                base_path = "@" + base_path
 
     # Return the path
     return os.path.join(base_path, relative_path)

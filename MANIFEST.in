@@ -1,4 +1,5 @@
 include kalmus/kalmus_icon.ico
+include kalmus/kalmus_icon.xbm
 include kalmus/kalmus_icon.jpg
 include kalmus/mission_impossible_Bright_Whole_frame_Color.json
 
