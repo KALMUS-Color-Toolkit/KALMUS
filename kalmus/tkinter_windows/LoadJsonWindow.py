@@ -1,7 +1,7 @@
 """ LoadJsonWindow Class """
 
 import tkinter.filedialog
-from tkinter.messagebox import showerror
+from tkinter.messagebox import showerror, showinfo
 import copy
 import os
 
@@ -111,7 +111,8 @@ class LoadJsonWindow():
 
         try:
             # Generate the barcode from json file use the barcode generator
-            self.barcode_generator.generate_barcode_from_json(filename, self.type_variable.get())
+            barcode_type = self.type_variable.get()
+            self.barcode_generator.generate_barcode_from_json(filename, barcode_type)
         except:
             showerror("Error Occurred in Loading JSON Barcode", "An error occurred in loading the JSON barcode.\n\n"
                                                                 "Please make sure the type of Barcode saved\n"
@@ -158,3 +159,6 @@ class LoadJsonWindow():
 
         # Quit the main window
         self.window.destroy()
+
+        showinfo("Barcode Loaded Successfully", "{:s} Barcode has been successfully loaded into the memory.\n\n"
+                                                "Name key in memory: {:20s}".format(barcode_type, barcode_name))

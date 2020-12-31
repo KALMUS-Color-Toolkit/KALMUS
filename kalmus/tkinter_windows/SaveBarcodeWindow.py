@@ -2,7 +2,8 @@
 
 import tkinter
 import tkinter.filedialog
-from tkinter.messagebox import showwarning
+from tkinter.messagebox import showwarning, showinfo
+import os
 
 from kalmus.tkinter_windows.KALMUS_utils import resource_path
 
@@ -87,3 +88,7 @@ class SaveBarcodeWindow():
 
         # Quit the window
         self.window.destroy()
+
+        # Show success message
+        showinfo("JSON File Saved Successfully", "The JSON file is successfully saved.\n\n"
+                                                 "The Path to the File: {:20s}".format(os.path.abspath(filename)))

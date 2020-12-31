@@ -17,6 +17,7 @@ class GenerateBarcodeWindow():
     GenerateBarcodeWindow Class
     GUI window for user to generate the barcode from a video file
     """
+
     def __init__(self, barcode_generator, barcode_stack):
         """
         Initialize
@@ -183,8 +184,36 @@ class GenerateBarcodeWindow():
         # Checkbox for the user to choose whether save the frames or not during barcode generation
         self.checkbox_saved_frame = tkinter.Checkbutton(self.window, text="Save Frames  ",
                                                         variable=self.var_saved_frame,
-                                                        onvalue=1, offvalue=0)
+                                                        onvalue=1, offvalue=0, command=self.update_save_frame_entry)
         self.checkbox_saved_frame.grid(row=7, column=0)
+
+        # Label prompt for saving frame
+        save_frame_label = tkinter.Label(master=self.window, text="Save every (secs):")
+        save_frame_label.grid(row=7, column=1, sticky=tkinter.E)
+
+        # Text entry for the saved frames rate specification
+        self.save_frame_entry = tkinter.Entry(self.window, textvariable="-8", width=4, state="normal")
+        self.save_frame_entry.grid(row=7, column=2)
+        self.save_frame_entry.delete(0, tkinter.END)
+        self.save_frame_entry.insert(0, "4")
+        self.save_frame_entry.config(state="disabled")
+
+        # Variable that stores 0 for not saving frames during the generation 1 for rescaling frame
+        # during the generation
+        self.var_rescale_frame = tkinter.IntVar(self.window)
+
+        # Checkbox for the user to choose whether to rescale the frames or not during the barcode generation
+        self.checkbox_rescale_frame = tkinter.Checkbutton(self.window, text="Rescale Frames", width=12,
+                                                          variable=self.var_rescale_frame,
+                                                          onvalue=1, offvalue=0, command=self.update_rescale_entry)
+        self.checkbox_rescale_frame.grid(row=7, column=3, sticky=tkinter.E)
+
+        # Text entry for the rescale factor specification
+        self.rescale_factor_entry = tkinter.Entry(self.window, textvariable="-7", width=4, state="normal")
+        self.rescale_factor_entry.grid(row=7, column=4)
+        self.rescale_factor_entry.delete(0, tkinter.END)
+        self.rescale_factor_entry.insert(0, "0.5")
+        self.rescale_factor_entry.config(state="disabled")
 
         # Variable that stores 0 for single thread generation 1 for multi-thread generation
         self.var_multi_thread = tkinter.IntVar(self.window)
@@ -206,12 +235,12 @@ class GenerateBarcodeWindow():
         # Button to generate the barcode
         self.generate_button = tkinter.Button(master=self.window, text="Generate Barcode",
                                               command=self.generate_barcode_thread)
-        self.generate_button.grid(row=7, column=2, sticky=tkinter.W, rowspan=2)
+        self.generate_button.grid(row=8, column=2, sticky=tkinter.W, rowspan=1, pady=5)
 
         # Button to specify the meta data of the generated barcode
         self.specify_data_button = tkinter.Button(master=self.window, text="Specify Meta Data",
                                                   command=self.specify_data)
-        self.specify_data_button.grid(row=7, column=3, sticky=tkinter.W, rowspan=2)
+        self.specify_data_button.grid(row=8, column=3, sticky=tkinter.W, rowspan=1, pady=5)
 
         self.window.protocol("WM_DELETE_WINDOW", self.quit)
 
@@ -244,6 +273,28 @@ class GenerateBarcodeWindow():
         elif self.var_multi_thread.get() == 1:
             self.checkbox_multi_thread["text"] = "# of Threads:"
             self.thread_entry.config(state="normal")
+
+    def update_rescale_entry(self):
+        """
+        Enable or disable and change the label prompt when user check/uncheck the rescale frames checkbox
+        :return:
+        """
+        if self.var_rescale_frame.get() == 0:
+            self.checkbox_rescale_frame["text"] = "Rescale Frames"
+            self.rescale_factor_entry.config(state="disabled")
+        elif self.var_rescale_frame.get() == 1:
+            self.checkbox_rescale_frame["text"] = "By a factor of: "
+            self.rescale_factor_entry.config(state="normal")
+
+    def update_save_frame_entry(self):
+        """
+        Enable or disable the text entry when user check/uncheck the save frames checkbox
+        :return:
+        """
+        if self.var_saved_frame.get() == 0:
+            self.save_frame_entry.config(state="disabled")
+        elif self.var_saved_frame.get() == 1:
+            self.save_frame_entry.config(state="normal")
 
     def time_unit(self):
         """
@@ -419,11 +470,31 @@ class GenerateBarcodeWindow():
                                                    "Number of threads must be an integer")
                 self.enable_generate_button()
                 return
+
         # Check if user choose to save the frames or not
         if self.var_saved_frame.get() == 1:
             save_frames = True
+            try:
+                save_frames_rate = int(self.save_frame_entry.get())
+            except:
+                showerror("Invalid Save Frame Rate", "Invalid Save frame rate.\n"
+                                                     "Save frame rate must be a positive Integer.")
+                self.enable_generate_button()
         else:
             save_frames = False
+
+        # Check if user choose to rescale the frames or not
+        if self.var_rescale_frame.get() == 1:
+            try:
+                rescale_factor = float(self.rescale_factor_entry.get())
+            except:
+                showerror("Invalid Rescale Factor", "Invalid frame rescale factor.\n"
+                                                    "Must be a positive number.\n"
+                                                    "It can be a decimal number but not fractions")
+                self.enable_generate_button()
+                return
+        else:
+            rescale_factor = -1
 
         # Check if user choose to define the letter box region manually
         if self.letterbox_option.get() == "Manual":
@@ -437,7 +508,9 @@ class GenerateBarcodeWindow():
                 self.barcode_generator.generate_barcode(video_filename, user_defined_letterbox=True,
                                                         low_ver=low_ver, high_ver=high_ver,
                                                         left_hor=left_hor, right_hor=right_hor,
-                                                        num_thread=multi_thread, save_frames=save_frames)
+                                                        num_thread=multi_thread, save_frames=save_frames,
+                                                        rescale_frames_factor=rescale_factor,
+                                                        save_frames_rate=save_frames_rate)
             except:
                 showwarning("Error Occurred in Barcode Generation", "An unknown Error occurred in the barcode "
                                                                     "generation.\nPlease check the letterbox set up"
@@ -449,7 +522,9 @@ class GenerateBarcodeWindow():
                 # If not, start the generation.
                 # The letter box will be automatically found during the generation process
                 self.barcode_generator.generate_barcode(video_filename, num_thread=multi_thread,
-                                                        save_frames=save_frames)
+                                                        save_frames=save_frames,
+                                                        rescale_frames_factor=rescale_factor,
+                                                        save_frames_rate=save_frames_rate)
             except:
                 showwarning("Error Occurred in Barcode Generation", "An unknown Error occurred in the barcode "
                                                                     "generation.\nPlease check the parameters' "
@@ -488,11 +563,13 @@ class GenerateBarcodeWindow():
 
         # Show barcode generation success message
         showinfo("Finished Successfully", "{:s} {:s} {:s} Barcode of the input video:\n"
-                             "{:20s}\n"
-                             "has been successfully generated!\n\n"
-                             "Barcode is saved in the memory with name: {:20s}".format(color_metric, frame_type,
-                                                                                       barcode_type, video_filename,
-                                                                                       videoname))
+                                          "{:20s}\n"
+                                          "has been successfully generated!\n\n"
+                                          "Barcode is saved in the memory with name: {:20s}".format(color_metric,
+                                                                                                    frame_type,
+                                                                                                    barcode_type,
+                                                                                                    video_filename,
+                                                                                                    videoname))
 
     def disable_generate_button(self):
         """

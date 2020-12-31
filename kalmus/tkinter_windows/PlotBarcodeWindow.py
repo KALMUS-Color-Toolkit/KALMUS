@@ -7,9 +7,12 @@ OutputCSVWindow Class
 
 import tkinter
 import tkinter.filedialog
+from tkinter.messagebox import showinfo, showerror
+
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
 import numpy as np
+import os
 
 from kalmus.visualization_utils import show_colors_in_cube
 from kalmus.tkinter_windows.KALMUS_utils import resource_path, update_hist
@@ -220,6 +223,10 @@ class OutputCSVWindow():
         # Get the file name of the output csv file
         csv_filename = self.filename_entry.get()
 
+        if len(csv_filename) == 0:
+            showerror("Invalid Path or Filename", "Please specify the path/filename of the generated csv file.\n")
+            return
+
         # Get the sampled frame rate of the barcode
         sample_rate = self.barcode.sampled_frame_rate
 
@@ -263,6 +270,9 @@ class OutputCSVWindow():
 
         # Quit the window after outputting csv file
         self.window.destroy()
+
+        showinfo("CSV File Generated Successfully", "CSV file has been generated successfully.\n"
+                                                    "Path to the File: {:20s}".format(os.path.abspath(csv_filename)))
 
     def browse_folder(self):
         """

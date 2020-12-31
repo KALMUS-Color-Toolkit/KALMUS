@@ -1,7 +1,7 @@
 """ SaveImageWindow Class """
 
 import tkinter
-from tkinter.messagebox import showerror
+from tkinter.messagebox import showerror, showinfo
 import tkinter.filedialog
 import matplotlib.pyplot as plt
 import cv2
@@ -148,3 +148,6 @@ class SaveImageWindow():
 
         # Quit the window
         self.window.destroy()
+
+        showinfo("Image Saved Successfully", "The image is saved successfully.\n\n"
+                                             "The Path to the Image: {:20s}".format(os.path.abspath(filename)))

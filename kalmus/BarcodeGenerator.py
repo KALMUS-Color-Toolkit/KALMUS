@@ -113,7 +113,8 @@ class BarcodeGenerator():
 
     def generate_barcode(self, video_file_path, user_defined_letterbox=False,
                          low_ver=-1, high_ver=-1, left_hor=-1, right_hor=-1,
-                         num_thread=None, save_frames=False):
+                         num_thread=None, save_frames=False, rescale_frames_factor=-1,
+                         save_frames_rate=4):
         """
         Generate the barcode
         :param video_file_path: The path to the video file
@@ -125,14 +126,18 @@ class BarcodeGenerator():
         :param right_hor: The right horizontal letterbox given by user
         :param num_thread: Number of thread for computation. None == Single thread. num_thread > 1: multi-thread
         :param save_frames: Whether to save the frames during the barcode generation
+        :param rescale_frames_factor: factor to rescale the input frames during the generation
         :return:
         """
         self.instantiate_barcode()
         if user_defined_letterbox:
             self.barcode.set_letterbox_bound(up_vertical_bound=high_ver, down_vertical_bound=low_ver,
                                              left_horizontal_bound=left_hor, right_horizontal_bound=right_hor)
-        if save_frames:
-            self.barcode.enable_save_frames()
+        if save_frames and save_frames_rate > 0:
+            self.barcode.enable_save_frames(sampled_rate=save_frames_rate)
+
+        if rescale_frames_factor > 0:
+            self.barcode.enable_rescale_frames_in_generation(rescale_frames_factor)
 
         if self.barcode_type == "Color":
             if num_thread is not None:

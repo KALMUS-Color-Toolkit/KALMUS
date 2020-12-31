@@ -135,6 +135,9 @@ class Barcode():
         self.saved_frames_sampled_rate = -1
         self.saved_frame_height = 0
 
+        self.rescale_frames_in_generation = False
+        self.rescale_frame_factor = -1
+
     def read_videos(self, video_path_name):
         """
         Read in the video from the given path
@@ -204,6 +207,8 @@ class Barcode():
         :return: The processed frame
         """
         frame = self.remove_letter_box_from_frame(frame)
+        if self.rescale_frames_in_generation:
+            frame = self._resize_frame(frame)
 
         if self.frame_type == "Whole_frame":
             processed_frame = frame
@@ -229,6 +234,11 @@ class Barcode():
             processed_frame = back_frame
 
         return processed_frame
+
+    def _resize_frame(self, frame):
+        frame = cv2.resize(frame, dsize=(0, 0), fx=self.rescale_frame_factor, fy=self.rescale_frame_factor,
+                           interpolation=cv2.INTER_NEAREST)
+        return frame
 
     def get_color_from_frame(self, frame):
         """
@@ -301,6 +311,11 @@ class Barcode():
         :return:
         """
         self.find_film_letterbox()
+
+    def enable_rescale_frames_in_generation(self, rescale_factor=1):
+        assert rescale_factor > 0, "Rescale factor must be Positive"
+        self.rescale_frames_in_generation = True
+        self.rescale_frame_factor = np.sqrt(rescale_factor)
 
     def add_meta_data(self, key, value):
         """
