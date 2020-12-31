@@ -4,6 +4,7 @@ Version2
 """
 
 import tkinter
+from tkinter.messagebox import askokcancel
 
 from kalmus.tkinter_windows.GenerateBarcodeWindow import GenerateBarcodeWindow
 from kalmus.tkinter_windows.SaveBarcodeWindow import SaveBarcodeWindow
@@ -68,7 +69,7 @@ class MainWindow():
         self.root = tkinter.Tk()
 
         self.root.configure(bg='#85C1FA')
-        self.root.wm_title("KALMUS Version 1.3.1")
+        self.root.wm_title("KALMUS Version 1.3.4beta1")
         self.root.iconbitmap(resource_path("kalmus_icon.ico"))
 
         # Initialize the figure
@@ -173,15 +174,23 @@ class MainWindow():
         button_stats_info.grid(row=7, column=0)
 
         # Button to quit the main window
-        button_quit = tkinter.Button(master=self.root, text="Quit", command=self.quit)
+        button_quit = tkinter.Button(master=self.root, text="Quit", command=self.close_window)
         button_quit.grid(row=8, column=0)
 
         # Button to check the meta data of the displayed barcodes
         button_check_meta = tkinter.Button(master=self.root, text="Check Meta Info", command=self.check_meta_info)
         button_check_meta.grid(row=8, column=3)
 
+        self.root.protocol("WM_DELETE_WINDOW", self.close_window)
+
         # Start the main window
         self.root.mainloop()
+
+    def close_window(self):
+        quit_software = askokcancel("Quit KALMUS", "Are you sure you want to close the KALMUS?\n"
+                                                 "All unsaved results will be lost.")
+        if quit_software:
+            self.quit()
 
     def quit(self):
         """

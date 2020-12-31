@@ -3,7 +3,7 @@
 import cv2
 import tkinter
 import tkinter.filedialog
-from tkinter.messagebox import showerror, showwarning
+from tkinter.messagebox import showerror, showwarning, showinfo
 import copy
 import os
 import threading
@@ -213,8 +213,18 @@ class GenerateBarcodeWindow():
                                                   command=self.specify_data)
         self.specify_data_button.grid(row=7, column=3, sticky=tkinter.W, rowspan=2)
 
+        self.window.protocol("WM_DELETE_WINDOW", self.quit)
+
         # Start the window
         self.window.mainloop()
+
+    def quit(self):
+        """
+        Quit the main window
+        :return:
+        """
+        self.window.quit()
+        self.window.destroy()
 
     def specify_data(self):
         """
@@ -470,8 +480,19 @@ class GenerateBarcodeWindow():
         # Add the generated barcode to the memory stack (dictionary)
         self.barcode_stack[videoname] = copy.deepcopy(barcode)
 
-        # Quit the window
-        self.window.destroy()
+        # Enable the generate button for the next barcode generation request
+        self.enable_generate_button()
+
+        # Reset the meta data to the initial state
+        self.meta_data_dict = {}
+
+        # Show barcode generation success message
+        showinfo("Finished Successfully", "{:s} {:s} {:s} Barcode of the input video:\n"
+                             "{:20s}\n"
+                             "has been successfully generated!\n\n"
+                             "Barcode is saved in the memory with name: {:20s}".format(color_metric, frame_type,
+                                                                                       barcode_type, video_filename,
+                                                                                       videoname))
 
     def disable_generate_button(self):
         """

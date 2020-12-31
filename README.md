@@ -9,6 +9,8 @@ KALMUS is a Python package for the computational analysis of colors in films. It
 - More indicative **Error Detection/Exception Handling** in KALMUS graphic user interface.  
 Now in the generate barcode, Load JSON window, Save JSON window, and Save Barcode Image window 
 error or warning message box with issue message will pop up if any handled/unresolved exception occurred in the process.
+- kalmus-gui now **asks users** whether they are sure to quit the KALMUS when they try to close the main window by the Quit 
+button or Close button on the Window Manager bar.
 
 **Changes**
 

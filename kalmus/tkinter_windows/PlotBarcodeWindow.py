@@ -82,9 +82,6 @@ class PlotBarcodeWindow():
                                               command=self.show_RGB_color_in_cube)
             self.button_cube.grid(row=1, column=2)
 
-        # Start the window
-        self.plot_window.mainloop()
-
     def show_RGB_color_in_cube(self):
         """
         Instantiate the RGBColorCubeWindow if user press the show color in RGB cube button
@@ -143,10 +140,6 @@ class ColorHistogramWindow():
         toolbar.update()
         canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
 
-        # Start the window
-        self.window.mainloop()
-
-
 class RGBColorCubeWindow():
     """
     RGBColorCubeWindow Class
@@ -183,9 +176,6 @@ class RGBColorCubeWindow():
         toolbar = NavigationToolbar2Tk(canvas, self.window)
         toolbar.update()
         canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
-
-        # Start the window
-        self.window.mainloop()
 
 
 class OutputCSVWindow():

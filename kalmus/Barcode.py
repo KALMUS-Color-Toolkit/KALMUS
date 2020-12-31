@@ -342,6 +342,10 @@ class Barcode():
         if self.saved_frames_sampled_rate < sampled_rate_upper_bound:
             self.saved_frames_sampled_rate = sampled_rate_upper_bound
 
+        # If the barcode is too short
+        if self.saved_frames_sampled_rate <= 0:
+            self.saved_frames_sampled_rate = 1
+
         height = self.high_bound_ver - self.low_bound_ver
         width = self.high_bound_hor - self.low_bound_hor
 
