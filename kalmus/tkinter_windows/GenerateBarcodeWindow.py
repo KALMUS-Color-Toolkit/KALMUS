@@ -193,7 +193,7 @@ class GenerateBarcodeWindow():
 
         # Text entry for the saved frames rate specification
         self.save_frame_entry = tkinter.Entry(self.window, textvariable="-8", width=4, state="normal")
-        self.save_frame_entry.grid(row=7, column=2)
+        self.save_frame_entry.grid(row=7, column=2, sticky=tkinter.W)
         self.save_frame_entry.delete(0, tkinter.END)
         self.save_frame_entry.insert(0, "4")
         self.save_frame_entry.config(state="disabled")
@@ -481,6 +481,7 @@ class GenerateBarcodeWindow():
                                                      "Save frame rate must be a positive Integer.")
                 self.enable_generate_button()
         else:
+            save_frames_rate = -1
             save_frames = False
 
         # Check if user choose to rescale the frames or not

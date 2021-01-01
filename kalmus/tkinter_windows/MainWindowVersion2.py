@@ -4,7 +4,7 @@ Version2
 """
 
 import tkinter
-from tkinter.messagebox import askokcancel
+from tkinter.messagebox import askokcancel, showinfo, showerror
 
 from kalmus.tkinter_windows.GenerateBarcodeWindow import GenerateBarcodeWindow
 from kalmus.tkinter_windows.SaveBarcodeWindow import SaveBarcodeWindow
@@ -69,7 +69,7 @@ class MainWindow():
         self.root = tkinter.Tk()
 
         self.root.configure(bg='#85C1FA')
-        self.root.wm_title("KALMUS Version 1.3.4beta1")
+        self.root.wm_title("KALMUS Version 1.3.4beta2")
         self.root.iconbitmap(resource_path("kalmus_icon.ico"))
 
         # Initialize the figure
@@ -133,6 +133,8 @@ class MainWindow():
         # Position the canvas/plotted figure into the window
         self.canvas.get_tk_widget().grid(row=0, column=1, rowspan=8, columnspan=3)
 
+        self.generate_window_opened = False
+
         # Button to generate the barcode
         button_generate = tkinter.Button(master=self.root, text="Generate Barcode",
                                          command=self.generate_barcode)
@@ -187,6 +189,17 @@ class MainWindow():
         self.root.mainloop()
 
     def close_window(self):
+        """
+        close the Mainwindow
+        Check if the Generate Barcode window is still open before quiting the Main program
+        Return (cancel the quit) if the Generate Barcode window is still open.
+        :return:
+        """
+        if self.generate_window_opened:
+            showerror("Generate Barcode Window is Opened", "Generate Barcode window is still opened!\n"
+                                                           "Please close the Generate Barcode window before Quit.")
+            return
+
         quit_software = askokcancel("Quit KALMUS", "Are you sure you want to close the KALMUS?\n"
                                                  "All unsaved results will be lost.")
         if quit_software:
@@ -249,7 +262,12 @@ class MainWindow():
         Instantiate the GenerateBarcodeWindow
         :return:
         """
-        GenerateBarcodeWindow(self.barcode_gn, self.barcodes_stack)
+        if not self.generate_window_opened:
+            self.generate_window_opened = True
+            GenerateBarcodeWindow(self.barcode_gn, self.barcodes_stack)
+            self.generate_window_opened = False
+        else:
+            showinfo("Generate Barcode window is Opened", "Generate Barcode Window is already opened.")
 
     def save_barcode_on_stack(self):
         """
