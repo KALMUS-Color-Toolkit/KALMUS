@@ -2,7 +2,38 @@
 
 KALMUS is a Python package for the computational analysis of colors in films. It addresses how to best describe a film's color.  This package is optimized for two purposes:  (1) various ways to measure, calculate and compare a film's color and (2) various ways to visualize a film's color.
 
-# update 1.3.3
+# Update 1.3.4
+
+**Add features**
+
+- New *optional parameter* **save frame rate** in the barcode generation. Now, if users select to save the frames during
+the generation of the barcode, they can choose how many seconds to save one frame. The default save frame rate is saving
+one frame every 4 seconds.
+
+- New *option* and *optional parameter* **Rescale frame** in the barcode generation. Users can choose whether to rescale 
+the input frame (reducing or enlarging the image size) during the barcode generation by a factor given by users.  
+The rescaling the input frame to a smaller size can substantially expedite the generation process. This option is highly
+recommend for the input video with resolution higher than 1K standard.  
+However, for the video with resolution lower than 1K, the time for rescaling the frame may outweigh the benefit in 
+accelerating the barcode generation.
+
+**Changes**
+
+- Now, instead of closing themselves once the process succeeded, the Generate Barcode window will give user the 
+success message when the barcode is generated, and the window will not be closed. Meanwhile, only one generate barcode 
+can be opened at a time, and users need to close the Generate Barcode window before exiting the program.
+- Load JSON window, Save JSON window, Save Image Window, and Output CSV window now also give users success message when 
+the process is finished. Load JSON window will indicate the name (key) of the barcode loaded into the memory in its
+ message. Save JSON window, Save Image Window, and Output CSV window will indicate where the JSON, Image, and CSV files
+ are saved on the machine.
+
+**Fixes**
+
+- The blocking issue of the Generate Barcode after users quit the KALMUS software has been fixed. Now, when users close 
+the Generate Barcode Window and Main Window of the KALMUS GUI, all the other windows will be closed automatically and 
+the allocated resources for their threads will be released. 
+
+### update 1.3.3
 
 **Add features**
 

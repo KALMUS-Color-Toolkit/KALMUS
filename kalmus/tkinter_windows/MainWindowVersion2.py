@@ -138,7 +138,7 @@ class MainWindow():
         # Button to generate the barcode
         button_generate = tkinter.Button(master=self.root, text="Generate Barcode",
                                          command=self.generate_barcode)
-        button_generate.grid(row=0, column=0)
+        button_generate.grid(row=0, column=0, padx=3)
 
         # Button to load the barcode from existed json files
         button_load = tkinter.Button(master=self.root, text="Load JSON",

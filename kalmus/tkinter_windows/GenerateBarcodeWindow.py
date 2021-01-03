@@ -438,9 +438,9 @@ class GenerateBarcodeWindow():
             return
         except:
             showerror("Acquisition Parameters", "An unknown Error occurred when reading\n"
-                                                "the acquisition parameters.\n"
+                                                "the acquisition parameters.\n\n"
                                                 "Please make sure all parameters are positive\n"
-                                                "Frames unit must be an integer\n"
+                                                "Frames units must all be integers\n"
                                                 "In Time unit, mins:secs in Start and End at must be integers\n"
                                                 "Sample every (secs) can be decimals but not fraction.")
             self.enable_generate_button()
