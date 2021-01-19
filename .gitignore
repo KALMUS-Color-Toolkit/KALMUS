@@ -10,6 +10,8 @@ build
 dist
 past_dist
 
+_discarded
+
 /KALMUS_version0.1/.idea
 /KALMUS_version0.1/add_data.txt
 /KALMUS_version0.1/example_json_barcodes
