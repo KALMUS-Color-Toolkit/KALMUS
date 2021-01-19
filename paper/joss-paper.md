@@ -62,8 +62,10 @@ KALMUS allows users to understand a film’s color palette and compare that pale
 | Structural similarity index | 0 least similar, 1 most similar | @wang |
 | Cross correlation | -1 anti-similar, 1 most similar | @avants|
 | Local cross correlation | -1 anti-similar, 1 most similar | @avants |
-| Needleman--Wunsch | 0 least similar, 1 most similar | @needleman, @adams |
-| Smith--Waterman | 0 least similar, 1 most similar | @smith, @adams |
+| Needleman--Wunsch | 0 least similar, 1 most similar | @needleman |
+|                   |                                 | @adams |
+| Smith--Waterman | 0 least similar, 1 most similar | @smith |
+|                 |                                 | @adams |
 
 
 As of version 1.3.5, the software is stable.  Because the audience of potential users of KALMUS is broad, we provide access to the KALMUS package via the GUI described above but also point out that the package can be installed and used in any Python environment.
