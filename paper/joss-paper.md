@@ -48,7 +48,7 @@ KALMUS is built around a visualization of films known as movie barcodes; it prod
 
 [^1]: In OpenCV [@opencv], for example, if a frame is decimated to a single pixel, its color is determined by area interpolation, a weighted average of the RGB-values of the pixels.
 
-KALMUS allows for the analysis of a film's color by (1) providing an interface that takes in either a video file or a JSON file (a sample JSON file can be found [here](https://github.com/yc015/KALMUS/blob/master/kalmus/mission_impossible_Bright_Whole_frame_Color.json)), (2) allowing for the computation of a frame's color in a number of ways (dominant, median, etc), (3) allowing for the computation of a film's color in a number of ways, (4) providing implementations of ways to compare colors of two films, (5) providing implementations of ways to visualize the color of a film and (6) allowing the user to download color data as a CSV or JSON file.  See Figure 2 for an explanation of KALMUS's user interface.
+KALMUS allows for the analysis of a film's color by (1) providing an interface that takes in either a video file or a JSON file (a sample JSON file can be found [here](https://github.com/KALMUS-Color-Toolkit/KALMUS/blob/master/kalmus/mission_impossible_Bright_Whole_frame_Color.json)), (2) allowing for the computation of a frame's color in a number of ways (dominant, median, etc), (3) allowing for the computation of a film's color in a number of ways, (4) providing implementations of ways to compare colors of two films, (5) providing implementations of ways to visualize the color of a film and (6) allowing the user to download color data as a CSV or JSON file.  See Figure 2 for an explanation of KALMUS's user interface.
 
 !["Figure 2"](images-joss/kalmus-interface.jpg)
 
