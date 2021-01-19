@@ -20,9 +20,6 @@ bibliography: joss-refs.bib
 ---
 
 
-To do:
-1. Get the bibliography working/yaml in general
-
 # Summary
 
 KALMUS is a Python package for the computational analysis of colors in films. It provides quantitative tools to study and compare the use of film color.  This package serves two purposes:  (1) various ways to measure, calculate and compare a film's colors and (2) various ways to visualize a film's color.  We have named the software KALMUS in homage to Natalie Kalmus (1882 - 1965), a Technicolor Director who oversaw the color palettes of nearly 300 Hollywood feature films.
