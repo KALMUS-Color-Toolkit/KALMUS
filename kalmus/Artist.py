@@ -503,6 +503,14 @@ def grabcut_foreback_segmentation(image, start_row=0, start_col=0, row_size=-1, 
     :return: 1D image of the foreground part of the image, and 1D image of the background part of the image
     Expected shape== Number of pixels x channels
     """
+    if start_row < 0:
+        start_row = 0
+    if start_col <= 0:
+        start_col = image.shape[1] // 6
+    if row_size <= 0:
+        row_size = image.shape[0] - 1
+    if col_size <= 0:
+        col_size = image.shape[1] * 2 // 3
 
     mask = np.zeros(image.shape[:2], np.uint8)
     # Temporary array for background Gaussian mixture model

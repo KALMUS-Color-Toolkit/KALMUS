@@ -69,7 +69,7 @@ class MainWindow():
         self.root = tkinter.Tk()
 
         self.root.configure(bg='#85C1FA')
-        self.root.wm_title("KALMUS Version 1.3.4")
+        self.root.wm_title("KALMUS Version 1.3.5")
         self.root.iconbitmap(resource_path("kalmus_icon.ico"))
 
         # Initialize the figure
@@ -183,6 +183,7 @@ class MainWindow():
         button_check_meta = tkinter.Button(master=self.root, text="Check Meta Info", command=self.check_meta_info)
         button_check_meta.grid(row=8, column=3)
 
+        # Close the window mainloop if user try to close the window
         self.root.protocol("WM_DELETE_WINDOW", self.close_window)
 
         # Start the main window
@@ -195,13 +196,17 @@ class MainWindow():
         Return (cancel the quit) if the Generate Barcode window is still open.
         :return:
         """
+        # Check if generate barcode window is opened
         if self.generate_window_opened:
+            # If it is opened show an error
             showerror("Generate Barcode Window is Opened", "Generate Barcode window is still opened!\n"
                                                            "Please close the Generate Barcode window before Quit.")
             return
 
+        # Otherwise check if user want to quit the software
         quit_software = askokcancel("Quit KALMUS", "Are you sure you want to close the KALMUS?\n"
                                                  "All unsaved results will be lost.")
+        # Quit if yes
         if quit_software:
             self.quit()
 
@@ -283,19 +288,31 @@ class MainWindow():
         """
         SaveImageWindow(self.barcode_1, self.barcode_2)
 
-    def time_pick(self,event):
+    def time_pick(self, event):
+        """
+        Pick the time at a point of the plotted barcode if user double click on that point
+        :param event:
+        :return:
+        """
+        # If user is double click on the graph
         if event.dblclick:
+            # Try get the x and y position of the clicked point
             try:
                 ix, iy = int(event.xdata + 0.5), int(event.ydata + 0.5)
             except Exception:
                 return
 
+            # find which axis of the graph does the clicked point belong to
             for i, axe in enumerate(self.ax[:, 0]):
                 if axe == event.inaxes:
+                    # Check if it is plotted barcode 1 or plotted barcode 2
                     if i == 0:
                         barcode = self.barcode_1
                     else:
                         barcode = self.barcode_2
+
+                    # Make sure the point is within the plotted barcode
                     barcode_shape = barcode.get_barcode().shape
                     if 0 <= iy < barcode_shape[0] and 0 <= ix < barcode_shape[1]:
+                        # Instantiate the CheckTimePointWindow
                         CheckTimePointWindow(barcode, mouse_x=ix, mouse_y=iy)

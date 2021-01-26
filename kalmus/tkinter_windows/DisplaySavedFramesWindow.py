@@ -1,3 +1,5 @@
+""" DisplaySavedFramesWindow Class """
+
 import tkinter
 
 from kalmus.tkinter_windows.KALMUS_utils import resource_path
@@ -7,6 +9,10 @@ import numpy as np
 
 
 class DisplaySavedFramesWindow():
+    """
+    DisplaySavedFramesWindow Class
+    GUI window for displaying saved frame of a barcode around the clicked point
+    """
     def __init__(self, barcode, mouse_x, mouse_y, figsize=(10, 2), dpi=100):
         self.barcode = barcode
 
@@ -34,18 +40,29 @@ class DisplaySavedFramesWindow():
         self.canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
 
     def get_frames_image_for_display(self, mouse_x, mouse_y):
+        """
+        Get the frames around the clicked point
+        :param mouse_x: The x position of the clicked point
+        :param mouse_y: The y position of the clicked point
+        :return:
+        """
         barcode_shape = self.barcode.get_barcode().shape
+        # Get the middle position of the saved frame
         cur_pos = (mouse_x * barcode_shape[0] + mouse_y) / (barcode_shape[0] * barcode_shape[1])
         frame_pos = round(cur_pos * len(self.barcode.saved_frames))
 
+        # Get another four frames around the middle frame
+        # Make sure the frame positions/indexes are valid
         if frame_pos < 2:
             frame_pos = 2
         if frame_pos > len(self.barcode.saved_frames) - 3:
             frame_pos = len(self.barcode.saved_frames) - 3
         frames = self.barcode.saved_frames[frame_pos - 2: frame_pos + 3]
 
+        # Get the combined five frames image
         combine_image = frames[0]
         for frame in frames[1:]:
+            # Combine the frames into one image
             combine_image = np.concatenate((combine_image, frame), axis=1)
 
         return combine_image

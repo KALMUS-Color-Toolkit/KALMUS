@@ -28,6 +28,7 @@ The project is released under the open-source MIT License.
 - The project source codes now cloud be found on our GitHub page, <https://github.com/KALMUS-Color-Toolkit/KALMUS>.
 - If you clone the project to the local, you may start the program by running the script kalmus.py. `python kalmus.py`  
 
+---
 ### Update 1.3.4
 
 **Add features**
