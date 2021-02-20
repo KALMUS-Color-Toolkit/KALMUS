@@ -1,6 +1,6 @@
 """ Main function of the kalmus software """
 
-from kalmus.BarcodeGenerator import BarcodeGenerator
+from kalmus.barcodes.BarcodeGenerator import BarcodeGenerator
 from kalmus.tkinter_windows.MainWindowVersion2 import MainWindow
 from kalmus.tkinter_windows.KALMUS_utils import resource_path
 

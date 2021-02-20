@@ -1,8 +1,7 @@
 """ KALMUS tkinter utility """
 
 import cv2
-import kalmus.measure_utils as measure_utils
-from tkinter import PhotoImage
+import kalmus.utils.measure_utils as measure_utils
 import os
 import sys
 import numpy as np
@@ -278,7 +277,7 @@ def resource_path(relative_path):
                 relative_path += "xbm"
 
         base_path = os.path.abspath(os.path.dirname(__file__))
-        base_path = os.path.join(base_path, '..')
+        base_path = os.path.join(base_path, '../data')
 
         if relative_path.endswith(".xbm"):
             if os.name != "nt":

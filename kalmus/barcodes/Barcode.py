@@ -11,7 +11,7 @@ import cv2
 import numpy as np
 import threading
 
-from kalmus import Artist as Artist
+from kalmus.utils import Artist as Artist
 
 # Available metrics for computing the color of a frame
 color_metrics = ["Average", "Median", "Mode", "Top-dominant", "Weighted-dominant",

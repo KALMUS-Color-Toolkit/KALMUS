@@ -4,8 +4,8 @@ import tkinter
 from tkinter.messagebox import showerror
 
 from kalmus.tkinter_windows.KALMUS_utils import resource_path
-from kalmus.tkinter_windows.CalibrateBarcodeTimeWindow import CalibrateBarcodeTimeWindow
-from kalmus.tkinter_windows.DisplaySavedFramesWindow import DisplaySavedFramesWindow
+from kalmus.tkinter_windows.time_points_windows.CalibrateBarcodeTimeWindow import CalibrateBarcodeTimeWindow
+from kalmus.tkinter_windows.time_points_windows.DisplaySavedFramesWindow import DisplaySavedFramesWindow
 
 
 class CheckTimePointWindow():

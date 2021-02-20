@@ -1,7 +1,7 @@
 """ WhichBarcodeInspectWindow Class """
 
 import tkinter
-from kalmus.tkinter_windows.PlotBarcodeWindow import PlotBarcodeWindow
+from kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow import PlotBarcodeWindow
 from kalmus.tkinter_windows.KALMUS_utils import resource_path
 
 

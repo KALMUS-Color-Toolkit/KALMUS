@@ -8,7 +8,7 @@ import copy
 import os
 import threading
 
-from kalmus.tkinter_windows.SpecifyMetaDataWindow import SpecifyMetaDataWindow
+from kalmus.tkinter_windows.meta_info_windows.SpecifyMetaDataWindow import SpecifyMetaDataWindow
 from kalmus.tkinter_windows.KALMUS_utils import resource_path
 
 

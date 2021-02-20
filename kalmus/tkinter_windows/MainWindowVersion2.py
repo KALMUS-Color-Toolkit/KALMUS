@@ -12,11 +12,11 @@ from kalmus.tkinter_windows.LoadStackWindow import LoadStackWindow
 from kalmus.tkinter_windows.LoadJsonWindow import LoadJsonWindow
 from kalmus.tkinter_windows.ReshapeBarcodeWindow import ReshapeBarcodeWindow
 from kalmus.tkinter_windows.KALMUS_utils import paint_hue_hist, update_axes_title, resource_path
-from kalmus.tkinter_windows.WhichBarcodeInpsectWindow import WhichBarcodeInspectWindow
+from kalmus.tkinter_windows.plot_barcodes_windows.WhichBarcodeInpsectWindow import WhichBarcodeInspectWindow
 from kalmus.tkinter_windows.StatsInfoWindow import StatsInfoWindow
 from kalmus.tkinter_windows.SaveImageWindow import SaveImageWindow
-from kalmus.tkinter_windows.WhichBarcodeCheckMeta import WhichBarcodeCheckMeta
-from kalmus.tkinter_windows.CheckTimePointWindow import CheckTimePointWindow
+from kalmus.tkinter_windows.meta_info_windows.WhichBarcodeCheckMeta import WhichBarcodeCheckMeta
+from kalmus.tkinter_windows.time_points_windows.CheckTimePointWindow import CheckTimePointWindow
 
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)

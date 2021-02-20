@@ -1,6 +1,6 @@
 """ Command line startup of the kalmus software """
 
-from kalmus.BarcodeGenerator import BarcodeGenerator
+from kalmus.barcodes.BarcodeGenerator import BarcodeGenerator
 from kalmus.tkinter_windows.MainWindowVersion2 import MainWindow
 import os
 
@@ -10,7 +10,7 @@ def main():
     barcode_gn = BarcodeGenerator()
     # Build the default barcode from the default json file
     json_path = os.path.abspath(os.path.dirname(__file__))
-    json_path = os.path.join(json_path, "mission_impossible_Bright_Whole_frame_Color.json")
+    json_path = os.path.join(json_path, "data/mission_impossible_Bright_Whole_frame_Color.json")
     barcode_gn.generate_barcode_from_json(json_file_path=json_path,
                                           barcode_type="Color")
 

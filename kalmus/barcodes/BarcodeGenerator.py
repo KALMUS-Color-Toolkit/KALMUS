@@ -3,7 +3,7 @@
 import numpy as np
 import json
 
-from kalmus.Barcode import ColorBarcode, BrightnessBarcode
+from kalmus.barcodes.Barcode import ColorBarcode, BrightnessBarcode
 
 # Available metrics for computing the color of a frame
 color_metrics = ["Average", "Median", "Mode", "Top-dominant", "Weighted-dominant",
