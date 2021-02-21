@@ -5,6 +5,7 @@ saved_barcodes
 **/__pycache__/
 __pycache__
 /kalmus/__pycache__/
+.ipynb_checkpoints
 
 build
 dist
