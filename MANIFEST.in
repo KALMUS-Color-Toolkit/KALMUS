@@ -1,7 +1,7 @@
-include kalmus/kalmus_icon.ico
-include kalmus/kalmus_icon.xbm
-include kalmus/kalmus_icon.jpg
-include kalmus/mission_impossible_Bright_Whole_frame_Color.json
+include kalmus/data/kalmus_icon.ico
+include kalmus/data/kalmus_icon.xbm
+include kalmus/data/kalmus_icon.jpg
+include kalmus/data/mission_impossible_Bright_Whole_frame_Color.json
 
 include requirements.txt
 include README.md

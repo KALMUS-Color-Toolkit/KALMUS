@@ -23,16 +23,6 @@ The project is released under the open-source MIT License.
 
 # Update Log
 
-### Update 1.3.6
-**Changes**
-- The internal package structure is refactored.
-    - The utility files, including Artist, measure_utils, and visualization
-    utils, are in kalmus.utils. To import Artist for example, `import kalmus.utils.Artist`.
-    - The barcodes related class files, including Barcode and BarcodeGenerator, 
-    are in barcodes module now. To import Barcode for example, `import kalmus.barcodes.Barcode`.
-    - The tkinter windows class files are further modularized.
-    
----
 ### Update 1.3.5
 **Changes**  
 - The project source codes now cloud be found on our GitHub page, <https://github.com/KALMUS-Color-Toolkit/KALMUS>.
