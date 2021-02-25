@@ -14,18 +14,19 @@ def compute_dominant_color(image, n_clusters=3, max_iter=10, threshold_error=1.0
     """
     Compute the dominant color of an input image using the kmeans clustering. The centers of the
     clusters are the dominant colors of the input image
-    :param image: input image. Either a multi-channel color image or a grayscale image (2D image)
+
+    :param image: input image. Either a multi-channel color image or a grayscale image (2D image) \
     Expected shape of image is height x width x (channels)
     :param n_clusters: number of clusters
     :param max_iter: maximum iterations before terminating kmeans clustering
-    :param threshold_error: threshold error for terminating kmeans clustering. kmean clustering terminate
-    when the errors between the current computed and previous computed cluster center is under this
+    :param threshold_error: threshold error for terminating kmeans clustering. kmean clustering terminate \
+    when the errors between the current computed and previous computed cluster center is under this \
     threshold
-    :param attempts: Number of attempts to rerun the Kmeans clustering with different initial cluster
+    :param attempts: Number of attempts to rerun the Kmeans clustering with different initial cluster \
     centers. Since kmeans clustering randomly choose n number of cluster in its initialization process.
-    :return: An array of n cluster centers and an array of relative size (in percentage) of the clusters.
-    Expected output shape: n_clusters x channels (cluster centers), n_clusters (relative size in percentage)
-    E.g. for an input color image with 3 channels and n_clusters = 3  Output can be [[255, 255, 255],
+    :return: An array of n cluster centers and an array of relative size (in percentage) of the clusters. \
+    Expected output shape: n_clusters x channels (cluster centers), n_clusters (relative size in percentage) \
+    E.g. for an input color image with 3 channels and n_clusters = 3  Output can be [[255, 255, 255], \
     [126, 75, 198], [186, 145, 122]], [0.4, 0.5, 0.1]
     """
     assert len(image.shape) >= 2, "The input must be a 2 dimensional image"
@@ -46,6 +47,7 @@ def flatten_image(image):
     """
     Flat the input 2D image into an 1D image while preserve the channels of the input image
     with shape==[height x width, channels]
+
     :param image: Input 2D image (either multi-channel color image or greyscale image)
     :return: The flatten 1D image. shape==(height x width, channels)
     """
@@ -60,10 +62,11 @@ def flatten_image(image):
 def compute_percents_of_labels(label):
     """
     Compute the ratio/percentage size of the labels in an labeled image
+
     :param label: the labeled 2D image
-    :return: An array of relative size of the labels in the image. Indices of the sizes in the array
-    is corresponding to the labels in the labeled image. E.g. output [0.2, 0.5, 0.3] means label 0's size
-    is 0.2 of the labeled image, label 1' size is 0.5 of the labeled image, and label 2's size is 0.3 of
+    :return: An array of relative size of the labels in the image. Indices of the sizes in the array \
+    is corresponding to the labels in the labeled image. E.g. output [0.2, 0.5, 0.3] means label 0's size \
+    is 0.2 of the labeled image, label 1' size is 0.5 of the labeled image, and label 2's size is 0.3 of \
     the labeled image.
     """
     # Get the bins of the histogram. Since the last bin of the histogram is [label, label+1]
@@ -81,12 +84,13 @@ def compute_percents_of_labels(label):
 def compute_mode_color(image, bin_size = 10):
     """
     compute the mode color of an input image
-    :param image: either a multi-channel color image or a single channel greyscale image
+
+    :param image: either a multi-channel color image or a single channel greyscale image \
     Expected shape of image: height x width x (channels)
-    :param bin_size: Histogramize the input image. Color/intensity of each pixel in the
-    image will be accumulate in the bins with size==bin_size. The output mode color/intensity
+    :param bin_size: Histogramize the input image. Color/intensity of each pixel in the \
+    image will be accumulate in the bins with size==bin_size. The output mode color/intensity \
     is always an integer multiple of the bin_size.
-    :return: The mode color of the image (modes of the channels), shape=channels, and counts of the
+    :return: The mode color of the image (modes of the channels), shape=channels, and counts of the \
     mode colors happened in the input image, shape==channels
     """
     image = flatten_image(image)
@@ -98,6 +102,7 @@ def compute_mode_color(image, bin_size = 10):
 def compute_mean_color(image):
     """
     Compute the average/mean color of the input multi-channel image or greyscale image.
+
     :param image: input image. Either a multi-channel color image or a single channel greyscale image
     :return: The average color of the image (averaged across the channels). shape==channels.
     """
@@ -109,6 +114,7 @@ def compute_mean_color(image):
 def compute_median_color(image):
     """
     Compute the median color of the input multi-channel color image or a single channel greyscale image.
+
     :param image: input image. Either a multi-channel color image or a single channel greyscale image
     :return: The median color of the image (median values of channels), shape==channels
     """
@@ -121,6 +127,7 @@ def compute_brightest_color_and_brightness(grey_image, color_image, return_min=F
                                            gaussian_blur=False, blur_radius=15):
     """
     Find the brightest pixel in an image and return the color and brightness at that pixel
+
     :param blur_radius: The radius of the gaussian filter
     :param gaussian_blur: Whether to apply a gaussian filter before finding the brightest point the grey image
     :param grey_image: The greyscale image. single channel 2D image. Expected shape==(row/height, col/width)
@@ -141,11 +148,12 @@ def compute_brightest_color_and_brightness(grey_image, color_image, return_min=F
 def find_bright_spots(image, n_clusters=3, blur_radius=21, amount_of_bright_parts=0.8, return_all_pos=False):
     """
     Find the indices location of the top-k brightest spots in an color image.
+
     :param image: input image. Must be an mutli-channel RGB color image
     :param n_clusters: expected number of clusters/brightest spots in the input image
     :param blur_radius: radius of the Gaussian blur kernel that used to smooth the image
-    :param amount_of_bright_parts: amount of bright parts in an image. Used to find the lower bound for
-    distinguishing the bright and non-bright part of the input image. Range of amount_of_bright_parts is
+    :param amount_of_bright_parts: amount of bright parts in an image. Used to find the lower bound for \
+    distinguishing the bright and non-bright part of the input image. Range of amount_of_bright_parts is \
     in [0, 1] (all non-bright -> all bright)
     :return:
     """
@@ -205,10 +213,11 @@ def random_sample_pixels(img, sample_ratio=0, mode="row-col"):
     flat: sampling across the flat input image. The shape and aspect ratio of the input image
     are not preserved due to the flatten process, but it sample the pixels much faster than
     'row-col' mode. The distribution of the sampling result is similar to that from the 'row-col'
-    :param img: Input 2D image. Either a multi-channel color image or a single channel greyscale image
+
+    :param img: Input 2D image. Either a multi-channel color image or a single channel greyscale image \
     Expected shape==height x width x (channels)
     :param sample_ratio: The amount of pixels sampled from the image. in range [0, 1]
-    :param mode: two sampling mode are available.
+    :param mode: two sampling mode are available. \
     1) 'row-col' sampling mode 2) 'flat' sampling mode
     :return:
     """
@@ -256,20 +265,21 @@ def watershed_segmentation(image, minimum_segment_size=0.0004, base_ratio=0.5, d
     Use edge detection approach with watershed algorithm.
     adjust the critical gradient (edge gradient) with the distribution of the input image's
     intensity gradient .
+
     :param grey_image: The input image for region segmentation
-    :param minimum_segment_size: The minimum size of the segments in the segmented image in percentage
-    (size is the relative ratio of the image) The segmented regions smaller than the minimum size will be merged
+    :param minimum_segment_size: The minimum size of the segments in the segmented image in percentage \
+    (size is the relative ratio of the image) The segmented regions smaller than the minimum size will be merged \
     to its neighboring larger segmented components
-    :param base_ratio: Amount of regions at least in the image. The image in watershed transformation is
-    differentiated into two parts regions + boundaries. The base ratio is the ratio between the least amount of 
+    :param base_ratio: Amount of regions at least in the image. The image in watershed transformation is \
+    differentiated into two parts regions + boundaries. The base ratio is the ratio between the least amount of \
     pixels that are regions and the total amount of pixels in the image.
     :param denoise_disk_size: the kernel size of the denoise median filter
-    :param gradiant_disk_size: the kernel size of the gradient filter that is used for determining the amount of 
+    :param gradiant_disk_size: the kernel size of the gradient filter that is used for determining the amount of \
     boundaries
-    :param marker_disk_size: the kernel size of the gradient filter that is used for generating transformation 
+    :param marker_disk_size: the kernel size of the gradient filter that is used for generating transformation \
     marker
-    :return: the segmented image, where shape==input_image.shape. and regions are labeled from 0 to n-1, where
-    n is the number of regions in the labeled image. Functions also return the greyscale image corresponding to
+    :return: the segmented image, where shape==input_image.shape. and regions are labeled from 0 to n-1, where \
+    n is the number of regions in the labeled image. Functions also return the greyscale image corresponding to \
     the original image
     """
     assert 0 <= minimum_segment_size < 1, "The minimum size of the segments (in percentage ratio) is in range [0, 1)"
@@ -321,11 +331,12 @@ def get_rag(gray_image, labels):
     """
     Get the region adjacency graph using the labeled image and corresponding the edge map generated by
     greyscale image with sobel filter
+
     :param gray_image: The greyscale image corresponding to the labeled image
-    :param labels: a labeled segmented image, where the pixels in the image are labeled with index of the
+    :param labels: a labeled segmented image, where the pixels in the image are labeled with index of the \
     segmented regions.
-    :return: The region adjacency graph in dictionary
-    see https://scikit-image.org/docs/stable/auto_examples/segmentation/plot_rag_boundary.html for more
+    :return: The region adjacency graph in dictionary \
+    see https://scikit-image.org/docs/stable/auto_examples/segmentation/plot_rag_boundary.html for more \
     references
     """
     # Get rag of the labeled image
@@ -342,6 +353,7 @@ def rag_to_matrix(rag, num_regions):
     e.g.
     0,1
     1,0 means region 0 and region 1 are adjacent
+
     :param rag: region adjacency dictionary
     :param num_regions: number of regions in the region adjacency graph
     :return: An binary adjacency matrix with shape==num_regions x num_regions
@@ -361,10 +373,11 @@ def color_of_regions(labels, original_image):
     Compute average color and brightest color of the regions and record
     the relative size of the regions as a ratio with respect to the size
     of whole image.
+
     :param labels: The labeled image. Expected shape==height x width. Integer labels
     :param original_image: The original color image corresponding to the label image
-    :return: A list of average color of the regions, a list of brightest color of the regions, and
-    a list of sizes of the regions. The order of the regions in list is the same as they are in
+    :return: A list of average color of the regions, a list of brightest color of the regions, and \
+    a list of sizes of the regions. The order of the regions in list is the same as they are in \
     labeled image
     """
     # Average Color of the region
@@ -406,15 +419,16 @@ def contrast_between_regions(region_colors, matrix, region_weights=None):
     """
     Compute the contrast between the segmented regions in image using the color of regions
     and adjacency matrix
+
     :param region_colors: A list of colors of segmented regions
-    :param matrix: A 2D adjacency matrix that describe the spatial relationship between the regions
+    :param matrix: A 2D adjacency matrix that describe the spatial relationship between the regions \
     Expect a binary matrix, where 1 means adjacent and 0 means non-adjacent
-    :param region_weights: A 1D array of weights that can be applied onto the contrast calculate for each
-    regions.
-    e.g. Regions may have different sizes, and you can weight the computed contrast by the size of the
+    :param region_weights: A 1D array of weights that can be applied onto the contrast calculate for each \
+    regions. \
+    e.g. Regions may have different sizes, and you can weight the computed contrast by the size of the \
     regions. Expected shape of the regions weight is shape==number of regions
-    :return: A 2D numpy matrix where each entry is the contrast between the row indexed region and column
-    indexed region. Contrast ratio >= 1, an entry with 0 means row indexed region and column indexed region
+    :return: A 2D numpy matrix where each entry is the contrast between the row indexed region and column \
+    indexed region. Contrast ratio >= 1, an entry with 0 means row indexed region and column indexed region \
     are non-adjacent
     """
     assert matrix.shape[0] == matrix.shape[1], "Invalid shape of the adjacency matrix, the matrix must" \
@@ -452,6 +466,7 @@ def _RGB2sRGB(RGB):
     Convert the 24-bits Adobe RGB color to the standard RGB color defined
     in Web Content Accessibility Guidelines (WCAG) 2.0
     see https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef for more references
+
     :param RGB: The input RGB color or colors shape== ... x 3 (R, G, and B channels)
     :return: converted sRGB colors
     """
@@ -463,6 +478,7 @@ def _sRGB2luminance(sRGB):
     """
     Compute luminance of standard RGB color
     see https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef for more references
+
     :param sRGB: Input sRGB color or colors shape==... x 3 (sR, sG, and sB channels)
     :return: the luminance computed using the sRGB color
     """
@@ -477,6 +493,7 @@ def contrast_ratio(color1, color2):
     """
     Compute the contrast ratio between two 24-bits RGB colors in range [0, 255]
     see https://www.w3.org/TR/2008/REC-WCAG20-20081211/#contrast-ratiodef for more references
+
     :param color1: one of the 24-bits RGB colors in range [0, 255]
     :param color2: one of the 24-bits RGB colors in range [0, 255]
     :return: the contrast ratio between two 24-bits RGB colors. Contrast ratio >= 1
@@ -494,13 +511,14 @@ def grabcut_foreback_segmentation(image, start_row=0, start_col=0, row_size=-1, 
     Perform the GrabCut segmentation over the input image with a rectangle of possible foreground
     specified by user. The GrabCut segment the image into two parts foreground and background, and
     the function return the 1D image of the foreground and background as the output
+
     :param image: The input image for GrabCut segmentation
     :param start_row: The starting row of the foreground rectangle of possible foreground
     :param start_col: The starting col of the foreground rectangle of possible foreground
     :param row_size: The vertical length of the rectangle
     :param col_size: The horizontal length of the rectangle
     :param num_iter: The number of iterations for GrabCut to run
-    :return: 1D image of the foreground part of the image, and 1D image of the background part of the image
+    :return: 1D image of the foreground part of the image, and 1D image of the background part of the image \
     Expected shape== Number of pixels x channels
     """
     if start_row < 0:
@@ -535,6 +553,7 @@ def write_in_info(info_row, file_name="output.csv", mode='a'):
     Write a row of information to the csv file with a python list (not numpy array).
     All the values in numpy array (such as colors) are recommended to be converted to the list
     before write into the info_row.
+
     :param mode: The mode for using the file
     :param info_row: A row of data that will be write to the target csv file
     :param file_name: The name of the csv file

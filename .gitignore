@@ -10,6 +10,7 @@ __pycache__
 build
 dist
 past_dist
+api_doc_source
 
 _discarded
 

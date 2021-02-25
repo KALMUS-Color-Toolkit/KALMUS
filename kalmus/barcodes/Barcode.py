@@ -22,6 +22,7 @@ def get_contrast_matrix_and_labeled_image(frame, minimum_segment_size=0.0004):
     """
     Helper function that use the watershed method to segment the input image return the matrix of the
     brightness contrast of each segmented region with respect to its neighbors (adjacent segmented regions)
+
     :param frame: The input frame
     :param minimum_segment_size: The minimum size of the segmented region in the ratio to the whole frame. Range (0, 1)
     :return:
@@ -41,6 +42,7 @@ def foreback_segmentation(frame):
     """
     Helper function
     Segmented the input frame into two parts: foreground and background, using the GrabCut
+
     :param frame: Input frame
     :return:
     """
@@ -54,8 +56,9 @@ def get_letter_box_bounds(frame, threshold=5):
     """
     Helper function that find the letter box bounds of a given frame
     The function assumes the letter box of the frame is black (dark)
+
     :param frame: Input frame
-    :param threshold: The brightness threshold value that distinguish
+    :param threshold: The brightness threshold value that distinguish \
                       the region of interest (bright) and letterbox (dark)
     :return: The lower, higher vertical bounds, and left, right horizontal bounds
              The region of interest is in [low_ver: high_ver, left_hor: right_hor]
@@ -100,6 +103,7 @@ class Barcode():
                  barcode_type=None):
         """
         Initialize the barcode with the given parameters
+
         :param color_metric: The metric for computing the color of the frame
         :param frame_type: The type of frame sampling
         :param sampled_frame_rate: Frame sample rate: the frame sampled from every sampled_frame_rate.
@@ -141,6 +145,7 @@ class Barcode():
     def read_videos(self, video_path_name):
         """
         Read in the video from the given path
+
         :param video_path_name: The path to the video file
         :return:
         """
@@ -165,6 +170,7 @@ class Barcode():
         """
         Automatically find the letter box bounds of the film.
         Function run the get_letter_box_bounds helper function by num_sample times and take the median of bounds
+
         :param num_sample: Number of times running the get_letter_box_bounds
         :return:
         """
@@ -194,6 +200,7 @@ class Barcode():
     def remove_letter_box_from_frame(self, frame):
         """
         Remove the letter box from the frame using the known letter box bounds
+
         :param frame: Input original frame with letter box
         :return: Cropped frame without letter box
         """
@@ -203,6 +210,7 @@ class Barcode():
     def process_frame(self, frame):
         """
         Process the original frame by cropping out the letter box and resample frame using the given frame type
+
         :param frame: Input orignal frame
         :return: The processed frame
         """
@@ -243,6 +251,7 @@ class Barcode():
     def get_color_from_frame(self, frame):
         """
         Compute the color of the input frame using the known color metric
+
         :param frame: Input frame
         :return: The color of the frame computed using the known color metric
         """
@@ -276,6 +285,7 @@ class Barcode():
     def get_barcode(self):
         """
         Return the barcode. If not exist reshape the stored computed colors/brightness first to get the barcode
+
         :return: The barcode
         """
         if self.barcode is None:
@@ -286,6 +296,7 @@ class Barcode():
                             left_horizontal_bound, right_horizontal_bound):
         """
         Manually set up the letter box bound of the film
+
         :param up_vertical_bound: The lower vertical bound
         :param down_vertical_bound: The higher vertical bound
         :param left_horizontal_bound: The left vertical bound
@@ -301,6 +312,7 @@ class Barcode():
     def enable_user_defined_letterbox(self):
         """
         Use the user defined letter box
+
         :return:
         """
         self.user_defined_letterbox = True
@@ -308,6 +320,7 @@ class Barcode():
     def automatic_find_letterbox(self):
         """
         Automatically find the letter box
+
         :return:
         """
         self.find_film_letterbox()
@@ -320,6 +333,7 @@ class Barcode():
     def add_meta_data(self, key, value):
         """
         Add the meta information that describes the barcode
+
         :param key: The key for the meta information
         :param value: The value stored in that key
         :return:
@@ -334,6 +348,8 @@ class Barcode():
         Set the save frame in the generation of barcode to be True.
         This attribute, saved_frames_in_generation, should only be modified before the generation of barcode.
         Once the barcode is generated, this attribute should not be changed.
+
+        :param sampled_rate: Save 1 frame every sampled_rate seconds
         :return:
         """
         self.save_frames_in_generation = True
@@ -348,6 +364,7 @@ class Barcode():
         At most 900 Frames will be saved for each barcode
         Save frame rate is, by default, saving one frame every 4 seconds
         Frame will resized to the width of 100 pixels with the same aspect ratio
+
         :return:
         """
         assert self.video is not None, "Video must be read before determining the save frame rate"
@@ -371,7 +388,11 @@ class Barcode():
         """
         Private method
         Save the frame during the generation process.
-        This functions should only be invoked during the generation process
+        This functions should only be invoked during the generation process.
+
+        :param cur_used_frame: How many frames have been read in
+        :param frame: Current frame (original unprocessed frame)
+        :param frame_arr: Array that stored the saved frames
         :return:
         """
         if cur_used_frame % self.saved_frames_sampled_rate == 0:
@@ -385,6 +406,7 @@ class Barcode():
     def save_as_json(self, filename=None):
         """
         Save the barcode into the json file
+
         :param filename: The name of the saved json file
         :return:
         """
@@ -423,6 +445,7 @@ class ColorBarcode(Barcode):
                  barcode_type="Color"):
         """
         Initialize the barcode with the given parameters
+
         :param color_metric: The metric for computing the color of the frame
         :param frame_type: The type of frame sampling
         :param sampled_frame_rate: Frame sample rate: the frame sampled from every sampled_frame_rate.
@@ -436,6 +459,7 @@ class ColorBarcode(Barcode):
     def collect_colors(self, video_path_name):
         """
         Collect the colors of frames from the video
+
         :param video_path_name: The path to the video file
         :return:
         """
@@ -475,6 +499,7 @@ class ColorBarcode(Barcode):
     def multi_thread_collect_colors(self, video_path_name, num_thread=4):
         """
         Collect the color of the input video using Multi-thread method
+
         :param video_path_name: The path to the input video
         :param num_thread: Number of threads to collect the brightness
         :return:
@@ -535,6 +560,7 @@ class ColorBarcode(Barcode):
     def thread_collect_color_start_to_end(self, video, start_point, num_frames, results, tid, frame_saved=None):
         """
         Collect the colors from the video using the multi-threads
+
         :param video: The video object
         :param start_point: Start point for collecting the colors
         :param num_frames: The number of frames to collect
@@ -577,6 +603,7 @@ class ColorBarcode(Barcode):
     def reshape_barcode(self, frames_per_column=160):
         """
         Reshape the barcode (2 dimensional with 3 channels)
+
         :param frames_per_column: Number of frames per column in the reshaped barcode
         :return:
         """
@@ -598,6 +625,7 @@ class BrightnessBarcode(Barcode):
                  barcode_type="Brightness"):
         """
         Initialize the barcode with the given parameters
+
         :param color_metric: The metric for computing the color of the frame
         :param frame_type: The type of frame sampling
         :param sampled_frame_rate: Frame sample rate: the frame sampled from every sampled_frame_rate.
@@ -611,6 +639,7 @@ class BrightnessBarcode(Barcode):
     def collect_brightness(self, video_path_name):
         """
         Collect the brightness from the input video
+
         :param video_path_name: The path to the video
         :return:
         """
@@ -657,6 +686,7 @@ class BrightnessBarcode(Barcode):
     def multi_thread_collect_brightness(self, video_path_name, num_thread=4):
         """
         Collect the brightness of the input video using Multi-thread method
+
         :param video_path_name: The path to the input video
         :param num_thread: Number of threads to collect the brightness
         :return:
@@ -717,6 +747,7 @@ class BrightnessBarcode(Barcode):
     def thread_collect_brightness_start_to_end(self, video, start_point, num_frames, results, tid, frame_saved=None):
         """
         Collect the brightness from the video using the multi-threads
+
         :param video: The video object
         :param start_point: Start point for collecting the colors
         :param num_frames: The number of frames to collect
@@ -766,6 +797,7 @@ class BrightnessBarcode(Barcode):
     def reshape_barcode(self, frames_per_column=160):
         """
         Reshape the brightness barcode (2 dimensional with 1 channel)
+
         :param frames_per_column: Number of frames per column in the reshaped barcode
         :return:
         """

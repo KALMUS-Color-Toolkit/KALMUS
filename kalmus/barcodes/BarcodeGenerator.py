@@ -19,6 +19,7 @@ barcode_types = ["Color", "Brightness"]
 def build_barcode_from_json(path_to_json, barcode_type="Color"):
     """
     Helper function that build a barcode object from the attributes stored in a json file
+
     :param path_to_json: Path to the json file
     :param barcode_type: Type of the barcode that stored in the json file
     :return:
@@ -73,11 +74,12 @@ class BarcodeGenerator():
                  sampled_frame_rate=1, skip_over=0, total_frames=10):
         """
         Initialize the parameters for the barcode generator
+
         :param frame_type: The type of the frame sampling
         :param color_metric: The metric of computing the frame color
         :param barcode_type: The type of the generated barcode
-        :param sampled_frame_rate: The frame sample rate
-               (one frame will be sampled from every sampled_frame_rate frames)
+        :param sampled_frame_rate: The frame sample rate \
+        (one frame will be sampled from every sampled_frame_rate frames)
         :param skip_over: How many frames to skip with at the beginning of the input video
         :param total_frames: Total number of frames that will be computed (included in the barcode/sampled frames)
         """
@@ -99,9 +101,10 @@ class BarcodeGenerator():
         self.total_frames = total_frames
         self.barcode = None
 
-    def instantiate_barcode(self):
+    def instantiate_barcode_object(self):
         """
         Instantiate the barcode object using the given generation parameters
+
         :return:
         """
         if self.barcode_type == "Color":
@@ -117,9 +120,10 @@ class BarcodeGenerator():
                          save_frames_rate=4):
         """
         Generate the barcode
+
         :param video_file_path: The path to the video file
-        :param user_defined_letterbox: Whether use the user defined the letterbox, or use the
-                                       automatically found letterbox
+        :param user_defined_letterbox: Whether use the user defined the letterbox, or use the \
+        automatically found letterbox
         :param low_ver: The lower vertical letterbox given by user
         :param high_ver: The higher vertical letterbox given by user
         :param left_hor: The left horizontal letterbox given by user
@@ -153,6 +157,7 @@ class BarcodeGenerator():
     def generate_barcode_from_json(self, json_file_path, barcode_type=None):
         """
         Generate the barcode from a json file, which contain a dictionary representation of barcode object
+
         :param json_file_path: the path to the json file
         :param barcode_type: the type of the barcode saved in the json file
         :return:
@@ -164,6 +169,7 @@ class BarcodeGenerator():
     def get_barcode(self):
         """
         return the barcode object stored in the Barcode generator
+
         :return:
         """
         return self.barcode

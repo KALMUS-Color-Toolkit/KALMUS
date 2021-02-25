@@ -1,0 +1,8 @@
+Barcode Classes
+*****************
+
+.. automodule:: kalmus.barcodes.Barcode
+    :members: Barcode, ColorBarcode, BrightnessBarcode, get_contrast_matrix_and_labeled_image, foreback_segmentation,
+    get_letter_box_bounds
+    :undoc-members:
+    :show-inheritance:

@@ -9,11 +9,12 @@ from skimage.metrics import mean_squared_error, structural_similarity
 def nrmse_similarity(image_1, image_2, mode="Average norm"):
     """
     Normalized root mean squared error (NRMSE).
+
     :param image_1: The image 1 for comparison
     :param image_2: The image 2 for comparison
-    :param mode: The mode for the normalization, average mode use the max (|image_1|, |image_2|)
+    :param mode: The mode for the normalization, average mode use the max (||image_1||, ||image_2||) \
                  Min max use the max(image_1 value range, image_2 value range)
-    :return: The score that measure the similarity between two images in range [0,1] using NRMSE
+    :return: The score that measure the similarity between two images in range [0,1] using NRMSE \
              0 is the least similar, 1 is the most similar (same)
     """
     image_1 = image_1.astype("float64")
@@ -35,10 +36,11 @@ def nrmse_similarity(image_1, image_2, mode="Average norm"):
 def ssim_similarity(image_1, image_2, window_size=None):
     """
     Structural similarity index measure (ssim)
+
     :param image_1: The image 1 for comparison
     :param image_2: The image 2 for comparison
     :param window_size: The size of the local window, integer
-    :return: The Structural similarity index score in range [0,1]
+    :return: The Structural similarity index score in range [0,1] \
              0 is the least similar, 1 is the most similar (same)
     """
     assert image_1.shape == image_2.shape, "The shape of two images used for computing structural similarity must " \
@@ -64,6 +66,7 @@ def get_resample_index(num_frames, sample_amount=10):
     Helper function
     Get the resample indexes based on the number of frames in sequences and the amount of samples we want to
     extract. The indexes are equally spaced. (linear interpolation)
+
     :param num_frames: The total number of frames
     :param sample_amount: How many frames that you want to sample from them
     :return: np.array of indexes that are equally spaced from 0. The size of the array == sample_amount
@@ -81,9 +84,10 @@ def get_resample_index(num_frames, sample_amount=10):
 def cross_correlation(signal_template, signal_source):
     """
     Signal matching. Cross correlation of two input signals. Signals need to be in the same shape
+
     :param signal_template: The template signal
     :param signal_source: The source signal
-    :return: The cross correlation between two input signals. High cross correlation means high similarity between
+    :return: The cross correlation between two input signals. High cross correlation means high similarity between \
              two input signals. range in [-1, 1]
     """
     assert signal_template.shape == signal_source.shape, "The shape of two input signals/color barcodes must have the" \
@@ -102,11 +106,12 @@ def cross_correlation(signal_template, signal_source):
 def local_cross_correlation(signal_template, signal_source, horizontal_interval=40, vertical_interval=40):
     """
     Local cross correlation between two input signals. The input signals need to be 2 dimensional for local windowing
+
     :param signal_template: The template signal
     :param signal_source: The source signal
     :param horizontal_interval: Number of horizontal intervals (window width == signal width // horizontal intervals)
     :param vertical_interval: Number of vertical intervals (window height == signal height // vertical intervals)
-    :return: The local cross correlation between two signals. Higher local cross correlation means higher similarity
+    :return: The local cross correlation between two signals. Higher local cross correlation means higher similarity \
              between two signals. range in [-1, 1]
     """
     assert signal_source.shape == signal_template.shape, "Incompatiable shape between source and template signals"
@@ -142,7 +147,8 @@ def generate_hue_strings_from_color_barcode(color_barcode, num_interval=12):
     Helper function
     Generate the characters strings that represent the hue values of the input RGB color barcode (3 channel in range
     [0, 255]).
-    :param color_barcode: Input color barcode, the input barcode must be a 1 dimensional color barcode with
+
+    :param color_barcode: Input color barcode, the input barcode must be a 1 dimensional color barcode with \
                           three channels (R, G, B). shape == [number of colors, 3]
     :param num_interval: The number of intervals that will be divided in the Hue ring (0 to 360 degree)
     :return: The string where each character represent the hue interval of the colors in the input RGB barcode
@@ -176,7 +182,8 @@ def generate_brightness_string_from_brightness_barcode(brightness_barcode, num_i
     Helper function
     Generate the string where each character represents the brightness interval of the brightness in the input
     brightness barcode.
-    :param brightness_barcode: Input 1 dimensional brightness barcode with 1 channel.
+
+    :param brightness_barcode: Input 1 dimensional brightness barcode with 1 channel. \
                                shape == [number of brightness, 1]
     :param num_interval: The number of intervals that will be divided in the brightness range [0, 255]
     :return: The string where each character represents the brightness interval of the brightness in the input
@@ -205,6 +212,7 @@ def compare_needleman_wunsch(barcode_1, barcode_2, local_sequence_size=2000,
     """
     Compare two input character arrays/strings (barcode)'s matching score using the Needleman Wunsch method.
     Needleman Wunsch: https://www.sciencedirect.com/science/article/abs/pii/0022283670900574?via%3Dihub
+
     :param barcode_1: The input string representation of barcode 1
     :param barcode_2: The input string representation of barcode 2
     :param local_sequence_size: Divide the long barcode into several small barcode with local_sequence_size length
@@ -238,6 +246,7 @@ def compare_smith_waterman(barcode_1, barcode_2, local_sequence_size=2000,
     """
     Compare two input character arrays/strings (barcode)'s matching score using the Smith Waterman method.
     Smith Waterman: https://www.sciencedirect.com/science/article/abs/pii/0022283681900875?via%3Dihub
+
     :param barcode_1: The input string representation of barcode 1
     :param barcode_2: The input string representation of barcode 2
     :param local_sequence_size: Divide the long barcode into several small barcode with local_sequence_size length

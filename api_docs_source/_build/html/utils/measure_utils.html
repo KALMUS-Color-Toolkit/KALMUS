@@ -1,0 +1,380 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="python" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Measure Utility &mdash; KALMUS 1.3.6 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Visualization Utility" href="visualization_utils.html" />
+    <link rel="prev" title="Artist Utility" href="Artist.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> KALMUS
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../kalmus.html">API Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../kalmus.html#barcode-classes">Barcode Classes</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../kalmus.html#utils">Utils</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Artist.html">Artist Utility</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Measure Utility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="visualization_utils.html">Visualization Utility</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">KALMUS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../kalmus.html">KALMUS Color Toolkit (KALMUS): API Documentation</a> &raquo;</li>
+        
+      <li>Measure Utility</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/utils/measure_utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-kalmus.utils.measure_utils">
+<span id="measure-utility"></span><h1>Measure Utility<a class="headerlink" href="#module-kalmus.utils.measure_utils" title="Permalink to this headline">¶</a></h1>
+<p>Image Comparison Utility</p>
+<dl class="py function">
+<dt id="kalmus.utils.measure_utils.compare_needleman_wunsch">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.measure_utils.</span></code><code class="sig-name descname"><span class="pre">compare_needleman_wunsch</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">barcode_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">barcode_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_sequence_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">match_score</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mismatch_penal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gap_penal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extending_gap_penal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalized</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/measure_utils.html#compare_needleman_wunsch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.measure_utils.compare_needleman_wunsch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compare two input character arrays/strings (barcode)'s matching score using the Needleman Wunsch method.
+Needleman Wunsch: <a class="reference external" href="https://www.sciencedirect.com/science/article/abs/pii/0022283670900574?via%3Dihub">https://www.sciencedirect.com/science/article/abs/pii/0022283670900574?via%3Dihub</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>barcode_1</strong> -- The input string representation of barcode 1</p></li>
+<li><p><strong>barcode_2</strong> -- The input string representation of barcode 2</p></li>
+<li><p><strong>local_sequence_size</strong> -- Divide the long barcode into several small barcode with local_sequence_size length</p></li>
+<li><p><strong>match_score</strong> -- The score (bonus) for correctly matching character</p></li>
+<li><p><strong>mismatch_penal</strong> -- The penalty for mismatch character</p></li>
+<li><p><strong>gap_penal</strong> -- The penalty for gaps within matched sequence</p></li>
+<li><p><strong>extending_gap_penal</strong> -- The penalty for extending gaps</p></li>
+<li><p><strong>normalized</strong> -- Whether to normalize the final matching score into range [0, 1]</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The match score/normalized match score</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="kalmus.utils.measure_utils.compare_smith_waterman">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.measure_utils.</span></code><code class="sig-name descname"><span class="pre">compare_smith_waterman</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">barcode_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">barcode_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_sequence_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">match_score</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mismatch_penal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gap_penal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extending_gap_penal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalized</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/measure_utils.html#compare_smith_waterman"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.measure_utils.compare_smith_waterman" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compare two input character arrays/strings (barcode)'s matching score using the Smith Waterman method.
+Smith Waterman: <a class="reference external" href="https://www.sciencedirect.com/science/article/abs/pii/0022283681900875?via%3Dihub">https://www.sciencedirect.com/science/article/abs/pii/0022283681900875?via%3Dihub</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>barcode_1</strong> -- The input string representation of barcode 1</p></li>
+<li><p><strong>barcode_2</strong> -- The input string representation of barcode 2</p></li>
+<li><p><strong>local_sequence_size</strong> -- Divide the long barcode into several small barcode with local_sequence_size length</p></li>
+<li><p><strong>match_score</strong> -- The score (bonus) for correctly matching character</p></li>
+<li><p><strong>mismatch_penal</strong> -- The penalty for mismatch character</p></li>
+<li><p><strong>gap_penal</strong> -- The penalty for gaps within matched sequence</p></li>
+<li><p><strong>extending_gap_penal</strong> -- The penalty for extending gaps</p></li>
+<li><p><strong>normalized</strong> -- Whether to normalize the final matching score into range [0, 1]</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The match score/normalized match score</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="kalmus.utils.measure_utils.cross_correlation">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.measure_utils.</span></code><code class="sig-name descname"><span class="pre">cross_correlation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal_template</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signal_source</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/measure_utils.html#cross_correlation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.measure_utils.cross_correlation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Signal matching. Cross correlation of two input signals. Signals need to be in the same shape</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>signal_template</strong> -- The template signal</p></li>
+<li><p><strong>signal_source</strong> -- The source signal</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The cross correlation between two input signals. High cross correlation means high similarity between              two input signals. range in [-1, 1]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="kalmus.utils.measure_utils.generate_brightness_string_from_brightness_barcode">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.measure_utils.</span></code><code class="sig-name descname"><span class="pre">generate_brightness_string_from_brightness_barcode</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">brightness_barcode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/measure_utils.html#generate_brightness_string_from_brightness_barcode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.measure_utils.generate_brightness_string_from_brightness_barcode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function
+Generate the string where each character represents the brightness interval of the brightness in the input
+brightness barcode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>brightness_barcode</strong> -- Input 1 dimensional brightness barcode with 1 channel.                                shape == [number of brightness, 1]</p></li>
+<li><p><strong>num_interval</strong> -- The number of intervals that will be divided in the brightness range [0, 255]</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The string where each character represents the brightness interval of the brightness in the input</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="kalmus.utils.measure_utils.generate_hue_strings_from_color_barcode">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.measure_utils.</span></code><code class="sig-name descname"><span class="pre">generate_hue_strings_from_color_barcode</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color_barcode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/measure_utils.html#generate_hue_strings_from_color_barcode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.measure_utils.generate_hue_strings_from_color_barcode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function
+Generate the characters strings that represent the hue values of the input RGB color barcode (3 channel in range
+[0, 255]).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>color_barcode</strong> -- Input color barcode, the input barcode must be a 1 dimensional color barcode with                           three channels (R, G, B). shape == [number of colors, 3]</p></li>
+<li><p><strong>num_interval</strong> -- The number of intervals that will be divided in the Hue ring (0 to 360 degree)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The string where each character represent the hue interval of the colors in the input RGB barcode</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="kalmus.utils.measure_utils.local_cross_correlation">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.measure_utils.</span></code><code class="sig-name descname"><span class="pre">local_cross_correlation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal_template</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signal_source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizontal_interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">40</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical_interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">40</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/measure_utils.html#local_cross_correlation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.measure_utils.local_cross_correlation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Local cross correlation between two input signals. The input signals need to be 2 dimensional for local windowing</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>signal_template</strong> -- The template signal</p></li>
+<li><p><strong>signal_source</strong> -- The source signal</p></li>
+<li><p><strong>horizontal_interval</strong> -- Number of horizontal intervals (window width == signal width // horizontal intervals)</p></li>
+<li><p><strong>vertical_interval</strong> -- Number of vertical intervals (window height == signal height // vertical intervals)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The local cross correlation between two signals. Higher local cross correlation means higher similarity              between two signals. range in [-1, 1]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="kalmus.utils.measure_utils.nrmse_similarity">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.measure_utils.</span></code><code class="sig-name descname"><span class="pre">nrmse_similarity</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Average</span> <span class="pre">norm'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/measure_utils.html#nrmse_similarity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.measure_utils.nrmse_similarity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalized root mean squared error (NRMSE).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_1</strong> -- The image 1 for comparison</p></li>
+<li><p><strong>image_2</strong> -- The image 2 for comparison</p></li>
+<li><p><strong>mode</strong> -- The mode for the normalization, average mode use the max (||image_1||, ||image_2||)                  Min max use the max(image_1 value range, image_2 value range)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The score that measure the similarity between two images in range [0,1] using NRMSE              0 is the least similar, 1 is the most similar (same)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="kalmus.utils.measure_utils.ssim_similarity">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.measure_utils.</span></code><code class="sig-name descname"><span class="pre">ssim_similarity</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/measure_utils.html#ssim_similarity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.measure_utils.ssim_similarity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structural similarity index measure (ssim)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_1</strong> -- The image 1 for comparison</p></li>
+<li><p><strong>image_2</strong> -- The image 2 for comparison</p></li>
+<li><p><strong>window_size</strong> -- The size of the local window, integer</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The Structural similarity index score in range [0,1]              0 is the least similar, 1 is the most similar (same)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="visualization_utils.html" class="btn btn-neutral float-right" title="Visualization Utility" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Artist.html" class="btn btn-neutral float-left" title="Artist Utility" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Yida Chen, Eric Faden, and Nathan Ryan.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

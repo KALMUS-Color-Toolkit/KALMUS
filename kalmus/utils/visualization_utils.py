@@ -9,11 +9,12 @@ def show_color(color, figure_size=(9, 6), title="Undefined Test",
                axis_off=False, save_image=False, file_name="test.png"):
     """
     Plot the rgb color.
+
     :param color: 1D array contains the R, G, and B channel values
     :param title: The title of the plotted color
-    :param axis_off: True to set the axis of the plot figure off. False to have the axis on the side of
+    :param axis_off: True to set the axis of the plot figure off. False to have the axis on the side of \
     figure.
-    :param save_image: True to save the plot figure into the path that user provide. False not to save
+    :param save_image: True to save the plot figure into the path that user provide. False not to save \
     the plot figure
     :param file_name: The filename of the saved figure. The default path to the saved image is test.png
     """
@@ -37,6 +38,7 @@ def show_colors_in_sequence(colors, figure_size=(9, 6), title="Undefined Test", 
                             save_image=False, file_name="test.png", horizontal=True):
     """
     Plot a sequence of RGB colors either horizontally or vertically in line
+
     :param colors: 2D array of RGB colors. Expected sequence shape==Number of colors x channels (3)
     :param figure_size: the size of the plot figure
     :param title: the title of the plot
@@ -78,7 +80,8 @@ def show_color_matrix(color_2d_array, mode="truncate", figure_size=(9, 4),
     "truncate" mode will truncate the last row of the color matrix if it has different len with respect
     to the other rows. "padding" mode will pad white colors to the last row until the last row has the
     same length as the other rows
-    :param color_2d_array: the input color matrix. Expected the shape of the color matrix to be row x col x channels
+
+    :param color_2d_array: the input color matrix. Expected the shape of the color matrix to be row x col x channels \
     channels should 3 (R, G, and B channels of RGB colors)
     :param mode: mode for displaying color matrix. "truncate" or "padding"
     :param figure_size: the size of the figure
@@ -87,7 +90,7 @@ def show_color_matrix(color_2d_array, mode="truncate", figure_size=(9, 4),
     :param save_image: True to save the plot figure, False do not save the figure
     :param file_name: the path to the saved figure
     :param return_matrix: True to return the processed color matrix back False not to return anything
-    :return: the process color matrix. Depending on the display mode, the return color matrix will have padding
+    :return: the process color matrix. Depending on the display mode, the return color matrix will have padding \
     white colors if mode is "padding", or the last row of color matrix will be truncated if mode is "truncate"
     """
     assert mode == "truncate" or mode == "padding", "Invalid mode for displaying color matrix, two" \
@@ -139,7 +142,9 @@ def show_color_matrix(color_2d_array, mode="truncate", figure_size=(9, 4),
 
 def show_image(img, title="Undefined Test", figure_size=(9, 6), axis_off=False):
     """
+    A wrapper of the matplotlib.pyplot.imshow method
     Show the image in RGB color or in greyscale intensity
+
     :param img: input multi-channel color image or single-channel greyscale image
     :param title: The title of the plot image
     :param figure_size: The size of the plotted figure
@@ -159,6 +164,7 @@ def show_colors_in_cube(colors, figure_size=(8, 8), return_figure=False, samplin
     and B axis (z axis))
     see https://matplotlib.org/3.1.1/gallery/mplot3d/scatter3d.html for more references
     ipympl is required for this function to work in the jupyter notebook
+
     :param colors: A sequence of colors to display in cubic space
     :param figure_size: the size of the figure
     """
@@ -195,6 +201,7 @@ def show_high_contrast_region(image, minimum_segment_size=0.0004, figsize=(6, 4)
     """
     Plot the high contrast region (brightness contrast) of the image.
     image is segmented using the gradient based watershed segmentation
+
     :param image: input color image shape=(row (height), col (width), channel(3))
     :param minimum_segment_size: The minimum size (in relative ratio [0, 1]) for the segments in the segmented image
     :param figsize: the size of the plot figure
@@ -215,6 +222,7 @@ def show_low_contrast_region(image, minimum_segment_size=0.0004, figsize=(6, 4))
     """
         Plot the low contrast region (brightness contrast) of the image.
         image is segmented using the gradient based watershed segmentation
+
         :param image: input color image shape=(row (height), col (width), channel(3))
         :param minimum_segment_size: The minimum size (in relative ratio [0, 1]) for the segments in the segmented image
         :param figsize: the size of the plot figure
@@ -235,6 +243,7 @@ def extract_region_with_index(image, region_index, labeled_image):
     """
     Helper function that masked the labeled image on the input image, and extract the
     region with corresponding region index in the labeled image from the input image
+
     :param image: input image shape=(row(height), col(width))
     :param region_index: the extracted region index in the labeled image
     :param labeled_image: the labeled image of the corresponding input image shape=image.shape

@@ -1,0 +1,1 @@
+__version__ = "kalmus 1.3.7"

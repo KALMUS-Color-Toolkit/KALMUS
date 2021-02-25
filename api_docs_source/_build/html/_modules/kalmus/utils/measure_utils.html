@@ -1,0 +1,710 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="python" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="python" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kalmus.utils.measure_utils &mdash; KALMUS 1.3.6 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+  
+
+  <link rel="preload" href="../../../_static/fonts/fontawesome-webfont.woff2?v=4.7.0" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/divio.css" type="text/css" />
+
+  <link rel="apple-touch-icon" href="../../../_static/favicon.png">
+  <link rel="icon" type="image/png" href="../../../_static/favicon.png">
+  <!--[if IE]><link rel="shortcut icon" href="../../../_static/favicon.png"><![endif]-->
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  <!--  -->
+  <!-- <script src="../../../_static/js/modernizr.min.js"></script> -->
+  <!--  -->
+</head>
+
+<body class="wy-body-for-nav">
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+<div class="search-form" role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+    <button class="search-btn">
+    <span class="fa fa-search"></span>
+    </button>
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kalmus.html">API Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../kalmus.html#barcode-classes">Barcode Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../barcodes/Barcodes.html">Barcode Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../barcodes/BarcodeGenerator.html">BarcodeGenerator Class</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../kalmus.html#utils">Utils</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../utils/Artist.html">Artist Utility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../utils/measure_utils.html">Measure Utility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../utils/visualization_utils.html">Visualization Utility</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+
+            
+                
+                    <div class="divio-cloud">
+                        <span class="divio-cloud-caption">GET STARTED FASTER</span>
+                        <h2 class="divio-cloud-heading"><b>Divio</b> is built for django CMS</h2>
+                        <ul class="divio-cloud-features">
+                            <li>Powerful <b>FREE</b> instance</li>
+                            <li>Local development environment</li>
+                            <li><b>Preconfigured django CMS</b></li>
+                        </ul>
+                        <a class="btn-neutral divio-cloud-btn" target="_blank" href="https://goo.gl/nHv16j">Get your free account</a>
+                    </div>
+                
+            
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+
+
+      <div class="wy-nav-content">
+    <div class="header">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <div class="header-title-wrap">
+            <a class="header-title" href="../../../index.html">KALMUS</a>
+        </div>
+        <a class="logo-link" target="_blank" href="https://divio.com"><img src="../../../_static/logo-divio-black.svg" class="logo" alt="Divio"/></a>
+    </div>
+
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a>&nbsp; &raquo;&nbsp;</li>
+        
+          <li><a href="../../index.html">Module code</a>&nbsp; &raquo;&nbsp;</li>
+        
+
+      <li>kalmus.utils.measure_utils</li>
+    
+  </ul>
+</div>
+        
+        <div class="rst-content">
+        
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for kalmus.utils.measure_utils</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot; Image Comparison Utility &quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">Bio.pairwise2</span> <span class="k">as</span> <span class="nn">sequence_align</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">skimage.color</span> <span class="k">import</span> <span class="n">rgb2hsv</span>
+<span class="kn">from</span> <span class="nn">skimage.metrics</span> <span class="k">import</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">structural_similarity</span>
+
+
+<div class="viewcode-block" id="nrmse_similarity"><a class="viewcode-back" href="../../../utils/measure_utils.html#kalmus.utils.measure_utils.nrmse_similarity">[docs]</a><span class="k">def</span> <span class="nf">nrmse_similarity</span><span class="p">(</span><span class="n">image_1</span><span class="p">,</span> <span class="n">image_2</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;Average norm&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Normalized root mean squared error (NRMSE).</span>
+
+<span class="sd">    :param image_1: The image 1 for comparison</span>
+<span class="sd">    :param image_2: The image 2 for comparison</span>
+<span class="sd">    :param mode: The mode for the normalization, average mode use the max (||image_1||, ||image_2||) \</span>
+<span class="sd">                 Min max use the max(image_1 value range, image_2 value range)</span>
+<span class="sd">    :return: The score that measure the similarity between two images in range [0,1] using NRMSE \</span>
+<span class="sd">             0 is the least similar, 1 is the most similar (same)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">image_1</span> <span class="o">=</span> <span class="n">image_1</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">)</span>
+    <span class="n">image_2</span> <span class="o">=</span> <span class="n">image_2</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;Average norm&quot;</span><span class="p">:</span>
+        <span class="n">image_1_avg_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">image_1</span> <span class="o">*</span> <span class="n">image_1</span><span class="p">))</span>
+        <span class="n">image_2_avg_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">image_2</span> <span class="o">*</span> <span class="n">image_2</span><span class="p">))</span>
+        <span class="n">denom</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">image_1_avg_norm</span><span class="p">,</span> <span class="n">image_2_avg_norm</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;Min max&quot;</span><span class="p">:</span>
+        <span class="n">image_1_min_max</span> <span class="o">=</span> <span class="n">image_1</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">image_1</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="n">image_2_min_max</span> <span class="o">=</span> <span class="n">image_2</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">image_1</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="n">denom</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">image_1_min_max</span><span class="p">,</span> <span class="n">image_2_min_max</span><span class="p">)</span>
+
+    <span class="n">score</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">image_1</span><span class="p">,</span> <span class="n">image_2</span><span class="p">))</span> <span class="o">/</span> <span class="n">denom</span>
+
+    <span class="k">return</span> <span class="n">score</span></div>
+
+
+<div class="viewcode-block" id="ssim_similarity"><a class="viewcode-back" href="../../../utils/measure_utils.html#kalmus.utils.measure_utils.ssim_similarity">[docs]</a><span class="k">def</span> <span class="nf">ssim_similarity</span><span class="p">(</span><span class="n">image_1</span><span class="p">,</span> <span class="n">image_2</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Structural similarity index measure (ssim)</span>
+
+<span class="sd">    :param image_1: The image 1 for comparison</span>
+<span class="sd">    :param image_2: The image 2 for comparison</span>
+<span class="sd">    :param window_size: The size of the local window, integer</span>
+<span class="sd">    :return: The Structural similarity index score in range [0,1] \</span>
+<span class="sd">             0 is the least similar, 1 is the most similar (same)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">image_1</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">image_2</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">&quot;The shape of two images used for computing structural similarity must &quot;</span> \
+                                           <span class="s2">&quot;be the same.&quot;</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">image_1</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;The image must be a 2D image (single channel greyscale image or multi-channel&quot;</span> \
+                                    <span class="s2">&quot;color image)&quot;</span>
+    <span class="k">if</span> <span class="n">window_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">window_size</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">window_size</span> <span class="o">&lt;</span> <span class="nb">min</span><span class="p">(</span><span class="n">image_1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">image_1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> \
+            <span class="s2">&quot;The size of the local window must be an odd number and smaller than the size of input images&quot;</span>
+    <span class="n">image_1</span> <span class="o">=</span> <span class="n">image_1</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">)</span>
+    <span class="n">image_2</span> <span class="o">=</span> <span class="n">image_2</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">image_1</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="n">structural_similarity</span><span class="p">(</span><span class="n">image_1</span><span class="p">,</span> <span class="n">image_2</span><span class="p">,</span> <span class="n">win_size</span><span class="o">=</span><span class="n">window_size</span><span class="p">,</span> <span class="n">multichannel</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">image_1</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="n">structural_similarity</span><span class="p">(</span><span class="n">image_1</span><span class="p">,</span> <span class="n">image_2</span><span class="p">,</span> <span class="n">win_size</span><span class="o">=</span><span class="n">window_size</span><span class="p">,</span> <span class="n">multichannel</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">score</span></div>
+
+
+<span class="k">def</span> <span class="nf">get_resample_index</span><span class="p">(</span><span class="n">num_frames</span><span class="p">,</span> <span class="n">sample_amount</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper function</span>
+<span class="sd">    Get the resample indexes based on the number of frames in sequences and the amount of samples we want to</span>
+<span class="sd">    extract. The indexes are equally spaced. (linear interpolation)</span>
+
+<span class="sd">    :param num_frames: The total number of frames</span>
+<span class="sd">    :param sample_amount: How many frames that you want to sample from them</span>
+<span class="sd">    :return: np.array of indexes that are equally spaced from 0. The size of the array == sample_amount</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">num_frames</span> <span class="o">&gt;=</span> <span class="n">sample_amount</span><span class="p">,</span> <span class="s2">&quot;The number of data in&quot;</span>
+
+    <span class="n">possible_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_frames</span><span class="p">,</span> <span class="p">(</span><span class="n">num_frames</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">sample_amount</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+
+    <span class="n">nearest_int_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">possible_index</span><span class="p">)</span>
+    <span class="n">nearest_int_index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">num_frames</span> <span class="o">-</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">nearest_int_index</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="cross_correlation"><a class="viewcode-back" href="../../../utils/measure_utils.html#kalmus.utils.measure_utils.cross_correlation">[docs]</a><span class="k">def</span> <span class="nf">cross_correlation</span><span class="p">(</span><span class="n">signal_template</span><span class="p">,</span> <span class="n">signal_source</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Signal matching. Cross correlation of two input signals. Signals need to be in the same shape</span>
+
+<span class="sd">    :param signal_template: The template signal</span>
+<span class="sd">    :param signal_source: The source signal</span>
+<span class="sd">    :return: The cross correlation between two input signals. High cross correlation means high similarity between \</span>
+<span class="sd">             two input signals. range in [-1, 1]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">signal_template</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">signal_source</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">&quot;The shape of two input signals/color barcodes must have the&quot;</span> \
+                                                         <span class="s2">&quot;same shapes.&quot;</span>
+    <span class="n">template</span> <span class="o">=</span> <span class="n">signal_template</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="n">signal_source</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">template</span> <span class="o">-=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">signal_template</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal_template</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))</span>
+    <span class="n">source</span> <span class="o">-=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">signal_source</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal_template</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))</span>
+    <span class="n">nom</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">template</span> <span class="o">*</span> <span class="n">source</span><span class="p">)</span>
+    <span class="n">denom</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">template</span> <span class="o">*</span> <span class="n">template</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">source</span> <span class="o">*</span> <span class="n">source</span><span class="p">))</span>
+    <span class="n">cross_corre</span> <span class="o">=</span> <span class="n">nom</span> <span class="o">/</span> <span class="n">denom</span>
+
+    <span class="k">return</span> <span class="n">cross_corre</span></div>
+
+
+<div class="viewcode-block" id="local_cross_correlation"><a class="viewcode-back" href="../../../utils/measure_utils.html#kalmus.utils.measure_utils.local_cross_correlation">[docs]</a><span class="k">def</span> <span class="nf">local_cross_correlation</span><span class="p">(</span><span class="n">signal_template</span><span class="p">,</span> <span class="n">signal_source</span><span class="p">,</span> <span class="n">horizontal_interval</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">vertical_interval</span><span class="o">=</span><span class="mi">40</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Local cross correlation between two input signals. The input signals need to be 2 dimensional for local windowing</span>
+
+<span class="sd">    :param signal_template: The template signal</span>
+<span class="sd">    :param signal_source: The source signal</span>
+<span class="sd">    :param horizontal_interval: Number of horizontal intervals (window width == signal width // horizontal intervals)</span>
+<span class="sd">    :param vertical_interval: Number of vertical intervals (window height == signal height // vertical intervals)</span>
+<span class="sd">    :return: The local cross correlation between two signals. Higher local cross correlation means higher similarity \</span>
+<span class="sd">             between two signals. range in [-1, 1]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">signal_source</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">signal_template</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">&quot;Incompatiable shape between source and template signals&quot;</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">signal_source</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;local cross correlation requires the input signals to be 2 dimensional&quot;</span>
+    <span class="n">interval_row</span> <span class="o">=</span> <span class="n">signal_template</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="n">vertical_interval</span>
+    <span class="n">interval_col</span> <span class="o">=</span> <span class="n">signal_template</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="n">horizontal_interval</span>
+
+    <span class="k">if</span> <span class="n">interval_row</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">interval_row</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">interval_col</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">interval_col</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="n">template</span> <span class="o">=</span> <span class="n">signal_template</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="n">signal_source</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">start_row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">template</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">interval_row</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">start_col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">template</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">interval_col</span><span class="p">):</span>
+            <span class="n">template</span><span class="p">[</span><span class="n">start_row</span><span class="p">:</span> <span class="n">start_row</span> <span class="o">+</span> <span class="n">interval_row</span><span class="p">,</span> <span class="n">start_col</span><span class="p">:</span> <span class="n">start_col</span> <span class="o">+</span> <span class="n">interval_col</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">-=</span> \
+                <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">template</span><span class="p">[</span><span class="n">start_row</span><span class="p">:</span> <span class="n">start_row</span> <span class="o">+</span> <span class="n">interval_row</span><span class="p">,</span> <span class="n">start_col</span><span class="p">:</span> <span class="n">start_col</span> <span class="o">+</span> <span class="n">interval_col</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span>
+                        <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="n">source</span><span class="p">[</span><span class="n">start_row</span><span class="p">:</span> <span class="n">start_row</span> <span class="o">+</span> <span class="n">interval_row</span><span class="p">,</span> <span class="n">start_col</span><span class="p">:</span> <span class="n">start_col</span> <span class="o">+</span> <span class="n">interval_col</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">-=</span> \
+                <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">source</span><span class="p">[</span><span class="n">start_row</span><span class="p">:</span> <span class="n">start_row</span> <span class="o">+</span> <span class="n">interval_row</span><span class="p">,</span> <span class="n">start_col</span><span class="p">:</span> <span class="n">start_col</span> <span class="o">+</span> <span class="n">interval_col</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span>
+                        <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+    <span class="n">nom</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">template</span> <span class="o">*</span> <span class="n">source</span><span class="p">)</span>
+    <span class="n">denom</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">template</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">source</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">cross_corre</span> <span class="o">=</span> <span class="n">nom</span> <span class="o">/</span> <span class="n">denom</span>
+
+    <span class="k">return</span> <span class="n">cross_corre</span></div>
+
+
+<div class="viewcode-block" id="generate_hue_strings_from_color_barcode"><a class="viewcode-back" href="../../../utils/measure_utils.html#kalmus.utils.measure_utils.generate_hue_strings_from_color_barcode">[docs]</a><span class="k">def</span> <span class="nf">generate_hue_strings_from_color_barcode</span><span class="p">(</span><span class="n">color_barcode</span><span class="p">,</span> <span class="n">num_interval</span><span class="o">=</span><span class="mi">12</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper function</span>
+<span class="sd">    Generate the characters strings that represent the hue values of the input RGB color barcode (3 channel in range</span>
+<span class="sd">    [0, 255]).</span>
+
+<span class="sd">    :param color_barcode: Input color barcode, the input barcode must be a 1 dimensional color barcode with \</span>
+<span class="sd">                          three channels (R, G, B). shape == [number of colors, 3]</span>
+<span class="sd">    :param num_interval: The number of intervals that will be divided in the Hue ring (0 to 360 degree)</span>
+<span class="sd">    :return: The string where each character represent the hue interval of the colors in the input RGB barcode</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">color_barcode</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">color_barcode</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;The input color barcode must be a &quot;</span> \
+                                                                           <span class="s2">&quot;2D array of 3-chanel RGB colors&quot;</span>
+    <span class="n">color_barcode</span> <span class="o">=</span> <span class="n">rgb2hsv</span><span class="p">(</span><span class="n">color_barcode</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">hue_barcode</span> <span class="o">=</span> <span class="n">color_barcode</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">360</span>
+    <span class="n">hue_barcode</span> <span class="o">+=</span> <span class="mi">15</span>
+    <span class="n">hue_barcode</span><span class="p">[</span><span class="n">hue_barcode</span> <span class="o">&gt;=</span> <span class="mi">360</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">360</span>
+
+    <span class="n">interval_size</span> <span class="o">=</span> <span class="mi">360</span> <span class="o">/</span> <span class="n">num_interval</span>
+    <span class="n">hue_barcode</span> <span class="o">/=</span> <span class="n">interval_size</span>
+    <span class="n">hue_barcode</span> <span class="o">=</span> <span class="n">hue_barcode</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;uint16&quot;</span><span class="p">)</span>
+
+    <span class="n">string_barcode</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">hue_barcode</span><span class="p">:</span>
+        <span class="n">str_code</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="k">if</span> <span class="n">str_code</span> <span class="o">&gt;</span> <span class="mi">9</span><span class="p">:</span>
+            <span class="n">str_code</span> <span class="o">=</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">str_code</span> <span class="o">-</span> <span class="mi">9</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">str_code</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">str_code</span><span class="p">)</span>
+        <span class="n">string_barcode</span> <span class="o">+=</span> <span class="n">str_code</span>
+
+    <span class="k">return</span> <span class="n">string_barcode</span></div>
+
+
+<div class="viewcode-block" id="generate_brightness_string_from_brightness_barcode"><a class="viewcode-back" href="../../../utils/measure_utils.html#kalmus.utils.measure_utils.generate_brightness_string_from_brightness_barcode">[docs]</a><span class="k">def</span> <span class="nf">generate_brightness_string_from_brightness_barcode</span><span class="p">(</span><span class="n">brightness_barcode</span><span class="p">,</span> <span class="n">num_interval</span><span class="o">=</span><span class="mi">15</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper function</span>
+<span class="sd">    Generate the string where each character represents the brightness interval of the brightness in the input</span>
+<span class="sd">    brightness barcode.</span>
+
+<span class="sd">    :param brightness_barcode: Input 1 dimensional brightness barcode with 1 channel. \</span>
+<span class="sd">                               shape == [number of brightness, 1]</span>
+<span class="sd">    :param num_interval: The number of intervals that will be divided in the brightness range [0, 255]</span>
+<span class="sd">    :return: The string where each character represents the brightness interval of the brightness in the input</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">brightness_barcode</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">brightness_barcode</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> \
+        <span class="s2">&quot;The input brightness barcode must be a 2D array with last channel to be 1&quot;</span>
+    <span class="n">interval_size</span> <span class="o">=</span> <span class="mi">255</span> <span class="o">/</span> <span class="n">num_interval</span>
+    <span class="n">bri_barcode</span> <span class="o">=</span> <span class="n">brightness_barcode</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="n">interval_size</span>
+    <span class="n">bri_barcode</span> <span class="o">=</span> <span class="n">bri_barcode</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;uint16&quot;</span><span class="p">)</span>
+
+    <span class="n">string_barcode</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">bri_barcode</span><span class="p">:</span>
+        <span class="n">str_code</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="k">if</span> <span class="n">str_code</span> <span class="o">&gt;</span> <span class="mi">9</span><span class="p">:</span>
+            <span class="n">str_code</span> <span class="o">=</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">str_code</span> <span class="o">-</span> <span class="mi">9</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">str_code</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">str_code</span><span class="p">)</span>
+        <span class="n">string_barcode</span> <span class="o">+=</span> <span class="n">str_code</span>
+
+    <span class="k">return</span> <span class="n">string_barcode</span></div>
+
+
+<div class="viewcode-block" id="compare_needleman_wunsch"><a class="viewcode-back" href="../../../utils/measure_utils.html#kalmus.utils.measure_utils.compare_needleman_wunsch">[docs]</a><span class="k">def</span> <span class="nf">compare_needleman_wunsch</span><span class="p">(</span><span class="n">barcode_1</span><span class="p">,</span> <span class="n">barcode_2</span><span class="p">,</span> <span class="n">local_sequence_size</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
+                             <span class="n">match_score</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">mismatch_penal</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">gap_penal</span><span class="o">=-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">extending_gap_penal</span><span class="o">=-</span><span class="mf">0.1</span><span class="p">,</span>
+                             <span class="n">normalized</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compare two input character arrays/strings (barcode)&#39;s matching score using the Needleman Wunsch method.</span>
+<span class="sd">    Needleman Wunsch: https://www.sciencedirect.com/science/article/abs/pii/0022283670900574?via%3Dihub</span>
+
+<span class="sd">    :param barcode_1: The input string representation of barcode 1</span>
+<span class="sd">    :param barcode_2: The input string representation of barcode 2</span>
+<span class="sd">    :param local_sequence_size: Divide the long barcode into several small barcode with local_sequence_size length</span>
+<span class="sd">    :param match_score: The score (bonus) for correctly matching character</span>
+<span class="sd">    :param mismatch_penal: The penalty for mismatch character</span>
+<span class="sd">    :param gap_penal: The penalty for gaps within matched sequence</span>
+<span class="sd">    :param extending_gap_penal: The penalty for extending gaps</span>
+<span class="sd">    :param normalized: Whether to normalize the final matching score into range [0, 1]</span>
+<span class="sd">    :return: The match score/normalized match score</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">barcode_1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">barcode_2</span><span class="p">),</span> <span class="s2">&quot;The lengths of two barcodes have to be identical&quot;</span>
+
+    <span class="n">scores</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">start_point</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">barcode_1</span><span class="p">),</span> <span class="n">local_sequence_size</span><span class="p">):</span>
+        <span class="n">scores</span> <span class="o">+=</span> <span class="n">sequence_align</span><span class="o">.</span><span class="n">align</span><span class="o">.</span><span class="n">globalms</span><span class="p">(</span><span class="n">barcode_1</span><span class="p">[</span><span class="n">start_point</span><span class="p">:</span><span class="n">start_point</span> <span class="o">+</span> <span class="n">local_sequence_size</span><span class="p">],</span>
+                                                <span class="n">barcode_2</span><span class="p">[</span><span class="n">start_point</span><span class="p">:</span><span class="n">start_point</span> <span class="o">+</span> <span class="n">local_sequence_size</span><span class="p">],</span>
+                                                <span class="n">match_score</span><span class="p">,</span> <span class="n">mismatch_penal</span><span class="p">,</span> <span class="n">gap_penal</span><span class="p">,</span> <span class="n">extending_gap_penal</span><span class="p">,</span>
+                                                <span class="n">score_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">normalized</span><span class="p">:</span>
+        <span class="n">denom</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">barcode_1</span><span class="p">)</span> <span class="o">*</span> <span class="n">match_score</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">denom</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">scores</span> <span class="o">/</span> <span class="n">denom</span></div>
+
+
+<div class="viewcode-block" id="compare_smith_waterman"><a class="viewcode-back" href="../../../utils/measure_utils.html#kalmus.utils.measure_utils.compare_smith_waterman">[docs]</a><span class="k">def</span> <span class="nf">compare_smith_waterman</span><span class="p">(</span><span class="n">barcode_1</span><span class="p">,</span> <span class="n">barcode_2</span><span class="p">,</span> <span class="n">local_sequence_size</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
+                           <span class="n">match_score</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">mismatch_penal</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">gap_penal</span><span class="o">=-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">extending_gap_penal</span><span class="o">=-</span><span class="mf">0.1</span><span class="p">,</span>
+                           <span class="n">normalized</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compare two input character arrays/strings (barcode)&#39;s matching score using the Smith Waterman method.</span>
+<span class="sd">    Smith Waterman: https://www.sciencedirect.com/science/article/abs/pii/0022283681900875?via%3Dihub</span>
+
+<span class="sd">    :param barcode_1: The input string representation of barcode 1</span>
+<span class="sd">    :param barcode_2: The input string representation of barcode 2</span>
+<span class="sd">    :param local_sequence_size: Divide the long barcode into several small barcode with local_sequence_size length</span>
+<span class="sd">    :param match_score: The score (bonus) for correctly matching character</span>
+<span class="sd">    :param mismatch_penal: The penalty for mismatch character</span>
+<span class="sd">    :param gap_penal: The penalty for gaps within matched sequence</span>
+<span class="sd">    :param extending_gap_penal: The penalty for extending gaps</span>
+<span class="sd">    :param normalized: Whether to normalize the final matching score into range [0, 1]</span>
+<span class="sd">    :return: The match score/normalized match score</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">barcode_1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">barcode_2</span><span class="p">),</span> <span class="s2">&quot;The lengths of two barcodes have to be identical&quot;</span>
+
+    <span class="n">scores</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">start_point</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">barcode_1</span><span class="p">),</span> <span class="n">local_sequence_size</span><span class="p">):</span>
+        <span class="n">scores</span> <span class="o">+=</span> <span class="n">sequence_align</span><span class="o">.</span><span class="n">align</span><span class="o">.</span><span class="n">localms</span><span class="p">(</span><span class="n">barcode_1</span><span class="p">[</span><span class="n">start_point</span><span class="p">:</span><span class="n">start_point</span> <span class="o">+</span> <span class="n">local_sequence_size</span><span class="p">],</span>
+                                               <span class="n">barcode_2</span><span class="p">[</span><span class="n">start_point</span><span class="p">:</span><span class="n">start_point</span> <span class="o">+</span> <span class="n">local_sequence_size</span><span class="p">],</span>
+                                               <span class="n">match_score</span><span class="p">,</span> <span class="n">mismatch_penal</span><span class="p">,</span> <span class="n">gap_penal</span><span class="p">,</span> <span class="n">extending_gap_penal</span><span class="p">,</span>
+                                               <span class="n">score_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">normalized</span><span class="p">:</span>
+        <span class="n">denom</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">barcode_1</span><span class="p">)</span> <span class="o">*</span> <span class="n">match_score</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">denom</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">scores</span> <span class="o">/</span> <span class="n">denom</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          
+
+<footer>
+  
+
+  <hr/>
+
+  <div class="footer-info" role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Yida Chen, Eric Faden, and Nathan Ryan.
+
+    </p>
+    <p> 
+    
+
+    </p>
+  </div>
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+    <span>Documentation</span>
+    <span>
+      v: latest
+      <span class="fa fa-chevron-down"></span>
+  </span>
+    </span>
+    <div class="rst-other-versions"><!-- Inserted RTD Footer -->
+<div class="injected">
+
+
+  <div class="rst-versions rst-badge " data-toggle="rst-versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book">&nbsp;</span>
+      v: latest
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+
+
+
+
+
+      <dl>
+        <dt>Versions</dt>
+
+         <strong>
+        <dd><a href="http://docs.django-cms.org/en/latest/">latest</a></dd>
+         </strong>
+
+
+        <dd><a href="http://docs.django-cms.org/en/release-3.5.x/">release-3.5.x</a></dd>
+
+
+
+        <dd><a href="http://docs.django-cms.org/en/release-3.4.x/">release-3.4.x</a></dd>
+
+
+
+        <dd><a href="http://docs.django-cms.org/en/release-3.3.x/">release-3.3.x</a></dd>
+
+
+
+        <dd><a href="http://docs.django-cms.org/en/release-3.2.x/">release-3.2.x</a></dd>
+
+
+
+        <dd><a href="http://docs.django-cms.org/en/release-3.1.x/">release-3.1.x</a></dd>
+
+
+
+        <dd><a href="http://docs.django-cms.org/en/release-3.0.x/">release-3.0.x</a></dd>
+
+
+
+        <dd><a href="http://docs.django-cms.org/en/release-2.4.x/">release-2.4.x</a></dd>
+
+
+
+        <dd><a href="http://docs.django-cms.org/en/release-2.3.x/">release-2.3.x</a></dd>
+
+
+
+        <dd><a href="http://docs.django-cms.org/en/release-2.2.x/">release-2.2.x</a></dd>
+
+
+
+        <dd><a href="http://docs.django-cms.org/en/release-2.1.x/">release-2.1.x</a></dd>
+
+
+
+        <dd><a href="http://docs.django-cms.org/en/develop/">develop</a></dd>
+
+
+      </dl>
+
+
+
+
+
+      <dl>
+        <dt>Downloads</dt>
+
+        <dd><a href="//readthedocs.org/projects/django-cms/downloads/pdf/latest/">PDF</a></dd>
+
+        <dd><a href="//readthedocs.org/projects/django-cms/downloads/htmlzip/latest/">HTML</a></dd>
+
+        <dd><a href="//readthedocs.org/projects/django-cms/downloads/epub/latest/">Epub</a></dd>
+
+      </dl>
+
+
+
+
+      <dl>
+        <!-- These are kept as relative links for internal installs that are http -->
+        <dt>On Read the Docs</dt>
+        <dd>
+          <a href="//readthedocs.org/projects/django-cms/">Project Home</a>
+        </dd>
+        <dd>
+          <a href="//readthedocs.org/projects/django-cms/builds/">Builds</a>
+        </dd>
+        <dd>
+          <a href="//readthedocs.org/projects/django-cms/downloads/">Downloads</a>
+        </dd>
+      </dl>
+
+
+
+
+
+      <dl>
+        <dt>On GitHub</dt>
+        <dd>
+          <a href="https://github.com/divio/django-cms/blob/release/3.5.x/docs/index.rst">View</a>
+        </dd>
+
+      </dl>
+
+
+
+
+      <dl>
+        <dt>Search</dt>
+        <dd>
+          <div style="padding: 6px;">
+            <form id="flyout-search-form" class="wy-form" target="_blank" action="//readthedocs.org/projects/django-cms/search/" method="get">
+              <input type="text" name="q" placeholder="Search docs">
+              </form>
+          </div>
+        </dd>
+      </dl>
+
+
+
+
+      <hr>
+
+        <small>
+          <span>Hosted by <a href="https://readthedocs.org">Read the Docs</a></span>
+          <span> · </span>
+          <a href="https://docs.readthedocs.io/en/latest/privacy-policy.html">Privacy Policy</a>
+        </small>
+
+
+
+    </div>
+  </div>
+
+
+</div>
+</div>
+  </div>
+
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'1.3.6',
+            LANGUAGE:'python',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  <script type="text/javascript">
+      jQuery(function () {
+        try {
+            SphinxRtdTheme.Navigation.enableSticky();
+        } catch (e) {
+            SphinxRtdTheme.StickyNav.enable();
+        }
+    });
+
+    jQuery(function ($) {
+        var adjustAnchor = function() {
+            var $anchor = $(':target');
+            var fixedElementHeight = 80;
+
+            if ($anchor.length > 0) {
+                setTimeout(function () {
+                    $('html, body').scrollTop($anchor.offset().top - fixedElementHeight);
+                });
+            }
+        };
+
+        adjustAnchor();
+        $(window).on('hashchange load', adjustAnchor);
+    });
+  </script>
+  <script type="text/javascript">
+      $(function () {
+          $('.tabs').each(function () {
+              var tabs = $(this);
+              var links = tabs.find('.tabs__link');
+              var contents = tabs.find('.tabs__content').find('.tabs-pane');
+
+              links.on('click', function (e) {
+                  var index = links.index(this);
+
+                  links.removeClass('tabs__link--active');
+                  $(this).addClass('tabs__link--active');
+
+                  contents.hide();
+                  contents.eq(index).show();
+              });
+
+              var index = 0;
+
+              if (window.location.hash) {
+                  var maybeLink = $('.tabs__link[href="' + window.location.hash + '"]');
+
+                  if (maybeLink.length && links.index(maybeLink) !== -1) {
+                      index = links.index(maybeLink);
+                  }
+              }
+
+          links.eq(index).trigger('click');
+        });
+      });
+  </script> 
+
+</body>
+</html>
