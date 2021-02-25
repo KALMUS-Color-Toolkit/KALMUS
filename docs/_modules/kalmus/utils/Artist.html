@@ -1,70 +1,80 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="python" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="python" > <!--<![endif]-->
+<html class="writer-html5" lang="python" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>kalmus.utils.Artist &mdash; KALMUS 1.3.6 documentation</title>
   
 
   
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
   
+  
+
   
   
 
   
 
   
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
-  
-  
-
-  <link rel="preload" href="../../../_static/fonts/fontawesome-webfont.woff2?v=4.7.0" as="font" type="font/woff2" crossorigin />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/divio.css" type="text/css" />
-
-  <link rel="apple-touch-icon" href="../../../_static/favicon.png">
-  <link rel="icon" type="image/png" href="../../../_static/favicon.png">
-  <!--[if IE]><link rel="shortcut icon" href="../../../_static/favicon.png"><![endif]-->
+    
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
-
-  <!--  -->
-  <!-- <script src="../../../_static/js/modernizr.min.js"></script> -->
-  <!--  -->
 </head>
 
 <body class="wy-body-for-nav">
+
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
-<div class="search-form" role="search">
+            <a href="../../../index.html" class="icon icon-home"> KALMUS
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
-    <button class="search-btn">
-    <span class="fa fa-search"></span>
-    </button>
   </form>
 </div>
 
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -75,51 +85,34 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Home</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../kalmus.html">API Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../kalmus.html#barcode-classes">Barcode Classes</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../barcodes/Barcodes.html">Barcode Classes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../barcodes/BarcodeGenerator.html">BarcodeGenerator Class</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kalmus.html">API Documentation</a></li>
 </ul>
 
             
           
-
-            
-                
-                    <div class="divio-cloud">
-                        <span class="divio-cloud-caption">GET STARTED FASTER</span>
-                        <h2 class="divio-cloud-heading"><b>Divio</b> is built for django CMS</h2>
-                        <ul class="divio-cloud-features">
-                            <li>Powerful <b>FREE</b> instance</li>
-                            <li>Local development environment</li>
-                            <li><b>Preconfigured django CMS</b></li>
-                        </ul>
-                        <a class="btn-neutral divio-cloud-btn" target="_blank" href="https://goo.gl/nHv16j">Get your free account</a>
-                    </div>
-                
-            
         </div>
+        
       </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">KALMUS</a>
+        
+      </nav>
 
 
       <div class="wy-nav-content">
-    <div class="header">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <div class="header-title-wrap">
-            <a class="header-title" href="../../../index.html">KALMUS</a>
-        </div>
-        <a class="logo-link" target="_blank" href="https://divio.com"><img src="../../../_static/logo-divio-black.svg" class="logo" alt="Divio"/></a>
-    </div>
-
+        
+        <div class="rst-content">
+        
           
+
+
 
 
 
@@ -136,20 +129,25 @@
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../../index.html">Docs</a>&nbsp; &raquo;&nbsp;</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
         
-          <li><a href="../../index.html">Module code</a>&nbsp; &raquo;&nbsp;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
         
-
       <li>kalmus.utils.Artist</li>
     
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
   </ul>
+
+  
+  <hr/>
 </div>
-        
-        <div class="rst-content">
-        
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
@@ -199,7 +197,7 @@
     <span class="k">return</span> <span class="n">centers</span><span class="p">,</span> <span class="n">percent_of_dominance</span></div>
 
 
-<span class="k">def</span> <span class="nf">flatten_image</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+<div class="viewcode-block" id="flatten_image"><a class="viewcode-back" href="../../../utils/Artist.html#kalmus.utils.Artist.flatten_image">[docs]</a><span class="k">def</span> <span class="nf">flatten_image</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Flat the input 2D image into an 1D image while preserve the channels of the input image</span>
 <span class="sd">    with shape==[height x width, channels]</span>
@@ -212,10 +210,10 @@
         <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
     <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
         <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">image</span>
+    <span class="k">return</span> <span class="n">image</span></div>
 
 
-<span class="k">def</span> <span class="nf">compute_percents_of_labels</span><span class="p">(</span><span class="n">label</span><span class="p">):</span>
+<div class="viewcode-block" id="compute_percents_of_labels"><a class="viewcode-back" href="../../../utils/Artist.html#kalmus.utils.Artist.compute_percents_of_labels">[docs]</a><span class="k">def</span> <span class="nf">compute_percents_of_labels</span><span class="p">(</span><span class="n">label</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Compute the ratio/percentage size of the labels in an labeled image</span>
 
@@ -234,7 +232,7 @@
     <span class="n">percent_of_dominance</span> <span class="o">=</span> <span class="n">percent_of_dominance</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">)</span>
     <span class="c1"># Normalized by the sum of frequencies (number of pixels in the labeled image)</span>
     <span class="n">percent_of_dominance</span> <span class="o">/=</span> <span class="n">percent_of_dominance</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">percent_of_dominance</span>
+    <span class="k">return</span> <span class="n">percent_of_dominance</span></div>
 
 
 <div class="viewcode-block" id="compute_mode_color"><a class="viewcode-back" href="../../../utils/Artist.html#kalmus.utils.Artist.compute_mode_color">[docs]</a><span class="k">def</span> <span class="nf">compute_mode_color</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">bin_size</span> <span class="o">=</span> <span class="mi">10</span><span class="p">):</span>
@@ -279,7 +277,7 @@
     <span class="k">return</span> <span class="n">median_color</span></div>
 
 
-<span class="k">def</span> <span class="nf">compute_brightest_color_and_brightness</span><span class="p">(</span><span class="n">grey_image</span><span class="p">,</span> <span class="n">color_image</span><span class="p">,</span> <span class="n">return_min</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<div class="viewcode-block" id="compute_brightest_color_and_brightness"><a class="viewcode-back" href="../../../utils/Artist.html#kalmus.utils.Artist.compute_brightest_color_and_brightness">[docs]</a><span class="k">def</span> <span class="nf">compute_brightest_color_and_brightness</span><span class="p">(</span><span class="n">grey_image</span><span class="p">,</span> <span class="n">color_image</span><span class="p">,</span> <span class="n">return_min</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                                            <span class="n">gaussian_blur</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">blur_radius</span><span class="o">=</span><span class="mi">15</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Find the brightest pixel in an image and return the color and brightness at that pixel</span>
@@ -298,10 +296,10 @@
         <span class="k">return</span> <span class="n">color_image</span><span class="p">[</span><span class="n">max_loc</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">max_brightness</span><span class="p">,</span> <span class="n">max_loc</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>\
                 <span class="n">color_image</span><span class="p">[</span><span class="n">min_loc</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">min_brightness</span><span class="p">,</span> <span class="n">min_loc</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">color_image</span><span class="p">[</span><span class="n">max_loc</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">max_brightness</span><span class="p">,</span> <span class="n">max_loc</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">color_image</span><span class="p">[</span><span class="n">max_loc</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">max_brightness</span><span class="p">,</span> <span class="n">max_loc</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
 
 
-<span class="k">def</span> <span class="nf">find_bright_spots</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">blur_radius</span><span class="o">=</span><span class="mi">21</span><span class="p">,</span> <span class="n">amount_of_bright_parts</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">return_all_pos</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="find_bright_spots"><a class="viewcode-back" href="../../../utils/Artist.html#kalmus.utils.Artist.find_bright_spots">[docs]</a><span class="k">def</span> <span class="nf">find_bright_spots</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">blur_radius</span><span class="o">=</span><span class="mi">21</span><span class="p">,</span> <span class="n">amount_of_bright_parts</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">return_all_pos</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Find the indices location of the top-k brightest spots in an color image.</span>
 
@@ -356,10 +354,10 @@
         <span class="k">if</span> <span class="n">return_all_pos</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span></div>
 
 
-<span class="k">def</span> <span class="nf">random_sample_pixels</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">sample_ratio</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;row-col&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="random_sample_pixels"><a class="viewcode-back" href="../../../utils/Artist.html#kalmus.utils.Artist.random_sample_pixels">[docs]</a><span class="k">def</span> <span class="nf">random_sample_pixels</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">sample_ratio</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;row-col&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Randomly sample an amount of pixels from an image based on the given sampled ratio.</span>
 <span class="sd">    Two sampling mode are available.</span>
@@ -411,10 +409,10 @@
         <span class="c1"># If none of two modes is specified</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Invalid sampling mode. Two sampling options are &#39;row-col&#39; and &#39;flat&#39;&quot;</span><span class="p">)</span>
         <span class="k">return</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">random_pixels</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">random_pixels</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">watershed_segmentation</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">minimum_segment_size</span><span class="o">=</span><span class="mf">0.0004</span><span class="p">,</span> <span class="n">base_ratio</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">denoise_disk_size</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">gradiant_disk_size</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+<div class="viewcode-block" id="watershed_segmentation"><a class="viewcode-back" href="../../../utils/Artist.html#kalmus.utils.Artist.watershed_segmentation">[docs]</a><span class="k">def</span> <span class="nf">watershed_segmentation</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">minimum_segment_size</span><span class="o">=</span><span class="mf">0.0004</span><span class="p">,</span> <span class="n">base_ratio</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">denoise_disk_size</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">gradiant_disk_size</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
                            <span class="n">marker_disk_size</span><span class="o">=</span><span class="mi">15</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Label the connected regions in an image.</span>
@@ -480,10 +478,10 @@
     <span class="n">regions</span> <span class="o">=</span> <span class="n">watershed</span><span class="p">(</span><span class="n">gradient</span><span class="p">,</span> <span class="n">markers</span><span class="p">)</span>
 
     <span class="c1"># Return the labeled image and the corresponding greyscale image</span>
-    <span class="k">return</span> <span class="n">regions</span><span class="p">,</span> <span class="n">grey_image</span>
+    <span class="k">return</span> <span class="n">regions</span><span class="p">,</span> <span class="n">grey_image</span></div>
 
 
-<span class="k">def</span> <span class="nf">get_rag</span><span class="p">(</span><span class="n">gray_image</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+<div class="viewcode-block" id="get_rag"><a class="viewcode-back" href="../../../utils/Artist.html#kalmus.utils.Artist.get_rag">[docs]</a><span class="k">def</span> <span class="nf">get_rag</span><span class="p">(</span><span class="n">gray_image</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get the region adjacency graph using the labeled image and corresponding the edge map generated by</span>
 <span class="sd">    greyscale image with sobel filter</span>
@@ -498,10 +496,10 @@
     <span class="c1"># Get rag of the labeled image</span>
     <span class="n">edge_map</span> <span class="o">=</span> <span class="n">sobel</span><span class="p">(</span><span class="n">gray_image</span><span class="p">)</span>
     <span class="n">rag</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">rag_boundary</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">edge_map</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">rag</span>
+    <span class="k">return</span> <span class="n">rag</span></div>
 
 
-<span class="k">def</span> <span class="nf">rag_to_matrix</span><span class="p">(</span><span class="n">rag</span><span class="p">,</span> <span class="n">num_regions</span><span class="p">):</span>
+<div class="viewcode-block" id="rag_to_matrix"><a class="viewcode-back" href="../../../utils/Artist.html#kalmus.utils.Artist.rag_to_matrix">[docs]</a><span class="k">def</span> <span class="nf">rag_to_matrix</span><span class="p">(</span><span class="n">rag</span><span class="p">,</span> <span class="n">num_regions</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Transfer the region adjacency dictionary to a more accessible region adjacency matrix</span>
 <span class="sd">    where in the matrix, 1 means the region of corresponding column index is adjacent to the</span>
@@ -521,10 +519,10 @@
         <span class="n">adj_list</span> <span class="o">=</span> <span class="n">adict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">keys</span> <span class="ow">in</span> <span class="n">adj_list</span><span class="p">:</span>
             <span class="n">matrix</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">keys</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">matrix</span>
+    <span class="k">return</span> <span class="n">matrix</span></div>
 
 
-<span class="k">def</span> <span class="nf">color_of_regions</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">original_image</span><span class="p">):</span>
+<div class="viewcode-block" id="color_of_regions"><a class="viewcode-back" href="../../../utils/Artist.html#kalmus.utils.Artist.color_of_regions">[docs]</a><span class="k">def</span> <span class="nf">color_of_regions</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">original_image</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Compute average color and brightest color of the regions and record</span>
 <span class="sd">    the relative size of the regions as a ratio with respect to the size</span>
@@ -568,10 +566,10 @@
         <span class="n">brightest_color</span> <span class="o">=</span> <span class="n">extract_image</span><span class="p">[</span><span class="n">brightest_color_loc</span><span class="p">]</span>
         <span class="n">brightest_colors_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">brightest_color</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">avg_colors_list</span><span class="p">,</span> <span class="n">brightest_colors_list</span><span class="p">,</span> <span class="n">region_sizes</span>
+    <span class="k">return</span> <span class="n">avg_colors_list</span><span class="p">,</span> <span class="n">brightest_colors_list</span><span class="p">,</span> <span class="n">region_sizes</span></div>
 
 
-<span class="k">def</span> <span class="nf">contrast_between_regions</span><span class="p">(</span><span class="n">region_colors</span><span class="p">,</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">region_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="contrast_between_regions"><a class="viewcode-back" href="../../../utils/Artist.html#kalmus.utils.Artist.contrast_between_regions">[docs]</a><span class="k">def</span> <span class="nf">contrast_between_regions</span><span class="p">(</span><span class="n">region_colors</span><span class="p">,</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">region_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Compute the contrast between the segmented regions in image using the color of regions</span>
 <span class="sd">    and adjacency matrix</span>
@@ -614,7 +612,7 @@
         <span class="n">contrast_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">contrast_row</span><span class="p">)</span>
     <span class="n">contrast_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">contrast_list</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">contrast_list</span>
+    <span class="k">return</span> <span class="n">contrast_list</span></div>
 
 
 <span class="k">def</span> <span class="nf">_RGB2sRGB</span><span class="p">(</span><span class="n">RGB</span><span class="p">):</span>
@@ -645,7 +643,7 @@
     <span class="k">return</span> <span class="n">luminance</span>
 
 
-<span class="k">def</span> <span class="nf">contrast_ratio</span><span class="p">(</span><span class="n">color1</span><span class="p">,</span> <span class="n">color2</span><span class="p">):</span>
+<div class="viewcode-block" id="contrast_ratio"><a class="viewcode-back" href="../../../utils/Artist.html#kalmus.utils.Artist.contrast_ratio">[docs]</a><span class="k">def</span> <span class="nf">contrast_ratio</span><span class="p">(</span><span class="n">color1</span><span class="p">,</span> <span class="n">color2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Compute the contrast ratio between two 24-bits RGB colors in range [0, 255]</span>
 <span class="sd">    see https://www.w3.org/TR/2008/REC-WCAG20-20081211/#contrast-ratiodef for more references</span>
@@ -659,10 +657,10 @@
     <span class="n">ratio</span> <span class="o">=</span> <span class="p">(</span><span class="n">luminance1</span> <span class="o">+</span> <span class="mf">0.05</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">luminance2</span> <span class="o">+</span> <span class="mf">0.05</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">ratio</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">ratio</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">ratio</span>
-    <span class="k">return</span> <span class="n">ratio</span>
+    <span class="k">return</span> <span class="n">ratio</span></div>
 
 
-<span class="k">def</span> <span class="nf">grabcut_foreback_segmentation</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">start_row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">start_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">row_size</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">col_size</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_iter</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+<div class="viewcode-block" id="grabcut_foreback_segmentation"><a class="viewcode-back" href="../../../utils/Artist.html#kalmus.utils.Artist.grabcut_foreback_segmentation">[docs]</a><span class="k">def</span> <span class="nf">grabcut_foreback_segmentation</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">start_row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">start_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">row_size</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">col_size</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_iter</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Perform the GrabCut segmentation over the input image with a rectangle of possible foreground</span>
 <span class="sd">    specified by user. The GrabCut segment the image into two parts foreground and background, and</span>
@@ -701,7 +699,7 @@
     <span class="c1"># The obvious background and probable background are marked with 0 and 2</span>
     <span class="n">background_image</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">2</span><span class="p">))]</span>
 
-    <span class="k">return</span> <span class="n">foreground_image</span><span class="p">,</span> <span class="n">background_image</span>
+    <span class="k">return</span> <span class="n">foreground_image</span><span class="p">,</span> <span class="n">background_image</span></div>
 
 
 <span class="k">def</span> <span class="nf">write_in_info</span><span class="p">(</span><span class="n">info_row</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s2">&quot;output.csv&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">):</span>
@@ -722,26 +720,26 @@
            </div>
            
           </div>
-          
-
-<footer>
-  
+          <footer>
 
   <hr/>
 
-  <div class="footer-info" role="contentinfo">
+  <div role="contentinfo">
     <p>
-        &copy; Copyright 2021, Yida Chen, Eric Faden, and Nathan Ryan.
-
-    </p>
-    <p> 
-    
+        &#169; Copyright 2021, Yida Chen, Eric Faden, and Nathan Ryan.
 
     </p>
   </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
@@ -749,245 +747,17 @@
 
   </div>
   
-<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-    <span>Documentation</span>
-    <span>
-      v: latest
-      <span class="fa fa-chevron-down"></span>
-  </span>
-    </span>
-    <div class="rst-other-versions"><!-- Inserted RTD Footer -->
-<div class="injected">
 
-
-  <div class="rst-versions rst-badge " data-toggle="rst-versions">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      <span class="fa fa-book">&nbsp;</span>
-      v: latest
-      <span class="fa fa-caret-down"></span>
-    </span>
-    <div class="rst-other-versions">
-
-
-
-
-
-      <dl>
-        <dt>Versions</dt>
-
-         <strong>
-        <dd><a href="http://docs.django-cms.org/en/latest/">latest</a></dd>
-         </strong>
-
-
-        <dd><a href="http://docs.django-cms.org/en/release-3.5.x/">release-3.5.x</a></dd>
-
-
-
-        <dd><a href="http://docs.django-cms.org/en/release-3.4.x/">release-3.4.x</a></dd>
-
-
-
-        <dd><a href="http://docs.django-cms.org/en/release-3.3.x/">release-3.3.x</a></dd>
-
-
-
-        <dd><a href="http://docs.django-cms.org/en/release-3.2.x/">release-3.2.x</a></dd>
-
-
-
-        <dd><a href="http://docs.django-cms.org/en/release-3.1.x/">release-3.1.x</a></dd>
-
-
-
-        <dd><a href="http://docs.django-cms.org/en/release-3.0.x/">release-3.0.x</a></dd>
-
-
-
-        <dd><a href="http://docs.django-cms.org/en/release-2.4.x/">release-2.4.x</a></dd>
-
-
-
-        <dd><a href="http://docs.django-cms.org/en/release-2.3.x/">release-2.3.x</a></dd>
-
-
-
-        <dd><a href="http://docs.django-cms.org/en/release-2.2.x/">release-2.2.x</a></dd>
-
-
-
-        <dd><a href="http://docs.django-cms.org/en/release-2.1.x/">release-2.1.x</a></dd>
-
-
-
-        <dd><a href="http://docs.django-cms.org/en/develop/">develop</a></dd>
-
-
-      </dl>
-
-
-
-
-
-      <dl>
-        <dt>Downloads</dt>
-
-        <dd><a href="//readthedocs.org/projects/django-cms/downloads/pdf/latest/">PDF</a></dd>
-
-        <dd><a href="//readthedocs.org/projects/django-cms/downloads/htmlzip/latest/">HTML</a></dd>
-
-        <dd><a href="//readthedocs.org/projects/django-cms/downloads/epub/latest/">Epub</a></dd>
-
-      </dl>
-
-
-
-
-      <dl>
-        <!-- These are kept as relative links for internal installs that are http -->
-        <dt>On Read the Docs</dt>
-        <dd>
-          <a href="//readthedocs.org/projects/django-cms/">Project Home</a>
-        </dd>
-        <dd>
-          <a href="//readthedocs.org/projects/django-cms/builds/">Builds</a>
-        </dd>
-        <dd>
-          <a href="//readthedocs.org/projects/django-cms/downloads/">Downloads</a>
-        </dd>
-      </dl>
-
-
-
-
-
-      <dl>
-        <dt>On GitHub</dt>
-        <dd>
-          <a href="https://github.com/divio/django-cms/blob/release/3.5.x/docs/index.rst">View</a>
-        </dd>
-
-      </dl>
-
-
-
-
-      <dl>
-        <dt>Search</dt>
-        <dd>
-          <div style="padding: 6px;">
-            <form id="flyout-search-form" class="wy-form" target="_blank" action="//readthedocs.org/projects/django-cms/search/" method="get">
-              <input type="text" name="q" placeholder="Search docs">
-              </form>
-          </div>
-        </dd>
-      </dl>
-
-
-
-
-      <hr>
-
-        <small>
-          <span>Hosted by <a href="https://readthedocs.org">Read the Docs</a></span>
-          <span> · </span>
-          <a href="https://docs.readthedocs.io/en/latest/privacy-policy.html">Privacy Policy</a>
-        </small>
-
-
-
-    </div>
-  </div>
-
-
-</div>
-</div>
-  </div>
-
-
-
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../../',
-            VERSION:'1.3.6',
-            LANGUAGE:'python',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../../_static/doctools.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-  
-
-  
   <script type="text/javascript">
       jQuery(function () {
-        try {
-            SphinxRtdTheme.Navigation.enableSticky();
-        } catch (e) {
-            SphinxRtdTheme.StickyNav.enable();
-        }
-    });
-
-    jQuery(function ($) {
-        var adjustAnchor = function() {
-            var $anchor = $(':target');
-            var fixedElementHeight = 80;
-
-            if ($anchor.length > 0) {
-                setTimeout(function () {
-                    $('html, body').scrollTop($anchor.offset().top - fixedElementHeight);
-                });
-            }
-        };
-
-        adjustAnchor();
-        $(window).on('hashchange load', adjustAnchor);
-    });
-  </script>
-  <script type="text/javascript">
-      $(function () {
-          $('.tabs').each(function () {
-              var tabs = $(this);
-              var links = tabs.find('.tabs__link');
-              var contents = tabs.find('.tabs__content').find('.tabs-pane');
-
-              links.on('click', function (e) {
-                  var index = links.index(this);
-
-                  links.removeClass('tabs__link--active');
-                  $(this).addClass('tabs__link--active');
-
-                  contents.hide();
-                  contents.eq(index).show();
-              });
-
-              var index = 0;
-
-              if (window.location.hash) {
-                  var maybeLink = $('.tabs__link[href="' + window.location.hash + '"]');
-
-                  if (maybeLink.length && links.index(maybeLink) !== -1) {
-                      index = links.index(maybeLink);
-                  }
-              }
-
-          links.eq(index).trigger('click');
-        });
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>
