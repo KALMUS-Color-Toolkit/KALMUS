@@ -1,0 +1,497 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="python" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>kalmus.tkinter_windows.gui_utils &mdash; KALMUS 1.3.6 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> KALMUS
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kalmus.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../acknowledge.html">Acknowledgement</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">KALMUS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>kalmus.tkinter_windows.gui_utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for kalmus.tkinter_windows.gui_utils</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot; KALMUS tkinter GUI utility &quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">kalmus.utils.measure_utils</span> <span class="k">as</span> <span class="nn">measure_utils</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">skimage.color</span> <span class="k">import</span> <span class="n">hsv2rgb</span><span class="p">,</span> <span class="n">rgb2hsv</span>
+
+
+<div class="viewcode-block" id="compare_two_barcodes"><a class="viewcode-back" href="../../../tkinter_windows/gui_utils.html#kalmus.tkinter_windows.gui_utils.compare_two_barcodes">[docs]</a><span class="k">def</span> <span class="nf">compare_two_barcodes</span><span class="p">(</span><span class="n">barcode_1</span><span class="p">,</span> <span class="n">barcode_2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compare the similarity between two barcodes using NRMSE, SSIM, cross correlation, local cross correlation,</span>
+<span class="sd">    Needleman Wunsch, and Smith Waterman alignment matching</span>
+
+<span class="sd">    :param barcode_1: The input barcode 1</span>
+<span class="sd">    :param barcode_2: The input barcode 2</span>
+<span class="sd">    :return: The simiarity scores computed using all six metrics</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Resize two barcodes so they have the same shape</span>
+    <span class="c1"># Alway resize the small barcode to the shape of the larger barcode</span>
+    <span class="n">target_barcode_1</span> <span class="o">=</span> <span class="n">barcode_1</span><span class="o">.</span><span class="n">get_barcode</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">)</span>
+    <span class="n">target_barcode_2</span> <span class="o">=</span> <span class="n">barcode_2</span><span class="o">.</span><span class="n">get_barcode</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">target_barcode_1</span><span class="o">.</span><span class="n">size</span> <span class="o">&lt;=</span> <span class="n">target_barcode_2</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+        <span class="n">target_barcode_1</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">target_barcode_1</span><span class="p">,</span> <span class="n">dsize</span><span class="o">=</span><span class="n">target_barcode_2</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                      <span class="n">interpolation</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">INTER_LINEAR</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">target_barcode_1</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="n">target_barcode_2</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+        <span class="n">target_barcode_2</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">target_barcode_2</span><span class="p">,</span> <span class="n">dsize</span><span class="o">=</span><span class="n">target_barcode_1</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                      <span class="n">interpolation</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">INTER_LINEAR</span><span class="p">)</span>
+
+    <span class="c1"># Get the cross correlation and local cross correlation</span>
+    <span class="n">cross_corre</span> <span class="o">=</span> <span class="n">measure_utils</span><span class="o">.</span><span class="n">cross_correlation</span><span class="p">(</span><span class="n">target_barcode_1</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">),</span>
+                                                  <span class="n">target_barcode_2</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">))</span>
+    <span class="n">loc_cross_corre</span> <span class="o">=</span> <span class="n">measure_utils</span><span class="o">.</span><span class="n">local_cross_correlation</span><span class="p">(</span><span class="n">target_barcode_1</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">),</span>
+                                                            <span class="n">target_barcode_2</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">))</span>
+
+    <span class="c1"># Get the Normalized root mean squared error and and Structual similarity index measurement</span>
+    <span class="n">nrmse</span> <span class="o">=</span> <span class="n">measure_utils</span><span class="o">.</span><span class="n">nrmse_similarity</span><span class="p">(</span><span class="n">target_barcode_1</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">),</span>
+                                           <span class="n">target_barcode_2</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">))</span>
+    <span class="n">ssim</span> <span class="o">=</span> <span class="n">measure_utils</span><span class="o">.</span><span class="n">ssim_similarity</span><span class="p">(</span><span class="n">target_barcode_1</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">),</span>
+                                         <span class="n">target_barcode_2</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">))</span>
+
+    <span class="c1"># Get the color/brightness of two barcodes</span>
+    <span class="k">if</span> <span class="n">barcode_1</span><span class="o">.</span><span class="n">barcode_type</span> <span class="o">==</span> <span class="s2">&quot;Color&quot;</span><span class="p">:</span>
+        <span class="n">colors_barcode_1</span> <span class="o">=</span> <span class="n">barcode_1</span><span class="o">.</span><span class="n">colors</span>
+        <span class="n">colors_barcode_2</span> <span class="o">=</span> <span class="n">barcode_2</span><span class="o">.</span><span class="n">colors</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">colors_barcode_1</span> <span class="o">=</span> <span class="n">barcode_1</span><span class="o">.</span><span class="n">brightness</span>
+        <span class="n">colors_barcode_2</span> <span class="o">=</span> <span class="n">barcode_2</span><span class="o">.</span><span class="n">brightness</span>
+
+    <span class="c1"># Resample the barcodes if the barcodes have different size/length</span>
+    <span class="k">if</span> <span class="n">colors_barcode_1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">colors_barcode_2</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="n">colors_barcode_1</span> <span class="o">=</span> <span class="n">colors_barcode_1</span><span class="p">[</span><span class="n">measure_utils</span><span class="o">.</span><span class="n">get_resample_index</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">colors_barcode_1</span><span class="p">),</span>
+                                                                             <span class="nb">len</span><span class="p">(</span><span class="n">colors_barcode_2</span><span class="p">))]</span>
+    <span class="k">elif</span> <span class="n">colors_barcode_1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">colors_barcode_2</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="n">colors_barcode_2</span> <span class="o">=</span> <span class="n">colors_barcode_2</span><span class="p">[</span><span class="n">measure_utils</span><span class="o">.</span><span class="n">get_resample_index</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">colors_barcode_2</span><span class="p">),</span>
+                                                                             <span class="nb">len</span><span class="p">(</span><span class="n">colors_barcode_1</span><span class="p">))]</span>
+    <span class="c1"># Convert the barcode to character string for alignment matching comparison</span>
+    <span class="c1"># Convert the barcode to correct character based on its barcode type</span>
+    <span class="k">if</span> <span class="n">barcode_1</span><span class="o">.</span><span class="n">barcode_type</span> <span class="o">==</span> <span class="s2">&quot;Color&quot;</span><span class="p">:</span>
+        <span class="n">string_1</span> <span class="o">=</span> <span class="n">measure_utils</span><span class="o">.</span><span class="n">generate_hue_strings_from_color_barcode</span><span class="p">(</span><span class="n">colors_barcode_1</span><span class="p">)</span>
+        <span class="n">string_2</span> <span class="o">=</span> <span class="n">measure_utils</span><span class="o">.</span><span class="n">generate_hue_strings_from_color_barcode</span><span class="p">(</span><span class="n">colors_barcode_2</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">string_1</span> <span class="o">=</span> <span class="n">measure_utils</span><span class="o">.</span><span class="n">generate_brightness_string_from_brightness_barcode</span><span class="p">(</span><span class="n">colors_barcode_1</span><span class="p">)</span>
+        <span class="n">string_2</span> <span class="o">=</span> <span class="n">measure_utils</span><span class="o">.</span><span class="n">generate_brightness_string_from_brightness_barcode</span><span class="p">(</span><span class="n">colors_barcode_2</span><span class="p">)</span>
+
+    <span class="c1"># Get the Needleman Wunsch and Smith Waterman alignment matching score</span>
+    <span class="n">needleman</span> <span class="o">=</span> <span class="n">measure_utils</span><span class="o">.</span><span class="n">compare_needleman_wunsch</span><span class="p">(</span><span class="n">string_1</span><span class="p">,</span> <span class="n">string_2</span><span class="p">,</span> <span class="n">normalized</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">smithw</span> <span class="o">=</span> <span class="n">measure_utils</span><span class="o">.</span><span class="n">compare_smith_waterman</span><span class="p">(</span><span class="n">string_1</span><span class="p">,</span> <span class="n">string_2</span><span class="p">,</span> <span class="n">normalized</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">cross_corre</span><span class="p">,</span> <span class="n">loc_cross_corre</span><span class="p">,</span> <span class="n">nrmse</span><span class="p">,</span> <span class="n">ssim</span><span class="p">,</span> <span class="n">needleman</span><span class="p">,</span> <span class="n">smithw</span></div>
+
+
+<div class="viewcode-block" id="get_comparison_result_text"><a class="viewcode-back" href="../../../tkinter_windows/gui_utils.html#kalmus.tkinter_windows.gui_utils.get_comparison_result_text">[docs]</a><span class="k">def</span> <span class="nf">get_comparison_result_text</span><span class="p">(</span><span class="n">barcode_1</span><span class="p">,</span> <span class="n">barcode_2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the text comparison result using the compare_two_barcodes function</span>
+
+<span class="sd">    :param barcode_1: The compared barcode 1</span>
+<span class="sd">    :param barcode_2: The compared barcode 2</span>
+<span class="sd">    :return: The text comparison result</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Return error text if two barcodes are not in the same type</span>
+    <span class="k">if</span> <span class="n">barcode_1</span><span class="o">.</span><span class="n">barcode_type</span> <span class="o">!=</span> <span class="n">barcode_2</span><span class="o">.</span><span class="n">barcode_type</span><span class="p">:</span>
+        <span class="n">result_text</span> <span class="o">=</span> <span class="s2">&quot;ERROR:</span><span class="se">\n</span><span class="s2">Comparison between different types of</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                      <span class="s2">&quot;barcode type </span><span class="si">{:s}</span><span class="s2"> and </span><span class="si">{:s}</span><span class="se">\n</span><span class="s2">are not allowed.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">barcode_1</span><span class="o">.</span><span class="n">barcode_type</span><span class="p">,</span>
+                                                                            <span class="n">barcode_2</span><span class="o">.</span><span class="n">barcode_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result_text</span>
+
+    <span class="c1"># Get the similarity score from the compare_two_barcodes function</span>
+    <span class="n">cross_corre</span><span class="p">,</span> <span class="n">loc_cross_corre</span><span class="p">,</span> <span class="n">nrmse</span><span class="p">,</span> <span class="n">ssim</span><span class="p">,</span> <span class="n">needleman</span><span class="p">,</span> <span class="n">smith</span> <span class="o">=</span> <span class="n">compare_two_barcodes</span><span class="p">(</span><span class="n">barcode_1</span><span class="p">,</span> <span class="n">barcode_2</span><span class="p">)</span>
+
+    <span class="c1"># Get the text result</span>
+    <span class="n">result_text</span> <span class="o">=</span> <span class="s2">&quot;Comparison metrics:</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                  <span class="s2">&quot;NRMSE Similarity:                  </span><span class="si">{:10.4f}</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                  <span class="s2">&quot;SSIM Similarity:                     </span><span class="si">{:10.4f}</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                  <span class="s2">&quot;Cross Correlation:                 </span><span class="si">{:10.4f}</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                  <span class="s2">&quot;Local Cross Correlation:         </span><span class="si">{:10.4f}</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                  <span class="s2">&quot;Needleman Wunsch Similarity:</span><span class="si">{:10.4f}</span><span class="se">\n</span><span class="s2">&quot;</span> \
+                  <span class="s2">&quot;Smith Waterman Similarity:     </span><span class="si">{:10.4f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nrmse</span><span class="p">,</span> <span class="n">ssim</span><span class="p">,</span> <span class="n">cross_corre</span><span class="p">,</span> <span class="n">loc_cross_corre</span><span class="p">,</span>
+                                                                   <span class="n">needleman</span><span class="p">,</span> <span class="n">smith</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result_text</span></div>
+
+
+<div class="viewcode-block" id="update_axes_title"><a class="viewcode-back" href="../../../tkinter_windows/gui_utils.html#kalmus.tkinter_windows.gui_utils.update_axes_title">[docs]</a><span class="k">def</span> <span class="nf">update_axes_title</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">barcode_1</span><span class="p">,</span> <span class="n">barcode_2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Update the title of the plotted axes</span>
+
+<span class="sd">    :param axes: The plotted axes of the figure</span>
+<span class="sd">    :param barcode_1: The barcode 1</span>
+<span class="sd">    :param barcode_2: The barcode 2</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">title_1</span> <span class="o">=</span> <span class="s2">&quot;Barcode 1&quot;</span>
+    <span class="n">title_2</span> <span class="o">=</span> <span class="s2">&quot;Barcode 2&quot;</span>
+
+    <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Film Title&quot;</span><span class="p">,</span> <span class="s2">&quot;Produced Year&quot;</span><span class="p">,</span> <span class="s2">&quot;Genre&quot;</span><span class="p">]</span>
+
+    <span class="c1"># Update the meta data into the title of the plotted figure</span>
+    <span class="k">if</span> <span class="n">barcode_1</span><span class="o">.</span><span class="n">meta_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">barcode_1</span><span class="o">.</span><span class="n">meta_data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">title_1</span> <span class="o">+=</span> <span class="s2">&quot;    </span><span class="si">{:s}</span><span class="s2">: </span><span class="si">{:s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">barcode_1</span><span class="o">.</span><span class="n">meta_data</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+
+    <span class="c1"># Update the Frame sampling type and color/brightness metric into the title</span>
+    <span class="n">title_1</span> <span class="o">+=</span> <span class="s2">&quot;    Frame Type:</span><span class="si">{:s}</span><span class="s2">    </span><span class="si">{:s}</span><span class="s2"> Metric:</span><span class="si">{:s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">barcode_1</span><span class="o">.</span><span class="n">frame_type</span><span class="p">,</span> <span class="n">barcode_1</span><span class="o">.</span><span class="n">barcode_type</span><span class="p">,</span>
+                                                                <span class="n">barcode_1</span><span class="o">.</span><span class="n">color_metric</span><span class="p">)</span>
+
+    <span class="c1"># Update the meta data into the title of the plotted figure</span>
+    <span class="k">if</span> <span class="n">barcode_2</span><span class="o">.</span><span class="n">meta_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">barcode_2</span><span class="o">.</span><span class="n">meta_data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">title_2</span> <span class="o">+=</span> <span class="s2">&quot;    </span><span class="si">{:s}</span><span class="s2">: </span><span class="si">{:s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">barcode_2</span><span class="o">.</span><span class="n">meta_data</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+
+    <span class="c1"># Update the Frame sampling type and color/brightness metric into the title</span>
+    <span class="n">title_2</span> <span class="o">+=</span> <span class="s2">&quot;    Frame Type:</span><span class="si">{:s}</span><span class="s2">    </span><span class="si">{:s}</span><span class="s2"> Metric:</span><span class="si">{:s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">barcode_2</span><span class="o">.</span><span class="n">frame_type</span><span class="p">,</span> <span class="n">barcode_2</span><span class="o">.</span><span class="n">barcode_type</span><span class="p">,</span>
+                                                                <span class="n">barcode_2</span><span class="o">.</span><span class="n">color_metric</span><span class="p">)</span>
+
+    <span class="c1"># Set up the title</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title_1</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title_2</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+    <span class="c1"># Change the histogram&#39;s label and xticks accordingly</span>
+    <span class="k">if</span> <span class="n">barcode_1</span><span class="o">.</span><span class="n">barcode_type</span> <span class="o">==</span> <span class="s2">&quot;Color&quot;</span><span class="p">:</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">361</span><span class="p">,</span> <span class="mi">30</span><span class="p">))</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Color Hue (0 - 360)&quot;</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Number of frames&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">barcode_1</span><span class="o">.</span><span class="n">barcode_type</span> <span class="o">==</span> <span class="s2">&quot;Brightness&quot;</span><span class="p">:</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Brightness (0 - 255)&quot;</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Number of frames&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">barcode_2</span><span class="o">.</span><span class="n">barcode_type</span> <span class="o">==</span> <span class="s2">&quot;Color&quot;</span><span class="p">:</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">361</span><span class="p">,</span> <span class="mi">30</span><span class="p">))</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Color Hue (0 - 360)&quot;</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Number of frames&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">barcode_2</span><span class="o">.</span><span class="n">barcode_type</span> <span class="o">==</span> <span class="s2">&quot;Brightness&quot;</span><span class="p">:</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">32</span><span class="p">))</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Brightness (0 - 255)&quot;</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Number of frames&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="update_graph"><a class="viewcode-back" href="../../../tkinter_windows/gui_utils.html#kalmus.tkinter_windows.gui_utils.update_graph">[docs]</a><span class="k">def</span> <span class="nf">update_graph</span><span class="p">(</span><span class="n">barcode_1</span><span class="p">,</span> <span class="n">barcode_2</span><span class="p">,</span> <span class="n">axes</span><span class="p">,</span> <span class="n">bin_step</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Update the plotted graph</span>
+
+<span class="sd">    :param barcode_1: The barcode 1</span>
+<span class="sd">    :param barcode_2: The barcode 2</span>
+<span class="sd">    :param axes: The axes of the plotted figure</span>
+<span class="sd">    :param bin_step: The step of histogram bin</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Plot the barcode with the correct color map based on their barcode types</span>
+    <span class="k">if</span> <span class="n">barcode_1</span><span class="o">.</span><span class="n">barcode_type</span> <span class="o">==</span> <span class="s2">&quot;Brightness&quot;</span><span class="p">:</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">barcode_1</span><span class="o">.</span><span class="n">get_barcode</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;uint8&quot;</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">barcode_1</span><span class="o">.</span><span class="n">get_barcode</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;uint8&quot;</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">barcode_2</span><span class="o">.</span><span class="n">barcode_type</span> <span class="o">==</span> <span class="s2">&quot;Brightness&quot;</span><span class="p">:</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">barcode_2</span><span class="o">.</span><span class="n">get_barcode</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;uint8&quot;</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">barcode_2</span><span class="o">.</span><span class="n">get_barcode</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;uint8&quot;</span><span class="p">))</span>
+
+    <span class="c1"># Rescale the axis range</span>
+    <span class="c1"># And update the plot</span>
+    <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="n">axes</span><span class="o">.</span><span class="n">ravel</span><span class="p">():</span>
+        <span class="n">axis</span><span class="o">.</span><span class="n">relim</span><span class="p">()</span>
+        <span class="n">axis</span><span class="o">.</span><span class="n">autoscale_view</span><span class="p">()</span>
+
+    <span class="c1"># Update the title of the plotted axes</span>
+    <span class="n">update_axes_title</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">barcode_1</span><span class="p">,</span> <span class="n">barcode_2</span><span class="p">)</span>
+
+    <span class="c1"># Update the histogram of the barcode 1</span>
+    <span class="n">update_hist</span><span class="p">(</span><span class="n">barcode_1</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">bin_step</span><span class="o">=</span><span class="n">bin_step</span><span class="p">)</span>
+
+    <span class="c1"># Update the histogram of the barcode 2</span>
+    <span class="n">update_hist</span><span class="p">(</span><span class="n">barcode_2</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">bin_step</span><span class="o">=</span><span class="n">bin_step</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="update_hist"><a class="viewcode-back" href="../../../tkinter_windows/gui_utils.html#kalmus.tkinter_windows.gui_utils.update_hist">[docs]</a><span class="k">def</span> <span class="nf">update_hist</span><span class="p">(</span><span class="n">barcode</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">bin_step</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Update the histogram of the plotted figure</span>
+
+<span class="sd">    :param barcode: The barcode of the corresponding histogram</span>
+<span class="sd">    :param ax: The axis that contain the histogram</span>
+<span class="sd">    :param bin_step: The step of the bin in the plotted histogram</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">bin_step</span> <span class="o">=</span> <span class="n">bin_step</span>
+
+    <span class="c1"># Plot the histogram based on the barcode&#39;s type</span>
+    <span class="k">if</span> <span class="n">barcode</span><span class="o">.</span><span class="n">barcode_type</span> <span class="o">==</span> <span class="s2">&quot;Color&quot;</span><span class="p">:</span>
+        <span class="c1"># If the barcode type is color</span>
+        <span class="c1"># Then plot the barcode&#39;s hue value</span>
+        <span class="n">normalized_barcode</span> <span class="o">=</span> <span class="n">barcode</span><span class="o">.</span><span class="n">get_barcode</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="mi">255</span>
+
+        <span class="n">hsv_colors</span> <span class="o">=</span> <span class="n">rgb2hsv</span><span class="p">(</span><span class="n">normalized_barcode</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="n">hue</span> <span class="o">=</span> <span class="n">hsv_colors</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">360</span>
+
+        <span class="n">N</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="n">patches</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">hue</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">361</span><span class="p">,</span> <span class="n">bin_step</span><span class="p">)))</span>
+
+        <span class="c1"># Paint each bin with its corresponding color in hue</span>
+        <span class="n">paint_hue_hist</span><span class="p">(</span><span class="n">bin_step</span><span class="p">,</span> <span class="n">patches</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># If the barcode type is brightness</span>
+        <span class="n">N</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="n">patches</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">barcode</span><span class="o">.</span><span class="n">brightness</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">bin_step</span><span class="p">)))</span>
+
+        <span class="c1"># Then paint each bin with its brightness intensity</span>
+        <span class="n">paint_gray_hist</span><span class="p">(</span><span class="n">bin_step</span><span class="p">,</span> <span class="n">patches</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="paint_hue_hist"><a class="viewcode-back" href="../../../tkinter_windows/gui_utils.html#kalmus.tkinter_windows.gui_utils.paint_hue_hist">[docs]</a><span class="k">def</span> <span class="nf">paint_hue_hist</span><span class="p">(</span><span class="n">bin_step</span><span class="p">,</span> <span class="n">patches</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Paint each bin of the hue histogram with its corresponding color in hue</span>
+
+<span class="sd">    :param bin_step: The step of the bin in the histogram</span>
+<span class="sd">    :param patches: The patches of the histogram that will be painted later</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Paint each bin of the histogram</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">patches</span><span class="p">)):</span>
+        <span class="c1"># Get the hue first</span>
+        <span class="n">hue</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span> <span class="o">*</span> <span class="n">bin_step</span> <span class="o">/</span> <span class="mf">360.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">)</span>
+        <span class="n">hue</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">hue</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Then get the corresponding color</span>
+        <span class="n">rgb</span> <span class="o">=</span> <span class="n">hsv2rgb</span><span class="p">(</span><span class="n">hue</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">rgb_tuple</span> <span class="o">=</span> <span class="p">(</span><span class="n">rgb</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">rgb</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">rgb</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+
+        <span class="c1"># Paint each patch of the histogram</span>
+        <span class="n">patches</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="n">rgb_tuple</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="paint_gray_hist"><a class="viewcode-back" href="../../../tkinter_windows/gui_utils.html#kalmus.tkinter_windows.gui_utils.paint_gray_hist">[docs]</a><span class="k">def</span> <span class="nf">paint_gray_hist</span><span class="p">(</span><span class="n">bin_step</span><span class="p">,</span> <span class="n">patches</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="mf">0.8</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Paint each bin of the brightness histogram with its corresponding brightness intensity</span>
+
+<span class="sd">    :param bin_step: The step of the bin in the histogram</span>
+<span class="sd">    :param patches: The patches of the histogram</span>
+<span class="sd">    :param opacity: Opacity of the brightness intensity to avoid totally white in the high intensity bin \</span>
+<span class="sd">                    To make the histogram bin in high intensity area more observable</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">patches</span><span class="p">)):</span>
+        <span class="c1"># Get the RGB gray color for each bin</span>
+        <span class="n">bri_rgb_tuple</span> <span class="o">=</span> <span class="p">(</span><span class="n">bin_step</span> <span class="o">*</span> <span class="n">i</span> <span class="o">*</span> <span class="n">opacity</span> <span class="o">/</span> <span class="mi">255</span><span class="p">,</span> <span class="n">bin_step</span> <span class="o">*</span> <span class="n">i</span> <span class="o">*</span> <span class="n">opacity</span> <span class="o">/</span> <span class="mi">255</span><span class="p">,</span> <span class="n">bin_step</span> <span class="o">*</span> <span class="n">i</span> <span class="o">*</span> <span class="n">opacity</span> <span class="o">/</span> <span class="mi">255</span><span class="p">)</span>
+        <span class="n">patches</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="n">bri_rgb_tuple</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="resource_path"><a class="viewcode-back" href="../../../tkinter_windows/gui_utils.html#kalmus.tkinter_windows.gui_utils.resource_path">[docs]</a><span class="k">def</span> <span class="nf">resource_path</span><span class="p">(</span><span class="n">relative_path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Internal utility function</span>
+<span class="sd">    Use to convert the input relative path to the absolute path</span>
+<span class="sd">    This is used for the Pyinstaller wrapper</span>
+
+<span class="sd">    :param relative_path: The relative path to the file</span>
+<span class="sd">    :return: The absolute path to the file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># If the MEIPASS base path exist</span>
+        <span class="n">base_path</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">_MEIPASS</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="c1"># Otherwise use the absolute path</span>
+        <span class="k">if</span> <span class="n">relative_path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.ico&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="s2">&quot;nt&quot;</span><span class="p">:</span>
+                <span class="n">relative_path</span> <span class="o">=</span> <span class="n">relative_path</span><span class="p">[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
+                <span class="n">relative_path</span> <span class="o">+=</span> <span class="s2">&quot;xbm&quot;</span>
+
+        <span class="n">base_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+        <span class="n">base_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_path</span><span class="p">,</span> <span class="s1">&#39;../data&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">relative_path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.xbm&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="s2">&quot;nt&quot;</span><span class="p">:</span>
+                <span class="n">base_path</span> <span class="o">=</span> <span class="s2">&quot;@&quot;</span> <span class="o">+</span> <span class="n">base_path</span>
+
+    <span class="c1"># Return the path</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_path</span><span class="p">,</span> <span class="n">relative_path</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Yida Chen, Eric Faden, and Nathan Ryan.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

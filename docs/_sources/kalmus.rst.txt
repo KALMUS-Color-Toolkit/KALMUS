@@ -17,3 +17,12 @@ Utils
    utils/Artist
    utils/measure_utils
    utils/visualization_utils
+
+UI Window Classes
+-------------------
+.. toctree::
+   :maxdepth: 4
+
+   tkinter_windows/MainWindow
+   tkinter_windows/GenerateBarcodeWindow
+   tkinter_windows/gui_utils

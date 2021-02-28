@@ -5,7 +5,7 @@ from tkinter.messagebox import showerror, showinfo
 import copy
 import os
 
-from kalmus.tkinter_windows.KALMUS_utils import resource_path, update_graph
+from kalmus.tkinter_windows.gui_utils import resource_path, update_graph
 
 
 class LoadJsonWindow():

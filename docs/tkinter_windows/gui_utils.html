@@ -1,0 +1,365 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="python" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>GUI Utility &mdash; KALMUS 1.3.6 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Acknowledgement" href="../acknowledge.html" />
+    <link rel="prev" title="GenerateBarcodeWindow Class" href="GenerateBarcodeWindow.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> KALMUS
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../kalmus.html">API Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../kalmus.html#barcode-classes">Barcode Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kalmus.html#utils">Utils</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../kalmus.html#ui-window-classes">UI Window Classes</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="MainWindow.html">MainWindow Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="GenerateBarcodeWindow.html">GenerateBarcodeWindow Class</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">GUI Utility</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../acknowledge.html">Acknowledgement</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">KALMUS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../kalmus.html">KALMUS Color Toolkit (KALMUS): API Documentation</a> &raquo;</li>
+        
+      <li>GUI Utility</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/tkinter_windows/gui_utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-kalmus.tkinter_windows.gui_utils">
+<span id="gui-utility"></span><h1>GUI Utility<a class="headerlink" href="#module-kalmus.tkinter_windows.gui_utils" title="Permalink to this headline">¶</a></h1>
+<p>KALMUS tkinter GUI utility</p>
+<dl class="py function">
+<dt id="kalmus.tkinter_windows.gui_utils.compare_two_barcodes">
+<code class="sig-prename descclassname"><span class="pre">kalmus.tkinter_windows.gui_utils.</span></code><code class="sig-name descname"><span class="pre">compare_two_barcodes</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">barcode_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">barcode_2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/tkinter_windows/gui_utils.html#compare_two_barcodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.gui_utils.compare_two_barcodes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compare the similarity between two barcodes using NRMSE, SSIM, cross correlation, local cross correlation,
+Needleman Wunsch, and Smith Waterman alignment matching</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>barcode_1</strong> -- The input barcode 1</p></li>
+<li><p><strong>barcode_2</strong> -- The input barcode 2</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The simiarity scores computed using all six metrics</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="kalmus.tkinter_windows.gui_utils.get_comparison_result_text">
+<code class="sig-prename descclassname"><span class="pre">kalmus.tkinter_windows.gui_utils.</span></code><code class="sig-name descname"><span class="pre">get_comparison_result_text</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">barcode_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">barcode_2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/tkinter_windows/gui_utils.html#get_comparison_result_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.gui_utils.get_comparison_result_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the text comparison result using the compare_two_barcodes function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>barcode_1</strong> -- The compared barcode 1</p></li>
+<li><p><strong>barcode_2</strong> -- The compared barcode 2</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The text comparison result</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="kalmus.tkinter_windows.gui_utils.paint_gray_hist">
+<code class="sig-prename descclassname"><span class="pre">kalmus.tkinter_windows.gui_utils.</span></code><code class="sig-name descname"><span class="pre">paint_gray_hist</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bin_step</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patches</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opacity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.8</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/tkinter_windows/gui_utils.html#paint_gray_hist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.gui_utils.paint_gray_hist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Paint each bin of the brightness histogram with its corresponding brightness intensity</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bin_step</strong> -- The step of the bin in the histogram</p></li>
+<li><p><strong>patches</strong> -- The patches of the histogram</p></li>
+<li><p><strong>opacity</strong> -- Opacity of the brightness intensity to avoid totally white in the high intensity bin                     To make the histogram bin in high intensity area more observable</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="kalmus.tkinter_windows.gui_utils.paint_hue_hist">
+<code class="sig-prename descclassname"><span class="pre">kalmus.tkinter_windows.gui_utils.</span></code><code class="sig-name descname"><span class="pre">paint_hue_hist</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bin_step</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patches</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/tkinter_windows/gui_utils.html#paint_hue_hist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.gui_utils.paint_hue_hist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Paint each bin of the hue histogram with its corresponding color in hue</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bin_step</strong> -- The step of the bin in the histogram</p></li>
+<li><p><strong>patches</strong> -- The patches of the histogram that will be painted later</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="kalmus.tkinter_windows.gui_utils.resource_path">
+<code class="sig-prename descclassname"><span class="pre">kalmus.tkinter_windows.gui_utils.</span></code><code class="sig-name descname"><span class="pre">resource_path</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relative_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/tkinter_windows/gui_utils.html#resource_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.gui_utils.resource_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Internal utility function
+Use to convert the input relative path to the absolute path
+This is used for the Pyinstaller wrapper</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>relative_path</strong> -- The relative path to the file</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The absolute path to the file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="kalmus.tkinter_windows.gui_utils.update_axes_title">
+<code class="sig-prename descclassname"><span class="pre">kalmus.tkinter_windows.gui_utils.</span></code><code class="sig-name descname"><span class="pre">update_axes_title</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">barcode_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">barcode_2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/tkinter_windows/gui_utils.html#update_axes_title"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.gui_utils.update_axes_title" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the title of the plotted axes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axes</strong> -- The plotted axes of the figure</p></li>
+<li><p><strong>barcode_1</strong> -- The barcode 1</p></li>
+<li><p><strong>barcode_2</strong> -- The barcode 2</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="kalmus.tkinter_windows.gui_utils.update_graph">
+<code class="sig-prename descclassname"><span class="pre">kalmus.tkinter_windows.gui_utils.</span></code><code class="sig-name descname"><span class="pre">update_graph</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">barcode_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">barcode_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bin_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/tkinter_windows/gui_utils.html#update_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.gui_utils.update_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the plotted graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>barcode_1</strong> -- The barcode 1</p></li>
+<li><p><strong>barcode_2</strong> -- The barcode 2</p></li>
+<li><p><strong>axes</strong> -- The axes of the plotted figure</p></li>
+<li><p><strong>bin_step</strong> -- The step of histogram bin</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="kalmus.tkinter_windows.gui_utils.update_hist">
+<code class="sig-prename descclassname"><span class="pre">kalmus.tkinter_windows.gui_utils.</span></code><code class="sig-name descname"><span class="pre">update_hist</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">barcode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bin_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/tkinter_windows/gui_utils.html#update_hist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.gui_utils.update_hist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the histogram of the plotted figure</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>barcode</strong> -- The barcode of the corresponding histogram</p></li>
+<li><p><strong>ax</strong> -- The axis that contain the histogram</p></li>
+<li><p><strong>bin_step</strong> -- The step of the bin in the plotted histogram</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../acknowledge.html" class="btn btn-neutral float-right" title="Acknowledgement" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="GenerateBarcodeWindow.html" class="btn btn-neutral float-left" title="GenerateBarcodeWindow Class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Yida Chen, Eric Faden, and Nathan Ryan.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

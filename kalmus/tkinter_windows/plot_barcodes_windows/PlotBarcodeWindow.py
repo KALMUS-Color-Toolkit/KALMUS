@@ -15,7 +15,7 @@ import numpy as np
 import os
 
 from kalmus.utils.visualization_utils import show_colors_in_cube
-from kalmus.tkinter_windows.KALMUS_utils import resource_path, update_hist
+from kalmus.tkinter_windows.gui_utils import resource_path, update_hist
 import kalmus.utils.Artist
 from skimage.color import rgb2hsv
 

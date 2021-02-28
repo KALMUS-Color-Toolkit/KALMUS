@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Python Module Index &mdash; KALMUS 1.3.6 documentation</title>
+  <title>Installation Guide &mdash; KALMUS 1.3.6 documentation</title>
   
 
   
@@ -38,9 +38,8 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
- 
-
-
+    <link rel="next" title="KALMUS Color Toolkit (KALMUS): API Documentation" href="kalmus.html" />
+    <link rel="prev" title="Welcome to KALMUS&#39;s documentation!" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -85,9 +84,9 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="index.html">Home</a></li>
-<li class="toctree-l1"><a class="reference internal" href="install.html">Installation Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kalmus.html">API Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="acknowledge.html">Acknowledgement</a></li>
 </ul>
@@ -138,10 +137,14 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Python Module Index</li>
+      <li>Installation Guide</li>
     
     
       <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/install.rst.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
     
@@ -153,70 +156,35 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-
-   <h1>Python Module Index</h1>
-
-   <div class="modindex-jumpbox">
-   <a href="#cap-k"><strong>k</strong></a>
-   </div>
-
-   <table class="indextable modindextable">
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-k"><td></td><td>
-       <strong>k</strong></td><td></td></tr>
-     <tr>
-       <td><img src="_static/minus.png" class="toggler"
-              id="toggle-1" style="display: none" alt="-" /></td>
-       <td>
-       <code class="xref">kalmus</code></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="barcodes/Barcodes.html#module-kalmus.barcodes.Barcode"><code class="xref">kalmus.barcodes.Barcode</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="barcodes/BarcodeGenerator.html#module-kalmus.barcodes.BarcodeGenerator"><code class="xref">kalmus.barcodes.BarcodeGenerator</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="tkinter_windows/GenerateBarcodeWindow.html#module-kalmus.tkinter_windows.GenerateBarcodeWindow"><code class="xref">kalmus.tkinter_windows.GenerateBarcodeWindow</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="tkinter_windows/gui_utils.html#module-kalmus.tkinter_windows.gui_utils"><code class="xref">kalmus.tkinter_windows.gui_utils</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="tkinter_windows/MainWindow.html#module-kalmus.tkinter_windows.MainWindowVersion2"><code class="xref">kalmus.tkinter_windows.MainWindowVersion2</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="utils/Artist.html#module-kalmus.utils.Artist"><code class="xref">kalmus.utils.Artist</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="utils/measure_utils.html#module-kalmus.utils.measure_utils"><code class="xref">kalmus.utils.measure_utils</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="utils/visualization_utils.html#module-kalmus.utils.visualization_utils"><code class="xref">kalmus.utils.visualization_utils</code></a></td><td>
-       <em></em></td></tr>
-   </table>
+  <div class="section" id="installation-guide">
+<h1>Installation Guide<a class="headerlink" href="#installation-guide" title="Permalink to this headline">¶</a></h1>
+<p>The Kalmus package requires a python with version 3.7 and onward.
+The package is released on PyPI (<a class="reference external" href="https://pypi.org/project/kalmus/">Project Homepage</a>). After you install the
+python&gt;=3.7, you can install the kalmus using pip (recommended):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">kalmus</span>
+</pre></div>
+</div>
+<p>Alternatively, you could install the KALMUS locally by first cloning the GitHub repo of Kalmus (<a class="reference external" href="https://github.com/KALMUS-Color-Toolkit/KALMUS">GitHub page</a>).
+Then, move to the top directory of cloned KALMUS project folder and install using pip command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">.</span>
+</pre></div>
+</div>
+<p>In both methods, the package's dependencies will be automatically installed. You can verify if the kalmus has been
+installed in your environment using pip command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">show</span> <span class="n">kalmus</span>
+</pre></div>
+</div>
+</div>
 
 
            </div>
            
           </div>
           <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="kalmus.html" class="btn btn-neutral float-right" title="KALMUS Color Toolkit (KALMUS): API Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to KALMUS&#39;s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
 
   <hr/>
 

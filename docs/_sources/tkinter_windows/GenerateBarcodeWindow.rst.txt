@@ -1,0 +1,7 @@
+GenerateBarcodeWindow Class
+*****************************
+
+.. automodule:: kalmus.tkinter_windows.GenerateBarcodeWindow
+    :members: GenerateBarcodeWindow
+    :undoc-members:
+    :show-inheritance:

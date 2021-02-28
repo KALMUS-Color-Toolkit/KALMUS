@@ -1,0 +1,4 @@
+Acknowledgement
+===================
+
+The authors wish to thank the Mellon Foundation, the Dalal Family Foundation, and the Bucknell University Humanities Center for their support on this project. The project is released under the open-source MIT License.

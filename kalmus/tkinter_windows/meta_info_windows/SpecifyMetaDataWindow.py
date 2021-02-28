@@ -3,7 +3,7 @@
 import tkinter
 import copy
 
-from kalmus.tkinter_windows.KALMUS_utils import resource_path
+from kalmus.tkinter_windows.gui_utils import resource_path
 
 # Available genre options
 genres = ["Comedy", "Drama", "Western", "Science Fiction", "War", "Melodrama", "Mystery/Thriller", "Action/Adventure",

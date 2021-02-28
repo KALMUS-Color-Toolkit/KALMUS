@@ -1,7 +1,7 @@
 """ LoadStackWindow Class """
 
 import tkinter
-from kalmus.tkinter_windows.KALMUS_utils import update_graph, resource_path
+from kalmus.tkinter_windows.gui_utils import update_graph, resource_path
 import copy
 
 

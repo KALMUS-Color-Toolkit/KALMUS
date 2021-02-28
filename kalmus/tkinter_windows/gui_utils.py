@@ -1,4 +1,4 @@
-""" KALMUS tkinter utility """
+""" KALMUS tkinter GUI utility """
 
 import cv2
 import kalmus.utils.measure_utils as measure_utils
@@ -12,6 +12,7 @@ def compare_two_barcodes(barcode_1, barcode_2):
     """
     Compare the similarity between two barcodes using NRMSE, SSIM, cross correlation, local cross correlation,
     Needleman Wunsch, and Smith Waterman alignment matching
+
     :param barcode_1: The input barcode 1
     :param barcode_2: The input barcode 2
     :return: The simiarity scores computed using all six metrics
@@ -73,6 +74,7 @@ def compare_two_barcodes(barcode_1, barcode_2):
 def get_comparison_result_text(barcode_1, barcode_2):
     """
     Get the text comparison result using the compare_two_barcodes function
+
     :param barcode_1: The compared barcode 1
     :param barcode_2: The compared barcode 2
     :return: The text comparison result
@@ -102,6 +104,7 @@ def get_comparison_result_text(barcode_1, barcode_2):
 def update_axes_title(axes, barcode_1, barcode_2):
     """
     Update the title of the plotted axes
+
     :param axes: The plotted axes of the figure
     :param barcode_1: The barcode 1
     :param barcode_2: The barcode 2
@@ -159,6 +162,7 @@ def update_axes_title(axes, barcode_1, barcode_2):
 def update_graph(barcode_1, barcode_2, axes, bin_step=5):
     """
     Update the plotted graph
+
     :param barcode_1: The barcode 1
     :param barcode_2: The barcode 2
     :param axes: The axes of the plotted figure
@@ -195,6 +199,7 @@ def update_graph(barcode_1, barcode_2, axes, bin_step=5):
 def update_hist(barcode, ax, bin_step=5):
     """
     Update the histogram of the plotted figure
+
     :param barcode: The barcode of the corresponding histogram
     :param ax: The axis that contain the histogram
     :param bin_step: The step of the bin in the plotted histogram
@@ -226,6 +231,7 @@ def update_hist(barcode, ax, bin_step=5):
 def paint_hue_hist(bin_step, patches):
     """
     Paint each bin of the hue histogram with its corresponding color in hue
+
     :param bin_step: The step of the bin in the histogram
     :param patches: The patches of the histogram that will be painted later
     :return:
@@ -247,9 +253,10 @@ def paint_hue_hist(bin_step, patches):
 def paint_gray_hist(bin_step, patches, opacity=0.8):
     """
     Paint each bin of the brightness histogram with its corresponding brightness intensity
+
     :param bin_step: The step of the bin in the histogram
     :param patches: The patches of the histogram
-    :param opacity: Opacity of the brightness intensity to avoid totally white in the high intensity bin
+    :param opacity: Opacity of the brightness intensity to avoid totally white in the high intensity bin \
                     To make the histogram bin in high intensity area more observable
     :return:
     """
@@ -261,8 +268,10 @@ def paint_gray_hist(bin_step, patches, opacity=0.8):
 
 def resource_path(relative_path):
     """
+    Internal utility function
     Use to convert the input relative path to the absolute path
     This is used for the Pyinstaller wrapper
+
     :param relative_path: The relative path to the file
     :return: The absolute path to the file
     """

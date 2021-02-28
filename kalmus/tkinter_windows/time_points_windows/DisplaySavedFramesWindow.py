@@ -2,7 +2,7 @@
 
 import tkinter
 
-from kalmus.tkinter_windows.KALMUS_utils import resource_path
+from kalmus.tkinter_windows.gui_utils import resource_path
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
 import numpy as np

@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import cv2
 import os
 
-from kalmus.tkinter_windows.KALMUS_utils import resource_path
+from kalmus.tkinter_windows.gui_utils import resource_path
 
 
 class SaveImageWindow():

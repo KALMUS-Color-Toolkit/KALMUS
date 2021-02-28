@@ -1,0 +1,7 @@
+GUI Utility
+******************
+
+.. automodule:: kalmus.tkinter_windows.gui_utils
+    :members: compare_two_barcodes, get_comparison_result_text, update_graph, update_hist, paint_hue_hist, paint_gray_hist, update_axes_title, resource_path
+    :undoc-members:
+    :show-inheritance:

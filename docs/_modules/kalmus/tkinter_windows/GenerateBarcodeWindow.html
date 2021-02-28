@@ -1,0 +1,830 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="python" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>kalmus.tkinter_windows.GenerateBarcodeWindow &mdash; KALMUS 1.3.6 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> KALMUS
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kalmus.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../acknowledge.html">Acknowledgement</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">KALMUS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>kalmus.tkinter_windows.GenerateBarcodeWindow</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for kalmus.tkinter_windows.GenerateBarcodeWindow</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot; GenerateBarcodeWindow Class &quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">tkinter</span>
+<span class="kn">import</span> <span class="nn">tkinter.filedialog</span>
+<span class="kn">from</span> <span class="nn">tkinter.messagebox</span> <span class="k">import</span> <span class="n">showerror</span><span class="p">,</span> <span class="n">showwarning</span><span class="p">,</span> <span class="n">showinfo</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+
+<span class="kn">from</span> <span class="nn">kalmus.tkinter_windows.meta_info_windows.SpecifyMetaDataWindow</span> <span class="k">import</span> <span class="n">SpecifyMetaDataWindow</span>
+<span class="kn">from</span> <span class="nn">kalmus.tkinter_windows.gui_utils</span> <span class="k">import</span> <span class="n">resource_path</span>
+
+
+<div class="viewcode-block" id="GenerateBarcodeWindow"><a class="viewcode-back" href="../../../tkinter_windows/GenerateBarcodeWindow.html#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow">[docs]</a><span class="k">class</span> <span class="nc">GenerateBarcodeWindow</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    GenerateBarcodeWindow Class</span>
+<span class="sd">    GUI window for user to generate the barcode from a video file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">barcode_generator</span><span class="p">,</span> <span class="n">barcode_stack</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize</span>
+
+<span class="sd">        :param barcode_generator: The barcode generator</span>
+<span class="sd">        :param barcode_stack: The dictionary that stores all the barcode on the memory</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">barcode_generator</span> <span class="o">=</span> <span class="n">barcode_generator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">barcode_stack</span> <span class="o">=</span> <span class="n">barcode_stack</span>
+
+        <span class="c1"># Initialize the window</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">wm_title</span><span class="p">(</span><span class="s2">&quot;Barcode Generator&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">iconbitmap</span><span class="p">(</span><span class="n">resource_path</span><span class="p">(</span><span class="s2">&quot;kalmus_icon.ico&quot;</span><span class="p">))</span>
+
+        <span class="c1"># A temporary meta data dictionary that will hold the meta information given by the user</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta_data_dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># video object capture by cv2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">video</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Label prompt for the generated barcode&#39;s barcode type</span>
+        <span class="n">barcode_type_label</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Barcode Type: &quot;</span><span class="p">)</span>
+        <span class="n">barcode_type_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Label prompt for the frame sampling type</span>
+        <span class="n">frame_type_label</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Frame Type: &quot;</span><span class="p">)</span>
+        <span class="n">frame_type_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Label prompt for the color/brightness metric</span>
+        <span class="n">color_metric_label</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Color metric: &quot;</span><span class="p">)</span>
+        <span class="n">color_metric_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Variable that stores the user&#39;s choice of generated barcode type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">barcode_type_var</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">StringVar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">barcode_type_var</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;Color&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Dropdown menu for the barcode type selection</span>
+        <span class="n">dropdown_bar_type</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">OptionMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode_type_var</span><span class="p">,</span> <span class="s2">&quot;Color&quot;</span><span class="p">,</span> <span class="s2">&quot;Brightness&quot;</span><span class="p">)</span>
+        <span class="n">dropdown_bar_type</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Variable that stores the user&#39;s choice of frame sampling type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frame_type_var</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">StringVar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frame_type_var</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;Whole_frame&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Dropdown menu for the frame sampling type selection</span>
+        <span class="n">dropdown_frame_type</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">OptionMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_type_var</span><span class="p">,</span> <span class="s2">&quot;Whole_frame&quot;</span><span class="p">,</span> <span class="s2">&quot;Low_contrast_region&quot;</span><span class="p">,</span>
+                                                 <span class="s2">&quot;High_contrast_region&quot;</span><span class="p">,</span> <span class="s2">&quot;Foreground&quot;</span><span class="p">,</span> <span class="s2">&quot;Background&quot;</span><span class="p">)</span>
+        <span class="n">dropdown_frame_type</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Variable that stores the user&#39;s choice of color metric</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color_metric_var</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">StringVar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color_metric_var</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;Average&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Dropdown menu for the color metric selection</span>
+        <span class="n">dropdown_color_metric</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">OptionMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_metric_var</span><span class="p">,</span> <span class="s2">&quot;Average&quot;</span><span class="p">,</span> <span class="s2">&quot;Median&quot;</span><span class="p">,</span> <span class="s2">&quot;Mode&quot;</span><span class="p">,</span>
+                                                   <span class="s2">&quot;Top-dominant&quot;</span><span class="p">,</span> <span class="s2">&quot;Weighted-dominant&quot;</span><span class="p">,</span> <span class="s2">&quot;Bright&quot;</span><span class="p">,</span> <span class="s2">&quot;Brightest&quot;</span><span class="p">)</span>
+        <span class="n">dropdown_color_metric</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Label prompt for the skip over specification</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">skip_over_label</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Start at (frames): &quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">skip_over_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># Label prompt for the sample rate specification</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sampled_rate_label</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Sample every (frames): &quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sampled_rate_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># Label prompt for the total frame included specification</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_frames_label</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Total frames: &quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_frames_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># Acquisition unit specification (in frames or in time)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">acquisition_label</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Acquistion unit&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">acquisition_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+        <span class="c1"># Variable that stores the user&#39;s choice of acquisition unit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">acquisition_option</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">StringVar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">acquisition_option</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;Frame&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Radio button for the Acquisition unit (Frame/Time) selection</span>
+        <span class="n">radio_frame</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Radiobutton</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Frame&quot;</span><span class="p">,</span> <span class="n">variable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">acquisition_option</span><span class="p">,</span>
+                                          <span class="n">value</span><span class="o">=</span><span class="s2">&quot;Frame&quot;</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span>
+                                          <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">frame_unit</span><span class="p">)</span>
+        <span class="n">radio_frame</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
+        <span class="n">radio_frame</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
+
+        <span class="n">radio_time</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Radiobutton</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Time&quot;</span><span class="p">,</span> <span class="n">variable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">acquisition_option</span><span class="p">,</span>
+                                         <span class="n">value</span><span class="o">=</span><span class="s2">&quot;Time&quot;</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span>
+                                         <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_unit</span><span class="p">)</span>
+        <span class="n">radio_time</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
+
+        <span class="c1"># Text entry for the skip over specification</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">skip_over_entry</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">skip_over_entry</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># Text entry for the sampling rate specification</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sampled_rate_entry</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sampled_rate_entry</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># Text entry for the total frames specification</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_frames_entry</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="s2">&quot;1000&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_frames_entry</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># Label prompt for the video file name input</span>
+        <span class="n">video_filename_label</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Media file path: &quot;</span><span class="p">)</span>
+        <span class="n">video_filename_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Text entry for the video file name specification</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">video_filename_entry</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">55</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">video_filename_entry</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+        <span class="c1"># Button to browse the folder</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">browse_folder_button</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Browse&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">browse_folder</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">browse_folder_button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+        <span class="c1"># Variable that stores the letter box option (automatic/user defined)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">letterbox_option</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">StringVar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">letterbox_option</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;Auto&quot;</span><span class="p">)</span>  <span class="c1"># initialize</span>
+
+        <span class="c1"># Label prompt for the letter box remove option</span>
+        <span class="n">letterbox_label</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Remove Letterbox: &quot;</span><span class="p">)</span>
+        <span class="n">letterbox_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Radio button for the letter box remove option</span>
+        <span class="n">radio_auto</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Radiobutton</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Auto&quot;</span><span class="p">,</span> <span class="n">variable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">letterbox_option</span><span class="p">,</span>
+                                         <span class="n">value</span><span class="o">=</span><span class="s2">&quot;Auto&quot;</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span>
+                                         <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">disable_setup</span><span class="p">)</span>
+        <span class="n">radio_auto</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
+        <span class="n">radio_auto</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
+
+        <span class="n">radio_manual</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Radiobutton</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Manual&quot;</span><span class="p">,</span> <span class="n">variable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">letterbox_option</span><span class="p">,</span>
+                                           <span class="n">value</span><span class="o">=</span><span class="s2">&quot;Manual&quot;</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span>
+                                           <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">enable_setup</span><span class="p">)</span>
+        <span class="n">radio_manual</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
+
+        <span class="c1"># User defined letter box label prompt</span>
+        <span class="n">high_ver_label</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Upper vertical: &quot;</span><span class="p">)</span>
+        <span class="n">high_ver_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">low_ver_label</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Lower vertical: &quot;</span><span class="p">)</span>
+        <span class="n">low_ver_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># User defined letter box text entry</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">high_ver_entry</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="s2">&quot;-1&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">high_ver_entry</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">low_ver_entry</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="s2">&quot;-2&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">low_ver_entry</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
+
+        <span class="n">left_hor_label</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Left horizontal: &quot;</span><span class="p">)</span>
+        <span class="n">left_hor_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">right_hor_label</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;right horizontal: &quot;</span><span class="p">)</span>
+        <span class="n">right_hor_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">left_hor_entry</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="s2">&quot;-3&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left_hor_entry</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">right_hor_entry</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="s2">&quot;-4&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right_hor_entry</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Variable that stores 0 for not saving frames during the generation 1 for saving frames during the generation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">var_saved_frame</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">IntVar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">)</span>
+
+        <span class="c1"># Checkbox for the user to choose whether save the frames or not during barcode generation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkbox_saved_frame</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Checkbutton</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Save Frames  &quot;</span><span class="p">,</span>
+                                                        <span class="n">variable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">var_saved_frame</span><span class="p">,</span>
+                                                        <span class="n">onvalue</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">offvalue</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">update_save_frame_entry</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkbox_saved_frame</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Label prompt for saving frame</span>
+        <span class="n">save_frame_label</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Save every (secs):&quot;</span><span class="p">)</span>
+        <span class="n">save_frame_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">E</span><span class="p">)</span>
+
+        <span class="c1"># Text entry for the saved frames rate specification</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_frame_entry</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="s2">&quot;-8&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_frame_entry</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_frame_entry</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">END</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_frame_entry</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_frame_entry</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Variable that stores 0 for not saving frames during the generation 1 for rescaling frame</span>
+        <span class="c1"># during the generation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">var_rescale_frame</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">IntVar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">)</span>
+
+        <span class="c1"># Checkbox for the user to choose whether to rescale the frames or not during the barcode generation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkbox_rescale_frame</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Checkbutton</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Rescale Frames&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+                                                          <span class="n">variable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">var_rescale_frame</span><span class="p">,</span>
+                                                          <span class="n">onvalue</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">offvalue</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">update_rescale_entry</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkbox_rescale_frame</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">E</span><span class="p">)</span>
+
+        <span class="c1"># Text entry for the rescale factor specification</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rescale_factor_entry</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="s2">&quot;-7&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rescale_factor_entry</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rescale_factor_entry</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">END</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rescale_factor_entry</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;0.5&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rescale_factor_entry</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Variable that stores 0 for single thread generation 1 for multi-thread generation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">var_multi_thread</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">IntVar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">)</span>
+
+        <span class="c1"># Checkbox for the user to choose whether use the multi-thread or not for barcode generation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkbox_multi_thread</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Checkbutton</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Multi-Thread:&quot;</span><span class="p">,</span>
+                                                         <span class="n">variable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">var_multi_thread</span><span class="p">,</span>
+                                                         <span class="n">onvalue</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">offvalue</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">update_thread_entry</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkbox_multi_thread</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Text entry for the thread specification</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thread_entry</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="s2">&quot;-6&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thread_entry</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thread_entry</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">END</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thread_entry</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thread_entry</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Button to generate the barcode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">generate_button</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Generate Barcode&quot;</span><span class="p">,</span>
+                                              <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">generate_barcode_thread</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">generate_button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">W</span><span class="p">,</span> <span class="n">rowspan</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+        <span class="c1"># Button to specify the meta data of the generated barcode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">specify_data_button</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Specify Meta Data&quot;</span><span class="p">,</span>
+                                                  <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">specify_data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">specify_data_button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">W</span><span class="p">,</span> <span class="n">rowspan</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">protocol</span><span class="p">(</span><span class="s2">&quot;WM_DELETE_WINDOW&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">quit</span><span class="p">)</span>
+
+        <span class="c1"># Start the window</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+
+<div class="viewcode-block" id="GenerateBarcodeWindow.quit"><a class="viewcode-back" href="../../../tkinter_windows/GenerateBarcodeWindow.html#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.quit">[docs]</a>    <span class="k">def</span> <span class="nf">quit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Quit the main window</span>
+
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="GenerateBarcodeWindow.specify_data"><a class="viewcode-back" href="../../../tkinter_windows/GenerateBarcodeWindow.html#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.specify_data">[docs]</a>    <span class="k">def</span> <span class="nf">specify_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Instantiate the SpecifyMetaDataWindow</span>
+
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">SpecifyMetaDataWindow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meta_data_dict</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GenerateBarcodeWindow.update_thread_entry"><a class="viewcode-back" href="../../../tkinter_windows/GenerateBarcodeWindow.html#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.update_thread_entry">[docs]</a>    <span class="k">def</span> <span class="nf">update_thread_entry</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Enable or disable and change the label prompt when user check/uncheck the multi-thread checkbox</span>
+
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_multi_thread</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">checkbox_multi_thread</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Multi-Thread:&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">thread_entry</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_multi_thread</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">checkbox_multi_thread</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;# of Threads:&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">thread_entry</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GenerateBarcodeWindow.update_rescale_entry"><a class="viewcode-back" href="../../../tkinter_windows/GenerateBarcodeWindow.html#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.update_rescale_entry">[docs]</a>    <span class="k">def</span> <span class="nf">update_rescale_entry</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Enable or disable and change the label prompt when user check/uncheck the rescale frames checkbox</span>
+
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_rescale_frame</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">checkbox_rescale_frame</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Rescale Frames&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rescale_factor_entry</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_rescale_frame</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">checkbox_rescale_frame</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;By a factor of: &quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rescale_factor_entry</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GenerateBarcodeWindow.update_save_frame_entry"><a class="viewcode-back" href="../../../tkinter_windows/GenerateBarcodeWindow.html#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.update_save_frame_entry">[docs]</a>    <span class="k">def</span> <span class="nf">update_save_frame_entry</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Enable or disable the text entry when user check/uncheck the save frames checkbox</span>
+
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_saved_frame</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_frame_entry</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_saved_frame</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_frame_entry</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GenerateBarcodeWindow.time_unit"><a class="viewcode-back" href="../../../tkinter_windows/GenerateBarcodeWindow.html#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.time_unit">[docs]</a>    <span class="k">def</span> <span class="nf">time_unit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Change the acquisition unit to Time when user switch to the time radio button</span>
+
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">skip_over_label</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Start at (mins:secs): &quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sampled_rate_label</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Sample every (secs): &quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_frames_label</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;End at (mins:secs): &quot;</span></div>
+
+<div class="viewcode-block" id="GenerateBarcodeWindow.frame_unit"><a class="viewcode-back" href="../../../tkinter_windows/GenerateBarcodeWindow.html#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.frame_unit">[docs]</a>    <span class="k">def</span> <span class="nf">frame_unit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Change the acquisition unit to Frame when user switch to the frame radio button</span>
+
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">skip_over_label</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Start at (frames): &quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sampled_rate_label</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Sample every (frames): &quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_frames_label</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Total frames: &quot;</span></div>
+
+<div class="viewcode-block" id="GenerateBarcodeWindow.browse_folder"><a class="viewcode-back" href="../../../tkinter_windows/GenerateBarcodeWindow.html#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.browse_folder">[docs]</a>    <span class="k">def</span> <span class="nf">browse_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Browse the folder</span>
+
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get the file name from the user specification</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">filedialog</span><span class="o">.</span><span class="n">askopenfilename</span><span class="p">(</span><span class="n">initialdir</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Select Media file&quot;</span><span class="p">,</span>
+                                                      <span class="n">filetypes</span><span class="o">=</span><span class="p">((</span><span class="s2">&quot;mp4 files&quot;</span><span class="p">,</span> <span class="s2">&quot;*.mp4&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;avi files&quot;</span><span class="p">,</span> <span class="s2">&quot;*.avi&quot;</span><span class="p">),</span>
+                                                                 <span class="p">(</span><span class="s2">&quot;m4v files&quot;</span><span class="p">,</span> <span class="s2">&quot;*.m4v&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;All files&quot;</span><span class="p">,</span> <span class="s2">&quot;*.*&quot;</span><span class="p">)))</span>
+
+        <span class="c1"># Update the file name to the text entry</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">video_filename_entry</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">END</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">video_filename_entry</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GenerateBarcodeWindow.generate_barcode_thread"><a class="viewcode-back" href="../../../tkinter_windows/GenerateBarcodeWindow.html#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.generate_barcode_thread">[docs]</a>    <span class="k">def</span> <span class="nf">generate_barcode_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate the barcode in a another thread</span>
+<span class="sd">        to avoid the frozen tkinter window issue</span>
+
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">generate_barcode</span><span class="p">)</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="GenerateBarcodeWindow.acquire_generation_param"><a class="viewcode-back" href="../../../tkinter_windows/GenerateBarcodeWindow.html#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.acquire_generation_param">[docs]</a>    <span class="k">def</span> <span class="nf">acquire_generation_param</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Acquire the barcode generation parameters</span>
+
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get barcode type, frame sampling type, and color/brightness metric</span>
+        <span class="n">barcode_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode_type_var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">frame_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_type_var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">color_metric</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_metric_var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+        <span class="c1"># Get the acquisition unit</span>
+        <span class="n">unit_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acquisition_option</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+        <span class="c1"># Get the file name/path of the input video</span>
+        <span class="n">video_filename</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">video_filename_entry</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">video_filename</span><span class="p">):</span>
+            <span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Video File Not Exists&quot;</span><span class="p">,</span> <span class="s2">&quot;Video file not found!</span><span class="se">\n</span><span class="s2">Please check the file path.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">()</span>
+
+        <span class="c1"># Get the correct acquisition parameters based on the acqusition unit</span>
+        <span class="k">if</span> <span class="n">unit_type</span> <span class="o">==</span> <span class="s2">&quot;Frame&quot;</span><span class="p">:</span>
+            <span class="n">skip_over_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">skip_over_entry</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">skip_over_str</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">skip_over_str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;start&quot;</span><span class="p">:</span>
+                <span class="n">skip_over</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">skip_over</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">skip_over_entry</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+
+            <span class="n">total_frames_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_frames_entry</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">total_frames_str</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">total_frames_str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;end&quot;</span><span class="p">:</span>
+                <span class="n">total_frames</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">1e8</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">total_frames</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total_frames_entry</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+
+            <span class="n">sampled_frame_rate_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sampled_rate_entry</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sampled_frame_rate_str</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">showwarning</span><span class="p">(</span><span class="s2">&quot;Sample Frame not Specified&quot;</span><span class="p">,</span> <span class="s2">&quot;Sample frame rate is not given.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                                          <span class="s2">&quot;Default sample rate 1 frame every input frame is used.&quot;</span><span class="p">)</span>
+                <span class="n">sampled_frame_rate</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sampled_frame_rate</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sampled_frame_rate_str</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">unit_type</span> <span class="o">==</span> <span class="s2">&quot;Time&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">video</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoCapture</span><span class="p">(</span><span class="n">video_filename</span><span class="p">)</span>
+            <span class="n">fps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">video</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">CAP_PROP_FPS</span><span class="p">)</span>
+
+            <span class="n">skip_over_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">skip_over_entry</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">skip_over_str</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">skip_over_str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;start&quot;</span><span class="p">:</span>
+                <span class="n">skip_over</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">split_pos</span> <span class="o">=</span> <span class="n">skip_over_str</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+                <span class="n">skip_over</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="n">skip_over_str</span><span class="p">[:</span><span class="n">split_pos</span><span class="p">])</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">skip_over_str</span><span class="p">[</span><span class="n">split_pos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]))</span> <span class="o">*</span> <span class="n">fps</span><span class="p">)</span>
+
+            <span class="n">sampled_frame_rate_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sampled_rate_entry</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sampled_frame_rate_str</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">showwarning</span><span class="p">(</span><span class="s2">&quot;Sample Frame not Specified&quot;</span><span class="p">,</span> <span class="s2">&quot;Sample frame rate is not given.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                                          <span class="s2">&quot;Default sample rate 1 frame every input frame is used.&quot;</span><span class="p">)</span>
+                <span class="n">sampled_frame_rate</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sampled_frame_rate</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">sampled_frame_rate_str</span><span class="p">)</span> <span class="o">*</span> <span class="n">fps</span><span class="p">))</span>
+
+            <span class="n">total_frames_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total_frames_entry</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">total_frames_str</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">total_frames_str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;end&quot;</span><span class="p">:</span>
+                <span class="n">total_frames</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">1e8</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">split_pos</span> <span class="o">=</span> <span class="n">total_frames_str</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+                <span class="n">total_frames</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">total_frames_str</span><span class="p">[:</span><span class="n">split_pos</span><span class="p">])</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">total_frames_str</span><span class="p">[</span><span class="n">split_pos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]))</span> <span class="o">*</span> <span class="n">fps</span>
+                <span class="n">total_frames</span> <span class="o">-=</span> <span class="n">skip_over</span>
+                <span class="n">total_frames</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">total_frames</span><span class="p">)</span>
+                <span class="n">total_frames</span> <span class="o">//=</span> <span class="n">sampled_frame_rate</span>
+
+        <span class="c1"># Make sure the sampled frame rate &gt;= 1 and the skip over &gt;= 0 and total frame &gt;= 0</span>
+        <span class="k">if</span> <span class="n">sampled_frame_rate</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">showwarning</span><span class="p">(</span><span class="s2">&quot;Frame Sample Rate too Small&quot;</span><span class="p">,</span> <span class="s2">&quot;The frame sample rate is too small.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                                       <span class="s2">&quot;It has been adjusted to the Minimum valid sample rate,</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                                       <span class="s2">&quot;Sample 1 frame every frame (==use all frames)&quot;</span><span class="p">)</span>
+            <span class="n">sampled_frame_rate</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">skip_over</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">showwarning</span><span class="p">(</span><span class="s2">&quot;Invalid Start time&quot;</span><span class="p">,</span> <span class="s2">&quot;Invalid start time for the barcode generation.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                              <span class="s2">&quot;Start frames/time has been set to 0/00:00 (== start of film)&quot;</span><span class="p">)</span>
+            <span class="n">skip_over</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">total_frames</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">showwarning</span><span class="p">(</span><span class="s2">&quot;Invalid Total Frames&quot;</span><span class="p">,</span> <span class="s2">&quot;Invalid total frames</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                                <span class="s2">&quot;or Barcode starts after it ends.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                                <span class="s2">&quot;Total frames has been adjusted to 0.&quot;</span><span class="p">)</span>
+            <span class="n">total_frames</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">return</span> <span class="n">barcode_type</span><span class="p">,</span> <span class="n">frame_type</span><span class="p">,</span> <span class="n">color_metric</span><span class="p">,</span> <span class="n">sampled_frame_rate</span><span class="p">,</span> <span class="n">skip_over</span><span class="p">,</span> <span class="n">total_frames</span><span class="p">,</span> <span class="n">video_filename</span></div>
+
+<div class="viewcode-block" id="GenerateBarcodeWindow.generate_barcode"><a class="viewcode-back" href="../../../tkinter_windows/GenerateBarcodeWindow.html#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.generate_barcode">[docs]</a>    <span class="k">def</span> <span class="nf">generate_barcode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate the barcode using the given parameters</span>
+
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">disable_generate_button</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">barcode_type</span><span class="p">,</span> <span class="n">frame_type</span><span class="p">,</span> <span class="n">color_metric</span><span class="p">,</span> <span class="n">sampled_frame_rate</span><span class="p">,</span> <span class="n">skip_over</span><span class="p">,</span> <span class="n">total_frames</span><span class="p">,</span> <span class="n">video_filename</span> <span class="o">=</span> \
+                <span class="bp">self</span><span class="o">.</span><span class="n">acquire_generation_param</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">enable_generate_button</span><span class="p">()</span>
+            <span class="k">return</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Acquisition Parameters&quot;</span><span class="p">,</span> <span class="s2">&quot;An unknown Error occurred when reading</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                                <span class="s2">&quot;the acquisition parameters.</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+                                                <span class="s2">&quot;Please make sure all parameters are positive</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                                <span class="s2">&quot;Frames units must all be integers</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                                <span class="s2">&quot;In Time unit, mins:secs in Start and End at must be integers</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                                <span class="s2">&quot;Sample every (secs) can be decimals but not fraction.&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">enable_generate_button</span><span class="p">()</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Update all the parameters to the barcode generator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">barcode_generator</span><span class="o">.</span><span class="n">barcode_type</span> <span class="o">=</span> <span class="n">barcode_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">barcode_generator</span><span class="o">.</span><span class="n">frame_type</span> <span class="o">=</span> <span class="n">frame_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">barcode_generator</span><span class="o">.</span><span class="n">color_metric</span> <span class="o">=</span> <span class="n">color_metric</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">barcode_generator</span><span class="o">.</span><span class="n">sampled_frame_rate</span> <span class="o">=</span> <span class="n">sampled_frame_rate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">barcode_generator</span><span class="o">.</span><span class="n">skip_over</span> <span class="o">=</span> <span class="n">skip_over</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">barcode_generator</span><span class="o">.</span><span class="n">total_frames</span> <span class="o">=</span> <span class="n">total_frames</span>
+
+        <span class="c1"># Check if user choose the multi-thread or not</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_multi_thread</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">multi_thread</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_multi_thread</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># If user choose to use the multi-thread, then get the number of threads that will be used</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">multi_thread</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">thread_entry</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+                <span class="k">if</span> <span class="n">multi_thread</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">showwarning</span><span class="p">(</span><span class="s2">&quot;Non Positive Thread Number&quot;</span><span class="p">,</span> <span class="s2">&quot;Number of threads has been adjusted to 1.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                                              <span class="s2">&quot;Degenerated to single thread generation.&quot;</span><span class="p">)</span>
+                    <span class="n">multi_thread</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Invalid Thread Number&quot;</span><span class="p">,</span> <span class="s2">&quot;Invalid number of threads.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                                   <span class="s2">&quot;Number of threads must be an integer&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">enable_generate_button</span><span class="p">()</span>
+                <span class="k">return</span>
+
+        <span class="c1"># Check if user choose to save the frames or not</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_saved_frame</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">save_frames</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">save_frames_rate</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_frame_entry</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Invalid Save Frame Rate&quot;</span><span class="p">,</span> <span class="s2">&quot;Invalid Save frame rate.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                                     <span class="s2">&quot;Save frame rate must be a positive Integer.&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">enable_generate_button</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">save_frames_rate</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="n">save_frames</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># Check if user choose to rescale the frames or not</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_rescale_frame</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">rescale_factor</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rescale_factor_entry</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Invalid Rescale Factor&quot;</span><span class="p">,</span> <span class="s2">&quot;Invalid frame rescale factor.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                                    <span class="s2">&quot;Must be a positive number.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                                    <span class="s2">&quot;It can be a decimal number but not fractions&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">enable_generate_button</span><span class="p">()</span>
+                <span class="k">return</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">rescale_factor</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="c1"># Check if user choose to define the letter box region manually</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">letterbox_option</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Manual&quot;</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># Update the letter box parameters, if user choose Manual</span>
+                <span class="n">high_ver</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">high_ver_entry</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+                <span class="n">low_ver</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">low_ver_entry</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+                <span class="n">left_hor</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">left_hor_entry</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+                <span class="n">right_hor</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">right_hor_entry</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+                <span class="c1"># Start the generation</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">barcode_generator</span><span class="o">.</span><span class="n">generate_barcode</span><span class="p">(</span><span class="n">video_filename</span><span class="p">,</span> <span class="n">user_defined_letterbox</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                        <span class="n">low_ver</span><span class="o">=</span><span class="n">low_ver</span><span class="p">,</span> <span class="n">high_ver</span><span class="o">=</span><span class="n">high_ver</span><span class="p">,</span>
+                                                        <span class="n">left_hor</span><span class="o">=</span><span class="n">left_hor</span><span class="p">,</span> <span class="n">right_hor</span><span class="o">=</span><span class="n">right_hor</span><span class="p">,</span>
+                                                        <span class="n">num_thread</span><span class="o">=</span><span class="n">multi_thread</span><span class="p">,</span> <span class="n">save_frames</span><span class="o">=</span><span class="n">save_frames</span><span class="p">,</span>
+                                                        <span class="n">rescale_frames_factor</span><span class="o">=</span><span class="n">rescale_factor</span><span class="p">,</span>
+                                                        <span class="n">save_frames_rate</span><span class="o">=</span><span class="n">save_frames_rate</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">showwarning</span><span class="p">(</span><span class="s2">&quot;Error Occurred in Barcode Generation&quot;</span><span class="p">,</span> <span class="s2">&quot;An unknown Error occurred in the barcode &quot;</span>
+                                                                    <span class="s2">&quot;generation.</span><span class="se">\n</span><span class="s2">Please check the letterbox set up&quot;</span>
+                                                                    <span class="s2">&quot; and the other parameters&#39; specification.&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">enable_generate_button</span><span class="p">()</span>
+                <span class="k">return</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">letterbox_option</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Auto&quot;</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># If not, start the generation.</span>
+                <span class="c1"># The letter box will be automatically found during the generation process</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">barcode_generator</span><span class="o">.</span><span class="n">generate_barcode</span><span class="p">(</span><span class="n">video_filename</span><span class="p">,</span> <span class="n">num_thread</span><span class="o">=</span><span class="n">multi_thread</span><span class="p">,</span>
+                                                        <span class="n">save_frames</span><span class="o">=</span><span class="n">save_frames</span><span class="p">,</span>
+                                                        <span class="n">rescale_frames_factor</span><span class="o">=</span><span class="n">rescale_factor</span><span class="p">,</span>
+                                                        <span class="n">save_frames_rate</span><span class="o">=</span><span class="n">save_frames_rate</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">showwarning</span><span class="p">(</span><span class="s2">&quot;Error Occurred in Barcode Generation&quot;</span><span class="p">,</span> <span class="s2">&quot;An unknown Error occurred in the barcode &quot;</span>
+                                                                    <span class="s2">&quot;generation.</span><span class="se">\n</span><span class="s2">Please check the parameters&#39; &quot;</span>
+                                                                    <span class="s2">&quot;specification.&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">enable_generate_button</span><span class="p">()</span>
+                <span class="k">return</span>
+
+        <span class="c1"># Correct the total frames</span>
+        <span class="n">total_frames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode_generator</span><span class="o">.</span><span class="n">get_barcode</span><span class="p">()</span><span class="o">.</span><span class="n">total_frames</span>
+
+        <span class="c1"># Get the key of the barcode, which will be later stored in the memory stack (dictionary)</span>
+        <span class="n">start_pos</span> <span class="o">=</span> <span class="n">video_filename</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">start_pos</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">start_pos</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">end_pos</span> <span class="o">=</span> <span class="n">video_filename</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+        <span class="n">videoname</span> <span class="o">=</span> <span class="n">video_filename</span><span class="p">[</span><span class="n">start_pos</span><span class="p">:</span><span class="n">end_pos</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">barcode_type</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">frame_type</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">color_metric</span> \
+                    <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">skip_over</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sampled_frame_rate</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">total_frames</span><span class="p">)</span>
+
+        <span class="c1"># Get the barcode from the barcode generator</span>
+        <span class="n">barcode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode_generator</span><span class="o">.</span><span class="n">get_barcode</span><span class="p">()</span>
+
+        <span class="c1"># Clear the cv2 captured video object</span>
+        <span class="n">barcode</span><span class="o">.</span><span class="n">video</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Update the user pre-defined meta data to the computed barcode</span>
+        <span class="n">barcode</span><span class="o">.</span><span class="n">meta_data</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meta_data_dict</span><span class="p">)</span>
+
+        <span class="c1"># Add the generated barcode to the memory stack (dictionary)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">barcode_stack</span><span class="p">[</span><span class="n">videoname</span><span class="p">]</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">barcode</span><span class="p">)</span>
+
+        <span class="c1"># Enable the generate button for the next barcode generation request</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enable_generate_button</span><span class="p">()</span>
+
+        <span class="c1"># Reset the meta data to the initial state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta_data_dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># Show barcode generation success message</span>
+        <span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;Finished Successfully&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{:s}</span><span class="s2"> </span><span class="si">{:s}</span><span class="s2"> </span><span class="si">{:s}</span><span class="s2"> Barcode of the input video:</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                          <span class="s2">&quot;</span><span class="si">{:20s}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                          <span class="s2">&quot;has been successfully generated!</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+                                          <span class="s2">&quot;Barcode is saved in the memory with name: </span><span class="si">{:20s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">color_metric</span><span class="p">,</span>
+                                                                                                    <span class="n">frame_type</span><span class="p">,</span>
+                                                                                                    <span class="n">barcode_type</span><span class="p">,</span>
+                                                                                                    <span class="n">video_filename</span><span class="p">,</span>
+                                                                                                    <span class="n">videoname</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="GenerateBarcodeWindow.disable_generate_button"><a class="viewcode-back" href="../../../tkinter_windows/GenerateBarcodeWindow.html#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.disable_generate_button">[docs]</a>    <span class="k">def</span> <span class="nf">disable_generate_button</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Disable the generate button and Specify Meta Data button once generation starts</span>
+
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Update the generate button text to the processing</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">generate_button</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;  Processing... &quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">generate_button</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">specify_data_button</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GenerateBarcodeWindow.enable_generate_button"><a class="viewcode-back" href="../../../tkinter_windows/GenerateBarcodeWindow.html#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.enable_generate_button">[docs]</a>    <span class="k">def</span> <span class="nf">enable_generate_button</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Enable the generate button and Specify Meta Data button in case of failed generation</span>
+
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Change the button text back to Generate Barcode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">generate_button</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Generate Barcode&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">generate_button</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">specify_data_button</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GenerateBarcodeWindow.disable_setup"><a class="viewcode-back" href="../../../tkinter_windows/GenerateBarcodeWindow.html#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.disable_setup">[docs]</a>    <span class="k">def</span> <span class="nf">disable_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Disable the letter box setup entry if user choose the Auto radio button</span>
+
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">high_ver_entry</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">low_ver_entry</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left_hor_entry</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right_hor_entry</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GenerateBarcodeWindow.enable_setup"><a class="viewcode-back" href="../../../tkinter_windows/GenerateBarcodeWindow.html#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.enable_setup">[docs]</a>    <span class="k">def</span> <span class="nf">enable_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Enable the letter box setup entry if user choose the Manual radio button</span>
+
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">high_ver_entry</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">low_ver_entry</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left_hor_entry</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right_hor_entry</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Yida Chen, Eric Faden, and Nathan Ryan.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

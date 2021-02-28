@@ -1,0 +1,398 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="python" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>GenerateBarcodeWindow Class &mdash; KALMUS 1.3.6 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="GUI Utility" href="gui_utils.html" />
+    <link rel="prev" title="MainWindow Class" href="MainWindow.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> KALMUS
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../kalmus.html">API Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../kalmus.html#barcode-classes">Barcode Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kalmus.html#utils">Utils</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../kalmus.html#ui-window-classes">UI Window Classes</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="MainWindow.html">MainWindow Class</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">GenerateBarcodeWindow Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gui_utils.html">GUI Utility</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../acknowledge.html">Acknowledgement</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">KALMUS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../kalmus.html">KALMUS Color Toolkit (KALMUS): API Documentation</a> &raquo;</li>
+        
+      <li>GenerateBarcodeWindow Class</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/tkinter_windows/GenerateBarcodeWindow.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-kalmus.tkinter_windows.GenerateBarcodeWindow">
+<span id="generatebarcodewindow-class"></span><h1>GenerateBarcodeWindow Class<a class="headerlink" href="#module-kalmus.tkinter_windows.GenerateBarcodeWindow" title="Permalink to this headline">¶</a></h1>
+<p>GenerateBarcodeWindow Class</p>
+<dl class="py class">
+<dt id="kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">kalmus.tkinter_windows.GenerateBarcodeWindow.</span></code><code class="sig-name descname"><span class="pre">GenerateBarcodeWindow</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">barcode_generator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">barcode_stack</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/tkinter_windows/GenerateBarcodeWindow.html#GenerateBarcodeWindow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>GenerateBarcodeWindow Class
+GUI window for user to generate the barcode from a video file</p>
+<dl class="py method">
+<dt id="kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.acquire_generation_param">
+<code class="sig-name descname"><span class="pre">acquire_generation_param</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/tkinter_windows/GenerateBarcodeWindow.html#GenerateBarcodeWindow.acquire_generation_param"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.acquire_generation_param" title="Permalink to this definition">¶</a></dt>
+<dd><p>Acquire the barcode generation parameters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.browse_folder">
+<code class="sig-name descname"><span class="pre">browse_folder</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/tkinter_windows/GenerateBarcodeWindow.html#GenerateBarcodeWindow.browse_folder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.browse_folder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Browse the folder</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.disable_generate_button">
+<code class="sig-name descname"><span class="pre">disable_generate_button</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/tkinter_windows/GenerateBarcodeWindow.html#GenerateBarcodeWindow.disable_generate_button"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.disable_generate_button" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disable the generate button and Specify Meta Data button once generation starts</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.disable_setup">
+<code class="sig-name descname"><span class="pre">disable_setup</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/tkinter_windows/GenerateBarcodeWindow.html#GenerateBarcodeWindow.disable_setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.disable_setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disable the letter box setup entry if user choose the Auto radio button</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.enable_generate_button">
+<code class="sig-name descname"><span class="pre">enable_generate_button</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/tkinter_windows/GenerateBarcodeWindow.html#GenerateBarcodeWindow.enable_generate_button"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.enable_generate_button" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable the generate button and Specify Meta Data button in case of failed generation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.enable_setup">
+<code class="sig-name descname"><span class="pre">enable_setup</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/tkinter_windows/GenerateBarcodeWindow.html#GenerateBarcodeWindow.enable_setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.enable_setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable the letter box setup entry if user choose the Manual radio button</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.frame_unit">
+<code class="sig-name descname"><span class="pre">frame_unit</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/tkinter_windows/GenerateBarcodeWindow.html#GenerateBarcodeWindow.frame_unit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.frame_unit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change the acquisition unit to Frame when user switch to the frame radio button</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.generate_barcode">
+<code class="sig-name descname"><span class="pre">generate_barcode</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/tkinter_windows/GenerateBarcodeWindow.html#GenerateBarcodeWindow.generate_barcode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.generate_barcode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate the barcode using the given parameters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.generate_barcode_thread">
+<code class="sig-name descname"><span class="pre">generate_barcode_thread</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/tkinter_windows/GenerateBarcodeWindow.html#GenerateBarcodeWindow.generate_barcode_thread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.generate_barcode_thread" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate the barcode in a another thread
+to avoid the frozen tkinter window issue</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.quit">
+<code class="sig-name descname"><span class="pre">quit</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/tkinter_windows/GenerateBarcodeWindow.html#GenerateBarcodeWindow.quit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.quit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Quit the main window</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.specify_data">
+<code class="sig-name descname"><span class="pre">specify_data</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/tkinter_windows/GenerateBarcodeWindow.html#GenerateBarcodeWindow.specify_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.specify_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instantiate the SpecifyMetaDataWindow</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.time_unit">
+<code class="sig-name descname"><span class="pre">time_unit</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/tkinter_windows/GenerateBarcodeWindow.html#GenerateBarcodeWindow.time_unit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.time_unit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change the acquisition unit to Time when user switch to the time radio button</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.update_rescale_entry">
+<code class="sig-name descname"><span class="pre">update_rescale_entry</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/tkinter_windows/GenerateBarcodeWindow.html#GenerateBarcodeWindow.update_rescale_entry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.update_rescale_entry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable or disable and change the label prompt when user check/uncheck the rescale frames checkbox</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.update_save_frame_entry">
+<code class="sig-name descname"><span class="pre">update_save_frame_entry</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/tkinter_windows/GenerateBarcodeWindow.html#GenerateBarcodeWindow.update_save_frame_entry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.update_save_frame_entry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable or disable the text entry when user check/uncheck the save frames checkbox</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.update_thread_entry">
+<code class="sig-name descname"><span class="pre">update_thread_entry</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/tkinter_windows/GenerateBarcodeWindow.html#GenerateBarcodeWindow.update_thread_entry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.update_thread_entry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable or disable and change the label prompt when user check/uncheck the multi-thread checkbox</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="gui_utils.html" class="btn btn-neutral float-right" title="GUI Utility" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="MainWindow.html" class="btn btn-neutral float-left" title="MainWindow Class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Yida Chen, Eric Faden, and Nathan Ryan.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

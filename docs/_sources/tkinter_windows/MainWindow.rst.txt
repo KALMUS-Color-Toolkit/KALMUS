@@ -1,0 +1,7 @@
+MainWindow Class
+*************************
+
+.. automodule:: kalmus.tkinter_windows.MainWindowVersion2
+    :members: MainWindow
+    :undoc-members:
+    :show-inheritance:

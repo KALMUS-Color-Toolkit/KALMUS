@@ -2,7 +2,7 @@
 
 import tkinter
 from kalmus.tkinter_windows.meta_info_windows.MetaInfoWindow import MetaInfoWindow
-from kalmus.tkinter_windows.KALMUS_utils import resource_path
+from kalmus.tkinter_windows.gui_utils import resource_path
 
 
 class WhichBarcodeCheckMeta():

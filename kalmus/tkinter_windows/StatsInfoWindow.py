@@ -2,7 +2,7 @@
 
 import tkinter
 
-from kalmus.tkinter_windows.KALMUS_utils import get_comparison_result_text, resource_path
+from kalmus.tkinter_windows.gui_utils import get_comparison_result_text, resource_path
 
 
 class StatsInfoWindow():
