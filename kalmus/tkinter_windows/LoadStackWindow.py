@@ -13,6 +13,7 @@ class LoadStackWindow():
     def __init__(self, barcode_stack, barcode_1, barcode_2, axes, canvas):
         """
         Initialize
+
         :param barcode_stack: The dictionary that stores all the barcode on memory
         :param barcode_1: The barcode 1
         :param barcode_2: The barcode 2
@@ -59,7 +60,6 @@ class LoadStackWindow():
     def load_stack(self):
         """
         Load the barcode from the memory and use it to replace one of the displayed barcodes in the main window
-        :return:
         """
         # Get the selection of the barcode on memory
         barcode_key = str(self.listbox.get(self.listbox.curselection()))

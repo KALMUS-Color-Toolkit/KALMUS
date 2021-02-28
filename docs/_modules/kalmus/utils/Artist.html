@@ -82,10 +82,11 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../kalmus.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../acknowledge.html">Acknowledgement</a></li>
 </ul>
 
             
@@ -373,7 +374,8 @@
 <span class="sd">    :param sample_ratio: The amount of pixels sampled from the image. in range [0, 1]</span>
 <span class="sd">    :param mode: two sampling mode are available. \</span>
 <span class="sd">    1) &#39;row-col&#39; sampling mode 2) &#39;flat&#39; sampling mode</span>
-<span class="sd">    :return:</span>
+<span class="sd">    :return: If mode=&quot;flat&quot;, return the resampled array of pixels (1-d flat array of data points) \</span>
+<span class="sd">             If mode=&quot;row-col&quot;, return the resampled image</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">sample_ratio</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;The sample ratio is in the range of [0, 1]&quot;</span>
     <span class="k">if</span> <span class="n">sample_ratio</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>

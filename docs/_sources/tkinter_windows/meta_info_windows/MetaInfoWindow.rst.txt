@@ -1,0 +1,7 @@
+MetaInfoWindow Class
+*****************************
+
+.. automodule:: kalmus.tkinter_windows.meta_info_windows.MetaInfoWindow
+    :members: MetaInfoWindow
+    :undoc-members:
+    :show-inheritance:

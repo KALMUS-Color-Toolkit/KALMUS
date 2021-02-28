@@ -85,7 +85,6 @@ class SaveImageWindow():
     def browse_folder(self):
         """
         Browse the folders in a file manager window
-        :return:
         """
         # Get the file name/path from the user input in the file manager
         filename = tkinter.filedialog.asksaveasfilename(initialdir=".", title="Save Image file",
@@ -99,7 +98,6 @@ class SaveImageWindow():
     def update_size_entry(self):
         """
         Update the size of current selected barcodes displayed in the resize entries
-        :return:
         """
         # Find the current selected barcode
         # Update the width and height (in pixels) of that barcode in the resize entries
@@ -120,7 +118,6 @@ class SaveImageWindow():
     def save_image(self):
         """
         Save the currently selected barcode into the image with the given size
-        :return:
         """
         # Check if the filename is given
         filename = self.filename_entry.get()

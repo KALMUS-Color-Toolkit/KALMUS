@@ -15,6 +15,7 @@ class MetaInfoWindow():
     def __init__(self, barcode, barcodes_stack):
         """
         Initialize
+
         :param barcode: The barcode to check with the meta information
         :param barcodes_stack: The dictionary that store all the barcodes on the memory
         """
@@ -47,7 +48,6 @@ class MetaInfoWindow():
     def refresh_text(self):
         """
         Refresh the meta information text displayed for the barcode
-        :return:
         """
         meta_text = "Meta Information of the Barcode:\n"
 
@@ -69,10 +69,10 @@ class MetaInfoWindow():
 
     def get_time_str(self):
         """
-        Get string for film length in hrs:mins:secs
-                       clip start time in hrs:mins:secs
-                   and clip end time in hrs:mins:secs
-        :return:
+        Get string for film length in hrs:mins:secs, clip start time in hrs:mins:secs,
+        and clip end time in hrs:mins:secs
+
+        :return: Text string for film length, clip start time at film, clip end time at film
         """
         if self.barcode.fps is None:
             self.barcode.fps = 29.8
@@ -96,6 +96,13 @@ class MetaInfoWindow():
         return film_length_str, clip_start_time_str, clip_end_time_str
 
     def get_hr_min_sec_from_tot_sec(self, tot_seconds):
+        """
+        Get the equivalent Hours:Minutes:Seconds representation from a given total seconds
+
+        :param tot_seconds: Total seconds
+        :return: Converted hours, minutes, and seconds representation Hours:Minutes:Seconds \
+                 Hours >= 0, 60 > Minutes >= 0, 60 > Seconds >= 0
+        """
         secs = tot_seconds % 60
         mins = int(tot_seconds / 60) % 60
         hrs = int(tot_seconds / 3600) % 60
@@ -104,7 +111,6 @@ class MetaInfoWindow():
     def update_meta_info(self):
         """
         Instantiate the SpecifyMetaDataWindow, if the user press the add info button
-        :return:
         """
         SpecifyMetaDataWindow(self.barcode.__dict__["meta_data"], barcode=self.barcode,
                               barcode_stacks=self.barcodes_stack)

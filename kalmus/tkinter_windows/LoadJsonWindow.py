@@ -17,6 +17,7 @@ class LoadJsonWindow():
                  canvas, barcode_stack):
         """
         Initialize
+
         :param barcode_generator: The barcode generator
         :param barcode_1: The barcode 1
         :param barcode_2: The barcode 2
@@ -84,7 +85,6 @@ class LoadJsonWindow():
     def browse_folder(self):
         """
         Browse the folder to locate the json file
-        :return:
         """
         # Get the file name from the user selection
         filename = tkinter.filedialog.askopenfilename(initialdir=".", title="Select JSON file",
@@ -98,7 +98,6 @@ class LoadJsonWindow():
     def build_barcode(self):
         """
         Build/load the barcode use the json file
-        :return:
         """
         # Get the file name/path to the json file
         filename = self.filename_entry.get()

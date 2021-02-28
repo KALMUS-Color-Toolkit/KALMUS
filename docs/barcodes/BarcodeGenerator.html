@@ -84,9 +84,9 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul class="current">
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation Guide</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../kalmus.html">API Documentation</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../kalmus.html#barcode-classes">Barcode Classes</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="Barcodes.html">Barcode Classes</a></li>
@@ -94,8 +94,10 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../kalmus.html#utils">Utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kalmus.html#ui-window-classes">UI Window Classes</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../acknowledge.html">Acknowledgement</a></li>
 </ul>
 
             
@@ -191,9 +193,6 @@
 <li><p><strong>rescale_frames_factor</strong> -- factor to rescale the input frames during the generation</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
 </dl>
 </dd></dl>
 
@@ -208,9 +207,6 @@
 <li><p><strong>barcode_type</strong> -- the type of the barcode saved in the json file</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
 </dl>
 </dd></dl>
 
@@ -220,7 +216,7 @@
 <dd><p>return the barcode object stored in the Barcode generator</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p></p>
+<dd class="field-odd"><p>The generated barcode</p>
 </dd>
 </dl>
 </dd></dl>
@@ -229,11 +225,6 @@
 <dt id="kalmus.barcodes.BarcodeGenerator.BarcodeGenerator.instantiate_barcode_object">
 <code class="sig-name descname"><span class="pre">instantiate_barcode_object</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/barcodes/BarcodeGenerator.html#BarcodeGenerator.instantiate_barcode_object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.barcodes.BarcodeGenerator.BarcodeGenerator.instantiate_barcode_object" title="Permalink to this definition">¶</a></dt>
 <dd><p>Instantiate the barcode object using the given generation parameters</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p></p>
-</dd>
-</dl>
 </dd></dl>
 
 </dd></dl>
@@ -250,7 +241,7 @@
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
+<dd class="field-even"><p>The barcode built from the json file at given path</p>
 </dd>
 </dl>
 </dd></dl>

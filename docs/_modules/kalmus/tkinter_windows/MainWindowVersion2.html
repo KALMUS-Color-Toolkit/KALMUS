@@ -167,7 +167,7 @@
 <span class="kn">from</span> <span class="nn">kalmus.tkinter_windows.LoadJsonWindow</span> <span class="k">import</span> <span class="n">LoadJsonWindow</span>
 <span class="kn">from</span> <span class="nn">kalmus.tkinter_windows.ReshapeBarcodeWindow</span> <span class="k">import</span> <span class="n">ReshapeBarcodeWindow</span>
 <span class="kn">from</span> <span class="nn">kalmus.tkinter_windows.gui_utils</span> <span class="k">import</span> <span class="n">paint_hue_hist</span><span class="p">,</span> <span class="n">update_axes_title</span><span class="p">,</span> <span class="n">resource_path</span>
-<span class="kn">from</span> <span class="nn">kalmus.tkinter_windows.plot_barcodes_windows.WhichBarcodeInpsectWindow</span> <span class="k">import</span> <span class="n">WhichBarcodeInspectWindow</span>
+<span class="kn">from</span> <span class="nn">kalmus.tkinter_windows.plot_barcodes_windows.WhichBarcodeInspectWindow</span> <span class="k">import</span> <span class="n">WhichBarcodeInspectWindow</span>
 <span class="kn">from</span> <span class="nn">kalmus.tkinter_windows.StatsInfoWindow</span> <span class="k">import</span> <span class="n">StatsInfoWindow</span>
 <span class="kn">from</span> <span class="nn">kalmus.tkinter_windows.SaveImageWindow</span> <span class="k">import</span> <span class="n">SaveImageWindow</span>
 <span class="kn">from</span> <span class="nn">kalmus.tkinter_windows.meta_info_windows.WhichBarcodeCheckMeta</span> <span class="k">import</span> <span class="n">WhichBarcodeCheckMeta</span>
@@ -350,8 +350,6 @@
 <span class="sd">        close the Mainwindow</span>
 <span class="sd">        Check if the Generate Barcode window is still open before quiting the Main program</span>
 <span class="sd">        Return (cancel the quit) if the Generate Barcode window is still open.</span>
-
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Check if generate barcode window is opened</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_window_opened</span><span class="p">:</span>
@@ -370,8 +368,6 @@
 <div class="viewcode-block" id="MainWindow.quit"><a class="viewcode-back" href="../../../tkinter_windows/MainWindow.html#kalmus.tkinter_windows.MainWindowVersion2.MainWindow.quit">[docs]</a>    <span class="k">def</span> <span class="nf">quit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Quit the main window</span>
-
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span></div>
@@ -379,24 +375,18 @@
 <div class="viewcode-block" id="MainWindow.check_meta_info"><a class="viewcode-back" href="../../../tkinter_windows/MainWindow.html#kalmus.tkinter_windows.MainWindowVersion2.MainWindow.check_meta_info">[docs]</a>    <span class="k">def</span> <span class="nf">check_meta_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Instantiate the WhichBarcodeCheckMeta window</span>
-
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">WhichBarcodeCheckMeta</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode_1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode_2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcodes_stack</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="MainWindow.show_barcode"><a class="viewcode-back" href="../../../tkinter_windows/MainWindow.html#kalmus.tkinter_windows.MainWindowVersion2.MainWindow.show_barcode">[docs]</a>    <span class="k">def</span> <span class="nf">show_barcode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Instantiate the WhichBarcodeInspectWindow</span>
-
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">WhichBarcodeInspectWindow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode_1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode_2</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="MainWindow.load_json_barcode"><a class="viewcode-back" href="../../../tkinter_windows/MainWindow.html#kalmus.tkinter_windows.MainWindowVersion2.MainWindow.load_json_barcode">[docs]</a>    <span class="k">def</span> <span class="nf">load_json_barcode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Instantiate the LoadJsonWindow</span>
-
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">LoadJsonWindow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode_gn</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode_1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode_2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="p">,</span>
                        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcodes_stack</span><span class="p">)</span></div>
@@ -404,8 +394,6 @@
 <div class="viewcode-block" id="MainWindow.load_stack_barcode"><a class="viewcode-back" href="../../../tkinter_windows/MainWindow.html#kalmus.tkinter_windows.MainWindowVersion2.MainWindow.load_stack_barcode">[docs]</a>    <span class="k">def</span> <span class="nf">load_stack_barcode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Instantiate the LoadStackWindow</span>
-
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">LoadStackWindow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">barcodes_stack</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode_1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode_2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="p">,</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">)</span></div>
@@ -413,24 +401,18 @@
 <div class="viewcode-block" id="MainWindow.reshape_barcode"><a class="viewcode-back" href="../../../tkinter_windows/MainWindow.html#kalmus.tkinter_windows.MainWindowVersion2.MainWindow.reshape_barcode">[docs]</a>    <span class="k">def</span> <span class="nf">reshape_barcode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Instantiate the ReshapeBarcodeWindow</span>
-
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ReshapeBarcodeWindow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode_1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode_2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="MainWindow.stats_info"><a class="viewcode-back" href="../../../tkinter_windows/MainWindow.html#kalmus.tkinter_windows.MainWindowVersion2.MainWindow.stats_info">[docs]</a>    <span class="k">def</span> <span class="nf">stats_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Instantiate the StatsInfoWindow</span>
-
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">StatsInfoWindow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode_1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode_2</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="MainWindow.generate_barcode"><a class="viewcode-back" href="../../../tkinter_windows/MainWindow.html#kalmus.tkinter_windows.MainWindowVersion2.MainWindow.generate_barcode">[docs]</a>    <span class="k">def</span> <span class="nf">generate_barcode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Instantiate the GenerateBarcodeWindow</span>
-
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_window_opened</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">generate_window_opened</span> <span class="o">=</span> <span class="kc">True</span>
@@ -442,16 +424,12 @@
 <div class="viewcode-block" id="MainWindow.save_barcode_on_stack"><a class="viewcode-back" href="../../../tkinter_windows/MainWindow.html#kalmus.tkinter_windows.MainWindowVersion2.MainWindow.save_barcode_on_stack">[docs]</a>    <span class="k">def</span> <span class="nf">save_barcode_on_stack</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Instantiate the SaveBarcodeWindow</span>
-
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">SaveBarcodeWindow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">barcodes_stack</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="MainWindow.save_image_from_display"><a class="viewcode-back" href="../../../tkinter_windows/MainWindow.html#kalmus.tkinter_windows.MainWindowVersion2.MainWindow.save_image_from_display">[docs]</a>    <span class="k">def</span> <span class="nf">save_image_from_display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Instantiate the SaveImageWindow</span>
-
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">SaveImageWindow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode_1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode_2</span><span class="p">)</span></div>
 
@@ -460,7 +438,6 @@
 <span class="sd">        Pick the time at a point of the plotted barcode if user double click on that point</span>
 
 <span class="sd">        :param event: matplotlib event. Only catch double click event</span>
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># If user is double click on the graph</span>
         <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">dblclick</span><span class="p">:</span>

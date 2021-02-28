@@ -28,6 +28,7 @@ class PlotBarcodeWindow():
     def __init__(self, barcode, figsize=(6, 4), dpi=100):
         """
         Initialize
+
         :param barcode: The barcode that will be inspected
         :param figsize: The size of the plotted figure
         :param dpi: The dpi of the figure
@@ -88,14 +89,12 @@ class PlotBarcodeWindow():
     def show_RGB_color_in_cube(self):
         """
         Instantiate the RGBColorCubeWindow if user press the show color in RGB cube button
-        :return:
         """
         RGBColorCubeWindow(self.barcode)
 
     def show_color_histogram(self):
         """
         Instantiate the ColorHistogramWindow if user press the show histogram button
-        :return:
         """
         ColorHistogramWindow(self.barcode)
 
@@ -111,6 +110,7 @@ class ColorHistogramWindow():
     def __init__(self, barcode):
         """
         Initialize
+
         :param barcode: The input barcode
         """
         # Set up the window
@@ -152,6 +152,7 @@ class RGBColorCubeWindow():
     def __init__(self, barcode):
         """
         Initialize
+
         :param barcode: The input barcode
         """
         self.barcode = barcode
@@ -190,6 +191,7 @@ class OutputCSVWindow():
     def __init__(self, barcode):
         """
         Initialize
+
         :param barcode: The barcode to output the per frame level data
         """
         self.barcode = barcode
@@ -218,7 +220,6 @@ class OutputCSVWindow():
     def output_csv_file(self):
         """
         Output the per frame level data to a csv file
-        :return:
         """
         # Get the file name of the output csv file
         csv_filename = self.filename_entry.get()
@@ -277,7 +278,6 @@ class OutputCSVWindow():
     def browse_folder(self):
         """
         Browse the folder to locate the json file
-        :return:
         """
         # Get the file name from the user selection
         filename = tkinter.filedialog.asksaveasfilename(initialdir=".", title="Select CSV file",

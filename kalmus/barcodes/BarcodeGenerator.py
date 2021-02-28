@@ -22,7 +22,7 @@ def build_barcode_from_json(path_to_json, barcode_type="Color"):
 
     :param path_to_json: Path to the json file
     :param barcode_type: Type of the barcode that stored in the json file
-    :return:
+    :return: The barcode built from the json file at given path
     """
     assert barcode_type in barcode_types, "Invalid barcode type. The available types of " \
                                           "the barcode are {:s}".format(str(barcode_types))
@@ -104,8 +104,6 @@ class BarcodeGenerator():
     def instantiate_barcode_object(self):
         """
         Instantiate the barcode object using the given generation parameters
-
-        :return:
         """
         if self.barcode_type == "Color":
             self.barcode = ColorBarcode(self.color_metric, self.frame_type, self.sampled_frame_rate,
@@ -131,7 +129,6 @@ class BarcodeGenerator():
         :param num_thread: Number of thread for computation. None == Single thread. num_thread > 1: multi-thread
         :param save_frames: Whether to save the frames during the barcode generation
         :param rescale_frames_factor: factor to rescale the input frames during the generation
-        :return:
         """
         self.instantiate_barcode()
         if user_defined_letterbox:
@@ -160,7 +157,6 @@ class BarcodeGenerator():
 
         :param json_file_path: the path to the json file
         :param barcode_type: the type of the barcode saved in the json file
-        :return:
         """
         if barcode_type is None:
             barcode_type = self.barcode_type
@@ -170,6 +166,7 @@ class BarcodeGenerator():
         """
         return the barcode object stored in the Barcode generator
 
-        :return:
+        :return: The generated barcode
         """
+        assert self.barcode is not None, "There is not a generated barcode"
         return self.barcode

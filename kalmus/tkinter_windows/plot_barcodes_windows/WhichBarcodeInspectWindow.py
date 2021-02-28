@@ -13,6 +13,7 @@ class WhichBarcodeInspectWindow():
     def __init__(self, barcode_1, barcode_2, figsize=(6, 4), dpi=100):
         """
         Initialize
+
         :param barcode_1: The barcode 1
         :param barcode_2: The barcode 2
         :param figsize: The size of the figure plotted in the window
@@ -49,7 +50,6 @@ class WhichBarcodeInspectWindow():
     def inspect_barcode(self):
         """
         Inspect the selected barcode once user press inspect button
-        :return:
         """
         # Get the selection from the user
         which_barcode = self.barcode_option.get()

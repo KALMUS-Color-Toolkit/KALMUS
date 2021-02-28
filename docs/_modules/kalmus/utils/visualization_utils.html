@@ -82,10 +82,11 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../kalmus.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../acknowledge.html">Acknowledgement</a></li>
 </ul>
 
             
@@ -359,7 +360,6 @@
 <span class="sd">    :param image: input color image shape=(row (height), col (width), channel(3))</span>
 <span class="sd">    :param minimum_segment_size: The minimum size (in relative ratio [0, 1]) for the segments in the segmented image</span>
 <span class="sd">    :param figsize: the size of the plot figure</span>
-<span class="sd">    :return:</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">contrast_matrix</span><span class="p">,</span> <span class="n">labeled_image</span> <span class="o">=</span> <span class="n">get_contrast_matrix_and_labeled_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span>
                                                                            <span class="n">minimum_segment_size</span><span class="o">=</span><span class="n">minimum_segment_size</span><span class="p">)</span>
@@ -380,7 +380,6 @@
 <span class="sd">        :param image: input color image shape=(row (height), col (width), channel(3))</span>
 <span class="sd">        :param minimum_segment_size: The minimum size (in relative ratio [0, 1]) for the segments in the segmented image</span>
 <span class="sd">        :param figsize: the size of the plot figure</span>
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
     <span class="n">contrast_matrix</span><span class="p">,</span> <span class="n">labeled_image</span> <span class="o">=</span> <span class="n">get_contrast_matrix_and_labeled_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span>
                                                                            <span class="n">minimum_segment_size</span><span class="o">=</span><span class="n">minimum_segment_size</span><span class="p">)</span>
@@ -401,7 +400,7 @@
 <span class="sd">    :param image: input image shape=(row(height), col(width))</span>
 <span class="sd">    :param region_index: the extracted region index in the labeled image</span>
 <span class="sd">    :param labeled_image: the labeled image of the corresponding input image shape=image.shape</span>
-<span class="sd">    :return:</span>
+<span class="sd">    :return: Image with only region with corresponding index on labeled_image.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">extract_part</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">image</span><span class="p">[</span><span class="n">labeled_image</span> <span class="o">==</span> <span class="n">region_index</span><span class="p">])</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">max</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">:</span>

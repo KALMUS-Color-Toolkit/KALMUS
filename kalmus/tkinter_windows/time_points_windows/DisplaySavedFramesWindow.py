@@ -44,7 +44,7 @@ class DisplaySavedFramesWindow():
         Get the frames around the clicked point
         :param mouse_x: The x position of the clicked point
         :param mouse_y: The y position of the clicked point
-        :return:
+        :return: The combined sampled frames for displaying
         """
         barcode_shape = self.barcode.get_barcode().shape
         # Get the middle position of the saved frame

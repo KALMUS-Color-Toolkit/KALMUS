@@ -25,7 +25,9 @@ def get_contrast_matrix_and_labeled_image(frame, minimum_segment_size=0.0004):
 
     :param frame: The input frame
     :param minimum_segment_size: The minimum size of the segmented region in the ratio to the whole frame. Range (0, 1)
-    :return:
+    :return: The matrix with shape (num_regions x num_regions) whose cell [i, j] represents the contrast \
+             between the region i and region j, and the corresponding labeled image (segmentation)
+
     """
     labels, grey_frame = Artist.watershed_segmentation(frame, minimum_segment_size=minimum_segment_size)
     try:
@@ -44,7 +46,7 @@ def foreback_segmentation(frame):
     Segmented the input frame into two parts: foreground and background, using the GrabCut
 
     :param frame: Input frame
-    :return:
+    :return: The foreground part of image, the background part of image
     """
     fore_frame, back_frame = Artist.grabcut_foreback_segmentation(frame, start_row=0, row_size=frame.shape[0] - 1,
                                                                   start_col=frame.shape[1] // 6,
@@ -60,7 +62,7 @@ def get_letter_box_bounds(frame, threshold=5):
     :param frame: Input frame
     :param threshold: The brightness threshold value that distinguish \
                       the region of interest (bright) and letterbox (dark)
-    :return: The lower, higher vertical bounds, and left, right horizontal bounds
+    :return: The lower, higher vertical bounds, and left, right horizontal bounds \
              The region of interest is in [low_ver: high_ver, left_hor: right_hor]
     """
     low_bound_ver = 0
@@ -147,7 +149,6 @@ class Barcode():
         Read in the video from the given path
 
         :param video_path_name: The path to the video file
-        :return:
         """
         self.video = cv2.VideoCapture(video_path_name)
 
@@ -172,7 +173,6 @@ class Barcode():
         Function run the get_letter_box_bounds helper function by num_sample times and take the median of bounds
 
         :param num_sample: Number of times running the get_letter_box_bounds
-        :return:
         """
         possible_indexes = np.arange(self.film_length_in_frames // 6, self.film_length_in_frames * 5 // 6, 1)
         frame_indexes = np.random.choice(possible_indexes, num_sample, replace=True)
@@ -212,7 +212,7 @@ class Barcode():
         Process the original frame by cropping out the letter box and resample frame using the given frame type
 
         :param frame: Input orignal frame
-        :return: The processed frame
+        :return: The processed and sampled frame
         """
         frame = self.remove_letter_box_from_frame(frame)
         if self.rescale_frames_in_generation:
@@ -286,7 +286,7 @@ class Barcode():
         """
         Return the barcode. If not exist reshape the stored computed colors/brightness first to get the barcode
 
-        :return: The barcode
+        :return: Return the barcode
         """
         if self.barcode is None:
             self.reshape_barcode()
@@ -301,7 +301,6 @@ class Barcode():
         :param down_vertical_bound: The higher vertical bound
         :param left_horizontal_bound: The left vertical bound
         :param right_horizontal_bound: The right vertical bound
-        :return:
         """
         self.enable_user_defined_letterbox()
         self.low_bound_ver = up_vertical_bound
@@ -312,16 +311,12 @@ class Barcode():
     def enable_user_defined_letterbox(self):
         """
         Use the user defined letter box
-
-        :return:
         """
         self.user_defined_letterbox = True
 
     def automatic_find_letterbox(self):
         """
         Automatically find the letter box
-
-        :return:
         """
         self.find_film_letterbox()
 
@@ -336,7 +331,6 @@ class Barcode():
 
         :param key: The key for the meta information
         :param value: The value stored in that key
-        :return:
         """
         assert key is not None, "The key for the adding data cannot be None"
         if self.meta_data is None:
@@ -350,7 +344,6 @@ class Barcode():
         Once the barcode is generated, this attribute should not be changed.
 
         :param sampled_rate: Save 1 frame every sampled_rate seconds
-        :return:
         """
         self.save_frames_in_generation = True
         self.saved_frames = []
@@ -364,8 +357,6 @@ class Barcode():
         At most 900 Frames will be saved for each barcode
         Save frame rate is, by default, saving one frame every 4 seconds
         Frame will resized to the width of 100 pixels with the same aspect ratio
-
-        :return:
         """
         assert self.video is not None, "Video must be read before determining the save frame rate"
         assert self.fps is not None, "FPS must be determined before determining the save frame rate"
@@ -393,7 +384,6 @@ class Barcode():
         :param cur_used_frame: How many frames have been read in
         :param frame: Current frame (original unprocessed frame)
         :param frame_arr: Array that stored the saved frames
-        :return:
         """
         if cur_used_frame % self.saved_frames_sampled_rate == 0:
             frame = self.remove_letter_box_from_frame(frame)
@@ -408,7 +398,6 @@ class Barcode():
         Save the barcode into the json file
 
         :param filename: The name of the saved json file
-        :return:
         """
         if self.barcode is None:
             self.reshape_barcode()
@@ -461,7 +450,6 @@ class ColorBarcode(Barcode):
         Collect the colors of frames from the video
 
         :param video_path_name: The path to the video file
-        :return:
         """
         self.read_videos(video_path_name)
 
@@ -502,7 +490,6 @@ class ColorBarcode(Barcode):
 
         :param video_path_name: The path to the input video
         :param num_thread: Number of threads to collect the brightness
-        :return:
         """
         # Correct the total frames temporarily for the multi-thread generation in order to
         # be according with the definition of total frames in single thread generation
@@ -567,7 +554,6 @@ class ColorBarcode(Barcode):
         :param results: The placeholder for saving the results
         :param tid: The id of the thread
         :param frame_saved: The placeholder for the saved frames
-        :return:
         """
         assert self.video is not None, "No video is read in to the barcode for analysis."
         cur_frame_idx = start_point
@@ -605,7 +591,6 @@ class ColorBarcode(Barcode):
         Reshape the barcode (2 dimensional with 3 channels)
 
         :param frames_per_column: Number of frames per column in the reshaped barcode
-        :return:
         """
         if len(self.colors) % frames_per_column == 0:
             self.barcode = self.colors.reshape(frames_per_column, -1, self.colors.shape[-1], order='F')
@@ -641,7 +626,6 @@ class BrightnessBarcode(Barcode):
         Collect the brightness from the input video
 
         :param video_path_name: The path to the video
-        :return:
         """
         self.read_videos(video_path_name)
 
@@ -689,7 +673,6 @@ class BrightnessBarcode(Barcode):
 
         :param video_path_name: The path to the input video
         :param num_thread: Number of threads to collect the brightness
-        :return:
         """
         # Correct the total frames temporarily for the multi-thread generation in order to
         # be according with the definition of total frames in single thread generation
@@ -754,7 +737,6 @@ class BrightnessBarcode(Barcode):
         :param results: The placeholder for saving the results
         :param tid: The id of the thread
         :param frame_saved: The placeholder for the saved frames
-        :return:
         """
         assert self.video is not None, "No video is read in to the barcode for analysis."
         cur_frame_idx = start_point
@@ -799,7 +781,6 @@ class BrightnessBarcode(Barcode):
         Reshape the brightness barcode (2 dimensional with 1 channel)
 
         :param frames_per_column: Number of frames per column in the reshaped barcode
-        :return:
         """
         if len(self.brightness) % frames_per_column == 0:
             self.barcode = self.brightness.reshape(frames_per_column, -1, order='F')

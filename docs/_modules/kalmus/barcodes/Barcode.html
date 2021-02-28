@@ -180,7 +180,9 @@
 
 <span class="sd">    :param frame: The input frame</span>
 <span class="sd">    :param minimum_segment_size: The minimum size of the segmented region in the ratio to the whole frame. Range (0, 1)</span>
-<span class="sd">    :return:</span>
+<span class="sd">    :return: The matrix with shape (num_regions x num_regions) whose cell [i, j] represents the contrast \</span>
+<span class="sd">             between the region i and region j, and the corresponding labeled image (segmentation)</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">labels</span><span class="p">,</span> <span class="n">grey_frame</span> <span class="o">=</span> <span class="n">Artist</span><span class="o">.</span><span class="n">watershed_segmentation</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">minimum_segment_size</span><span class="o">=</span><span class="n">minimum_segment_size</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
@@ -199,7 +201,7 @@
 <span class="sd">    Segmented the input frame into two parts: foreground and background, using the GrabCut</span>
 
 <span class="sd">    :param frame: Input frame</span>
-<span class="sd">    :return:</span>
+<span class="sd">    :return: The foreground part of image, the background part of image</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">fore_frame</span><span class="p">,</span> <span class="n">back_frame</span> <span class="o">=</span> <span class="n">Artist</span><span class="o">.</span><span class="n">grabcut_foreback_segmentation</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">start_row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">row_size</span><span class="o">=</span><span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
                                                                   <span class="n">start_col</span><span class="o">=</span><span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="mi">6</span><span class="p">,</span>
@@ -215,7 +217,7 @@
 <span class="sd">    :param frame: Input frame</span>
 <span class="sd">    :param threshold: The brightness threshold value that distinguish \</span>
 <span class="sd">                      the region of interest (bright) and letterbox (dark)</span>
-<span class="sd">    :return: The lower, higher vertical bounds, and left, right horizontal bounds</span>
+<span class="sd">    :return: The lower, higher vertical bounds, and left, right horizontal bounds \</span>
 <span class="sd">             The region of interest is in [low_ver: high_ver, left_hor: right_hor]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">low_bound_ver</span> <span class="o">=</span> <span class="mi">0</span>
@@ -302,7 +304,6 @@
 <span class="sd">        Read in the video from the given path</span>
 
 <span class="sd">        :param video_path_name: The path to the video file</span>
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">video</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoCapture</span><span class="p">(</span><span class="n">video_path_name</span><span class="p">)</span>
 
@@ -327,7 +328,6 @@
 <span class="sd">        Function run the get_letter_box_bounds helper function by num_sample times and take the median of bounds</span>
 
 <span class="sd">        :param num_sample: Number of times running the get_letter_box_bounds</span>
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">possible_indexes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">film_length_in_frames</span> <span class="o">//</span> <span class="mi">6</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">film_length_in_frames</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">//</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">frame_indexes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">possible_indexes</span><span class="p">,</span> <span class="n">num_sample</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -367,7 +367,7 @@
 <span class="sd">        Process the original frame by cropping out the letter box and resample frame using the given frame type</span>
 
 <span class="sd">        :param frame: Input orignal frame</span>
-<span class="sd">        :return: The processed frame</span>
+<span class="sd">        :return: The processed and sampled frame</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_letter_box_from_frame</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rescale_frames_in_generation</span><span class="p">:</span>
@@ -441,7 +441,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the barcode. If not exist reshape the stored computed colors/brightness first to get the barcode</span>
 
-<span class="sd">        :return: The barcode</span>
+<span class="sd">        :return: Return the barcode</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">reshape_barcode</span><span class="p">()</span>
@@ -456,7 +456,6 @@
 <span class="sd">        :param down_vertical_bound: The higher vertical bound</span>
 <span class="sd">        :param left_horizontal_bound: The left vertical bound</span>
 <span class="sd">        :param right_horizontal_bound: The right vertical bound</span>
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">enable_user_defined_letterbox</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">low_bound_ver</span> <span class="o">=</span> <span class="n">up_vertical_bound</span>
@@ -467,16 +466,12 @@
 <div class="viewcode-block" id="Barcode.enable_user_defined_letterbox"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.Barcode.enable_user_defined_letterbox">[docs]</a>    <span class="k">def</span> <span class="nf">enable_user_defined_letterbox</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Use the user defined letter box</span>
-
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">user_defined_letterbox</span> <span class="o">=</span> <span class="kc">True</span></div>
 
 <div class="viewcode-block" id="Barcode.automatic_find_letterbox"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.Barcode.automatic_find_letterbox">[docs]</a>    <span class="k">def</span> <span class="nf">automatic_find_letterbox</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Automatically find the letter box</span>
-
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">find_film_letterbox</span><span class="p">()</span></div>
 
@@ -491,7 +486,6 @@
 
 <span class="sd">        :param key: The key for the meta information</span>
 <span class="sd">        :param value: The value stored in that key</span>
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="n">key</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;The key for the adding data cannot be None&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -505,7 +499,6 @@
 <span class="sd">        Once the barcode is generated, this attribute should not be changed.</span>
 
 <span class="sd">        :param sampled_rate: Save 1 frame every sampled_rate seconds</span>
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">save_frames_in_generation</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">saved_frames</span> <span class="o">=</span> <span class="p">[]</span>
@@ -519,8 +512,6 @@
 <span class="sd">        At most 900 Frames will be saved for each barcode</span>
 <span class="sd">        Save frame rate is, by default, saving one frame every 4 seconds</span>
 <span class="sd">        Frame will resized to the width of 100 pixels with the same aspect ratio</span>
-
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">video</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;Video must be read before determining the save frame rate&quot;</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">fps</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;FPS must be determined before determining the save frame rate&quot;</span>
@@ -548,7 +539,6 @@
 <span class="sd">        :param cur_used_frame: How many frames have been read in</span>
 <span class="sd">        :param frame: Current frame (original unprocessed frame)</span>
 <span class="sd">        :param frame_arr: Array that stored the saved frames</span>
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">cur_used_frame</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">saved_frames_sampled_rate</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_letter_box_from_frame</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
@@ -563,7 +553,6 @@
 <span class="sd">        Save the barcode into the json file</span>
 
 <span class="sd">        :param filename: The name of the saved json file</span>
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">reshape_barcode</span><span class="p">()</span>
@@ -616,7 +605,6 @@
 <span class="sd">        Collect the colors of frames from the video</span>
 
 <span class="sd">        :param video_path_name: The path to the video file</span>
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">read_videos</span><span class="p">(</span><span class="n">video_path_name</span><span class="p">)</span>
 
@@ -657,7 +645,6 @@
 
 <span class="sd">        :param video_path_name: The path to the input video</span>
 <span class="sd">        :param num_thread: Number of threads to collect the brightness</span>
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Correct the total frames temporarily for the multi-thread generation in order to</span>
         <span class="c1"># be according with the definition of total frames in single thread generation</span>
@@ -722,7 +709,6 @@
 <span class="sd">        :param results: The placeholder for saving the results</span>
 <span class="sd">        :param tid: The id of the thread</span>
 <span class="sd">        :param frame_saved: The placeholder for the saved frames</span>
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">video</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;No video is read in to the barcode for analysis.&quot;</span>
         <span class="n">cur_frame_idx</span> <span class="o">=</span> <span class="n">start_point</span>
@@ -760,7 +746,6 @@
 <span class="sd">        Reshape the barcode (2 dimensional with 3 channels)</span>
 
 <span class="sd">        :param frames_per_column: Number of frames per column in the reshaped barcode</span>
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colors</span><span class="p">)</span> <span class="o">%</span> <span class="n">frames_per_column</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">frames_per_column</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;F&#39;</span><span class="p">)</span>
@@ -796,7 +781,6 @@
 <span class="sd">        Collect the brightness from the input video</span>
 
 <span class="sd">        :param video_path_name: The path to the video</span>
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">read_videos</span><span class="p">(</span><span class="n">video_path_name</span><span class="p">)</span>
 
@@ -844,7 +828,6 @@
 
 <span class="sd">        :param video_path_name: The path to the input video</span>
 <span class="sd">        :param num_thread: Number of threads to collect the brightness</span>
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Correct the total frames temporarily for the multi-thread generation in order to</span>
         <span class="c1"># be according with the definition of total frames in single thread generation</span>
@@ -909,7 +892,6 @@
 <span class="sd">        :param results: The placeholder for saving the results</span>
 <span class="sd">        :param tid: The id of the thread</span>
 <span class="sd">        :param frame_saved: The placeholder for the saved frames</span>
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">video</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;No video is read in to the barcode for analysis.&quot;</span>
         <span class="n">cur_frame_idx</span> <span class="o">=</span> <span class="n">start_point</span>
@@ -954,7 +936,6 @@
 <span class="sd">        Reshape the brightness barcode (2 dimensional with 1 channel)</span>
 
 <span class="sd">        :param frames_per_column: Number of frames per column in the reshaped barcode</span>
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">brightness</span><span class="p">)</span> <span class="o">%</span> <span class="n">frames_per_column</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">brightness</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">frames_per_column</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;F&#39;</span><span class="p">)</span>

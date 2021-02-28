@@ -406,8 +406,6 @@
 <div class="viewcode-block" id="GenerateBarcodeWindow.quit"><a class="viewcode-back" href="../../../tkinter_windows/GenerateBarcodeWindow.html#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.quit">[docs]</a>    <span class="k">def</span> <span class="nf">quit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Quit the main window</span>
-
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span></div>
@@ -415,16 +413,12 @@
 <div class="viewcode-block" id="GenerateBarcodeWindow.specify_data"><a class="viewcode-back" href="../../../tkinter_windows/GenerateBarcodeWindow.html#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.specify_data">[docs]</a>    <span class="k">def</span> <span class="nf">specify_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Instantiate the SpecifyMetaDataWindow</span>
-
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">SpecifyMetaDataWindow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meta_data_dict</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="GenerateBarcodeWindow.update_thread_entry"><a class="viewcode-back" href="../../../tkinter_windows/GenerateBarcodeWindow.html#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.update_thread_entry">[docs]</a>    <span class="k">def</span> <span class="nf">update_thread_entry</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Enable or disable and change the label prompt when user check/uncheck the multi-thread checkbox</span>
-
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_multi_thread</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">checkbox_multi_thread</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Multi-Thread:&quot;</span>
@@ -436,8 +430,6 @@
 <div class="viewcode-block" id="GenerateBarcodeWindow.update_rescale_entry"><a class="viewcode-back" href="../../../tkinter_windows/GenerateBarcodeWindow.html#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.update_rescale_entry">[docs]</a>    <span class="k">def</span> <span class="nf">update_rescale_entry</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Enable or disable and change the label prompt when user check/uncheck the rescale frames checkbox</span>
-
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_rescale_frame</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">checkbox_rescale_frame</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Rescale Frames&quot;</span>
@@ -449,8 +441,6 @@
 <div class="viewcode-block" id="GenerateBarcodeWindow.update_save_frame_entry"><a class="viewcode-back" href="../../../tkinter_windows/GenerateBarcodeWindow.html#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.update_save_frame_entry">[docs]</a>    <span class="k">def</span> <span class="nf">update_save_frame_entry</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Enable or disable the text entry when user check/uncheck the save frames checkbox</span>
-
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_saved_frame</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">save_frame_entry</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span>
@@ -460,8 +450,6 @@
 <div class="viewcode-block" id="GenerateBarcodeWindow.time_unit"><a class="viewcode-back" href="../../../tkinter_windows/GenerateBarcodeWindow.html#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.time_unit">[docs]</a>    <span class="k">def</span> <span class="nf">time_unit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Change the acquisition unit to Time when user switch to the time radio button</span>
-
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">skip_over_label</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Start at (mins:secs): &quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sampled_rate_label</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Sample every (secs): &quot;</span>
@@ -470,8 +458,6 @@
 <div class="viewcode-block" id="GenerateBarcodeWindow.frame_unit"><a class="viewcode-back" href="../../../tkinter_windows/GenerateBarcodeWindow.html#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.frame_unit">[docs]</a>    <span class="k">def</span> <span class="nf">frame_unit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Change the acquisition unit to Frame when user switch to the frame radio button</span>
-
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">skip_over_label</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Start at (frames): &quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sampled_rate_label</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Sample every (frames): &quot;</span>
@@ -480,8 +466,6 @@
 <div class="viewcode-block" id="GenerateBarcodeWindow.browse_folder"><a class="viewcode-back" href="../../../tkinter_windows/GenerateBarcodeWindow.html#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.browse_folder">[docs]</a>    <span class="k">def</span> <span class="nf">browse_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Browse the folder</span>
-
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Get the file name from the user specification</span>
         <span class="n">filename</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">filedialog</span><span class="o">.</span><span class="n">askopenfilename</span><span class="p">(</span><span class="n">initialdir</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Select Media file&quot;</span><span class="p">,</span>
@@ -504,8 +488,6 @@
 <div class="viewcode-block" id="GenerateBarcodeWindow.acquire_generation_param"><a class="viewcode-back" href="../../../tkinter_windows/GenerateBarcodeWindow.html#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.acquire_generation_param">[docs]</a>    <span class="k">def</span> <span class="nf">acquire_generation_param</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Acquire the barcode generation parameters</span>
-
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Get barcode type, frame sampling type, and color/brightness metric</span>
         <span class="n">barcode_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode_type_var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
@@ -593,8 +575,6 @@
 <div class="viewcode-block" id="GenerateBarcodeWindow.generate_barcode"><a class="viewcode-back" href="../../../tkinter_windows/GenerateBarcodeWindow.html#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.generate_barcode">[docs]</a>    <span class="k">def</span> <span class="nf">generate_barcode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate the barcode using the given parameters</span>
-
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">disable_generate_button</span><span class="p">()</span>
         <span class="k">try</span><span class="p">:</span>
@@ -742,8 +722,6 @@
 <div class="viewcode-block" id="GenerateBarcodeWindow.disable_generate_button"><a class="viewcode-back" href="../../../tkinter_windows/GenerateBarcodeWindow.html#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.disable_generate_button">[docs]</a>    <span class="k">def</span> <span class="nf">disable_generate_button</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Disable the generate button and Specify Meta Data button once generation starts</span>
-
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Update the generate button text to the processing</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">generate_button</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;  Processing... &quot;</span>
@@ -753,8 +731,6 @@
 <div class="viewcode-block" id="GenerateBarcodeWindow.enable_generate_button"><a class="viewcode-back" href="../../../tkinter_windows/GenerateBarcodeWindow.html#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.enable_generate_button">[docs]</a>    <span class="k">def</span> <span class="nf">enable_generate_button</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Enable the generate button and Specify Meta Data button in case of failed generation</span>
-
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Change the button text back to Generate Barcode</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">generate_button</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Generate Barcode&quot;</span>
@@ -764,8 +740,6 @@
 <div class="viewcode-block" id="GenerateBarcodeWindow.disable_setup"><a class="viewcode-back" href="../../../tkinter_windows/GenerateBarcodeWindow.html#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.disable_setup">[docs]</a>    <span class="k">def</span> <span class="nf">disable_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Disable the letter box setup entry if user choose the Auto radio button</span>
-
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">high_ver_entry</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">low_ver_entry</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span>
@@ -775,8 +749,6 @@
 <div class="viewcode-block" id="GenerateBarcodeWindow.enable_setup"><a class="viewcode-back" href="../../../tkinter_windows/GenerateBarcodeWindow.html#kalmus.tkinter_windows.GenerateBarcodeWindow.GenerateBarcodeWindow.enable_setup">[docs]</a>    <span class="k">def</span> <span class="nf">enable_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Enable the letter box setup entry if user choose the Manual radio button</span>
-
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">high_ver_entry</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">low_ver_entry</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">)</span>

@@ -38,8 +38,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Acknowledgement" href="../acknowledge.html" />
-    <link rel="prev" title="GenerateBarcodeWindow Class" href="GenerateBarcodeWindow.html" /> 
+    <link rel="next" title="MainWindow Class" href="MainWindow.html" />
+    <link rel="prev" title="Visualization Utility" href="../utils/visualization_utils.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -91,9 +91,18 @@
 <li class="toctree-l2"><a class="reference internal" href="../kalmus.html#barcode-classes">Barcode Classes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../kalmus.html#utils">Utils</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../kalmus.html#ui-window-classes">UI Window Classes</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">GUI Utility</a></li>
 <li class="toctree-l3"><a class="reference internal" href="MainWindow.html">MainWindow Class</a></li>
 <li class="toctree-l3"><a class="reference internal" href="GenerateBarcodeWindow.html">GenerateBarcodeWindow Class</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">GUI Utility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="meta_info_windows.html">Meta Information Window Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plot_barcodes_windows.html">Inspect Barcode Window Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="time_points_windows.html">Time-point Statistics Window Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="LoadJsonWindow.html">LoadJsonWindow Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="LoadStackWindow.html">LoadStackWindow Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ReshapeBarcodeWindow.html">ReshapeBarcodeWindow Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="SaveBarcodeWindow.html">SaveBarcodeWindow Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="SaveImageWindow.html">SaveImageWindow Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="StatsInfoWindow.html">StatsInfoWindow Class</a></li>
 </ul>
 </li>
 </ul>
@@ -209,7 +218,7 @@ Needleman Wunsch, and Smith Waterman alignment matching</p>
 <dl class="py function">
 <dt id="kalmus.tkinter_windows.gui_utils.paint_gray_hist">
 <code class="sig-prename descclassname"><span class="pre">kalmus.tkinter_windows.gui_utils.</span></code><code class="sig-name descname"><span class="pre">paint_gray_hist</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bin_step</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patches</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opacity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.8</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/tkinter_windows/gui_utils.html#paint_gray_hist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.gui_utils.paint_gray_hist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Paint each bin of the brightness histogram with its corresponding brightness intensity</p>
+<dd><p>Paint each bin of the brightness histogram with its corresponding brightness intensity (in place)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -218,25 +227,19 @@ Needleman Wunsch, and Smith Waterman alignment matching</p>
 <li><p><strong>opacity</strong> -- Opacity of the brightness intensity to avoid totally white in the high intensity bin                     To make the histogram bin in high intensity area more observable</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt id="kalmus.tkinter_windows.gui_utils.paint_hue_hist">
 <code class="sig-prename descclassname"><span class="pre">kalmus.tkinter_windows.gui_utils.</span></code><code class="sig-name descname"><span class="pre">paint_hue_hist</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bin_step</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patches</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/tkinter_windows/gui_utils.html#paint_hue_hist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.gui_utils.paint_hue_hist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Paint each bin of the hue histogram with its corresponding color in hue</p>
+<dd><p>Paint each bin of the hue histogram with its corresponding color in hue (in place)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>bin_step</strong> -- The step of the bin in the histogram</p></li>
 <li><p><strong>patches</strong> -- The patches of the histogram that will be painted later</p></li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
 </dd>
 </dl>
 </dd></dl>
@@ -260,7 +263,7 @@ This is used for the Pyinstaller wrapper</p>
 <dl class="py function">
 <dt id="kalmus.tkinter_windows.gui_utils.update_axes_title">
 <code class="sig-prename descclassname"><span class="pre">kalmus.tkinter_windows.gui_utils.</span></code><code class="sig-name descname"><span class="pre">update_axes_title</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">barcode_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">barcode_2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/tkinter_windows/gui_utils.html#update_axes_title"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.gui_utils.update_axes_title" title="Permalink to this definition">¶</a></dt>
-<dd><p>Update the title of the plotted axes</p>
+<dd><p>Update the title of the plotted axes (in place)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -269,16 +272,13 @@ This is used for the Pyinstaller wrapper</p>
 <li><p><strong>barcode_2</strong> -- The barcode 2</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt id="kalmus.tkinter_windows.gui_utils.update_graph">
 <code class="sig-prename descclassname"><span class="pre">kalmus.tkinter_windows.gui_utils.</span></code><code class="sig-name descname"><span class="pre">update_graph</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">barcode_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">barcode_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bin_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/tkinter_windows/gui_utils.html#update_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.gui_utils.update_graph" title="Permalink to this definition">¶</a></dt>
-<dd><p>Update the plotted graph</p>
+<dd><p>Update the plotted graph (in place)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -288,16 +288,13 @@ This is used for the Pyinstaller wrapper</p>
 <li><p><strong>bin_step</strong> -- The step of histogram bin</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt id="kalmus.tkinter_windows.gui_utils.update_hist">
 <code class="sig-prename descclassname"><span class="pre">kalmus.tkinter_windows.gui_utils.</span></code><code class="sig-name descname"><span class="pre">update_hist</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">barcode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bin_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/tkinter_windows/gui_utils.html#update_hist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.gui_utils.update_hist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Update the histogram of the plotted figure</p>
+<dd><p>Update the histogram of the plotted figure (in place)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -305,9 +302,6 @@ This is used for the Pyinstaller wrapper</p>
 <li><p><strong>ax</strong> -- The axis that contain the histogram</p></li>
 <li><p><strong>bin_step</strong> -- The step of the bin in the plotted histogram</p></li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
 </dd>
 </dl>
 </dd></dl>
@@ -320,8 +314,8 @@ This is used for the Pyinstaller wrapper</p>
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="../acknowledge.html" class="btn btn-neutral float-right" title="Acknowledgement" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="GenerateBarcodeWindow.html" class="btn btn-neutral float-left" title="GenerateBarcodeWindow Class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="MainWindow.html" class="btn btn-neutral float-right" title="MainWindow Class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../utils/visualization_utils.html" class="btn btn-neutral float-left" title="Visualization Utility" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

@@ -103,12 +103,11 @@ def get_comparison_result_text(barcode_1, barcode_2):
 
 def update_axes_title(axes, barcode_1, barcode_2):
     """
-    Update the title of the plotted axes
+    Update the title of the plotted axes (in place)
 
     :param axes: The plotted axes of the figure
     :param barcode_1: The barcode 1
     :param barcode_2: The barcode 2
-    :return:
     """
     title_1 = "Barcode 1"
     title_2 = "Barcode 2"
@@ -161,13 +160,12 @@ def update_axes_title(axes, barcode_1, barcode_2):
 
 def update_graph(barcode_1, barcode_2, axes, bin_step=5):
     """
-    Update the plotted graph
+    Update the plotted graph (in place)
 
     :param barcode_1: The barcode 1
     :param barcode_2: The barcode 2
     :param axes: The axes of the plotted figure
     :param bin_step: The step of histogram bin
-    :return:
     """
     # Plot the barcode with the correct color map based on their barcode types
     if barcode_1.barcode_type == "Brightness":
@@ -198,12 +196,11 @@ def update_graph(barcode_1, barcode_2, axes, bin_step=5):
 
 def update_hist(barcode, ax, bin_step=5):
     """
-    Update the histogram of the plotted figure
+    Update the histogram of the plotted figure (in place)
 
     :param barcode: The barcode of the corresponding histogram
     :param ax: The axis that contain the histogram
     :param bin_step: The step of the bin in the plotted histogram
-    :return:
     """
     bin_step = bin_step
 
@@ -230,11 +227,10 @@ def update_hist(barcode, ax, bin_step=5):
 
 def paint_hue_hist(bin_step, patches):
     """
-    Paint each bin of the hue histogram with its corresponding color in hue
+    Paint each bin of the hue histogram with its corresponding color in hue (in place)
 
     :param bin_step: The step of the bin in the histogram
     :param patches: The patches of the histogram that will be painted later
-    :return:
     """
     # Paint each bin of the histogram
     for i in range(len(patches)):
@@ -252,13 +248,12 @@ def paint_hue_hist(bin_step, patches):
 
 def paint_gray_hist(bin_step, patches, opacity=0.8):
     """
-    Paint each bin of the brightness histogram with its corresponding brightness intensity
+    Paint each bin of the brightness histogram with its corresponding brightness intensity (in place)
 
     :param bin_step: The step of the bin in the histogram
     :param patches: The patches of the histogram
     :param opacity: Opacity of the brightness intensity to avoid totally white in the high intensity bin \
                     To make the histogram bin in high intensity area more observable
-    :return:
     """
     for i in range(len(patches)):
         # Get the RGB gray color for each bin

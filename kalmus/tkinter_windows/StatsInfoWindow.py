@@ -14,6 +14,7 @@ class StatsInfoWindow():
     def __init__(self, barcode_1, barcode_2):
         """
         Initialize the Window
+
         :param barcode_1: The barcode 1
         :param barcode_2: The barcode 2
         """

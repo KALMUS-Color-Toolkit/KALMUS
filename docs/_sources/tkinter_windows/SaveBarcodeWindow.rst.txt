@@ -1,0 +1,7 @@
+SaveBarcodeWindow Class
+*******************************
+
+.. automodule:: kalmus.tkinter_windows.SaveBarcodeWindow
+    :members: SaveBarcodeWindow
+    :undoc-members:
+    :show-inheritance:

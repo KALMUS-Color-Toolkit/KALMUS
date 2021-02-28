@@ -1,0 +1,7 @@
+CheckTimePointWindow Class
+*******************************
+
+.. automodule:: kalmus.tkinter_windows.time_points_windows.CheckTimePointWindow
+    :members: CheckTimePointWindow
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,7 @@
+WhichBarcodeCheckMeta Class
+*******************************
+
+.. automodule:: kalmus.tkinter_windows.meta_info_windows.WhichBarcodeCheckMeta
+    :members: WhichBarcodeCheckMeta
+    :undoc-members:
+    :show-inheritance:

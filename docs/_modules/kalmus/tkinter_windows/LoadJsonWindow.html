@@ -1,0 +1,364 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="python" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>kalmus.tkinter_windows.LoadJsonWindow &mdash; KALMUS 1.3.6 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> KALMUS
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kalmus.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../acknowledge.html">Acknowledgement</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">KALMUS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>kalmus.tkinter_windows.LoadJsonWindow</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for kalmus.tkinter_windows.LoadJsonWindow</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot; LoadJsonWindow Class &quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">tkinter.filedialog</span>
+<span class="kn">from</span> <span class="nn">tkinter.messagebox</span> <span class="k">import</span> <span class="n">showerror</span><span class="p">,</span> <span class="n">showinfo</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">kalmus.tkinter_windows.gui_utils</span> <span class="k">import</span> <span class="n">resource_path</span><span class="p">,</span> <span class="n">update_graph</span>
+
+
+<div class="viewcode-block" id="LoadJsonWindow"><a class="viewcode-back" href="../../../tkinter_windows/LoadJsonWindow.html#kalmus.tkinter_windows.LoadJsonWindow.LoadJsonWindow">[docs]</a><span class="k">class</span> <span class="nc">LoadJsonWindow</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    loadJsonWindow Class</span>
+<span class="sd">    GUI window for user to load the barcode from existed json file to replace with the barcode in the main window</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">barcode_generator</span><span class="p">,</span> <span class="n">barcode_1</span><span class="p">,</span> <span class="n">barcode_2</span><span class="p">,</span> <span class="n">axes</span><span class="p">,</span>
+                 <span class="n">canvas</span><span class="p">,</span> <span class="n">barcode_stack</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize</span>
+
+<span class="sd">        :param barcode_generator: The barcode generator</span>
+<span class="sd">        :param barcode_1: The barcode 1</span>
+<span class="sd">        :param barcode_2: The barcode 2</span>
+<span class="sd">        :param axes: The axes of the plotted figure in the main window</span>
+<span class="sd">        :param canvas: The canvas of the plotted figure in the main window</span>
+<span class="sd">        :param barcode_stack: The dictionary that stores all the barcode on memory</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">barcode_generator</span> <span class="o">=</span> <span class="n">barcode_generator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">barcode_1</span> <span class="o">=</span> <span class="n">barcode_1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">barcode_2</span> <span class="o">=</span> <span class="n">barcode_2</span>
+
+        <span class="c1"># Set up the axes and canvas</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span> <span class="o">=</span> <span class="n">canvas</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">barcode_stack</span> <span class="o">=</span> <span class="n">barcode_stack</span>
+
+        <span class="c1"># Initialize the window</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">wm_title</span><span class="p">(</span><span class="s2">&quot;Load JSON Barcode&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">iconbitmap</span><span class="p">(</span><span class="n">resource_path</span><span class="p">(</span><span class="s2">&quot;kalmus_icon.ico&quot;</span><span class="p">))</span>
+
+        <span class="c1"># Label prompt for the file name/path to the json file</span>
+        <span class="n">filename_label</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;JSON file path: &quot;</span><span class="p">)</span>
+        <span class="n">filename_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
+
+        <span class="c1"># Text entry for user to type the file name/path to the json file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename_entry</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename_entry</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
+
+        <span class="c1"># Label prompt for user to specify the type of the barcode they will load</span>
+        <span class="n">barcode_type_label</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Specify Barcode Type: &quot;</span><span class="p">)</span>
+        <span class="n">barcode_type_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
+
+        <span class="c1"># The variable that stores the type of barcode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">type_variable</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">StringVar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">type_variable</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;Color&quot;</span><span class="p">)</span>
+
+        <span class="c1"># The dropdown menu for user to select the type of the loaded barcode</span>
+        <span class="n">dropdown_type</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">OptionMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">type_variable</span><span class="p">,</span> <span class="s2">&quot;Color&quot;</span><span class="p">,</span> <span class="s2">&quot;Brightness&quot;</span><span class="p">)</span>
+        <span class="n">dropdown_type</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
+
+        <span class="c1"># Button to build/load the barcode using the given json file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_build_barcode</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Load&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">build_barcode</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_build_barcode</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Button to browse the folder</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_browse_folder</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Browse&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">browse_folder</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_browse_folder</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+        <span class="c1"># Variable that stores whcih barcode in the main window to replace with</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">barcode_option</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">StringVar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">barcode_option</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;Barcode 1&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Radio button for selecting which barcode in the main window to replace with</span>
+        <span class="n">radio_barcode_1</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Radiobutton</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Barcode 1&quot;</span><span class="p">,</span> <span class="n">variable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode_option</span><span class="p">,</span>
+                                            <span class="n">value</span><span class="o">=</span><span class="s2">&quot;Barcode 1&quot;</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="n">radio_barcode_1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
+        <span class="n">radio_barcode_1</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
+
+        <span class="n">radio_barcode_2</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Radiobutton</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Barcode 2&quot;</span><span class="p">,</span> <span class="n">variable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode_option</span><span class="p">,</span>
+                                           <span class="n">value</span><span class="o">=</span><span class="s2">&quot;Barcode 2&quot;</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="n">radio_barcode_2</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
+
+<div class="viewcode-block" id="LoadJsonWindow.browse_folder"><a class="viewcode-back" href="../../../tkinter_windows/LoadJsonWindow.html#kalmus.tkinter_windows.LoadJsonWindow.LoadJsonWindow.browse_folder">[docs]</a>    <span class="k">def</span> <span class="nf">browse_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Browse the folder to locate the json file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get the file name from the user selection</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">filedialog</span><span class="o">.</span><span class="n">askopenfilename</span><span class="p">(</span><span class="n">initialdir</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Select JSON file&quot;</span><span class="p">,</span>
+                                                      <span class="n">filetypes</span><span class="o">=</span><span class="p">((</span><span class="s2">&quot;json files&quot;</span><span class="p">,</span> <span class="s2">&quot;*.json&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;txt files&quot;</span><span class="p">,</span> <span class="s2">&quot;*.txt&quot;</span><span class="p">),</span>
+                                                                 <span class="p">(</span><span class="s2">&quot;All files&quot;</span><span class="p">,</span> <span class="s2">&quot;*.*&quot;</span><span class="p">)))</span>
+
+        <span class="c1"># Update the file name to the file name text entry</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename_entry</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">END</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename_entry</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LoadJsonWindow.build_barcode"><a class="viewcode-back" href="../../../tkinter_windows/LoadJsonWindow.html#kalmus.tkinter_windows.LoadJsonWindow.LoadJsonWindow.build_barcode">[docs]</a>    <span class="k">def</span> <span class="nf">build_barcode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Build/load the barcode use the json file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get the file name/path to the json file</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename_entry</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+        <span class="c1"># Check if the filename is given</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+            <span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;JSON File Not Exists&quot;</span><span class="p">,</span> <span class="s2">&quot;JSON file not exists.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                              <span class="s2">&quot;Please check the JSON file path.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Generate the barcode from json file use the barcode generator</span>
+            <span class="n">barcode_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">type_variable</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">barcode_generator</span><span class="o">.</span><span class="n">generate_barcode_from_json</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">barcode_type</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Error Occurred in Loading JSON Barcode&quot;</span><span class="p">,</span> <span class="s2">&quot;An error occurred in loading the JSON barcode.</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+                                                                <span class="s2">&quot;Please make sure the type of Barcode saved</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                                                <span class="s2">&quot;in the JSON file is correctly specified.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                                                <span class="s2">&quot;Color or Brightness&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Get the name of the json file</span>
+        <span class="n">start_pos</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">start_pos</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">start_pos</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># Use that as the key to the newly built/loaded barcode</span>
+        <span class="n">barcode_name</span> <span class="o">=</span> <span class="n">filename</span><span class="p">[</span><span class="n">start_pos</span><span class="p">:</span> <span class="n">filename</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s2">&quot;.json&quot;</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">barcode_stack</span><span class="p">[</span><span class="n">barcode_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode_generator</span><span class="o">.</span><span class="n">get_barcode</span><span class="p">())</span>
+
+        <span class="c1"># Get which barcode in the main window to replace with</span>
+        <span class="n">which_barcode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode_option</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">which_barcode</span> <span class="o">==</span> <span class="s2">&quot;Barcode 1&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">barcode_1</span><span class="o">.</span><span class="vm">__dict__</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode_generator</span><span class="o">.</span><span class="n">get_barcode</span><span class="p">()</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">barcode_1</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode_generator</span><span class="o">.</span><span class="n">get_barcode</span><span class="p">()</span><span class="o">.</span><span class="vm">__class__</span>
+        <span class="k">elif</span> <span class="n">which_barcode</span> <span class="o">==</span> <span class="s2">&quot;Barcode 2&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">barcode_2</span><span class="o">.</span><span class="vm">__dict__</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode_generator</span><span class="o">.</span><span class="n">get_barcode</span><span class="p">()</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">barcode_2</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode_generator</span><span class="o">.</span><span class="n">get_barcode</span><span class="p">()</span><span class="o">.</span><span class="vm">__class__</span>
+
+        <span class="c1"># Clear the plotted axes in the main window</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cla</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cla</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cla</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cla</span><span class="p">()</span>
+
+        <span class="c1"># Always plotted the barcode with longer width below</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode_1</span><span class="o">.</span><span class="n">get_barcode</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode_2</span><span class="o">.</span><span class="n">get_barcode</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode_1</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">barcode_1</span><span class="o">.</span><span class="vm">__dict__</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode_2</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">barcode_2</span><span class="o">.</span><span class="vm">__dict__</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="c1"># Update the graph/plotted figure in the main window</span>
+        <span class="n">update_graph</span><span class="p">(</span><span class="n">barcode_1</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode_1</span><span class="p">,</span> <span class="n">barcode_2</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode_2</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">)</span>
+
+        <span class="c1"># Redraw the main window</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+
+        <span class="c1"># Quit the main window</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+
+        <span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;Barcode Loaded Successfully&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{:s}</span><span class="s2"> Barcode has been successfully loaded into the memory.</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+                                                <span class="s2">&quot;Name key in memory: </span><span class="si">{:20s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">barcode_type</span><span class="p">,</span> <span class="n">barcode_name</span><span class="p">))</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Yida Chen, Eric Faden, and Nathan Ryan.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

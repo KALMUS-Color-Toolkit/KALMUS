@@ -1,0 +1,294 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="python" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>kalmus.tkinter_windows.SaveBarcodeWindow &mdash; KALMUS 1.3.6 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> KALMUS
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../kalmus.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../acknowledge.html">Acknowledgement</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">KALMUS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>kalmus.tkinter_windows.SaveBarcodeWindow</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for kalmus.tkinter_windows.SaveBarcodeWindow</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot; SaveBarcodeWindow Class &quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">tkinter</span>
+<span class="kn">import</span> <span class="nn">tkinter.filedialog</span>
+<span class="kn">from</span> <span class="nn">tkinter.messagebox</span> <span class="k">import</span> <span class="n">showwarning</span><span class="p">,</span> <span class="n">showinfo</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">kalmus.tkinter_windows.gui_utils</span> <span class="k">import</span> <span class="n">resource_path</span>
+
+
+<div class="viewcode-block" id="SaveBarcodeWindow"><a class="viewcode-back" href="../../../tkinter_windows/SaveBarcodeWindow.html#kalmus.tkinter_windows.SaveBarcodeWindow.SaveBarcodeWindow">[docs]</a><span class="k">class</span> <span class="nc">SaveBarcodeWindow</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    SaveBarcodeWindow Class</span>
+<span class="sd">    GUI window for user to select the barcode to save into a json file that can be later loaded back to kalmus</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">barcode_stack</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize</span>
+
+<span class="sd">        :param barcode_stack: the dictionary that stored all the barcodes on the memory</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">barcode_stack</span> <span class="o">=</span> <span class="n">barcode_stack</span>
+
+        <span class="c1"># Initialize the window</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">iconbitmap</span><span class="p">(</span><span class="n">resource_path</span><span class="p">(</span><span class="s2">&quot;kalmus_icon.ico&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">wm_title</span><span class="p">(</span><span class="s2">&quot;Save Barcode from Memory Stack&quot;</span><span class="p">)</span>
+
+        <span class="c1"># List box that lists all the barcodes stored on the memory (shows the barcode&#39;s key in the dictionary)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">listbox</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Listbox</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">selectmode</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">SINGLE</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">65</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">listbox</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+        <span class="c1"># List all the barcodes in the list box using their keys</span>
+        <span class="k">for</span> <span class="n">barcode_names</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode_stack</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">listbox</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">tkinter</span><span class="o">.</span><span class="n">END</span><span class="p">,</span> <span class="n">barcode_names</span><span class="p">)</span>
+
+        <span class="c1"># Label prompt for the file name/path to the saved json file</span>
+        <span class="n">filename_label</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;JSON file path: &quot;</span><span class="p">)</span>
+        <span class="n">filename_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Text entry for user to specify the file name/path to the saved json file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename_entry</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename_entry</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
+
+        <span class="c1"># Button to browse the location in a file manager</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_browse_folder</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Browse&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">browse_folder</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_browse_folder</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
+
+        <span class="c1"># Button to save the barcode into json file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_save</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Save Barcode&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">save_stack</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_save</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SaveBarcodeWindow.browse_folder"><a class="viewcode-back" href="../../../tkinter_windows/SaveBarcodeWindow.html#kalmus.tkinter_windows.SaveBarcodeWindow.SaveBarcodeWindow.browse_folder">[docs]</a>    <span class="k">def</span> <span class="nf">browse_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Browse the folders in a file manager window</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get the file name/path from the user input in the file manager</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">filedialog</span><span class="o">.</span><span class="n">asksaveasfilename</span><span class="p">(</span><span class="n">initialdir</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Save JSON file&quot;</span><span class="p">,</span>
+                                                    <span class="n">filetypes</span><span class="o">=</span><span class="p">((</span><span class="s2">&quot;json files&quot;</span><span class="p">,</span> <span class="s2">&quot;*.json&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;txt files&quot;</span><span class="p">,</span> <span class="s2">&quot;*.txt&quot;</span><span class="p">),</span>
+                                                               <span class="p">(</span><span class="s2">&quot;All files&quot;</span><span class="p">,</span> <span class="s2">&quot;*.*&quot;</span><span class="p">)))</span>
+
+        <span class="c1"># Update the file name/path to the file name entry</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename_entry</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">END</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename_entry</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SaveBarcodeWindow.save_stack"><a class="viewcode-back" href="../../../tkinter_windows/SaveBarcodeWindow.html#kalmus.tkinter_windows.SaveBarcodeWindow.SaveBarcodeWindow.save_stack">[docs]</a>    <span class="k">def</span> <span class="nf">save_stack</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save the selected barcode from the memory stack to the json file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get the dictionary key of the selected barcode</span>
+        <span class="n">selected_barcode_names</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">listbox</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">listbox</span><span class="o">.</span><span class="n">curselection</span><span class="p">()]</span>
+
+        <span class="c1"># Get the file name/path to the saved json file from the user input</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename_entry</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">showwarning</span><span class="p">(</span><span class="s2">&quot;Default Saved JSON Path is Used&quot;</span><span class="p">,</span> <span class="s2">&quot;Path to the saved JSON file is not specified.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                                           <span class="s2">&quot;Default save path is used.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                                           <span class="s2">&quot;File will be saved in the current working directory.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                                           <span class="s2">&quot;It is recommended to specify the file path.&quot;</span><span class="p">)</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Saved the barcode</span>
+        <span class="k">for</span> <span class="n">barcode_name</span> <span class="ow">in</span> <span class="n">selected_barcode_names</span><span class="p">:</span>
+            <span class="n">barcode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode_stack</span><span class="p">[</span><span class="n">barcode_name</span><span class="p">]</span>
+            <span class="n">barcode</span><span class="o">.</span><span class="n">save_as_json</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+        <span class="c1"># Quit the window</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+
+        <span class="c1"># Show success message</span>
+        <span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;JSON File Saved Successfully&quot;</span><span class="p">,</span> <span class="s2">&quot;The JSON file is successfully saved.</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+                                                 <span class="s2">&quot;The Path to the File: </span><span class="si">{:20s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">filename</span><span class="p">)))</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Yida Chen, Eric Faden, and Nathan Ryan.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

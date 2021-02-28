@@ -258,12 +258,11 @@
 
 <div class="viewcode-block" id="update_axes_title"><a class="viewcode-back" href="../../../tkinter_windows/gui_utils.html#kalmus.tkinter_windows.gui_utils.update_axes_title">[docs]</a><span class="k">def</span> <span class="nf">update_axes_title</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">barcode_1</span><span class="p">,</span> <span class="n">barcode_2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Update the title of the plotted axes</span>
+<span class="sd">    Update the title of the plotted axes (in place)</span>
 
 <span class="sd">    :param axes: The plotted axes of the figure</span>
 <span class="sd">    :param barcode_1: The barcode 1</span>
 <span class="sd">    :param barcode_2: The barcode 2</span>
-<span class="sd">    :return:</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">title_1</span> <span class="o">=</span> <span class="s2">&quot;Barcode 1&quot;</span>
     <span class="n">title_2</span> <span class="o">=</span> <span class="s2">&quot;Barcode 2&quot;</span>
@@ -316,13 +315,12 @@
 
 <div class="viewcode-block" id="update_graph"><a class="viewcode-back" href="../../../tkinter_windows/gui_utils.html#kalmus.tkinter_windows.gui_utils.update_graph">[docs]</a><span class="k">def</span> <span class="nf">update_graph</span><span class="p">(</span><span class="n">barcode_1</span><span class="p">,</span> <span class="n">barcode_2</span><span class="p">,</span> <span class="n">axes</span><span class="p">,</span> <span class="n">bin_step</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Update the plotted graph</span>
+<span class="sd">    Update the plotted graph (in place)</span>
 
 <span class="sd">    :param barcode_1: The barcode 1</span>
 <span class="sd">    :param barcode_2: The barcode 2</span>
 <span class="sd">    :param axes: The axes of the plotted figure</span>
 <span class="sd">    :param bin_step: The step of histogram bin</span>
-<span class="sd">    :return:</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Plot the barcode with the correct color map based on their barcode types</span>
     <span class="k">if</span> <span class="n">barcode_1</span><span class="o">.</span><span class="n">barcode_type</span> <span class="o">==</span> <span class="s2">&quot;Brightness&quot;</span><span class="p">:</span>
@@ -353,12 +351,11 @@
 
 <div class="viewcode-block" id="update_hist"><a class="viewcode-back" href="../../../tkinter_windows/gui_utils.html#kalmus.tkinter_windows.gui_utils.update_hist">[docs]</a><span class="k">def</span> <span class="nf">update_hist</span><span class="p">(</span><span class="n">barcode</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">bin_step</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Update the histogram of the plotted figure</span>
+<span class="sd">    Update the histogram of the plotted figure (in place)</span>
 
 <span class="sd">    :param barcode: The barcode of the corresponding histogram</span>
 <span class="sd">    :param ax: The axis that contain the histogram</span>
 <span class="sd">    :param bin_step: The step of the bin in the plotted histogram</span>
-<span class="sd">    :return:</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">bin_step</span> <span class="o">=</span> <span class="n">bin_step</span>
 
@@ -385,11 +382,10 @@
 
 <div class="viewcode-block" id="paint_hue_hist"><a class="viewcode-back" href="../../../tkinter_windows/gui_utils.html#kalmus.tkinter_windows.gui_utils.paint_hue_hist">[docs]</a><span class="k">def</span> <span class="nf">paint_hue_hist</span><span class="p">(</span><span class="n">bin_step</span><span class="p">,</span> <span class="n">patches</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Paint each bin of the hue histogram with its corresponding color in hue</span>
+<span class="sd">    Paint each bin of the hue histogram with its corresponding color in hue (in place)</span>
 
 <span class="sd">    :param bin_step: The step of the bin in the histogram</span>
 <span class="sd">    :param patches: The patches of the histogram that will be painted later</span>
-<span class="sd">    :return:</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Paint each bin of the histogram</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">patches</span><span class="p">)):</span>
@@ -407,13 +403,12 @@
 
 <div class="viewcode-block" id="paint_gray_hist"><a class="viewcode-back" href="../../../tkinter_windows/gui_utils.html#kalmus.tkinter_windows.gui_utils.paint_gray_hist">[docs]</a><span class="k">def</span> <span class="nf">paint_gray_hist</span><span class="p">(</span><span class="n">bin_step</span><span class="p">,</span> <span class="n">patches</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="mf">0.8</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Paint each bin of the brightness histogram with its corresponding brightness intensity</span>
+<span class="sd">    Paint each bin of the brightness histogram with its corresponding brightness intensity (in place)</span>
 
 <span class="sd">    :param bin_step: The step of the bin in the histogram</span>
 <span class="sd">    :param patches: The patches of the histogram</span>
 <span class="sd">    :param opacity: Opacity of the brightness intensity to avoid totally white in the high intensity bin \</span>
 <span class="sd">                    To make the histogram bin in high intensity area more observable</span>
-<span class="sd">    :return:</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">patches</span><span class="p">)):</span>
         <span class="c1"># Get the RGB gray color for each bin</span>

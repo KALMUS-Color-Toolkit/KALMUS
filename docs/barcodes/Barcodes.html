@@ -188,9 +188,6 @@ BrightnessBarcode Class</p>
 <li><p><strong>value</strong> -- The value stored in that key</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
 </dl>
 </dd></dl>
 
@@ -198,11 +195,6 @@ BrightnessBarcode Class</p>
 <dt id="kalmus.barcodes.Barcode.Barcode.automatic_find_letterbox">
 <code class="sig-name descname"><span class="pre">automatic_find_letterbox</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/barcodes/Barcode.html#Barcode.automatic_find_letterbox"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.barcodes.Barcode.Barcode.automatic_find_letterbox" title="Permalink to this definition">¶</a></dt>
 <dd><p>Automatically find the letter box</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -220,9 +212,6 @@ Once the barcode is generated, this attribute should not be changed.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>sampled_rate</strong> -- Save 1 frame every sampled_rate seconds</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
 </dl>
 </dd></dl>
 
@@ -230,11 +219,6 @@ Once the barcode is generated, this attribute should not be changed.</p>
 <dt id="kalmus.barcodes.Barcode.Barcode.enable_user_defined_letterbox">
 <code class="sig-name descname"><span class="pre">enable_user_defined_letterbox</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/barcodes/Barcode.html#Barcode.enable_user_defined_letterbox"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.barcodes.Barcode.Barcode.enable_user_defined_letterbox" title="Permalink to this definition">¶</a></dt>
 <dd><p>Use the user defined letter box</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -246,9 +230,6 @@ Function run the get_letter_box_bounds helper function by num_sample times and t
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>num_sample</strong> -- Number of times running the get_letter_box_bounds</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
 </dl>
 </dd></dl>
 
@@ -258,7 +239,7 @@ Function run the get_letter_box_bounds helper function by num_sample times and t
 <dd><p>Return the barcode. If not exist reshape the stored computed colors/brightness first to get the barcode</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>The barcode</p>
+<dd class="field-odd"><p>Return the barcode</p>
 </dd>
 </dl>
 </dd></dl>
@@ -286,7 +267,7 @@ Function run the get_letter_box_bounds helper function by num_sample times and t
 <dd class="field-odd"><p><strong>frame</strong> -- Input orignal frame</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The processed frame</p>
+<dd class="field-even"><p>The processed and sampled frame</p>
 </dd>
 </dl>
 </dd></dl>
@@ -298,9 +279,6 @@ Function run the get_letter_box_bounds helper function by num_sample times and t
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>video_path_name</strong> -- The path to the video file</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
 </dd>
 </dl>
 </dd></dl>
@@ -327,9 +305,6 @@ Function run the get_letter_box_bounds helper function by num_sample times and t
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>filename</strong> -- The name of the saved json file</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
 </dl>
 </dd></dl>
 
@@ -347,9 +322,6 @@ This functions should only be invoked during the generation process.</p>
 <li><p><strong>frame_arr</strong> -- Array that stored the saved frames</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
 </dl>
 </dd></dl>
 
@@ -365,9 +337,6 @@ This functions should only be invoked during the generation process.</p>
 <li><p><strong>left_horizontal_bound</strong> -- The left vertical bound</p></li>
 <li><p><strong>right_horizontal_bound</strong> -- The right vertical bound</p></li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
 </dd>
 </dl>
 </dd></dl>
@@ -387,9 +356,6 @@ This functions should only be invoked during the generation process.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>video_path_name</strong> -- The path to the video</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
 </dl>
 </dd></dl>
 
@@ -404,9 +370,6 @@ This functions should only be invoked during the generation process.</p>
 <li><p><strong>num_thread</strong> -- Number of threads to collect the brightness</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
 </dl>
 </dd></dl>
 
@@ -417,9 +380,6 @@ This functions should only be invoked during the generation process.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>frames_per_column</strong> -- Number of frames per column in the reshaped barcode</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
 </dd>
 </dl>
 </dd></dl>
@@ -439,9 +399,6 @@ This functions should only be invoked during the generation process.</p>
 <li><p><strong>frame_saved</strong> -- The placeholder for the saved frames</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
 </dl>
 </dd></dl>
 
@@ -460,9 +417,6 @@ This functions should only be invoked during the generation process.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>video_path_name</strong> -- The path to the video file</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
 </dl>
 </dd></dl>
 
@@ -477,9 +431,6 @@ This functions should only be invoked during the generation process.</p>
 <li><p><strong>num_thread</strong> -- Number of threads to collect the brightness</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
 </dl>
 </dd></dl>
 
@@ -490,9 +441,6 @@ This functions should only be invoked during the generation process.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>frames_per_column</strong> -- Number of frames per column in the reshaped barcode</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
 </dd>
 </dl>
 </dd></dl>
@@ -512,9 +460,6 @@ This functions should only be invoked during the generation process.</p>
 <li><p><strong>frame_saved</strong> -- The placeholder for the saved frames</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
 </dl>
 </dd></dl>
 
@@ -530,7 +475,7 @@ Segmented the input frame into two parts: foreground and background, using the G
 <dd class="field-odd"><p><strong>frame</strong> -- Input frame</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
+<dd class="field-even"><p>The foreground part of image, the background part of image</p>
 </dd>
 </dl>
 </dd></dl>
@@ -548,7 +493,7 @@ brightness contrast of each segmented region with respect to its neighbors (adja
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
+<dd class="field-even"><p>The matrix with shape (num_regions x num_regions) whose cell [i, j] represents the contrast              between the region i and region j, and the corresponding labeled image (segmentation)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -566,8 +511,7 @@ The function assumes the letter box of the frame is black (dark)</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The lower, higher vertical bounds, and left, right horizontal bounds
-The region of interest is in [low_ver: high_ver, left_hor: right_hor]</p>
+<dd class="field-even"><p>The lower, higher vertical bounds, and left, right horizontal bounds              The region of interest is in [low_ver: high_ver, left_hor: right_hor]</p>
 </dd>
 </dl>
 </dd></dl>

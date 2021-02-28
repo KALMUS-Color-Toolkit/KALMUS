@@ -23,6 +23,15 @@ UI Window Classes
 .. toctree::
    :maxdepth: 4
 
+   tkinter_windows/gui_utils
    tkinter_windows/MainWindow
    tkinter_windows/GenerateBarcodeWindow
-   tkinter_windows/gui_utils
+   tkinter_windows/meta_info_windows
+   tkinter_windows/plot_barcodes_windows
+   tkinter_windows/time_points_windows
+   tkinter_windows/LoadJsonWindow
+   tkinter_windows/LoadStackWindow
+   tkinter_windows/ReshapeBarcodeWindow
+   tkinter_windows/SaveBarcodeWindow
+   tkinter_windows/SaveImageWindow
+   tkinter_windows/StatsInfoWindow

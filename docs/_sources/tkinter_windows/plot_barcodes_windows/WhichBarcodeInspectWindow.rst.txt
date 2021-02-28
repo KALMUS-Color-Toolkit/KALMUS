@@ -1,0 +1,7 @@
+WhichBarcodeInspectWindow Class
+**********************************
+
+.. automodule:: kalmus.tkinter_windows.plot_barcodes_windows.WhichBarcodeInspectWindow
+    :members: WhichBarcodeInspectWindow
+    :undoc-members:
+    :show-inheritance:

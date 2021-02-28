@@ -205,7 +205,6 @@ def show_high_contrast_region(image, minimum_segment_size=0.0004, figsize=(6, 4)
     :param image: input color image shape=(row (height), col (width), channel(3))
     :param minimum_segment_size: The minimum size (in relative ratio [0, 1]) for the segments in the segmented image
     :param figsize: the size of the plot figure
-    :return:
     """
     contrast_matrix, labeled_image = get_contrast_matrix_and_labeled_image(image,
                                                                            minimum_segment_size=minimum_segment_size)
@@ -226,7 +225,6 @@ def show_low_contrast_region(image, minimum_segment_size=0.0004, figsize=(6, 4))
         :param image: input color image shape=(row (height), col (width), channel(3))
         :param minimum_segment_size: The minimum size (in relative ratio [0, 1]) for the segments in the segmented image
         :param figsize: the size of the plot figure
-        :return:
         """
     contrast_matrix, labeled_image = get_contrast_matrix_and_labeled_image(image,
                                                                            minimum_segment_size=minimum_segment_size)
@@ -247,7 +245,7 @@ def extract_region_with_index(image, region_index, labeled_image):
     :param image: input image shape=(row(height), col(width))
     :param region_index: the extracted region index in the labeled image
     :param labeled_image: the labeled image of the corresponding input image shape=image.shape
-    :return:
+    :return: Image with only region with corresponding index on labeled_image.
     """
     extract_part = image.copy()
     if np.average(image[labeled_image == region_index]) / float(image.max()) > 0.5:

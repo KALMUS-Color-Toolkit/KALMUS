@@ -16,6 +16,7 @@ class SaveBarcodeWindow():
     def __init__(self, barcode_stack):
         """
         Initialize
+
         :param barcode_stack: the dictionary that stored all the barcodes on the memory
         """
         self.barcode_stack = barcode_stack
@@ -52,7 +53,6 @@ class SaveBarcodeWindow():
     def browse_folder(self):
         """
         Browse the folders in a file manager window
-        :return:
         """
         # Get the file name/path from the user input in the file manager
         filename = tkinter.filedialog.asksaveasfilename(initialdir=".", title="Save JSON file",
@@ -66,7 +66,6 @@ class SaveBarcodeWindow():
     def save_stack(self):
         """
         Save the selected barcode from the memory stack to the json file
-        :return:
         """
         # Get the dictionary key of the selected barcode
         selected_barcode_names = [self.listbox.get(idx) for idx in self.listbox.curselection()]

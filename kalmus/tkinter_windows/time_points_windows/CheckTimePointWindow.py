@@ -18,6 +18,7 @@ class CheckTimePointWindow():
     def __init__(self, barcode, mouse_x, mouse_y):
         """
         Initialize
+
         :param barcode: The barcode with clicked point
         :param mouse_x: The x position of the clicked point
         :param mouse_y: The y position of the clicked point
@@ -98,14 +99,12 @@ class CheckTimePointWindow():
     def calibrate_barcode_time(self):
         """
         Instantiate the CalibrateBarcodeWindow
-        :return:
         """
         CalibrateBarcodeTimeWindow(self.barcode, self.time_label, self.frame_label, self.x_pos, self.y_pos)
 
     def display(self):
         """
         Instantiate the DisplaySavedFramesWindow if barcode has the saved frames
-        :return:
         """
         # Check if barcode has the saved frames
         if self.barcode.saved_frames is None:

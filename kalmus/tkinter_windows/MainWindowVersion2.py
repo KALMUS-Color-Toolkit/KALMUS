@@ -12,7 +12,7 @@ from kalmus.tkinter_windows.LoadStackWindow import LoadStackWindow
 from kalmus.tkinter_windows.LoadJsonWindow import LoadJsonWindow
 from kalmus.tkinter_windows.ReshapeBarcodeWindow import ReshapeBarcodeWindow
 from kalmus.tkinter_windows.gui_utils import paint_hue_hist, update_axes_title, resource_path
-from kalmus.tkinter_windows.plot_barcodes_windows.WhichBarcodeInpsectWindow import WhichBarcodeInspectWindow
+from kalmus.tkinter_windows.plot_barcodes_windows.WhichBarcodeInspectWindow import WhichBarcodeInspectWindow
 from kalmus.tkinter_windows.StatsInfoWindow import StatsInfoWindow
 from kalmus.tkinter_windows.SaveImageWindow import SaveImageWindow
 from kalmus.tkinter_windows.meta_info_windows.WhichBarcodeCheckMeta import WhichBarcodeCheckMeta
@@ -195,8 +195,6 @@ class MainWindow():
         close the Mainwindow
         Check if the Generate Barcode window is still open before quiting the Main program
         Return (cancel the quit) if the Generate Barcode window is still open.
-
-        :return:
         """
         # Check if generate barcode window is opened
         if self.generate_window_opened:
@@ -215,8 +213,6 @@ class MainWindow():
     def quit(self):
         """
         Quit the main window
-
-        :return:
         """
         self.root.quit()
         self.root.destroy()
@@ -224,24 +220,18 @@ class MainWindow():
     def check_meta_info(self):
         """
         Instantiate the WhichBarcodeCheckMeta window
-
-        :return:
         """
         WhichBarcodeCheckMeta(self.barcode_1, self.barcode_2, self.barcodes_stack)
 
     def show_barcode(self):
         """
         Instantiate the WhichBarcodeInspectWindow
-
-        :return:
         """
         WhichBarcodeInspectWindow(self.barcode_1, self.barcode_2, dpi=100, figsize=(7, 4))
 
     def load_json_barcode(self):
         """
         Instantiate the LoadJsonWindow
-
-        :return:
         """
         LoadJsonWindow(self.barcode_gn, self.barcode_1, self.barcode_2, self.ax,
                        self.canvas, self.barcodes_stack)
@@ -249,8 +239,6 @@ class MainWindow():
     def load_stack_barcode(self):
         """
         Instantiate the LoadStackWindow
-
-        :return:
         """
         LoadStackWindow(self.barcodes_stack, self.barcode_1, self.barcode_2, self.ax,
                         self.canvas)
@@ -258,24 +246,18 @@ class MainWindow():
     def reshape_barcode(self):
         """
         Instantiate the ReshapeBarcodeWindow
-
-        :return:
         """
         ReshapeBarcodeWindow(self.barcode_1, self.barcode_2, self.ax, self.canvas)
 
     def stats_info(self):
         """
         Instantiate the StatsInfoWindow
-
-        :return:
         """
         StatsInfoWindow(self.barcode_1, self.barcode_2)
 
     def generate_barcode(self):
         """
         Instantiate the GenerateBarcodeWindow
-
-        :return:
         """
         if not self.generate_window_opened:
             self.generate_window_opened = True
@@ -287,16 +269,12 @@ class MainWindow():
     def save_barcode_on_stack(self):
         """
         Instantiate the SaveBarcodeWindow
-
-        :return:
         """
         SaveBarcodeWindow(self.barcodes_stack)
 
     def save_image_from_display(self):
         """
         Instantiate the SaveImageWindow
-
-        :return:
         """
         SaveImageWindow(self.barcode_1, self.barcode_2)
 
@@ -305,7 +283,6 @@ class MainWindow():
         Pick the time at a point of the plotted barcode if user double click on that point
 
         :param event: matplotlib event. Only catch double click event
-        :return:
         """
         # If user is double click on the graph
         if event.dblclick:

@@ -1,0 +1,7 @@
+CalibrateBarcodeTimeWindow Class
+***********************************
+
+.. automodule:: kalmus.tkinter_windows.time_points_windows.CalibrateBarcodeTimeWindow
+    :members: CalibrateBarcodeTimeWindow
+    :undoc-members:
+    :show-inheritance:

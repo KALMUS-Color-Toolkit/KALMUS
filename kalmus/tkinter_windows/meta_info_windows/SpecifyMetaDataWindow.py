@@ -18,6 +18,7 @@ class SpecifyMetaDataWindow():
     def __init__(self, meta_data_dict, barcode=None, barcode_stacks=None):
         """
         Initialize
+
         :param meta_data_dict: The meta information dictionary of the barcode
         :param barcode: The barcode
         :param barcode_stacks: The dictionary that stored all the barcode on memory
@@ -88,7 +89,6 @@ class SpecifyMetaDataWindow():
     def update_meta_info(self):
         """
         Update the meta information of the barcode using user input
-        :return:
         """
         # Get the user input
         title = self.title_entry.get()
@@ -131,8 +131,8 @@ class SpecifyMetaDataWindow():
     def update_other_entry(self, *args):
         """
         Enable the other genre entry once user select Other: in the dropdown list
+
         :param args: required by the tkinter callback
-        :return:
         """
         # Enable or disable the other genre entry based on the dropdown list selection
         if self.genre_var.get() == "Other:":

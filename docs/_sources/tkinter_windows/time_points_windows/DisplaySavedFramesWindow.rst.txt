@@ -1,0 +1,7 @@
+DisplaySavedFramesWindow Class
+*********************************
+
+.. automodule:: kalmus.tkinter_windows.time_points_windows.DisplaySavedFramesWindow
+    :members: DisplaySavedFramesWindow
+    :undoc-members:
+    :show-inheritance:

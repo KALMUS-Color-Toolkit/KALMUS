@@ -219,7 +219,8 @@ def random_sample_pixels(img, sample_ratio=0, mode="row-col"):
     :param sample_ratio: The amount of pixels sampled from the image. in range [0, 1]
     :param mode: two sampling mode are available. \
     1) 'row-col' sampling mode 2) 'flat' sampling mode
-    :return:
+    :return: If mode="flat", return the resampled array of pixels (1-d flat array of data points) \
+             If mode="row-col", return the resampled image
     """
     assert 0 <= sample_ratio <= 1, "The sample ratio is in the range of [0, 1]"
     if sample_ratio == 1:

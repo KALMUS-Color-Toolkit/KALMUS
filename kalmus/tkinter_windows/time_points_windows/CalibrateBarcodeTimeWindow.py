@@ -58,7 +58,6 @@ class CalibrateBarcodeTimeWindow():
     def update(self):
         """
         Update the start time, end time, and film frame rate (fps)
-        :return:
         """
         # Get the fps
         fps = self.fps_entry.get()

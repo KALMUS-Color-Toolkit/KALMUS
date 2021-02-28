@@ -1,0 +1,7 @@
+SpecifyMetaDataWindow Class
+*******************************
+
+.. automodule:: kalmus.tkinter_windows.meta_info_windows.SpecifyMetaDataWindow
+    :members: SpecifyMetaDataWindow
+    :undoc-members:
+    :show-inheritance:

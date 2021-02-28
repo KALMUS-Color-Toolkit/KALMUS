@@ -15,6 +15,7 @@ class ReshapeBarcodeWindow():
     def __init__(self, barcode_1, barcode_2, axes, canvas):
         """
         Initialize
+
         :param barcode_1: The barcode 1
         :param barcode_2: The barcode 2
         :param axes: The display axes in the MainWindow of the kalmus
@@ -110,7 +111,6 @@ class ReshapeBarcodeWindow():
     def update_size_label(self):
         """
         Update the size label if the currently selected barcode is changed
-        :return:
         """
         if self.barcode_option.get() == "Barcode 1":
             text = "Current Width = {:d}\nCurrent Height = {:d}".format(
@@ -124,7 +124,6 @@ class ReshapeBarcodeWindow():
     def reshape(self):
         """
         Enable or disable the input parameters entry if the reshape radio button is selected
-        :return:
         """
         self.column_length_entry.config(state='normal')
         self.resize_x_entry.config(state='disabled')
@@ -134,7 +133,6 @@ class ReshapeBarcodeWindow():
         """
         Enable or disable the input parameters entry and update the corresponding text
         if the scale radio button is selected
-        :return:
         """
         self.resize_x_label['text'] = "Scale Width by (ratio):    "
         self.resize_y_label['text'] = "Scale Height by (ratio):    "
@@ -147,7 +145,6 @@ class ReshapeBarcodeWindow():
         """
         Enable or disable the input parameters entry and update the corresponding text
         if the resize radio button is selected
-        :return:
         """
         self.resize_x_label['text'] = "Resize Width to (pixels): "
         self.resize_y_label['text'] = "Resize Height to (pixels): "
@@ -159,7 +156,6 @@ class ReshapeBarcodeWindow():
     def reshape_resize_barcode(self):
         """
         Reshape or resize the barcode using the given parameters
-        :return:
         """
         # Get the reshape/resize type from the user selection
         option = self.config_option.get()
@@ -223,9 +219,10 @@ class ReshapeBarcodeWindow():
         Check if the resize parameter is given
         If one of the parameter is not given assume that dimension is unchanged
         If both are not given, return and do not process the resize.
+
         :param default_x: Default x dimension
         :param default_y: Default y dimension
-        :return:
+        :return: Processed resize x and y parameters from the user input
         """
         resize_x_str = self.resize_x_entry.get()
         resize_y_str = self.resize_y_entry.get()
@@ -246,16 +243,15 @@ class ReshapeBarcodeWindow():
     def update_scale_factor(self, barcode, old_barcode_size):
         """
         Update the scale factor of the barcode
+
         :param barcode: The barcode to update
         :param old_barcode_size: The old size of that barcode
-        :return:
         """
         barcode.scale_factor *= (old_barcode_size / (barcode.get_barcode().shape[0] * barcode.get_barcode().shape[1]))
 
     def updated_new_barcode(self):
         """
-        Update the resize/reshape barcode to the MainWindow of the kalmus
-        :return:
+        Update the resized/reshaped barcode to the MainWindow of the kalmus
         """
         # Clear the display axes
         self.axes[0][0].cla()

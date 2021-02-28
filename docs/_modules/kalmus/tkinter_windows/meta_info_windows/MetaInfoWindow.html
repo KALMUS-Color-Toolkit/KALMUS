@@ -1,0 +1,317 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="python" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>kalmus.tkinter_windows.meta_info_windows.MetaInfoWindow &mdash; KALMUS 1.3.6 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> KALMUS
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../install.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../kalmus.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../acknowledge.html">Acknowledgement</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">KALMUS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>kalmus.tkinter_windows.meta_info_windows.MetaInfoWindow</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for kalmus.tkinter_windows.meta_info_windows.MetaInfoWindow</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot; MetaInfoWindow Class &quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">tkinter</span>
+<span class="kn">from</span> <span class="nn">kalmus.tkinter_windows.meta_info_windows.SpecifyMetaDataWindow</span> <span class="k">import</span> <span class="n">SpecifyMetaDataWindow</span>
+<span class="kn">from</span> <span class="nn">kalmus.tkinter_windows.gui_utils</span> <span class="k">import</span> <span class="n">resource_path</span>
+
+<span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Film Title&quot;</span><span class="p">,</span> <span class="s2">&quot;Directors&quot;</span><span class="p">,</span> <span class="s2">&quot;Country of Origin&quot;</span><span class="p">,</span> <span class="s2">&quot;Produced Year&quot;</span><span class="p">,</span> <span class="s2">&quot;Genre&quot;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="MetaInfoWindow"><a class="viewcode-back" href="../../../../tkinter_windows/meta_info_windows/MetaInfoWindow.html#kalmus.tkinter_windows.meta_info_windows.MetaInfoWindow.MetaInfoWindow">[docs]</a><span class="k">class</span> <span class="nc">MetaInfoWindow</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    MetaInfoWindow Class</span>
+<span class="sd">    GUI window that displays the meta information of the selected barcode</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">barcode</span><span class="p">,</span> <span class="n">barcodes_stack</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize</span>
+
+<span class="sd">        :param barcode: The barcode to check with the meta information</span>
+<span class="sd">        :param barcodes_stack: The dictionary that store all the barcodes on the memory</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span> <span class="o">=</span> <span class="n">barcode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">barcodes_stack</span> <span class="o">=</span> <span class="n">barcodes_stack</span>
+
+        <span class="c1"># Initialize the window</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">wm_title</span><span class="p">(</span><span class="s2">&quot;Barcode Meta Information&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">iconbitmap</span><span class="p">(</span><span class="n">resource_path</span><span class="p">(</span><span class="s2">&quot;kalmus_icon.ico&quot;</span><span class="p">))</span>
+
+        <span class="c1"># Label prompt for the meta information display</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta_info_label</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">35</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span>
+                                             <span class="n">justify</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">LEFT</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta_info_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
+
+        <span class="c1"># Update the Meta information text</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">refresh_text</span><span class="p">()</span>
+
+        <span class="c1"># Button to refresh the displayed meta information of the barcode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">refresh_button</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Refresh&quot;</span><span class="p">,</span>
+                                             <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">refresh_text</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">refresh_button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Button to add/update meta information to the barcode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_info_button</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Update Meta Info&quot;</span><span class="p">,</span>
+                                              <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">update_meta_info</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_info_button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MetaInfoWindow.refresh_text"><a class="viewcode-back" href="../../../../tkinter_windows/meta_info_windows/MetaInfoWindow.html#kalmus.tkinter_windows.meta_info_windows.MetaInfoWindow.MetaInfoWindow.refresh_text">[docs]</a>    <span class="k">def</span> <span class="nf">refresh_text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Refresh the meta information text displayed for the barcode</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">meta_text</span> <span class="o">=</span> <span class="s2">&quot;Meta Information of the Barcode:</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+        <span class="c1"># Build the text using the keys and their values stored in the barcodes&#39;s meta information dictionary</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">meta_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">meta_data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">format_string</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{: &lt;s}</span><span class="s2">   </span><span class="si">{:s}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">meta_data</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
+                    <span class="n">meta_text</span> <span class="o">+=</span> <span class="n">format_string</span>
+
+        <span class="n">film_length</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_time_str</span><span class="p">()</span>
+        <span class="n">fps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">fps</span>
+        <span class="n">meta_text</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="si">{: &lt;s}</span><span class="s2">   </span><span class="si">{:s}</span><span class="se">\n</span><span class="si">{: &lt;s}</span><span class="s2">  </span><span class="si">{:s}</span><span class="se">\n</span><span class="si">{: &lt;s}</span><span class="s2">  </span><span class="si">{:s}</span><span class="se">\n\n</span><span class="si">{: &lt;s}</span><span class="s2">  </span><span class="si">{:.1f}</span><span class="s2">&quot;</span>\
+            <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Film Length:&quot;</span><span class="p">,</span> <span class="n">film_length</span><span class="p">,</span>
+                    <span class="s2">&quot;Barcode starts at&quot;</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span>
+                    <span class="s2">&quot;Barcode ends at&quot;</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span>
+                    <span class="s2">&quot;Frame rate (FPS):&quot;</span><span class="p">,</span> <span class="n">fps</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta_info_label</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">meta_text</span></div>
+
+<div class="viewcode-block" id="MetaInfoWindow.get_time_str"><a class="viewcode-back" href="../../../../tkinter_windows/meta_info_windows/MetaInfoWindow.html#kalmus.tkinter_windows.meta_info_windows.MetaInfoWindow.MetaInfoWindow.get_time_str">[docs]</a>    <span class="k">def</span> <span class="nf">get_time_str</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get string for film length in hrs:mins:secs, clip start time in hrs:mins:secs,</span>
+<span class="sd">        and clip end time in hrs:mins:secs</span>
+
+<span class="sd">        :return: Text string for film length, clip start time at film, clip end time at film</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">fps</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">fps</span> <span class="o">=</span> <span class="mf">29.8</span>
+
+        <span class="n">film_length_in_secs</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">film_length_in_frames</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">fps</span><span class="p">)</span>
+
+        <span class="n">hrs</span><span class="p">,</span> <span class="n">mins</span><span class="p">,</span> <span class="n">secs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_hr_min_sec_from_tot_sec</span><span class="p">(</span><span class="n">film_length_in_secs</span><span class="p">)</span>
+        <span class="n">film_length_str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:02d}</span><span class="s2">:</span><span class="si">{:02d}</span><span class="s2">:</span><span class="si">{:02d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">hrs</span><span class="p">,</span> <span class="n">mins</span><span class="p">,</span> <span class="n">secs</span><span class="p">)</span>
+
+        <span class="n">barcode_clip_length_secs</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">total_frames</span>
+                                         <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">sampled_frame_rate</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">fps</span><span class="p">))</span>
+        <span class="n">clip_start_time_secs</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">skip_over</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">fps</span><span class="p">)</span>
+
+        <span class="n">hrs</span><span class="p">,</span> <span class="n">mins</span><span class="p">,</span> <span class="n">secs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_hr_min_sec_from_tot_sec</span><span class="p">(</span><span class="n">clip_start_time_secs</span><span class="p">)</span>
+        <span class="n">clip_start_time_str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:02d}</span><span class="s2">:</span><span class="si">{:02d}</span><span class="s2">:</span><span class="si">{:02d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">hrs</span><span class="p">,</span> <span class="n">mins</span><span class="p">,</span> <span class="n">secs</span><span class="p">)</span>
+
+        <span class="n">clip_end_time_secs</span> <span class="o">=</span> <span class="n">clip_start_time_secs</span> <span class="o">+</span> <span class="n">barcode_clip_length_secs</span>
+        <span class="n">hrs</span><span class="p">,</span> <span class="n">mins</span><span class="p">,</span> <span class="n">secs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_hr_min_sec_from_tot_sec</span><span class="p">(</span><span class="n">clip_end_time_secs</span><span class="p">)</span>
+        <span class="n">clip_end_time_str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:02d}</span><span class="s2">:</span><span class="si">{:02d}</span><span class="s2">:</span><span class="si">{:02d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">hrs</span><span class="p">,</span> <span class="n">mins</span><span class="p">,</span> <span class="n">secs</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">film_length_str</span><span class="p">,</span> <span class="n">clip_start_time_str</span><span class="p">,</span> <span class="n">clip_end_time_str</span></div>
+
+<div class="viewcode-block" id="MetaInfoWindow.get_hr_min_sec_from_tot_sec"><a class="viewcode-back" href="../../../../tkinter_windows/meta_info_windows/MetaInfoWindow.html#kalmus.tkinter_windows.meta_info_windows.MetaInfoWindow.MetaInfoWindow.get_hr_min_sec_from_tot_sec">[docs]</a>    <span class="k">def</span> <span class="nf">get_hr_min_sec_from_tot_sec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tot_seconds</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the equivalent Hours:Minutes:Seconds representation from a given total seconds</span>
+
+<span class="sd">        :param tot_seconds: Total seconds</span>
+<span class="sd">        :return: Converted hours, minutes, and seconds representation Hours:Minutes:Seconds \</span>
+<span class="sd">                 Hours &gt;= 0, 60 &gt; Minutes &gt;= 0, 60 &gt; Seconds &gt;= 0</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">secs</span> <span class="o">=</span> <span class="n">tot_seconds</span> <span class="o">%</span> <span class="mi">60</span>
+        <span class="n">mins</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">tot_seconds</span> <span class="o">/</span> <span class="mi">60</span><span class="p">)</span> <span class="o">%</span> <span class="mi">60</span>
+        <span class="n">hrs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">tot_seconds</span> <span class="o">/</span> <span class="mi">3600</span><span class="p">)</span> <span class="o">%</span> <span class="mi">60</span>
+        <span class="k">return</span> <span class="n">hrs</span><span class="p">,</span> <span class="n">mins</span><span class="p">,</span> <span class="n">secs</span></div>
+
+<div class="viewcode-block" id="MetaInfoWindow.update_meta_info"><a class="viewcode-back" href="../../../../tkinter_windows/meta_info_windows/MetaInfoWindow.html#kalmus.tkinter_windows.meta_info_windows.MetaInfoWindow.MetaInfoWindow.update_meta_info">[docs]</a>    <span class="k">def</span> <span class="nf">update_meta_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Instantiate the SpecifyMetaDataWindow, if the user press the add info button</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">SpecifyMetaDataWindow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s2">&quot;meta_data&quot;</span><span class="p">],</span> <span class="n">barcode</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="p">,</span>
+                              <span class="n">barcode_stacks</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">barcodes_stack</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Yida Chen, Eric Faden, and Nathan Ryan.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

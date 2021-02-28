@@ -1,0 +1,7 @@
+StatsInfoWindow Class
+*******************************
+
+.. automodule:: kalmus.tkinter_windows.StatsInfoWindow
+    :members: StatsInfoWindow
+    :undoc-members:
+    :show-inheritance:

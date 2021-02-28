@@ -1,0 +1,490 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="python" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow &mdash; KALMUS 1.3.6 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> KALMUS
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../install.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../kalmus.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../acknowledge.html">Acknowledgement</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">KALMUS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">PlotBarcodeWindow Class</span>
+<span class="sd">ColorHistogramWindow Class</span>
+<span class="sd">RGBColorCubeWindow Class</span>
+<span class="sd">OutputCSVWindow Class</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">tkinter</span>
+<span class="kn">import</span> <span class="nn">tkinter.filedialog</span>
+<span class="kn">from</span> <span class="nn">tkinter.messagebox</span> <span class="k">import</span> <span class="n">showinfo</span><span class="p">,</span> <span class="n">showerror</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib.backends.backend_tkagg</span> <span class="k">import</span> <span class="p">(</span><span class="n">FigureCanvasTkAgg</span><span class="p">,</span> <span class="n">NavigationToolbar2Tk</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">kalmus.utils.visualization_utils</span> <span class="k">import</span> <span class="n">show_colors_in_cube</span>
+<span class="kn">from</span> <span class="nn">kalmus.tkinter_windows.gui_utils</span> <span class="k">import</span> <span class="n">resource_path</span><span class="p">,</span> <span class="n">update_hist</span>
+<span class="kn">import</span> <span class="nn">kalmus.utils.Artist</span>
+<span class="kn">from</span> <span class="nn">skimage.color</span> <span class="k">import</span> <span class="n">rgb2hsv</span>
+
+
+<div class="viewcode-block" id="PlotBarcodeWindow"><a class="viewcode-back" href="../../../../tkinter_windows/plot_barcodes_windows/PlotBarcodeWindow.html#kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.PlotBarcodeWindow">[docs]</a><span class="k">class</span> <span class="nc">PlotBarcodeWindow</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    PlotBarcodeWindow Class</span>
+<span class="sd">    GUI window of plotting the barcode for user to inspect in details</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">barcode</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize</span>
+
+<span class="sd">        :param barcode: The barcode that will be inspected</span>
+<span class="sd">        :param figsize: The size of the plotted figure</span>
+<span class="sd">        :param dpi: The dpi of the figure</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span> <span class="o">=</span> <span class="n">barcode</span>
+
+        <span class="c1"># Initialize the window</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_window</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_window</span><span class="o">.</span><span class="n">wm_title</span><span class="p">(</span><span class="s2">&quot;Inspect Barcode&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_window</span><span class="o">.</span><span class="n">iconbitmap</span><span class="p">(</span><span class="n">resource_path</span><span class="p">(</span><span class="s2">&quot;kalmus_icon.ico&quot;</span><span class="p">))</span>
+
+        <span class="c1"># Set up the plotted figure</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">)</span>
+
+        <span class="c1"># Use the correct color map based on the input barcode&#39;s type</span>
+        <span class="k">if</span> <span class="n">barcode</span><span class="o">.</span><span class="n">barcode_type</span> <span class="o">==</span> <span class="s2">&quot;Brightness&quot;</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">barcode</span><span class="o">.</span><span class="n">get_barcode</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;uint8&quot;</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">barcode</span><span class="o">.</span><span class="n">get_barcode</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;uint8&quot;</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+        <span class="c1"># Set up the canvas for the figure</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span> <span class="o">=</span> <span class="n">FigureCanvasTkAgg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="p">,</span> <span class="n">master</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_window</span><span class="p">)</span>  <span class="c1"># A tk.DrawingArea.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+
+        <span class="c1"># Dynamic layout based on the type of the inspected barcode</span>
+        <span class="k">if</span> <span class="n">barcode</span><span class="o">.</span><span class="n">barcode_type</span> <span class="o">==</span> <span class="s2">&quot;Color&quot;</span><span class="p">:</span>
+            <span class="n">column_span</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">column_span</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">get_tk_widget</span><span class="p">()</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="n">column_span</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+        <span class="c1"># Use tkinter Frame to organize the figure widget</span>
+        <span class="n">toolbarFrame</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_window</span><span class="p">)</span>
+        <span class="n">toolbarFrame</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="n">column_span</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">W</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+
+        <span class="c1"># Initialize the plotting tool bar</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">toolbar</span> <span class="o">=</span> <span class="n">NavigationToolbar2Tk</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">,</span> <span class="n">toolbarFrame</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">toolbar</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+        <span class="c1"># Button to output the data in the barcode to a csv file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_output_csv</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Output CSV&quot;</span><span class="p">,</span>
+                                                <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">output_csv</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_output_csv</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+
+        <span class="c1"># Button to check the histogram distribution of the barcode&#39;s hue/brightness value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_hist</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Show Histogram&quot;</span><span class="p">,</span>
+                                              <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">show_color_histogram</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_hist</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+
+        <span class="c1"># If the barcode is a color barcode, allow user to inspect the RGB color distribution in a RGB cube</span>
+        <span class="k">if</span> <span class="n">barcode</span><span class="o">.</span><span class="n">barcode_type</span> <span class="o">==</span> <span class="s2">&quot;Color&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">button_cube</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Show Color in RGB Cube&quot;</span><span class="p">,</span>
+                                              <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">show_RGB_color_in_cube</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">button_cube</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<div class="viewcode-block" id="PlotBarcodeWindow.show_RGB_color_in_cube"><a class="viewcode-back" href="../../../../tkinter_windows/plot_barcodes_windows/PlotBarcodeWindow.html#kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.PlotBarcodeWindow.show_RGB_color_in_cube">[docs]</a>    <span class="k">def</span> <span class="nf">show_RGB_color_in_cube</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Instantiate the RGBColorCubeWindow if user press the show color in RGB cube button</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">RGBColorCubeWindow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PlotBarcodeWindow.show_color_histogram"><a class="viewcode-back" href="../../../../tkinter_windows/plot_barcodes_windows/PlotBarcodeWindow.html#kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.PlotBarcodeWindow.show_color_histogram">[docs]</a>    <span class="k">def</span> <span class="nf">show_color_histogram</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Instantiate the ColorHistogramWindow if user press the show histogram button</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ColorHistogramWindow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PlotBarcodeWindow.output_csv"><a class="viewcode-back" href="../../../../tkinter_windows/plot_barcodes_windows/PlotBarcodeWindow.html#kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.PlotBarcodeWindow.output_csv">[docs]</a>    <span class="k">def</span> <span class="nf">output_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">OutputCSVWindow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ColorHistogramWindow"><a class="viewcode-back" href="../../../../tkinter_windows/plot_barcodes_windows/PlotBarcodeWindow.html#kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.ColorHistogramWindow">[docs]</a><span class="k">class</span> <span class="nc">ColorHistogramWindow</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    ColorHistogramWindow Class</span>
+<span class="sd">    GUI window that show the distribution of the barcode&#39;s hue[0, 360]/brightness[0, 255] value</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">barcode</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize</span>
+
+<span class="sd">        :param barcode: The input barcode</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Set up the window</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">wm_title</span><span class="p">(</span><span class="s2">&quot;Histogram Distribution&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">iconbitmap</span><span class="p">(</span><span class="n">resource_path</span><span class="p">(</span><span class="s2">&quot;kalmus_icon.ico&quot;</span><span class="p">))</span>
+
+        <span class="c1"># Set up the plotted figure</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+        <span class="n">update_hist</span><span class="p">(</span><span class="n">barcode</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">bin_step</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+        <span class="c1"># Plot the histogram based on the barcode&#39;s type</span>
+        <span class="k">if</span> <span class="n">barcode</span><span class="o">.</span><span class="n">barcode_type</span> <span class="o">==</span> <span class="s2">&quot;Color&quot;</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">361</span><span class="p">,</span> <span class="mi">30</span><span class="p">))</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Color Hue (0 - 360)&quot;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Number of frames&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Brightness (0 - 255)&quot;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Number of frames&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Set up the canvas of the figure</span>
+        <span class="n">canvas</span> <span class="o">=</span> <span class="n">FigureCanvasTkAgg</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">master</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">)</span>  <span class="c1"># A tk.DrawingArea.</span>
+        <span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+        <span class="n">canvas</span><span class="o">.</span><span class="n">get_tk_widget</span><span class="p">()</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">TOP</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">BOTH</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Set up the tool bar of the figure</span>
+        <span class="n">toolbar</span> <span class="o">=</span> <span class="n">NavigationToolbar2Tk</span><span class="p">(</span><span class="n">canvas</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">)</span>
+        <span class="n">toolbar</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+        <span class="n">canvas</span><span class="o">.</span><span class="n">get_tk_widget</span><span class="p">()</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">TOP</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">BOTH</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RGBColorCubeWindow"><a class="viewcode-back" href="../../../../tkinter_windows/plot_barcodes_windows/PlotBarcodeWindow.html#kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.RGBColorCubeWindow">[docs]</a><span class="k">class</span> <span class="nc">RGBColorCubeWindow</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    RGBColorCubeWindow Class</span>
+<span class="sd">    GUI window that shows the distribution of the barcode&#39;s RGB color in a RGB cube</span>
+<span class="sd">    range in [0, 255] for all three channels</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">barcode</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize</span>
+
+<span class="sd">        :param barcode: The input barcode</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span> <span class="o">=</span> <span class="n">barcode</span>
+
+        <span class="c1"># Set up the window</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">wm_title</span><span class="p">(</span><span class="s2">&quot;Colors in RGB cube&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">iconbitmap</span><span class="p">(</span><span class="n">resource_path</span><span class="p">(</span><span class="s2">&quot;kalmus_icon.ico&quot;</span><span class="p">))</span>
+
+        <span class="c1"># Set up the plotted figure</span>
+        <span class="n">sampling</span> <span class="o">=</span> <span class="mi">6000</span>
+        <span class="k">if</span> <span class="n">sampling</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="n">sampling</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">show_colors_in_cube</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">colors</span><span class="p">,</span> <span class="n">return_figure</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figure_size</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">sampling</span><span class="o">=</span><span class="n">sampling</span><span class="p">)</span>
+
+        <span class="c1"># Set up the canvas</span>
+        <span class="n">canvas</span> <span class="o">=</span> <span class="n">FigureCanvasTkAgg</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">master</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">)</span>  <span class="c1"># A tk.DrawingArea.</span>
+        <span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+        <span class="n">canvas</span><span class="o">.</span><span class="n">get_tk_widget</span><span class="p">()</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">TOP</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">BOTH</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Allow mouse events on 3D figure</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">mouse_init</span><span class="p">()</span>
+
+        <span class="c1"># Set up the tool bar of the figure</span>
+        <span class="n">toolbar</span> <span class="o">=</span> <span class="n">NavigationToolbar2Tk</span><span class="p">(</span><span class="n">canvas</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">)</span>
+        <span class="n">toolbar</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+        <span class="n">canvas</span><span class="o">.</span><span class="n">get_tk_widget</span><span class="p">()</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">TOP</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">BOTH</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OutputCSVWindow"><a class="viewcode-back" href="../../../../tkinter_windows/plot_barcodes_windows/PlotBarcodeWindow.html#kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.OutputCSVWindow">[docs]</a><span class="k">class</span> <span class="nc">OutputCSVWindow</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    OutputCSVWindow class</span>
+<span class="sd">    GUI window that outputs the per frame level color/brightness data of the inspected barcode</span>
+<span class="sd">    The data output are stored in the csv file, and the data frame depends on the type of the barcode</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">barcode</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize</span>
+
+<span class="sd">        :param barcode: The barcode to output the per frame level data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span> <span class="o">=</span> <span class="n">barcode</span>
+
+        <span class="c1"># Set up the window</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">wm_title</span><span class="p">(</span><span class="s2">&quot;Output the barcode to CSV&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">iconbitmap</span><span class="p">(</span><span class="n">resource_path</span><span class="p">(</span><span class="s2">&quot;kalmus_icon.ico&quot;</span><span class="p">))</span>
+
+        <span class="c1"># Label prompt for the file name/path to the csv file</span>
+        <span class="n">filename_label</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;CSV file path: &quot;</span><span class="p">)</span>
+        <span class="n">filename_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
+
+        <span class="c1"># Text entry for user to type the file name/path to the csv file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename_entry</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename_entry</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
+
+        <span class="c1"># Button to browse the folder</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_browse_folder</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Browse&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">browse_folder</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_browse_folder</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># Button to build/load the barcode using the given json file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_build_barcode</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Output&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">output_csv_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_build_barcode</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<div class="viewcode-block" id="OutputCSVWindow.output_csv_file"><a class="viewcode-back" href="../../../../tkinter_windows/plot_barcodes_windows/PlotBarcodeWindow.html#kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.OutputCSVWindow.output_csv_file">[docs]</a>    <span class="k">def</span> <span class="nf">output_csv_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Output the per frame level data to a csv file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get the file name of the output csv file</span>
+        <span class="n">csv_filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename_entry</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">csv_filename</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Invalid Path or Filename&quot;</span><span class="p">,</span> <span class="s2">&quot;Please specify the path/filename of the generated csv file.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Get the sampled frame rate of the barcode</span>
+        <span class="n">sample_rate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">sampled_frame_rate</span>
+
+        <span class="c1"># Get the starting/skipped over frame of the barcode</span>
+        <span class="n">starting_frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">skip_over</span>
+
+        <span class="c1"># Generate the corresponding csv file for the type of the barcode</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">barcode_type</span> <span class="o">==</span> <span class="s1">&#39;Color&#39;</span><span class="p">:</span>
+            <span class="c1"># Data frame of the csv file for the color barcode</span>
+            <span class="n">data_frame</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frame index&#39;</span><span class="p">,</span> <span class="s1">&#39;Red (0-255)&#39;</span><span class="p">,</span> <span class="s1">&#39;Green (0-255)&#39;</span><span class="p">,</span> <span class="s1">&#39;Blue (0-255)&#39;</span><span class="p">,</span> <span class="s1">&#39;Hue (0 -360)&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;Saturation (0 - 1)&#39;</span><span class="p">,</span> <span class="s1">&#39;Value (lightness) (0 - 1)&#39;</span><span class="p">,</span><span class="s1">&#39;Brightness&#39;</span><span class="p">]</span>
+            <span class="n">kalmus</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">Artist</span><span class="o">.</span><span class="n">write_in_info</span><span class="p">(</span><span class="n">data_frame</span><span class="p">,</span> <span class="n">csv_filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+
+            <span class="n">cur_frame</span> <span class="o">=</span> <span class="n">starting_frame</span>
+            <span class="c1"># Get the per frame level color data</span>
+            <span class="k">for</span> <span class="n">color</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">colors</span><span class="p">:</span>
+                <span class="n">r</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">color</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">g</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">color</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">color</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+                <span class="n">brightness</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.299</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="mf">0.587</span> <span class="o">*</span> <span class="n">g</span> <span class="o">+</span> <span class="mf">0.114</span> <span class="o">*</span> <span class="n">b</span><span class="p">)</span>
+                <span class="n">hsv</span> <span class="o">=</span> <span class="n">rgb2hsv</span><span class="p">(</span><span class="n">color</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="mi">255</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+                <span class="n">h</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">hsv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">360</span><span class="p">)</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">hsv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">hsv</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+                <span class="n">kalmus</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">Artist</span><span class="o">.</span><span class="n">write_in_info</span><span class="p">([</span><span class="n">cur_frame</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">brightness</span><span class="p">],</span> <span class="n">csv_filename</span><span class="p">)</span>
+
+                <span class="n">cur_frame</span> <span class="o">+=</span> <span class="n">sample_rate</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">barcode_type</span> <span class="o">==</span> <span class="s1">&#39;Brightness&#39;</span><span class="p">:</span>
+            <span class="c1"># Data frame of the csv file for the brightness barcode</span>
+            <span class="n">data_frame</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frame index&#39;</span><span class="p">,</span> <span class="s1">&#39;Brightness&#39;</span><span class="p">]</span>
+            <span class="n">kalmus</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">Artist</span><span class="o">.</span><span class="n">write_in_info</span><span class="p">(</span><span class="n">data_frame</span><span class="p">,</span> <span class="n">csv_filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+
+            <span class="n">cur_frame</span> <span class="o">=</span> <span class="n">starting_frame</span>
+            <span class="c1"># Get the per frame level brightness data</span>
+            <span class="k">for</span> <span class="n">bri</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">brightness</span><span class="p">:</span>
+                <span class="n">kalmus</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">Artist</span><span class="o">.</span><span class="n">write_in_info</span><span class="p">([</span><span class="n">cur_frame</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">bri</span><span class="p">[</span><span class="mi">0</span><span class="p">])],</span> <span class="n">csv_filename</span><span class="p">)</span>
+
+                <span class="n">cur_frame</span> <span class="o">+=</span> <span class="n">sample_rate</span>
+
+        <span class="c1"># Quit the window after outputting csv file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+
+        <span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;CSV File Generated Successfully&quot;</span><span class="p">,</span> <span class="s2">&quot;CSV file has been generated successfully.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                                                    <span class="s2">&quot;Path to the File: </span><span class="si">{:20s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">csv_filename</span><span class="p">)))</span></div>
+
+<div class="viewcode-block" id="OutputCSVWindow.browse_folder"><a class="viewcode-back" href="../../../../tkinter_windows/plot_barcodes_windows/PlotBarcodeWindow.html#kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.OutputCSVWindow.browse_folder">[docs]</a>    <span class="k">def</span> <span class="nf">browse_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Browse the folder to locate the json file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get the file name from the user selection</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">filedialog</span><span class="o">.</span><span class="n">asksaveasfilename</span><span class="p">(</span><span class="n">initialdir</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Select CSV file&quot;</span><span class="p">,</span>
+                                                      <span class="n">filetypes</span><span class="o">=</span><span class="p">((</span><span class="s2">&quot;csv files&quot;</span><span class="p">,</span> <span class="s2">&quot;*.csv&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;txt files&quot;</span><span class="p">,</span> <span class="s2">&quot;*.txt&quot;</span><span class="p">),</span>
+                                                                 <span class="p">(</span><span class="s2">&quot;All files&quot;</span><span class="p">,</span> <span class="s2">&quot;*.*&quot;</span><span class="p">)))</span>
+
+        <span class="c1"># Update the file name to the file name text entry</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename_entry</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">END</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename_entry</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Yida Chen, Eric Faden, and Nathan Ryan.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

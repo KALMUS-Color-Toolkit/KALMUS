@@ -251,8 +251,6 @@ class GenerateBarcodeWindow():
     def quit(self):
         """
         Quit the main window
-
-        :return:
         """
         self.window.quit()
         self.window.destroy()
@@ -260,16 +258,12 @@ class GenerateBarcodeWindow():
     def specify_data(self):
         """
         Instantiate the SpecifyMetaDataWindow
-
-        :return:
         """
         SpecifyMetaDataWindow(self.meta_data_dict)
 
     def update_thread_entry(self):
         """
         Enable or disable and change the label prompt when user check/uncheck the multi-thread checkbox
-
-        :return:
         """
         if self.var_multi_thread.get() == 0:
             self.checkbox_multi_thread["text"] = "Multi-Thread:"
@@ -281,8 +275,6 @@ class GenerateBarcodeWindow():
     def update_rescale_entry(self):
         """
         Enable or disable and change the label prompt when user check/uncheck the rescale frames checkbox
-
-        :return:
         """
         if self.var_rescale_frame.get() == 0:
             self.checkbox_rescale_frame["text"] = "Rescale Frames"
@@ -294,8 +286,6 @@ class GenerateBarcodeWindow():
     def update_save_frame_entry(self):
         """
         Enable or disable the text entry when user check/uncheck the save frames checkbox
-
-        :return:
         """
         if self.var_saved_frame.get() == 0:
             self.save_frame_entry.config(state="disabled")
@@ -305,8 +295,6 @@ class GenerateBarcodeWindow():
     def time_unit(self):
         """
         Change the acquisition unit to Time when user switch to the time radio button
-
-        :return:
         """
         self.skip_over_label['text'] = "Start at (mins:secs): "
         self.sampled_rate_label['text'] = "Sample every (secs): "
@@ -315,8 +303,6 @@ class GenerateBarcodeWindow():
     def frame_unit(self):
         """
         Change the acquisition unit to Frame when user switch to the frame radio button
-
-        :return:
         """
         self.skip_over_label['text'] = "Start at (frames): "
         self.sampled_rate_label['text'] = "Sample every (frames): "
@@ -325,8 +311,6 @@ class GenerateBarcodeWindow():
     def browse_folder(self):
         """
         Browse the folder
-
-        :return:
         """
         # Get the file name from the user specification
         filename = tkinter.filedialog.askopenfilename(initialdir=".", title="Select Media file",
@@ -349,8 +333,6 @@ class GenerateBarcodeWindow():
     def acquire_generation_param(self):
         """
         Acquire the barcode generation parameters
-
-        :return:
         """
         # Get barcode type, frame sampling type, and color/brightness metric
         barcode_type = self.barcode_type_var.get()
@@ -438,8 +420,6 @@ class GenerateBarcodeWindow():
     def generate_barcode(self):
         """
         Generate the barcode using the given parameters
-
-        :return:
         """
         self.disable_generate_button()
         try:
@@ -587,8 +567,6 @@ class GenerateBarcodeWindow():
     def disable_generate_button(self):
         """
         Disable the generate button and Specify Meta Data button once generation starts
-
-        :return:
         """
         # Update the generate button text to the processing
         self.generate_button["text"] = "  Processing... "
@@ -598,8 +576,6 @@ class GenerateBarcodeWindow():
     def enable_generate_button(self):
         """
         Enable the generate button and Specify Meta Data button in case of failed generation
-
-        :return:
         """
         # Change the button text back to Generate Barcode
         self.generate_button["text"] = "Generate Barcode"
@@ -609,8 +585,6 @@ class GenerateBarcodeWindow():
     def disable_setup(self):
         """
         Disable the letter box setup entry if user choose the Auto radio button
-
-        :return:
         """
         self.high_ver_entry.config(state="disabled")
         self.low_ver_entry.config(state="disabled")
@@ -620,8 +594,6 @@ class GenerateBarcodeWindow():
     def enable_setup(self):
         """
         Enable the letter box setup entry if user choose the Manual radio button
-
-        :return:
         """
         self.high_ver_entry.config(state="normal")
         self.low_ver_entry.config(state="normal")

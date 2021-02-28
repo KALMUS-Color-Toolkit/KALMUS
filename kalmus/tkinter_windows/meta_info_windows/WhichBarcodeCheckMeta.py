@@ -13,6 +13,7 @@ class WhichBarcodeCheckMeta():
     def __init__(self, barcode_1, barcode_2, barcodes_stack):
         """
         Initialize
+
         :param barcode_1: The barcode 1
         :param barcode_2: The barcode 2
         :param barcodes_stack: The dictionary that stored all the barcode in memory
@@ -47,7 +48,6 @@ class WhichBarcodeCheckMeta():
     def check_meta_info(self):
         """
         Get the selected option from user and instantiate the MetaInfoWindow using the given option (barcode)
-        :return:
         """
         # Get the selection
         which_barcode = self.barcode_option.get()
