@@ -90,6 +90,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../kalmus.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../update_log.html">KALMUS Update Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../acknowledge.html">Acknowledgement</a></li>
 </ul>
 
@@ -289,7 +290,7 @@
 <span class="sd">        :param save_frames: Whether to save the frames during the barcode generation</span>
 <span class="sd">        :param rescale_frames_factor: factor to rescale the input frames during the generation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">instantiate_barcode</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instantiate_barcode_object</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">user_defined_letterbox</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">set_letterbox_bound</span><span class="p">(</span><span class="n">up_vertical_bound</span><span class="o">=</span><span class="n">high_ver</span><span class="p">,</span> <span class="n">down_vertical_bound</span><span class="o">=</span><span class="n">low_ver</span><span class="p">,</span>
                                              <span class="n">left_horizontal_bound</span><span class="o">=</span><span class="n">left_hor</span><span class="p">,</span> <span class="n">right_horizontal_bound</span><span class="o">=</span><span class="n">right_hor</span><span class="p">)</span>

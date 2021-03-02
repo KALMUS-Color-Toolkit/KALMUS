@@ -511,19 +511,19 @@ class GenerateBarcodeWindow():
                 self.enable_generate_button()
                 return
         elif self.letterbox_option.get() == "Auto":
-            try:
+            # try:
                 # If not, start the generation.
                 # The letter box will be automatically found during the generation process
-                self.barcode_generator.generate_barcode(video_filename, num_thread=multi_thread,
-                                                        save_frames=save_frames,
-                                                        rescale_frames_factor=rescale_factor,
-                                                        save_frames_rate=save_frames_rate)
-            except:
-                showwarning("Error Occurred in Barcode Generation", "An unknown Error occurred in the barcode "
-                                                                    "generation.\nPlease check the parameters' "
-                                                                    "specification.")
-                self.enable_generate_button()
-                return
+            self.barcode_generator.generate_barcode(video_filename, num_thread=multi_thread,
+                                                    save_frames=save_frames,
+                                                    rescale_frames_factor=rescale_factor,
+                                                    save_frames_rate=save_frames_rate)
+            # except:
+            #     showwarning("Error Occurred in Barcode Generation", "An unknown Error occurred in the barcode "
+            #                                                         "generation.\nPlease check the parameters' "
+            #                                                         "specification.")
+            #     self.enable_generate_button()
+            #     return
 
         # Correct the total frames
         total_frames = self.barcode_generator.get_barcode().total_frames

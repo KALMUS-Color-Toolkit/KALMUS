@@ -102,6 +102,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../kalmus.html#ui-window-classes">UI Window Classes</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../update_log.html">KALMUS Update Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../acknowledge.html">Acknowledgement</a></li>
 </ul>
 
@@ -159,7 +160,7 @@
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="../_sources/utils/Artist.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/utils/artist.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -172,12 +173,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-kalmus.utils.Artist">
-<span id="artist-utility"></span><h1>Artist Utility<a class="headerlink" href="#module-kalmus.utils.Artist" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-kalmus.utils.artist">
+<span id="artist-utility"></span><h1>Artist Utility<a class="headerlink" href="#module-kalmus.utils.artist" title="Permalink to this headline">¶</a></h1>
 <p>Utility Artist</p>
 <dl class="py function">
-<dt id="kalmus.utils.Artist.color_of_regions">
-<code class="sig-prename descclassname"><span class="pre">kalmus.utils.Artist.</span></code><code class="sig-name descname"><span class="pre">color_of_regions</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">original_image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/Artist.html#color_of_regions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.Artist.color_of_regions" title="Permalink to this definition">¶</a></dt>
+<dt id="kalmus.utils.artist.color_of_regions">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.artist.</span></code><code class="sig-name descname"><span class="pre">color_of_regions</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">original_image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/artist.html#color_of_regions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.artist.color_of_regions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute average color and brightest color of the regions and record
 the relative size of the regions as a ratio with respect to the size
 of whole image.</p>
@@ -195,8 +196,8 @@ of whole image.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="kalmus.utils.Artist.compute_brightest_color_and_brightness">
-<code class="sig-prename descclassname"><span class="pre">kalmus.utils.Artist.</span></code><code class="sig-name descname"><span class="pre">compute_brightest_color_and_brightness</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grey_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gaussian_blur</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blur_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/Artist.html#compute_brightest_color_and_brightness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.Artist.compute_brightest_color_and_brightness" title="Permalink to this definition">¶</a></dt>
+<dt id="kalmus.utils.artist.compute_brightest_color_and_brightness">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.artist.</span></code><code class="sig-name descname"><span class="pre">compute_brightest_color_and_brightness</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grey_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gaussian_blur</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blur_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/artist.html#compute_brightest_color_and_brightness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.artist.compute_brightest_color_and_brightness" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find the brightest pixel in an image and return the color and brightness at that pixel</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -215,8 +216,8 @@ of whole image.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="kalmus.utils.Artist.compute_dominant_color">
-<code class="sig-prename descclassname"><span class="pre">kalmus.utils.Artist.</span></code><code class="sig-name descname"><span class="pre">compute_dominant_color</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_clusters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attempts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/Artist.html#compute_dominant_color"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.Artist.compute_dominant_color" title="Permalink to this definition">¶</a></dt>
+<dt id="kalmus.utils.artist.compute_dominant_color">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.artist.</span></code><code class="sig-name descname"><span class="pre">compute_dominant_color</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_clusters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attempts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/artist.html#compute_dominant_color"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.artist.compute_dominant_color" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the dominant color of an input image using the kmeans clustering. The centers of the
 clusters are the dominant colors of the input image</p>
 <dl class="field-list simple">
@@ -236,8 +237,8 @@ clusters are the dominant colors of the input image</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="kalmus.utils.Artist.compute_mean_color">
-<code class="sig-prename descclassname"><span class="pre">kalmus.utils.Artist.</span></code><code class="sig-name descname"><span class="pre">compute_mean_color</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/Artist.html#compute_mean_color"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.Artist.compute_mean_color" title="Permalink to this definition">¶</a></dt>
+<dt id="kalmus.utils.artist.compute_mean_color">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.artist.</span></code><code class="sig-name descname"><span class="pre">compute_mean_color</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/artist.html#compute_mean_color"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.artist.compute_mean_color" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the average/mean color of the input multi-channel image or greyscale image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -250,8 +251,8 @@ clusters are the dominant colors of the input image</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="kalmus.utils.Artist.compute_median_color">
-<code class="sig-prename descclassname"><span class="pre">kalmus.utils.Artist.</span></code><code class="sig-name descname"><span class="pre">compute_median_color</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/Artist.html#compute_median_color"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.Artist.compute_median_color" title="Permalink to this definition">¶</a></dt>
+<dt id="kalmus.utils.artist.compute_median_color">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.artist.</span></code><code class="sig-name descname"><span class="pre">compute_median_color</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/artist.html#compute_median_color"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.artist.compute_median_color" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the median color of the input multi-channel color image or a single channel greyscale image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -264,8 +265,8 @@ clusters are the dominant colors of the input image</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="kalmus.utils.Artist.compute_mode_color">
-<code class="sig-prename descclassname"><span class="pre">kalmus.utils.Artist.</span></code><code class="sig-name descname"><span class="pre">compute_mode_color</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bin_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/Artist.html#compute_mode_color"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.Artist.compute_mode_color" title="Permalink to this definition">¶</a></dt>
+<dt id="kalmus.utils.artist.compute_mode_color">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.artist.</span></code><code class="sig-name descname"><span class="pre">compute_mode_color</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bin_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/artist.html#compute_mode_color"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.artist.compute_mode_color" title="Permalink to this definition">¶</a></dt>
 <dd><p>compute the mode color of an input image</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -281,8 +282,8 @@ clusters are the dominant colors of the input image</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="kalmus.utils.Artist.compute_percents_of_labels">
-<code class="sig-prename descclassname"><span class="pre">kalmus.utils.Artist.</span></code><code class="sig-name descname"><span class="pre">compute_percents_of_labels</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/Artist.html#compute_percents_of_labels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.Artist.compute_percents_of_labels" title="Permalink to this definition">¶</a></dt>
+<dt id="kalmus.utils.artist.compute_percents_of_labels">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.artist.</span></code><code class="sig-name descname"><span class="pre">compute_percents_of_labels</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/artist.html#compute_percents_of_labels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.artist.compute_percents_of_labels" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the ratio/percentage size of the labels in an labeled image</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -295,8 +296,8 @@ clusters are the dominant colors of the input image</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="kalmus.utils.Artist.contrast_between_regions">
-<code class="sig-prename descclassname"><span class="pre">kalmus.utils.Artist.</span></code><code class="sig-name descname"><span class="pre">contrast_between_regions</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">region_colors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">region_weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/Artist.html#contrast_between_regions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.Artist.contrast_between_regions" title="Permalink to this definition">¶</a></dt>
+<dt id="kalmus.utils.artist.contrast_between_regions">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.artist.</span></code><code class="sig-name descname"><span class="pre">contrast_between_regions</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">region_colors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">region_weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/artist.html#contrast_between_regions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.artist.contrast_between_regions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the contrast between the segmented regions in image using the color of regions
 and adjacency matrix</p>
 <dl class="field-list simple">
@@ -314,8 +315,8 @@ and adjacency matrix</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="kalmus.utils.Artist.contrast_ratio">
-<code class="sig-prename descclassname"><span class="pre">kalmus.utils.Artist.</span></code><code class="sig-name descname"><span class="pre">contrast_ratio</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/Artist.html#contrast_ratio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.Artist.contrast_ratio" title="Permalink to this definition">¶</a></dt>
+<dt id="kalmus.utils.artist.contrast_ratio">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.artist.</span></code><code class="sig-name descname"><span class="pre">contrast_ratio</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/artist.html#contrast_ratio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.artist.contrast_ratio" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the contrast ratio between two 24-bits RGB colors in range [0, 255]
 see <a class="reference external" href="https://www.w3.org/TR/2008/REC-WCAG20-20081211/#contrast-ratiodef">https://www.w3.org/TR/2008/REC-WCAG20-20081211/#contrast-ratiodef</a> for more references</p>
 <dl class="field-list simple">
@@ -332,8 +333,8 @@ see <a class="reference external" href="https://www.w3.org/TR/2008/REC-WCAG20-20
 </dd></dl>
 
 <dl class="py function">
-<dt id="kalmus.utils.Artist.find_bright_spots">
-<code class="sig-prename descclassname"><span class="pre">kalmus.utils.Artist.</span></code><code class="sig-name descname"><span class="pre">find_bright_spots</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_clusters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blur_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">21</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount_of_bright_parts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_all_pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/Artist.html#find_bright_spots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.Artist.find_bright_spots" title="Permalink to this definition">¶</a></dt>
+<dt id="kalmus.utils.artist.find_bright_spots">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.artist.</span></code><code class="sig-name descname"><span class="pre">find_bright_spots</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_clusters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blur_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">21</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount_of_bright_parts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_all_pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/artist.html#find_bright_spots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.artist.find_bright_spots" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find the indices location of the top-k brightest spots in an color image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -351,8 +352,29 @@ see <a class="reference external" href="https://www.w3.org/TR/2008/REC-WCAG20-20
 </dd></dl>
 
 <dl class="py function">
-<dt id="kalmus.utils.Artist.flatten_image">
-<code class="sig-prename descclassname"><span class="pre">kalmus.utils.Artist.</span></code><code class="sig-name descname"><span class="pre">flatten_image</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/Artist.html#flatten_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.Artist.flatten_image" title="Permalink to this definition">¶</a></dt>
+<dt id="kalmus.utils.artist.find_letter_box_from_videos">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.artist.</span></code><code class="sig-name descname"><span class="pre">find_letter_box_from_videos</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">video</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_sample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/artist.html#find_letter_box_from_videos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.artist.find_letter_box_from_videos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the position of letterbox (black bars around the scene) in the input cv2 video object.
+The function samples out num_sample (20 by default) number of frames from cv2 video object, and find the position
+of letterbox in each frame. The function uses the median results from all sampled frames as the final position of
+video's letterbox.</p>
+<p>Notice that the function assumes the letterbox is black or very close to black.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>video</strong> -- Input video object captured by cv2.VideoCapture()</p></li>
+<li><p><strong>num_sample</strong> -- Number of frames to sample from video for finding letterbox</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The smaller row index of letterbox (bound for upper horizontal letterbox),              the larger row index of letterbox (bound for lower horizontal letterbox),              the smaller col index of letterbox (bound for left vertical letterbox),              and the larger col index of letterbox (bound for right vertical letterbox).                           The results are the median results on num_sample number of frames                           To extract the frame without letterbox from letterboxing frame,</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="kalmus.utils.artist.flatten_image">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.artist.</span></code><code class="sig-name descname"><span class="pre">flatten_image</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/artist.html#flatten_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.artist.flatten_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Flat the input 2D image into an 1D image while preserve the channels of the input image
 with shape==[height x width, channels]</p>
 <dl class="field-list simple">
@@ -366,8 +388,44 @@ with shape==[height x width, channels]</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="kalmus.utils.Artist.get_rag">
-<code class="sig-prename descclassname"><span class="pre">kalmus.utils.Artist.</span></code><code class="sig-name descname"><span class="pre">get_rag</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gray_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/Artist.html#get_rag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.Artist.get_rag" title="Permalink to this definition">¶</a></dt>
+<dt id="kalmus.utils.artist.get_contrast_matrix_and_labeled_image">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.artist.</span></code><code class="sig-name descname"><span class="pre">get_contrast_matrix_and_labeled_image</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimum_segment_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0004</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/artist.html#get_contrast_matrix_and_labeled_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.artist.get_contrast_matrix_and_labeled_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function that use the watershed method to segment the input image return the matrix of the
+brightness contrast of each segmented region with respect to its neighbors (adjacent segmented regions)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frame</strong> -- The input frame</p></li>
+<li><p><strong>minimum_segment_size</strong> -- The minimum size of the segmented region in the ratio to the whole frame. Range (0, 1)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The matrix with shape (num_regions x num_regions) whose cell [i, j] represents the contrast              between the region i and region j, and the corresponding labeled image (segmentation)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="kalmus.utils.artist.get_letter_box_from_frames">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.artist.</span></code><code class="sig-name descname"><span class="pre">get_letter_box_from_frames</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/artist.html#get_letter_box_from_frames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.artist.get_letter_box_from_frames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the position of letterbox (black bars around the scene) in the input cv2 video object.
+The function assumes the letter box of the frame is black (dark)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frame</strong> -- Input frame</p></li>
+<li><p><strong>threshold</strong> -- The brightness threshold value that distinguish                       the region of interest (bright) and letterbox (dark)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The smaller row index of letterbox (bound for upper horizontal letterbox),              the larger row index of letterbox (bound for lower horizontal letterbox),              the smaller col index of letterbox (bound for left vertical letterbox),              and the larger col index of letterbox (bound for right vertical letterbox).                           To extract the frame without letterbox from letterboxing frame,</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="kalmus.utils.artist.get_rag">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.artist.</span></code><code class="sig-name descname"><span class="pre">get_rag</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gray_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/artist.html#get_rag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.artist.get_rag" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the region adjacency graph using the labeled image and corresponding the edge map generated by
 greyscale image with sobel filter</p>
 <dl class="field-list simple">
@@ -384,8 +442,8 @@ greyscale image with sobel filter</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="kalmus.utils.Artist.grabcut_foreback_segmentation">
-<code class="sig-prename descclassname"><span class="pre">kalmus.utils.Artist.</span></code><code class="sig-name descname"><span class="pre">grabcut_foreback_segmentation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_row</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/Artist.html#grabcut_foreback_segmentation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.Artist.grabcut_foreback_segmentation" title="Permalink to this definition">¶</a></dt>
+<dt id="kalmus.utils.artist.grabcut_foreback_segmentation">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.artist.</span></code><code class="sig-name descname"><span class="pre">grabcut_foreback_segmentation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_row</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/artist.html#grabcut_foreback_segmentation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.artist.grabcut_foreback_segmentation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform the GrabCut segmentation over the input image with a rectangle of possible foreground
 specified by user. The GrabCut segment the image into two parts foreground and background, and
 the function return the 1D image of the foreground and background as the output</p>
@@ -407,8 +465,8 @@ the function return the 1D image of the foreground and background as the output<
 </dd></dl>
 
 <dl class="py function">
-<dt id="kalmus.utils.Artist.rag_to_matrix">
-<code class="sig-prename descclassname"><span class="pre">kalmus.utils.Artist.</span></code><code class="sig-name descname"><span class="pre">rag_to_matrix</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_regions</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/Artist.html#rag_to_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.Artist.rag_to_matrix" title="Permalink to this definition">¶</a></dt>
+<dt id="kalmus.utils.artist.rag_to_matrix">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.artist.</span></code><code class="sig-name descname"><span class="pre">rag_to_matrix</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_regions</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/artist.html#rag_to_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.artist.rag_to_matrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transfer the region adjacency dictionary to a more accessible region adjacency matrix
 where in the matrix, 1 means the region of corresponding column index is adjacent to the
 region of corresponding row index/
@@ -429,8 +487,8 @@ e.g.
 </dd></dl>
 
 <dl class="py function">
-<dt id="kalmus.utils.Artist.random_sample_pixels">
-<code class="sig-prename descclassname"><span class="pre">kalmus.utils.Artist.</span></code><code class="sig-name descname"><span class="pre">random_sample_pixels</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'row-col'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/Artist.html#random_sample_pixels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.Artist.random_sample_pixels" title="Permalink to this definition">¶</a></dt>
+<dt id="kalmus.utils.artist.random_sample_pixels">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.artist.</span></code><code class="sig-name descname"><span class="pre">random_sample_pixels</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'row-col'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/artist.html#random_sample_pixels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.artist.random_sample_pixels" title="Permalink to this definition">¶</a></dt>
 <dd><p>Randomly sample an amount of pixels from an image based on the given sampled ratio.
 Two sampling mode are available.
 row-col: sampling first across the row and then across the column on each sampled row
@@ -454,8 +512,8 @@ are not preserved due to the flatten process, but it sample the pixels much fast
 </dd></dl>
 
 <dl class="py function">
-<dt id="kalmus.utils.Artist.watershed_segmentation">
-<code class="sig-prename descclassname"><span class="pre">kalmus.utils.Artist.</span></code><code class="sig-name descname"><span class="pre">watershed_segmentation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimum_segment_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0004</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">denoise_disk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gradiant_disk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marker_disk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/Artist.html#watershed_segmentation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.Artist.watershed_segmentation" title="Permalink to this definition">¶</a></dt>
+<dt id="kalmus.utils.artist.watershed_segmentation">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.artist.</span></code><code class="sig-name descname"><span class="pre">watershed_segmentation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimum_segment_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0004</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">denoise_disk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gradiant_disk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marker_disk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/artist.html#watershed_segmentation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.artist.watershed_segmentation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Label the connected regions in an image.
 Use edge detection approach with watershed algorithm.
 adjust the critical gradient (edge gradient) with the distribution of the input image's

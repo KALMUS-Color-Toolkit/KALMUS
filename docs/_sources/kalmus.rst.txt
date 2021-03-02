@@ -14,7 +14,7 @@ Utils
 .. toctree::
    :maxdepth: 4
 
-   utils/Artist
+   utils/artist
    utils/measure_utils
    utils/visualization_utils
 

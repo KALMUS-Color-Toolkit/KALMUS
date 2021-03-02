@@ -12,6 +12,7 @@ Welcome to KALMUS's documentation!
    Home <self>
    Installation Guide <install>
    API Documentation <kalmus>
+   KALMUS Update Log <update_log>
    Acknowledgement <acknowledge>
 
 KALMUS Color Toolkit

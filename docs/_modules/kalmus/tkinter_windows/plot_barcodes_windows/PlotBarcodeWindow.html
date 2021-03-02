@@ -90,6 +90,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../index.html">Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../install.html">Installation Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../kalmus.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../update_log.html">KALMUS Update Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../acknowledge.html">Acknowledgement</a></li>
 </ul>
 
@@ -175,7 +176,7 @@
 
 <span class="kn">from</span> <span class="nn">kalmus.utils.visualization_utils</span> <span class="k">import</span> <span class="n">show_colors_in_cube</span>
 <span class="kn">from</span> <span class="nn">kalmus.tkinter_windows.gui_utils</span> <span class="k">import</span> <span class="n">resource_path</span><span class="p">,</span> <span class="n">update_hist</span>
-<span class="kn">import</span> <span class="nn">kalmus.utils.Artist</span>
+<span class="kn">import</span> <span class="nn">kalmus.utils.artist</span>
 <span class="kn">from</span> <span class="nn">skimage.color</span> <span class="k">import</span> <span class="n">rgb2hsv</span>
 
 
@@ -398,7 +399,7 @@
             <span class="c1"># Data frame of the csv file for the color barcode</span>
             <span class="n">data_frame</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frame index&#39;</span><span class="p">,</span> <span class="s1">&#39;Red (0-255)&#39;</span><span class="p">,</span> <span class="s1">&#39;Green (0-255)&#39;</span><span class="p">,</span> <span class="s1">&#39;Blue (0-255)&#39;</span><span class="p">,</span> <span class="s1">&#39;Hue (0 -360)&#39;</span><span class="p">,</span>
                           <span class="s1">&#39;Saturation (0 - 1)&#39;</span><span class="p">,</span> <span class="s1">&#39;Value (lightness) (0 - 1)&#39;</span><span class="p">,</span><span class="s1">&#39;Brightness&#39;</span><span class="p">]</span>
-            <span class="n">kalmus</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">Artist</span><span class="o">.</span><span class="n">write_in_info</span><span class="p">(</span><span class="n">data_frame</span><span class="p">,</span> <span class="n">csv_filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+            <span class="n">kalmus</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">artist</span><span class="o">.</span><span class="n">write_in_info</span><span class="p">(</span><span class="n">data_frame</span><span class="p">,</span> <span class="n">csv_filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
 
             <span class="n">cur_frame</span> <span class="o">=</span> <span class="n">starting_frame</span>
             <span class="c1"># Get the per frame level color data</span>
@@ -412,19 +413,19 @@
                 <span class="n">s</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">hsv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
                 <span class="n">v</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">hsv</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
 
-                <span class="n">kalmus</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">Artist</span><span class="o">.</span><span class="n">write_in_info</span><span class="p">([</span><span class="n">cur_frame</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">brightness</span><span class="p">],</span> <span class="n">csv_filename</span><span class="p">)</span>
+                <span class="n">kalmus</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">artist</span><span class="o">.</span><span class="n">write_in_info</span><span class="p">([</span><span class="n">cur_frame</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">brightness</span><span class="p">],</span> <span class="n">csv_filename</span><span class="p">)</span>
 
                 <span class="n">cur_frame</span> <span class="o">+=</span> <span class="n">sample_rate</span>
 
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">barcode_type</span> <span class="o">==</span> <span class="s1">&#39;Brightness&#39;</span><span class="p">:</span>
             <span class="c1"># Data frame of the csv file for the brightness barcode</span>
             <span class="n">data_frame</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frame index&#39;</span><span class="p">,</span> <span class="s1">&#39;Brightness&#39;</span><span class="p">]</span>
-            <span class="n">kalmus</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">Artist</span><span class="o">.</span><span class="n">write_in_info</span><span class="p">(</span><span class="n">data_frame</span><span class="p">,</span> <span class="n">csv_filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+            <span class="n">kalmus</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">artist</span><span class="o">.</span><span class="n">write_in_info</span><span class="p">(</span><span class="n">data_frame</span><span class="p">,</span> <span class="n">csv_filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
 
             <span class="n">cur_frame</span> <span class="o">=</span> <span class="n">starting_frame</span>
             <span class="c1"># Get the per frame level brightness data</span>
             <span class="k">for</span> <span class="n">bri</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">brightness</span><span class="p">:</span>
-                <span class="n">kalmus</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">Artist</span><span class="o">.</span><span class="n">write_in_info</span><span class="p">([</span><span class="n">cur_frame</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">bri</span><span class="p">[</span><span class="mi">0</span><span class="p">])],</span> <span class="n">csv_filename</span><span class="p">)</span>
+                <span class="n">kalmus</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">artist</span><span class="o">.</span><span class="n">write_in_info</span><span class="p">([</span><span class="n">cur_frame</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">bri</span><span class="p">[</span><span class="mi">0</span><span class="p">])],</span> <span class="n">csv_filename</span><span class="p">)</span>
 
                 <span class="n">cur_frame</span> <span class="o">+=</span> <span class="n">sample_rate</span>
 

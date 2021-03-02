@@ -101,6 +101,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../kalmus.html#ui-window-classes">UI Window Classes</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../update_log.html">KALMUS Update Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../acknowledge.html">Acknowledgement</a></li>
 </ul>
 
@@ -229,10 +230,10 @@ Once the barcode is generated, this attribute should not be changed.</p>
 <dt id="kalmus.barcodes.Barcode.Barcode.find_film_letterbox">
 <code class="sig-name descname"><span class="pre">find_film_letterbox</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_sample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/barcodes/Barcode.html#Barcode.find_film_letterbox"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.barcodes.Barcode.Barcode.find_film_letterbox" title="Permalink to this definition">¶</a></dt>
 <dd><p>Automatically find the letter box bounds of the film.
-Function run the get_letter_box_bounds helper function by num_sample times and take the median of bounds</p>
+Function run the get_letter_box_from_frames helper function by num_sample times and take the median of bounds</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>num_sample</strong> -- Number of times running the get_letter_box_bounds</p>
+<dd class="field-odd"><p><strong>num_sample</strong> -- Number of times running the get_letter_box_from_frames</p>
 </dd>
 </dl>
 </dd></dl>
@@ -479,43 +480,7 @@ Segmented the input frame into two parts: foreground and background, using the G
 <dd class="field-odd"><p><strong>frame</strong> -- Input frame</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The foreground part of image, the background part of image</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="kalmus.barcodes.Barcode.get_contrast_matrix_and_labeled_image">
-<code class="sig-prename descclassname"><span class="pre">kalmus.barcodes.Barcode.</span></code><code class="sig-name descname"><span class="pre">get_contrast_matrix_and_labeled_image</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimum_segment_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0004</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/barcodes/Barcode.html#get_contrast_matrix_and_labeled_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.barcodes.Barcode.get_contrast_matrix_and_labeled_image" title="Permalink to this definition">¶</a></dt>
-<dd><p>Helper function that use the watershed method to segment the input image return the matrix of the
-brightness contrast of each segmented region with respect to its neighbors (adjacent segmented regions)</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>frame</strong> -- The input frame</p></li>
-<li><p><strong>minimum_segment_size</strong> -- The minimum size of the segmented region in the ratio to the whole frame. Range (0, 1)</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The matrix with shape (num_regions x num_regions) whose cell [i, j] represents the contrast              between the region i and region j, and the corresponding labeled image (segmentation)</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="kalmus.barcodes.Barcode.get_letter_box_bounds">
-<code class="sig-prename descclassname"><span class="pre">kalmus.barcodes.Barcode.</span></code><code class="sig-name descname"><span class="pre">get_letter_box_bounds</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/barcodes/Barcode.html#get_letter_box_bounds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.barcodes.Barcode.get_letter_box_bounds" title="Permalink to this definition">¶</a></dt>
-<dd><p>Helper function that find the letter box bounds of a given frame
-The function assumes the letter box of the frame is black (dark)</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>frame</strong> -- Input frame</p></li>
-<li><p><strong>threshold</strong> -- The brightness threshold value that distinguish                       the region of interest (bright) and letterbox (dark)</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The lower, higher vertical bounds, and left, right horizontal bounds              The region of interest is in [low_ver: high_ver, left_hor: right_hor]</p>
+<dd class="field-even"><p>1D image of the foreground part of the image, and 1D image of the background part of the image              Expected shape== Number of pixels x channels</p>
 </dd>
 </dl>
 </dd></dl>

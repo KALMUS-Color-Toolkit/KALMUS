@@ -16,7 +16,7 @@ import os
 
 from kalmus.utils.visualization_utils import show_colors_in_cube
 from kalmus.tkinter_windows.gui_utils import resource_path, update_hist
-import kalmus.utils.Artist
+import kalmus.utils.artist
 from skimage.color import rgb2hsv
 
 
@@ -239,7 +239,7 @@ class OutputCSVWindow():
             # Data frame of the csv file for the color barcode
             data_frame = ['Frame index', 'Red (0-255)', 'Green (0-255)', 'Blue (0-255)', 'Hue (0 -360)',
                           'Saturation (0 - 1)', 'Value (lightness) (0 - 1)','Brightness']
-            kalmus.utils.Artist.write_in_info(data_frame, csv_filename, mode='w')
+            kalmus.utils.artist.write_in_info(data_frame, csv_filename, mode='w')
 
             cur_frame = starting_frame
             # Get the per frame level color data
@@ -253,19 +253,19 @@ class OutputCSVWindow():
                 s = float(hsv[1])
                 v = float(hsv[2])
 
-                kalmus.utils.Artist.write_in_info([cur_frame, r, g, b, h, s, v, brightness], csv_filename)
+                kalmus.utils.artist.write_in_info([cur_frame, r, g, b, h, s, v, brightness], csv_filename)
 
                 cur_frame += sample_rate
 
         elif self.barcode.barcode_type == 'Brightness':
             # Data frame of the csv file for the brightness barcode
             data_frame = ['Frame index', 'Brightness']
-            kalmus.utils.Artist.write_in_info(data_frame, csv_filename, mode='w')
+            kalmus.utils.artist.write_in_info(data_frame, csv_filename, mode='w')
 
             cur_frame = starting_frame
             # Get the per frame level brightness data
             for bri in self.barcode.brightness:
-                kalmus.utils.Artist.write_in_info([cur_frame, int(bri[0])], csv_filename)
+                kalmus.utils.artist.write_in_info([cur_frame, int(bri[0])], csv_filename)
 
                 cur_frame += sample_rate
 

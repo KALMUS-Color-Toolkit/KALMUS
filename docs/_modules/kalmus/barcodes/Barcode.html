@@ -90,6 +90,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../kalmus.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../update_log.html">KALMUS Update Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../acknowledge.html">Acknowledgement</a></li>
 </ul>
 
@@ -170,33 +171,12 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">threading</span>
 
-<span class="kn">from</span> <span class="nn">kalmus.utils</span> <span class="k">import</span> <span class="n">Artist</span> <span class="k">as</span> <span class="n">Artist</span>
+<span class="kn">from</span> <span class="nn">kalmus.utils</span> <span class="k">import</span> <span class="n">artist</span> <span class="k">as</span> <span class="n">Artist</span>
+<span class="kn">from</span> <span class="nn">kalmus.utils.artist</span> <span class="k">import</span> <span class="n">get_letter_box_from_frames</span><span class="p">,</span> <span class="n">get_contrast_matrix_and_labeled_image</span>
 
 <span class="c1"># Available metrics for computing the color of a frame</span>
 <span class="n">color_metrics</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Average&quot;</span><span class="p">,</span> <span class="s2">&quot;Median&quot;</span><span class="p">,</span> <span class="s2">&quot;Mode&quot;</span><span class="p">,</span> <span class="s2">&quot;Top-dominant&quot;</span><span class="p">,</span> <span class="s2">&quot;Weighted-dominant&quot;</span><span class="p">,</span>
                  <span class="s2">&quot;Brightest&quot;</span><span class="p">,</span> <span class="s2">&quot;Bright&quot;</span><span class="p">]</span>
-
-
-<div class="viewcode-block" id="get_contrast_matrix_and_labeled_image"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.get_contrast_matrix_and_labeled_image">[docs]</a><span class="k">def</span> <span class="nf">get_contrast_matrix_and_labeled_image</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">minimum_segment_size</span><span class="o">=</span><span class="mf">0.0004</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Helper function that use the watershed method to segment the input image return the matrix of the</span>
-<span class="sd">    brightness contrast of each segmented region with respect to its neighbors (adjacent segmented regions)</span>
-
-<span class="sd">    :param frame: The input frame</span>
-<span class="sd">    :param minimum_segment_size: The minimum size of the segmented region in the ratio to the whole frame. Range (0, 1)</span>
-<span class="sd">    :return: The matrix with shape (num_regions x num_regions) whose cell [i, j] represents the contrast \</span>
-<span class="sd">             between the region i and region j, and the corresponding labeled image (segmentation)</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">labels</span><span class="p">,</span> <span class="n">grey_frame</span> <span class="o">=</span> <span class="n">Artist</span><span class="o">.</span><span class="n">watershed_segmentation</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">minimum_segment_size</span><span class="o">=</span><span class="n">minimum_segment_size</span><span class="p">)</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">adjacency_matrix</span> <span class="o">=</span> <span class="n">Artist</span><span class="o">.</span><span class="n">rag_to_matrix</span><span class="p">(</span><span class="n">Artist</span><span class="o">.</span><span class="n">get_rag</span><span class="p">(</span><span class="n">grey_frame</span><span class="p">,</span> <span class="n">labels</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">labels</span><span class="p">)))</span>
-        <span class="n">avg_color</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">region_sizes</span> <span class="o">=</span> <span class="n">Artist</span><span class="o">.</span><span class="n">color_of_regions</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span>
-        <span class="n">contrast_matrix</span> <span class="o">=</span> <span class="n">Artist</span><span class="o">.</span><span class="n">contrast_between_regions</span><span class="p">(</span><span class="n">avg_color</span><span class="p">,</span> <span class="n">adjacency_matrix</span><span class="p">)</span>
-    <span class="k">except</span><span class="p">:</span>
-        <span class="n">contrast_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">]])</span>
-        <span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">contrast_matrix</span><span class="p">,</span> <span class="n">labels</span></div>
 
 
 <div class="viewcode-block" id="foreback_segmentation"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.foreback_segmentation">[docs]</a><span class="k">def</span> <span class="nf">foreback_segmentation</span><span class="p">(</span><span class="n">frame</span><span class="p">):</span>
@@ -205,7 +185,8 @@
 <span class="sd">    Segmented the input frame into two parts: foreground and background, using the GrabCut</span>
 
 <span class="sd">    :param frame: Input frame</span>
-<span class="sd">    :return: The foreground part of image, the background part of image</span>
+<span class="sd">    :return: 1D image of the foreground part of the image, and 1D image of the background part of the image \</span>
+<span class="sd">             Expected shape== Number of pixels x channels</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">fore_frame</span><span class="p">,</span> <span class="n">back_frame</span> <span class="o">=</span> <span class="n">Artist</span><span class="o">.</span><span class="n">grabcut_foreback_segmentation</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">start_row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">row_size</span><span class="o">=</span><span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
                                                                   <span class="n">start_col</span><span class="o">=</span><span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="mi">6</span><span class="p">,</span>
@@ -213,53 +194,11 @@
     <span class="k">return</span> <span class="n">fore_frame</span><span class="p">,</span> <span class="n">back_frame</span></div>
 
 
-<div class="viewcode-block" id="get_letter_box_bounds"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.get_letter_box_bounds">[docs]</a><span class="k">def</span> <span class="nf">get_letter_box_bounds</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Helper function that find the letter box bounds of a given frame</span>
-<span class="sd">    The function assumes the letter box of the frame is black (dark)</span>
-
-<span class="sd">    :param frame: Input frame</span>
-<span class="sd">    :param threshold: The brightness threshold value that distinguish \</span>
-<span class="sd">                      the region of interest (bright) and letterbox (dark)</span>
-<span class="sd">    :return: The lower, higher vertical bounds, and left, right horizontal bounds \</span>
-<span class="sd">             The region of interest is in [low_ver: high_ver, left_hor: right_hor]</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">low_bound_ver</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">high_bound_ver</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">low_bound_hor</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">high_bound_hor</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span><span class="p">):</span>
-        <span class="n">color</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">frame</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span>
-        <span class="k">if</span> <span class="n">color</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">:</span>
-            <span class="n">low_bound_ver</span> <span class="o">=</span> <span class="n">i</span>
-            <span class="k">break</span>
-
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="n">color</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">frame</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span>
-        <span class="k">if</span> <span class="n">color</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">:</span>
-            <span class="n">high_bound_ver</span> <span class="o">=</span> <span class="n">i</span>
-            <span class="k">break</span>
-
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span><span class="p">):</span>
-        <span class="n">color</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">frame</span><span class="p">[:,</span> <span class="n">j</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span>
-        <span class="k">if</span> <span class="n">color</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">:</span>
-            <span class="n">low_bound_hor</span> <span class="o">=</span> <span class="n">j</span>
-            <span class="k">break</span>
-
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="n">color</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">frame</span><span class="p">[:,</span> <span class="n">j</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span>
-        <span class="k">if</span> <span class="n">color</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">:</span>
-            <span class="n">high_bound_hor</span> <span class="o">=</span> <span class="n">j</span>
-            <span class="k">break</span>
-
-    <span class="k">return</span> <span class="n">low_bound_ver</span><span class="p">,</span> <span class="n">high_bound_ver</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">low_bound_hor</span><span class="p">,</span> <span class="n">high_bound_hor</span> <span class="o">+</span> <span class="mi">1</span></div>
-
-
 <div class="viewcode-block" id="Barcode"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.Barcode">[docs]</a><span class="k">class</span> <span class="nc">Barcode</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Barcode Class</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color_metric</span><span class="p">,</span> <span class="n">frame_type</span><span class="p">,</span> <span class="n">sampled_frame_rate</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">skip_over</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">total_frames</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
                  <span class="n">barcode_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -329,9 +268,9 @@
 <div class="viewcode-block" id="Barcode.find_film_letterbox"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.Barcode.find_film_letterbox">[docs]</a>    <span class="k">def</span> <span class="nf">find_film_letterbox</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_sample</span><span class="o">=</span><span class="mi">30</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Automatically find the letter box bounds of the film.</span>
-<span class="sd">        Function run the get_letter_box_bounds helper function by num_sample times and take the median of bounds</span>
+<span class="sd">        Function run the get_letter_box_from_frames helper function by num_sample times and take the median of bounds</span>
 
-<span class="sd">        :param num_sample: Number of times running the get_letter_box_bounds</span>
+<span class="sd">        :param num_sample: Number of times running the get_letter_box_from_frames</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">possible_indexes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">film_length_in_frames</span> <span class="o">//</span> <span class="mi">6</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">film_length_in_frames</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">//</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">frame_indexes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">possible_indexes</span><span class="p">,</span> <span class="n">num_sample</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -345,7 +284,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">video</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">CAP_PROP_POS_FRAMES</span><span class="p">,</span> <span class="n">frame_index</span><span class="p">)</span>
             <span class="n">success</span><span class="p">,</span> <span class="n">frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">video</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
-                <span class="n">low_bound_v</span><span class="p">,</span> <span class="n">high_bound_v</span><span class="p">,</span> <span class="n">low_bound_h</span><span class="p">,</span> <span class="n">high_bound_h</span> <span class="o">=</span> <span class="n">get_letter_box_bounds</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+                <span class="n">low_bound_v</span><span class="p">,</span> <span class="n">high_bound_v</span><span class="p">,</span> <span class="n">low_bound_h</span><span class="p">,</span> <span class="n">high_bound_h</span> <span class="o">=</span> <span class="n">get_letter_box_from_frames</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
                 <span class="n">possible_low_bound_ver</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">low_bound_v</span><span class="p">)</span>
                 <span class="n">possible_high_bound_ver</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">high_bound_v</span><span class="p">)</span>
                 <span class="n">possible_low_bound_hor</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">low_bound_h</span><span class="p">)</span>
@@ -531,7 +470,7 @@
         <span class="n">height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">high_bound_ver</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">low_bound_ver</span>
         <span class="n">width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">high_bound_hor</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">low_bound_hor</span>
 
-        <span class="n">aspect_ratio</span> <span class="o">=</span> <span class="n">height</span><span class="o">/</span><span class="n">width</span>
+        <span class="n">aspect_ratio</span> <span class="o">=</span> <span class="n">height</span> <span class="o">/</span> <span class="n">width</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">saved_frame_height</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">aspect_ratio</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Barcode.save_frames"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.Barcode.save_frames">[docs]</a>    <span class="k">def</span> <span class="nf">save_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cur_used_frame</span><span class="p">,</span> <span class="n">frame</span><span class="p">,</span> <span class="n">frame_arr</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -589,6 +528,7 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Color barcode</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color_metric</span><span class="p">,</span> <span class="n">frame_type</span><span class="p">,</span> <span class="n">sampled_frame_rate</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">skip_over</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">total_frames</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
                  <span class="n">barcode_type</span><span class="o">=</span><span class="s2">&quot;Color&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -765,6 +705,7 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Brightness Barcode Class</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color_metric</span><span class="p">,</span> <span class="n">frame_type</span><span class="p">,</span> <span class="n">sampled_frame_rate</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">skip_over</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">total_frames</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
                  <span class="n">barcode_type</span><span class="o">=</span><span class="s2">&quot;Brightness&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

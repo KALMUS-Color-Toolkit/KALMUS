@@ -11,33 +11,12 @@ import cv2
 import numpy as np
 import threading
 
-from kalmus.utils import Artist as Artist
+from kalmus.utils import artist as Artist
+from kalmus.utils.artist import get_letter_box_from_frames, get_contrast_matrix_and_labeled_image
 
 # Available metrics for computing the color of a frame
 color_metrics = ["Average", "Median", "Mode", "Top-dominant", "Weighted-dominant",
                  "Brightest", "Bright"]
-
-
-def get_contrast_matrix_and_labeled_image(frame, minimum_segment_size=0.0004):
-    """
-    Helper function that use the watershed method to segment the input image return the matrix of the
-    brightness contrast of each segmented region with respect to its neighbors (adjacent segmented regions)
-
-    :param frame: The input frame
-    :param minimum_segment_size: The minimum size of the segmented region in the ratio to the whole frame. Range (0, 1)
-    :return: The matrix with shape (num_regions x num_regions) whose cell [i, j] represents the contrast \
-             between the region i and region j, and the corresponding labeled image (segmentation)
-
-    """
-    labels, grey_frame = Artist.watershed_segmentation(frame, minimum_segment_size=minimum_segment_size)
-    try:
-        adjacency_matrix = Artist.rag_to_matrix(Artist.get_rag(grey_frame, labels), len(np.unique(labels)))
-        avg_color, _, region_sizes = Artist.color_of_regions(labels, frame)
-        contrast_matrix = Artist.contrast_between_regions(avg_color, adjacency_matrix)
-    except:
-        contrast_matrix = np.array([[0]])
-        labels = np.ones(shape=frame.shape)
-    return contrast_matrix, labels
 
 
 def foreback_segmentation(frame):
@@ -46,7 +25,8 @@ def foreback_segmentation(frame):
     Segmented the input frame into two parts: foreground and background, using the GrabCut
 
     :param frame: Input frame
-    :return: The foreground part of image, the background part of image
+    :return: 1D image of the foreground part of the image, and 1D image of the background part of the image \
+             Expected shape== Number of pixels x channels
     """
     fore_frame, back_frame = Artist.grabcut_foreback_segmentation(frame, start_row=0, row_size=frame.shape[0] - 1,
                                                                   start_col=frame.shape[1] // 6,
@@ -54,53 +34,11 @@ def foreback_segmentation(frame):
     return fore_frame, back_frame
 
 
-def get_letter_box_bounds(frame, threshold=5):
-    """
-    Helper function that find the letter box bounds of a given frame
-    The function assumes the letter box of the frame is black (dark)
-
-    :param frame: Input frame
-    :param threshold: The brightness threshold value that distinguish \
-                      the region of interest (bright) and letterbox (dark)
-    :return: The lower, higher vertical bounds, and left, right horizontal bounds \
-             The region of interest is in [low_ver: high_ver, left_hor: right_hor]
-    """
-    low_bound_ver = 0
-    high_bound_ver = frame.shape[0]
-    low_bound_hor = 0
-    high_bound_hor = frame.shape[1]
-
-    for i in range(0, frame.shape[0] // 2):
-        color = np.average(frame[i, ...])
-        if color > threshold:
-            low_bound_ver = i
-            break
-
-    for i in range(frame.shape[0] - 1, frame.shape[0] // 2 - 1, -1):
-        color = np.average(frame[i, ...])
-        if color > threshold:
-            high_bound_ver = i
-            break
-
-    for j in range(0, frame.shape[1] // 2):
-        color = np.average(frame[:, j, ...])
-        if color > threshold:
-            low_bound_hor = j
-            break
-
-    for j in range(frame.shape[1] - 1, frame.shape[1] // 2 - 1, -1):
-        color = np.average(frame[:, j, ...])
-        if color > threshold:
-            high_bound_hor = j
-            break
-
-    return low_bound_ver, high_bound_ver + 1, low_bound_hor, high_bound_hor + 1
-
-
 class Barcode():
     """
     Barcode Class
     """
+
     def __init__(self, color_metric, frame_type, sampled_frame_rate=1, skip_over=0, total_frames=10,
                  barcode_type=None):
         """
@@ -170,9 +108,9 @@ class Barcode():
     def find_film_letterbox(self, num_sample=30):
         """
         Automatically find the letter box bounds of the film.
-        Function run the get_letter_box_bounds helper function by num_sample times and take the median of bounds
+        Function run the get_letter_box_from_frames helper function by num_sample times and take the median of bounds
 
-        :param num_sample: Number of times running the get_letter_box_bounds
+        :param num_sample: Number of times running the get_letter_box_from_frames
         """
         possible_indexes = np.arange(self.film_length_in_frames // 6, self.film_length_in_frames * 5 // 6, 1)
         frame_indexes = np.random.choice(possible_indexes, num_sample, replace=True)
@@ -186,7 +124,7 @@ class Barcode():
             self.video.set(cv2.CAP_PROP_POS_FRAMES, frame_index)
             success, frame = self.video.read()
             if success:
-                low_bound_v, high_bound_v, low_bound_h, high_bound_h = get_letter_box_bounds(frame)
+                low_bound_v, high_bound_v, low_bound_h, high_bound_h = get_letter_box_from_frames(frame)
                 possible_low_bound_ver.append(low_bound_v)
                 possible_high_bound_ver.append(high_bound_v)
                 possible_low_bound_hor.append(low_bound_h)
@@ -372,7 +310,7 @@ class Barcode():
         height = self.high_bound_ver - self.low_bound_ver
         width = self.high_bound_hor - self.low_bound_hor
 
-        aspect_ratio = height/width
+        aspect_ratio = height / width
         self.saved_frame_height = int(100 * aspect_ratio)
 
     def save_frames(self, cur_used_frame, frame, frame_arr=None):
@@ -430,6 +368,7 @@ class ColorBarcode(Barcode):
     """
     Color barcode
     """
+
     def __init__(self, color_metric, frame_type, sampled_frame_rate=1, skip_over=0, total_frames=10,
                  barcode_type="Color"):
         """
@@ -606,6 +545,7 @@ class BrightnessBarcode(Barcode):
     """
     Brightness Barcode Class
     """
+
     def __init__(self, color_metric, frame_type, sampled_frame_rate=1, skip_over=0, total_frames=10,
                  barcode_type="Brightness"):
         """

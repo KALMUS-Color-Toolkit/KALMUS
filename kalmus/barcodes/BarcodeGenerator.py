@@ -130,7 +130,7 @@ class BarcodeGenerator():
         :param save_frames: Whether to save the frames during the barcode generation
         :param rescale_frames_factor: factor to rescale the input frames during the generation
         """
-        self.instantiate_barcode()
+        self.instantiate_barcode_object()
         if user_defined_letterbox:
             self.barcode.set_letterbox_bound(up_vertical_bound=high_ver, down_vertical_bound=low_ver,
                                              left_horizontal_bound=left_hor, right_horizontal_bound=right_hor)

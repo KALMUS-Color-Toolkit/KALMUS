@@ -1,0 +1,337 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="python" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>KALMUS Update Log (v 1.3.6) &mdash; KALMUS 1.3.6 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Acknowledgement" href="acknowledge.html" />
+    <link rel="prev" title="StatsInfoWindow Class" href="tkinter_windows/StatsInfoWindow.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> KALMUS
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.3.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kalmus.html">API Documentation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">KALMUS Update Log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#update-log">Update Log</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#update-1-3-6">Update 1.3.6</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#update-1-3-5">Update 1.3.5</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#update-1-3-4">Update 1.3.4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#update-1-3-3">update 1.3.3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#update-1-3-1">Update 1.3.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#update-1-3-0">Update 1.3.0</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="acknowledge.html">Acknowledgement</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">KALMUS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>KALMUS Update Log (v 1.3.6)</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/update_log.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="kalmus-update-log-v-1-3-6">
+<h1>KALMUS Update Log (v 1.3.6)<a class="headerlink" href="#kalmus-update-log-v-1-3-6" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="update-log">
+<h2>Update Log<a class="headerlink" href="#update-log" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="update-1-3-6">
+<h3>Update 1.3.6<a class="headerlink" href="#update-1-3-6" title="Permalink to this headline">¶</a></h3>
+<p><strong>Changes</strong></p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>The internal package structure is refactored.</dt><dd><ul>
+<li><p>The utility files, including artist, measure_utils, and visualization utils, are in kalmus.utils. To import artist for example, <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">kalmus.utils.artist</span></code>.</p></li>
+<li><p>The barcodes related class files, including Barcode and BarcodeGenerator, are in barcodes module now. To import Barcode for example, <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">kalmus.barcodes.Barcode</span></code>.</p></li>
+<li><p>The tkinter windows class files are further modularized.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="update-1-3-5">
+<h3>Update 1.3.5<a class="headerlink" href="#update-1-3-5" title="Permalink to this headline">¶</a></h3>
+<p><strong>Changes</strong></p>
+<ul class="simple">
+<li><p>The project source codes now cloud be found on our GitHub page, <a class="reference external" href="https://github.com/KALMUS-Color-Toolkit/KALMUS">https://github.com/KALMUS-Color-Toolkit/KALMUS</a>.</p></li>
+<li><p>If you clone the project to the local, you may start the program by running the script kalmus.py. <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">kalmus.py</span></code></p></li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="update-1-3-4">
+<h3>Update 1.3.4<a class="headerlink" href="#update-1-3-4" title="Permalink to this headline">¶</a></h3>
+<p><strong>Add features</strong></p>
+<ul class="simple">
+<li><p>New <em>optional parameter</em> <strong>save frame rate</strong> in the barcode generation. Now, if users select to save the frames during the generation of the barcode, they can choose how many seconds to save one frame. The default save frame rate is saving one frame every 4 seconds.</p></li>
+<li><p>New <em>option</em> and <em>optional parameter</em> <strong>Rescale frame</strong> in the barcode generation. Users can choose whether to rescale the input frame (reducing or enlarging the image size) during the barcode generation by a factor given by users. The rescaling the input frame to a smaller size can substantially expedite the generation process. This option is highly recommend for the input video with resolution higher than 1K standard. However, for the video with resolution lower than 1K, the time for rescaling the frame may outweigh the benefit in accelerating the barcode generation.</p></li>
+</ul>
+<p><strong>Changes</strong></p>
+<ul class="simple">
+<li><p>Now, instead of closing themselves once the process succeeded, the Generate Barcode window will give user the success message when the barcode is generated, and the window will not be closed. Meanwhile, only one generate barcode can be opened at a time, and users need to close the Generate Barcode window before exiting the program.</p></li>
+<li><p>Load JSON window, Save JSON window, Save Image Window, and Output CSV window now also give users success message when the process is finished. Load JSON window will indicate the name (key) of the barcode loaded into the memory in its message. Save JSON window, Save Image Window, and Output CSV window will indicate where the JSON, Image, and CSV files are saved on the machine.</p></li>
+</ul>
+<p><strong>Fixes</strong></p>
+<ul class="simple">
+<li><p>The blocking issue of the Generate Barcode after users quit the KALMUS software has been fixed. Now, when users close the Generate Barcode Window and Main Window of the KALMUS GUI, all the other windows will be closed automatically and the allocated resources for their threads will be released.</p></li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="update-1-3-3">
+<h3>update 1.3.3<a class="headerlink" href="#update-1-3-3" title="Permalink to this headline">¶</a></h3>
+<p><strong>Add features</strong></p>
+<ul class="simple">
+<li><p>More indicative <strong>Error Detection/Exception Handling</strong> in KALMUS graphic user interface. Now in the generate barcode, Load JSON window, Save JSON window, and Save Barcode Image window error or warning message box with issue message will pop up if any handled/unresolved exception occurred in the process.</p></li>
+<li><p>kalmus-gui now <strong>asks users</strong> whether they are sure to quit the KALMUS when they try to close the main window by the Quit button or Close button on the Window Manager bar.</p></li>
+</ul>
+<p><strong>Changes</strong></p>
+<ul class="simple">
+<li><p>Layout of <strong>Inspect Barcode</strong> window has been redesigned. Now buttons are all on the same row, and the displayed barcode image are more compact with respect to the window.</p></li>
+<li><p>KALMUS GUI now loads different formats of icon image under different OS environment. (.ico format for Windows and POSIX Mac, .xbm for POSIX system)</p></li>
+<li><p>Now the histogram plots in the Main window will also be auto-rescaled after loading new barcodes into the main window.</p></li>
+<li><p>Threaded Barcode generation. Barcode generation now won't block the mainloop process of the KALMUS GUI.</p></li>
+</ul>
+<p><strong>Fixes</strong></p>
+<ul class="simple">
+<li><p>Dependencies fixes. The required versions of dependent modules <strong>matplotlib</strong> and <strong>scikit-image</strong> now retreat to more stable releases. <strong>matplotlib</strong> == 3.2.2 and <strong>scikit-image</strong> == 0.16.2</p></li>
+<li><p>Barcodes with less than 160 frames now can be correctly loaded and displayed in the KALMUS GUI.</p></li>
+<li><p>Unexpected print statements in the barcode generation has been removed.</p></li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="update-1-3-1">
+<h3>Update 1.3.1<a class="headerlink" href="#update-1-3-1" title="Permalink to this headline">¶</a></h3>
+<p><strong>Add features</strong></p>
+<ul class="simple">
+<li><p><strong>Check Meta Info</strong> now also shows the input video length (time), video frame rate (FPS), generated barcode's start time, and end time in  the input video. Notice that these four pieces of information are determined from the input video file and are hence <strong>immutable</strong> parameters of the video &amp; barcode.</p></li>
+</ul>
+<p><strong>Changes</strong></p>
+<ul class="simple">
+<li><p>The default behavior of the <strong>Save Frames</strong> in the generation of the barcode is changed. The upper bound of saved frames for a barcode is 900 frames. The default sampled rate is saving one frame every 4 seconds, the sampled rate will be reduced if the resultant saved frames exceed the bound.</p></li>
+<li><p>In the <strong>Reshape Barcode</strong>, parameters <strong>Scale Width/Height by (ratio)</strong> and <strong>Resize Width/Height to (pixels)</strong> are no longer required. If one of the parameters is not specified, rescaling/resizing will assume the barcode is unchanged in that dimension. If both dimensions (x and y) are not specified, the rescaling/resizing won't process. For reshaping, Frames per Column as the only parameter is still required, and the reshaping won't process unless the parameter is given.</p></li>
+<li><p>In the <strong>Save JSON</strong>, the JSON file path field is no longer required. If the path is not given, the default filename of the saved barcode will be used, and the JSON file (barcode) will be saved in the current working directory. We still recommend users to specify the JSON file path to avoid potential filename conflicts.</p></li>
+</ul>
+<p><strong>Fixes</strong></p>
+<ul class="simple">
+<li><p>Unexpected print statement when <em>Checking time</em> at a brightness barcode is now removed.</p></li>
+<li><p><strong>Reshape, Resize, or Rescale</strong> a barcode will no longer break the frame-pixel (or time-pixel) relation which the function <em>Check time at a pixel</em> relies on. Thus, users will no need to <strong>Recalibrate</strong> the barcode to fix the time-pixel relationship after <strong>Reshape/Resize/Rescale</strong>. <strong>Calibrate</strong> now should only be used to update the time information of the barcode generated by the KALMUS in the 1.3.0 version and before. The mutability of the Barcode's start time/end time, and Frame rate are no longer needed, and the <strong>Calibrate</strong> may be removed from the KALMUS GUI in the future version.</p></li>
+<li><p><em>Auto Rescale</em> the barcode plots after loading the new barcode with different sizes (in x, y, or both dimensions) or reshaping/resizing/rescaling the currently plotted barcodes.</p></li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="update-1-3-0">
+<h3>Update 1.3.0<a class="headerlink" href="#update-1-3-0" title="Permalink to this headline">¶</a></h3>
+<p><strong>Add features</strong></p>
+<ul class="simple">
+<li><p><em>Check time at a barcode's pixel</em>. Users now can double clicks on a pixel in the displayed barcode to check the position, frame index, and time of the corresponding frame in the original film. All these timestamps will be showed in a separate window.</p></li>
+<li><p>If the barcode saved the frames during the generation, users may click the <strong>Display</strong> button in the new window to check 5 frames around that time point.</p></li>
+<li><p>The correct time relies on the assumption that each pixel in the barcode is corresponding to a sampled frame. If the barcode image has been reshaped/scaled, users can use the <strong>Calibrate</strong> button to recalibrate the frame-pixel relationship. The Frame per Second (fps) is used particularly for the downward compatibility to the barcodes generated in the previous version of KALMUS, and should not be used for the barcode generated after version 1.3.0.</p></li>
+<li><p>Color barcode and Brightness barcode have distinguished behavior when checking the time point.</p></li>
+</ul>
+<p><strong>Fixes</strong></p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>In the Barcode Generator window, the frame acquisition parameters <strong>Start at (frames), Start at (mins:secs), Total frames, End at (mins:secs)</strong> are no longer required fields.</dt><dd><ol class="arabic simple">
+<li><p>The Generator assumes the barcode starts at the beginning of the film when leaving <strong>Start at</strong> entry blank or typing <code class="docutils literal notranslate"><span class="pre">Start</span></code> in the entry.</p></li>
+<li><p>The Generator assumes the barcode ends at the end of the film when leaving <strong>Total frames or End at</strong> entry blank or typing <code class="docutils literal notranslate"><span class="pre">End</span></code> in the entry.</p></li>
+<li><p>The <strong>Sampled frame rate (frames or seconds)</strong> is still required.</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="acknowledge.html" class="btn btn-neutral float-right" title="Acknowledgement" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="tkinter_windows/StatsInfoWindow.html" class="btn btn-neutral float-left" title="StatsInfoWindow Class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Yida Chen, Eric Faden, and Nathan Ryan.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -2,7 +2,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-from kalmus.barcodes.Barcode import get_contrast_matrix_and_labeled_image
+from kalmus.utils.artist import get_contrast_matrix_and_labeled_image
 
 
 def show_color(color, figure_size=(9, 6), title="Undefined Test",

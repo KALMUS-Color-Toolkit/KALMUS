@@ -81,7 +81,7 @@ def compute_percents_of_labels(label):
     return percent_of_dominance
 
 
-def compute_mode_color(image, bin_size = 10):
+def compute_mode_color(image, bin_size=10):
     """
     compute the mode color of an input image
 
@@ -139,8 +139,8 @@ def compute_brightest_color_and_brightness(grey_image, color_image, return_min=F
         grey_image = cv2.GaussianBlur(grey_image.copy(), (blur_radius, blur_radius), 0)
     min_brightness, max_brightness, min_loc, max_loc = cv2.minMaxLoc(grey_image)
     if return_min:
-        return color_image[max_loc[::-1]], max_brightness, max_loc[::-1],\
-                color_image[min_loc[::-1]], min_brightness, min_loc[::-1]
+        return color_image[max_loc[::-1]], max_brightness, max_loc[::-1], \
+               color_image[min_loc[::-1]], min_brightness, min_loc[::-1]
     else:
         return color_image[max_loc[::-1]], max_brightness, max_loc[::-1]
 
@@ -178,7 +178,7 @@ def find_bright_spots(image, n_clusters=3, blur_radius=21, amount_of_bright_part
     threshed_img = cv2.dilate(threshed_img, None, iterations=4)
 
     # Get the location of all white pixel in binary threshold image
-    locs = np.argwhere(threshed_img==255)
+    locs = np.argwhere(threshed_img == 255)
     try:
         # convert to np.float32
         Z = np.float32(locs)
@@ -259,7 +259,8 @@ def random_sample_pixels(img, sample_ratio=0, mode="row-col"):
     return np.array(random_pixels)
 
 
-def watershed_segmentation(image, minimum_segment_size=0.0004, base_ratio=0.5, denoise_disk_size = 5, gradiant_disk_size = 5,
+def watershed_segmentation(image, minimum_segment_size=0.0004, base_ratio=0.5, denoise_disk_size=5,
+                           gradiant_disk_size=5,
                            marker_disk_size=15):
     """
     Label the connected regions in an image.
@@ -486,7 +487,7 @@ def _sRGB2luminance(sRGB):
     lRGB = np.zeros(shape=sRGB.shape)
     lRGB[sRGB <= 0.03928] = sRGB[sRGB <= 0.03928] / 12.92
     lRGB[sRGB > 0.03928] = ((sRGB[sRGB > 0.03928] + 0.055) / 1.055) ** 2.4
-    luminance = 0.2126 * lRGB[...,0] + 0.7152 * lRGB[...,1] + 0.0722 * lRGB[...,2]
+    luminance = 0.2126 * lRGB[..., 0] + 0.7152 * lRGB[..., 1] + 0.0722 * lRGB[..., 2]
     return luminance
 
 
@@ -547,6 +548,130 @@ def grabcut_foreback_segmentation(image, start_row=0, start_col=0, row_size=-1, 
     background_image = image[np.where((mask == 0) | (mask == 2))]
 
     return foreground_image, background_image
+
+
+def find_letter_box_from_videos(video, num_sample=30):
+    """
+    Find the position of letterbox (black bars around the scene) in the input cv2 video object.
+    The function samples out num_sample (20 by default) number of frames from cv2 video object, and find the position
+    of letterbox in each frame. The function uses the median results from all sampled frames as the final position of
+    video's letterbox.
+
+    Notice that the function assumes the letterbox is black or very close to black.
+
+    :param video: Input video object captured by cv2.VideoCapture()
+    :param num_sample: Number of frames to sample from video for finding letterbox
+    :return: The smaller row index of letterbox (bound for upper horizontal letterbox), \
+             the larger row index of letterbox (bound for lower horizontal letterbox), \
+             the smaller col index of letterbox (bound for left vertical letterbox), \
+             and the larger col index of letterbox (bound for right vertical letterbox). \
+             \
+             The results are the median results on num_sample number of frames \
+             \
+             To extract the frame without letterbox from letterboxing frame, \
+    """
+    film_length_in_frames = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
+
+    # Sampled out num_sample number of frames from input video
+    possible_indexes = np.arange(film_length_in_frames // 6, film_length_in_frames * 5 // 6, 1)
+    frame_indexes = np.random.choice(possible_indexes, num_sample, replace=True)
+
+    # list of possible smaller row indexes (bounding the upper letterbox)
+    possible_low_bound_ver = []
+    # list of possible larger row indexes (bounding the lower letterbox)
+    possible_high_bound_ver = []
+    # list of possible smaller column indexes (bounding the left letterbox)
+    possible_low_bound_hor = []
+    # list of possible larger column indexes (bounding the right letterbox)
+    possible_high_bound_hor = []
+
+    # Find the letterbox position on each sampled frame
+    for frame_index in frame_indexes:
+        video.set(cv2.CAP_PROP_POS_FRAMES, frame_index)
+        success, frame = video.read()
+        if success:
+            low_bound_v, high_bound_v, low_bound_h, high_bound_h = get_letter_box_from_frames(frame)
+            possible_low_bound_ver.append(low_bound_v)
+            possible_high_bound_ver.append(high_bound_v)
+            possible_low_bound_hor.append(low_bound_h)
+            possible_high_bound_hor.append(high_bound_h)
+
+    # Take the medians as final results
+    low_bound_ver = int(np.median(possible_low_bound_ver))
+    high_bound_ver = int(np.median(possible_high_bound_ver))
+    low_bound_hor = int(np.median(possible_low_bound_hor))
+    high_bound_hor = int(np.median(possible_high_bound_hor))
+
+    return low_bound_ver, high_bound_ver, low_bound_hor, high_bound_hor
+
+
+def get_letter_box_from_frames(frame, threshold=5):
+    """
+    Find the position of letterbox (black bars around the scene) in the input cv2 video object.
+    The function assumes the letter box of the frame is black (dark)
+
+    :param frame: Input frame
+    :param threshold: The brightness threshold value that distinguish \
+                      the region of interest (bright) and letterbox (dark)
+    :return: The smaller row index of letterbox (bound for upper horizontal letterbox), \
+             the larger row index of letterbox (bound for lower horizontal letterbox), \
+             the smaller col index of letterbox (bound for left vertical letterbox), \
+             and the larger col index of letterbox (bound for right vertical letterbox). \
+             \
+             To extract the frame without letterbox from letterboxing frame, \
+    """
+    low_bound_ver = 0
+    high_bound_ver = frame.shape[0]
+    low_bound_hor = 0
+    high_bound_hor = frame.shape[1]
+
+    for i in range(0, frame.shape[0] // 2):
+        color = np.average(frame[i, ...])
+        if color > threshold:
+            low_bound_ver = i
+            break
+
+    for i in range(frame.shape[0] - 1, frame.shape[0] // 2 - 1, -1):
+        color = np.average(frame[i, ...])
+        if color > threshold:
+            high_bound_ver = i
+            break
+
+    for j in range(0, frame.shape[1] // 2):
+        color = np.average(frame[:, j, ...])
+        if color > threshold:
+            low_bound_hor = j
+            break
+
+    for j in range(frame.shape[1] - 1, frame.shape[1] // 2 - 1, -1):
+        color = np.average(frame[:, j, ...])
+        if color > threshold:
+            high_bound_hor = j
+            break
+
+    return low_bound_ver, high_bound_ver + 1, low_bound_hor, high_bound_hor + 1
+
+
+def get_contrast_matrix_and_labeled_image(frame, minimum_segment_size=0.0004):
+    """
+    Helper function that use the watershed method to segment the input image return the matrix of the
+    brightness contrast of each segmented region with respect to its neighbors (adjacent segmented regions)
+
+    :param frame: The input frame
+    :param minimum_segment_size: The minimum size of the segmented region in the ratio to the whole frame. Range (0, 1)
+    :return: The matrix with shape (num_regions x num_regions) whose cell [i, j] represents the contrast \
+             between the region i and region j, and the corresponding labeled image (segmentation)
+
+    """
+    labels, grey_frame = watershed_segmentation(frame, minimum_segment_size=minimum_segment_size)
+    try:
+        adjacency_matrix = rag_to_matrix(get_rag(grey_frame, labels), len(np.unique(labels)))
+        avg_color, _, region_sizes = color_of_regions(labels, frame)
+        contrast_matrix = contrast_between_regions(avg_color, adjacency_matrix)
+    except:
+        contrast_matrix = np.array([[0]])
+        labels = np.ones(shape=frame.shape)
+    return contrast_matrix, labels
 
 
 def write_in_info(info_row, file_name="output.csv", mode='a'):
