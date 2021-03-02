@@ -1,19 +1,20 @@
 Installation Guide
 =====================
 
-The Kalmus package requires a python with version 3.7 and onward.
+The kalmus package requires a python with version 3.7 and onward.
+
 The package is released on PyPI (`Project Homepage <https://pypi.org/project/kalmus/>`_). After you install the
 python>=3.7, you can install the kalmus using pip (recommended)::
 
-    pip install kalmus
+    $ pip install kalmus
 
 
-Alternatively, you could install the KALMUS locally by first cloning the GitHub repo of Kalmus (`GitHub page <https://github.com/KALMUS-Color-Toolkit/KALMUS>`_).
-Then, move to the top directory of cloned KALMUS project folder and install using pip command::
+Alternatively, you could install the kalmus locally by first cloning the GitHub repo of Kalmus (`GitHub page <https://github.com/KALMUS-Color-Toolkit/KALMUS>`_).
+Then, move to the top directory of cloned kalmus project folder and install using pip command::
 
-    pip install .
+    $ pip install .
 
 In both methods, the package's dependencies will be automatically installed. You can verify if the kalmus has been
 installed in your environment using pip command::
 
-    pip show kalmus
+    $ pip show kalmus

@@ -181,17 +181,17 @@ def find_bright_spots(image, n_clusters=3, blur_radius=21, amount_of_bright_part
     locs = np.argwhere(threshed_img == 255)
     try:
         # convert to np.float32
-        Z = np.float32(locs)
+        locs_above_threshold = np.float32(locs)
 
         # define criteria and apply kmeans()
         criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, 1.0)
-        ret, label, center = cv2.kmeans(Z, n_clusters, None, criteria, 10, cv2.KMEANS_RANDOM_CENTERS)
+        ret, label, center = cv2.kmeans(locs_above_threshold, n_clusters, None, criteria, 10, cv2.KMEANS_RANDOM_CENTERS)
 
         # Compute the percentage of each clusters in the image.
         percent_of_dominance = compute_percents_of_labels(label)
 
         if return_all_pos:
-            return label, Z.astype("int32"), percent_of_dominance
+            return label, locs_above_threshold.astype("int32"), percent_of_dominance
         else:
             return center.astype("int32"), percent_of_dominance
 
@@ -200,7 +200,7 @@ def find_bright_spots(image, n_clusters=3, blur_radius=21, amount_of_bright_part
         if return_all_pos:
             return np.array([-1]), np.array([-1]), np.array([-1])
         else:
-            return np.array([[-1], [-1], [-1]]), np.array([[-1], [-1], [-1]])
+            return np.ones(shape=(n_clusters, 1)) * -1, np.ones(shape=(n_clusters, 1)) * -1
 
 
 def random_sample_pixels(img, sample_ratio=0, mode="row-col"):
