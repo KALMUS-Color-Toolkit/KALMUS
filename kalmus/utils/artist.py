@@ -508,7 +508,30 @@ def contrast_ratio(color1, color2):
     return ratio
 
 
-def grabcut_foreback_segmentation(image, start_row=0, start_col=0, row_size=-1, col_size=-1, num_iter=3):
+def get_contrast_matrix_and_labeled_image(frame, minimum_segment_size=0.0004):
+    """
+    Helper function that use the watershed method to segment the input image return the matrix of the
+    brightness contrast of each segmented region with respect to its neighbors (adjacent segmented regions)
+
+    :param frame: The input frame
+    :param minimum_segment_size: The minimum size of the segmented region in the ratio to the whole frame. Range (0, 1)
+    :return: The matrix with shape (num_regions x num_regions) whose cell [i, j] represents the contrast \
+             between the region i and region j, and the corresponding labeled image (segmentation)
+
+    """
+    labels, grey_frame = watershed_segmentation(frame, minimum_segment_size=minimum_segment_size)
+    try:
+        adjacency_matrix = rag_to_matrix(get_rag(grey_frame, labels), len(np.unique(labels)))
+        avg_color, _, region_sizes = color_of_regions(labels, frame)
+        contrast_matrix = contrast_between_regions(avg_color, adjacency_matrix)
+    except:
+        contrast_matrix = np.array([[0]])
+        labels = np.ones(shape=frame.shape)
+    return contrast_matrix, labels
+
+
+def grabcut_foreback_segmentation(image, start_row=0, start_col=0, row_size=-1, col_size=-1, num_iter=3,
+                                  return_masks=False):
     """
     Perform the GrabCut segmentation over the input image with a rectangle of possible foreground
     specified by user. The GrabCut segment the image into two parts foreground and background, and
@@ -520,8 +543,12 @@ def grabcut_foreback_segmentation(image, start_row=0, start_col=0, row_size=-1, 
     :param row_size: The vertical length of the rectangle
     :param col_size: The horizontal length of the rectangle
     :param num_iter: The number of iterations for GrabCut to run
-    :return: 1D image of the foreground part of the image, and 1D image of the background part of the image \
-    Expected shape== Number of pixels x channels
+    :param return_masks: Return the foreground and background boolean mask if True \
+                         Return the 1D image of foreground pixels and 1D image of background pixels if False \
+                         False by default
+    :return: If return_masks is False (default), 1D image of the foreground part of the image, and 1D image of \
+             the background part of the image Expected shape== Number of pixels x channels. \
+             If return_masks is True, return boolean masks foreground and background. Expected shape==image.shape
     """
     if start_row < 0:
         start_row = 0
@@ -542,10 +569,15 @@ def grabcut_foreback_segmentation(image, start_row=0, start_col=0, row_size=-1, 
     cv2.grabCut(image, mask, rectangle,
                 background_model, foreground_model,
                 num_iter, cv2.GC_INIT_WITH_RECT)
-    # The obvious foreground and probable foreground are marked with 1 and 3
-    foreground_image = image[np.where((mask == 1) | (mask == 3))]
-    # The obvious background and probable background are marked with 0 and 2
-    background_image = image[np.where((mask == 0) | (mask == 2))]
+    if return_masks:
+        # The obvious foreground and probable foreground are marked with 1 and 3
+        # The obvious background and probable background are marked with 0 and 2
+        return (mask == 1) | (mask == 3), (mask == 0) | (mask == 2)
+    else:
+        # The obvious foreground and probable foreground are marked with 1 and 3
+        foreground_image = image[(mask == 1) | (mask == 3)]
+        # The obvious background and probable background are marked with 0 and 2
+        background_image = image[(mask == 0) | (mask == 2)]
 
     return foreground_image, background_image
 
@@ -650,28 +682,6 @@ def get_letter_box_from_frames(frame, threshold=5):
             break
 
     return low_bound_ver, high_bound_ver + 1, low_bound_hor, high_bound_hor + 1
-
-
-def get_contrast_matrix_and_labeled_image(frame, minimum_segment_size=0.0004):
-    """
-    Helper function that use the watershed method to segment the input image return the matrix of the
-    brightness contrast of each segmented region with respect to its neighbors (adjacent segmented regions)
-
-    :param frame: The input frame
-    :param minimum_segment_size: The minimum size of the segmented region in the ratio to the whole frame. Range (0, 1)
-    :return: The matrix with shape (num_regions x num_regions) whose cell [i, j] represents the contrast \
-             between the region i and region j, and the corresponding labeled image (segmentation)
-
-    """
-    labels, grey_frame = watershed_segmentation(frame, minimum_segment_size=minimum_segment_size)
-    try:
-        adjacency_matrix = rag_to_matrix(get_rag(grey_frame, labels), len(np.unique(labels)))
-        avg_color, _, region_sizes = color_of_regions(labels, frame)
-        contrast_matrix = contrast_between_regions(avg_color, adjacency_matrix)
-    except:
-        contrast_matrix = np.array([[0]])
-        labels = np.ones(shape=frame.shape)
-    return contrast_matrix, labels
 
 
 def write_in_info(info_row, file_name="output.csv", mode='a'):

@@ -92,8 +92,8 @@ def cross_correlation(signal_template, signal_source):
     """
     assert signal_template.shape == signal_source.shape, "The shape of two input signals/color barcodes must have the" \
                                                          "same shapes."
-    template = signal_template.copy()
-    source = signal_source.copy()
+    template = signal_template.copy().astype("float64")
+    source = signal_source.copy().astype("float64")
     template -= np.mean(signal_template, axis=tuple(np.arange(len(signal_template.shape) - 1)))
     source -= np.mean(signal_source, axis=tuple(np.arange(len(signal_template.shape) - 1)))
     nom = np.sum(template * source)
@@ -124,8 +124,8 @@ def local_cross_correlation(signal_template, signal_source, horizontal_interval=
     if interval_col == 0:
         interval_col = 1
 
-    template = signal_template.copy()
-    source = signal_source.copy()
+    template = signal_template.copy().astype("float64")
+    source = signal_source.copy().astype("float64")
     for start_row in range(0, template.shape[0], interval_row):
         for start_col in range(0, template.shape[1], interval_col):
             template[start_row: start_row + interval_row, start_col: start_col + interval_col, ...] -= \
@@ -206,15 +206,15 @@ def generate_brightness_string_from_brightness_barcode(brightness_barcode, num_i
     return string_barcode
 
 
-def compare_needleman_wunsch(barcode_1, barcode_2, local_sequence_size=2000,
+def compare_needleman_wunsch(str_barcode_1, str_barcode_2, local_sequence_size=2000,
                              match_score=2, mismatch_penal=-1, gap_penal=-0.5, extending_gap_penal=-0.1,
                              normalized=False):
     """
     Compare two input character arrays/strings (barcode)'s matching score using the Needleman Wunsch method.
     Needleman Wunsch: https://www.sciencedirect.com/science/article/abs/pii/0022283670900574?via%3Dihub
 
-    :param barcode_1: The input string representation of barcode 1
-    :param barcode_2: The input string representation of barcode 2
+    :param str_barcode_1: The input string representation of barcode 1
+    :param str_barcode_2: The input string representation of barcode 2
     :param local_sequence_size: Divide the long barcode into several small barcode with local_sequence_size length
     :param match_score: The score (bonus) for correctly matching character
     :param mismatch_penal: The penalty for mismatch character
@@ -223,32 +223,32 @@ def compare_needleman_wunsch(barcode_1, barcode_2, local_sequence_size=2000,
     :param normalized: Whether to normalize the final matching score into range [0, 1]
     :return: The match score/normalized match score
     """
-    assert len(barcode_1) == len(barcode_2), "The lengths of two barcodes have to be identical"
+    assert len(str_barcode_1) == len(str_barcode_2), "The lengths of two barcodes have to be identical"
 
     scores = 0
-    for start_point in range(0, len(barcode_1), local_sequence_size):
-        scores += sequence_align.align.globalms(barcode_1[start_point:start_point + local_sequence_size],
-                                                barcode_2[start_point:start_point + local_sequence_size],
+    for start_point in range(0, len(str_barcode_1), local_sequence_size):
+        scores += sequence_align.align.globalms(str_barcode_1[start_point:start_point + local_sequence_size],
+                                                str_barcode_2[start_point:start_point + local_sequence_size],
                                                 match_score, mismatch_penal, gap_penal, extending_gap_penal,
                                                 score_only=True)
 
     if normalized:
-        denom = len(barcode_1) * match_score
+        denom = len(str_barcode_1) * match_score
     else:
         denom = 1
 
     return scores / denom
 
 
-def compare_smith_waterman(barcode_1, barcode_2, local_sequence_size=2000,
+def compare_smith_waterman(str_barcode_1, str_barcode_2, local_sequence_size=2000,
                            match_score=2, mismatch_penal=-1, gap_penal=-0.5, extending_gap_penal=-0.1,
                            normalized=False):
     """
     Compare two input character arrays/strings (barcode)'s matching score using the Smith Waterman method.
     Smith Waterman: https://www.sciencedirect.com/science/article/abs/pii/0022283681900875?via%3Dihub
 
-    :param barcode_1: The input string representation of barcode 1
-    :param barcode_2: The input string representation of barcode 2
+    :param str_barcode_1: The input string representation of barcode 1
+    :param str_barcode_2: The input string representation of barcode 2
     :param local_sequence_size: Divide the long barcode into several small barcode with local_sequence_size length
     :param match_score: The score (bonus) for correctly matching character
     :param mismatch_penal: The penalty for mismatch character
@@ -257,17 +257,17 @@ def compare_smith_waterman(barcode_1, barcode_2, local_sequence_size=2000,
     :param normalized: Whether to normalize the final matching score into range [0, 1]
     :return: The match score/normalized match score
     """
-    assert len(barcode_1) == len(barcode_2), "The lengths of two barcodes have to be identical"
+    assert len(str_barcode_1) == len(str_barcode_2), "The lengths of two barcodes have to be identical"
 
     scores = 0
-    for start_point in range(0, len(barcode_1), local_sequence_size):
-        scores += sequence_align.align.localms(barcode_1[start_point:start_point + local_sequence_size],
-                                               barcode_2[start_point:start_point + local_sequence_size],
+    for start_point in range(0, len(str_barcode_1), local_sequence_size):
+        scores += sequence_align.align.localms(str_barcode_1[start_point:start_point + local_sequence_size],
+                                               str_barcode_2[start_point:start_point + local_sequence_size],
                                                match_score, mismatch_penal, gap_penal, extending_gap_penal,
                                                score_only=True)
 
     if normalized:
-        denom = len(barcode_1) * match_score
+        denom = len(str_barcode_1) * match_score
     else:
         denom = 1
 

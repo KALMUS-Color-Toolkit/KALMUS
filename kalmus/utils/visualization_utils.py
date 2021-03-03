@@ -134,10 +134,10 @@ def show_color_matrix(color_2d_array, mode="truncate", figure_size=(9, 4),
     if return_figure:
         return fig
 
-    plt.show()
-
     if return_matrix:
         return clr_matrix
+
+    plt.show()
 
 
 def show_image(img, title="Undefined Test", figure_size=(9, 6), axis_off=False):
