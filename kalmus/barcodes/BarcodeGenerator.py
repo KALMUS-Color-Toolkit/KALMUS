@@ -30,6 +30,9 @@ def build_barcode_from_json(path_to_json, barcode_type="Color"):
         object_dict = json.load(infile)
     infile.close()
 
+    # Make sure the barcode_type is correctly capitalized
+    barcode_type = barcode_type.capitalize()
+
     if barcode_type == "Color":
         barcode = ColorBarcode(color_metric=object_dict["color_metric"], frame_type=object_dict["frame_type"],
                                sampled_frame_rate=object_dict["sampled_frame_rate"],
@@ -93,9 +96,9 @@ class BarcodeGenerator():
             "Color metric Bright can not be used when the frame acquisition " \
             "methods are {:s}".format(str(frame_types[1:]))
 
-        self.frame_type = frame_type
-        self.color_metric = color_metric
-        self.barcode_type = barcode_type
+        self.frame_type = frame_type.capitalize()
+        self.color_metric = color_metric.capitalize()
+        self.barcode_type = barcode_type.capitalize()
         self.sampled_frame_rate = sampled_frame_rate
         self.skip_over = skip_over
         self.total_frames = total_frames

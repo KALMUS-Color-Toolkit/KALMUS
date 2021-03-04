@@ -242,7 +242,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">rescale_frames_in_generation</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rescale_frame_factor</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 
-<div class="viewcode-block" id="Barcode.read_videos"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.Barcode.read_videos">[docs]</a>    <span class="k">def</span> <span class="nf">read_videos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video_path_name</span><span class="p">):</span>
+<div class="viewcode-block" id="Barcode.read_videos"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.Barcode.read_videos">[docs]</a>    <span class="k">def</span> <span class="nf">read_video</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video_path_name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Read in the video from the given path</span>
 
@@ -550,7 +550,7 @@
 
 <span class="sd">        :param video_path_name: The path to the video file</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">read_videos</span><span class="p">(</span><span class="n">video_path_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read_video</span><span class="p">(</span><span class="n">video_path_name</span><span class="p">)</span>
 
         <span class="n">success</span><span class="p">,</span> <span class="n">frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">video</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 
@@ -594,7 +594,7 @@
         <span class="c1"># be according with the definition of total frames in single thread generation</span>
         <span class="c1"># where total frames == self.colors.size / 3 (channels)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">total_frames</span> <span class="o">*=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sampled_frame_rate</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">read_videos</span><span class="p">(</span><span class="n">video_path_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read_video</span><span class="p">(</span><span class="n">video_path_name</span><span class="p">)</span>
 
         <span class="n">thread_videos</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">num_thread</span>
         <span class="n">thread_videos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">video</span>
@@ -727,7 +727,7 @@
 
 <span class="sd">        :param video_path_name: The path to the video</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">read_videos</span><span class="p">(</span><span class="n">video_path_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read_video</span><span class="p">(</span><span class="n">video_path_name</span><span class="p">)</span>
 
         <span class="n">success</span><span class="p">,</span> <span class="n">frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">video</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 
@@ -778,7 +778,7 @@
         <span class="c1"># be according with the definition of total frames in single thread generation</span>
         <span class="c1"># where total frames == self.colors.size / 3 (channels)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">total_frames</span> <span class="o">*=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sampled_frame_rate</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">read_videos</span><span class="p">(</span><span class="n">video_path_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read_video</span><span class="p">(</span><span class="n">video_path_name</span><span class="p">)</span>
 
         <span class="n">thread_videos</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">num_thread</span>
         <span class="n">thread_videos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">video</span>

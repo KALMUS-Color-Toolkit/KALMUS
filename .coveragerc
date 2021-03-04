@@ -1,0 +1,14 @@
+[run]
+source=kalmus
+omit =
+    # Ignore the GUI window classes
+    *Window.py
+    # Ignore the Main GUI window class
+    kalmus/tkinter_windows/MainWindowVersion2.py
+    # Ignore the Which Barcoe to check meta information window
+    kalmus/tkinter_windows/meta_info_windows/WhichBarcodeCheckMeta.py
+    # Ignore the console script for initiating GUI using command line
+    kalmus/command_line_gui.py
+
+[report]
+exclude_lines = plt.*

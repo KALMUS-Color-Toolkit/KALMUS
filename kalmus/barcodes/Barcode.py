@@ -34,7 +34,7 @@ def foreback_segmentation(frame):
     return fore_frame, back_frame
 
 
-class Barcode():
+class Barcode:
     """
     Barcode Class
     """
@@ -51,9 +51,9 @@ class Barcode():
         :param total_frames: The total number of frames (computed) included in the barcode
         :param barcode_type: The type of the barcode
         """
-        self.color_metric = color_metric
-        self.frame_type = frame_type
-        self.barcode_type = barcode_type
+        self.color_metric = color_metric.capitalize()
+        self.frame_type = frame_type.capitalize()
+        self.barcode_type = barcode_type.capitalize()
         self.meta_data = {}
 
         self.sampled_frame_rate = sampled_frame_rate
@@ -82,7 +82,7 @@ class Barcode():
         self.rescale_frames_in_generation = False
         self.rescale_frame_factor = -1
 
-    def read_videos(self, video_path_name):
+    def read_video(self, video_path_name):
         """
         Read in the video from the given path
 
@@ -390,7 +390,7 @@ class ColorBarcode(Barcode):
 
         :param video_path_name: The path to the video file
         """
-        self.read_videos(video_path_name)
+        self.read_video(video_path_name)
 
         success, frame = self.video.read()
 
@@ -434,7 +434,7 @@ class ColorBarcode(Barcode):
         # be according with the definition of total frames in single thread generation
         # where total frames == self.colors.size / 3 (channels)
         self.total_frames *= self.sampled_frame_rate
-        self.read_videos(video_path_name)
+        self.read_video(video_path_name)
 
         thread_videos = [None] * num_thread
         thread_videos[0] = self.video
@@ -567,7 +567,7 @@ class BrightnessBarcode(Barcode):
 
         :param video_path_name: The path to the video
         """
-        self.read_videos(video_path_name)
+        self.read_video(video_path_name)
 
         success, frame = self.video.read()
 
@@ -618,7 +618,7 @@ class BrightnessBarcode(Barcode):
         # be according with the definition of total frames in single thread generation
         # where total frames == self.colors.size / 3 (channels)
         self.total_frames *= self.sampled_frame_rate
-        self.read_videos(video_path_name)
+        self.read_video(video_path_name)
 
         thread_videos = [None] * num_thread
         thread_videos[0] = self.video

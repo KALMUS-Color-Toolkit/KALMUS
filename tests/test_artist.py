@@ -17,12 +17,12 @@ import kalmus.utils.artist as artist
 
 
 def get_test_color_video():
-    video = cv2.VideoCapture("automated_tests/test_data/test_color_video.mp4")
+    video = cv2.VideoCapture("tests/test_data/test_color_video.mp4")
     return video
 
 
 def get_test_color_image_with_letterbox():
-    return plt.imread("automated_tests/test_data/test_color_image_letterboxing.jpg", format="jpeg")
+    return plt.imread("tests/test_data/test_color_image_letterboxing.jpg", format="jpeg")
 
 
 def test_compute_mean_color(get_test_color_image):

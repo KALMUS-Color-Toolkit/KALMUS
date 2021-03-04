@@ -11,8 +11,8 @@ import kalmus.utils.measure_utils as measure_utils
 def get_another_test_color_image():
     # A color image that is different than the shared test data
     # Used for similarity measurement
-    color_image_1 = plt.imread("automated_tests/test_data/test_color_image.jpg", format="jpeg")
-    cur_image = plt.imread("automated_tests/test_data/test_color_image_2.jpg", format="jpeg")
+    color_image_1 = plt.imread("tests/test_data/test_color_image.jpg", format="jpeg")
+    cur_image = plt.imread("tests/test_data/test_color_image_2.jpg", format="jpeg")
     # Make sure two compared image are in the same spatial size
     if color_image_1.shape[:2] !=  cur_image.shape[:2]:
         # Use INTER_NEAREST interpolation to avoid aliasing that creates artificial data
@@ -23,9 +23,9 @@ def get_another_test_color_image():
 def get_another_test_gray_image():
     # A color image that is different than the shared test data
     # Used for similarity measurement
-    clr_image = plt.imread("automated_tests/test_data/test_color_image_2.jpg", format="jpeg")
+    clr_image = plt.imread("tests/test_data/test_color_image_2.jpg", format="jpeg")
     cur_image = cv2.cvtColor(clr_image, cv2.COLOR_RGB2GRAY)
-    clr_image_1 = plt.imread("automated_tests/test_data/test_color_image.jpg", format="jpeg")
+    clr_image_1 = plt.imread("tests/test_data/test_color_image.jpg", format="jpeg")
     gray_image_1 = cv2.cvtColor(clr_image_1, cv2.COLOR_RGB2GRAY)
     # Make sure two compared image are in the same spatial size
     if gray_image_1.shape[:2] != cur_image.shape[:2]:
