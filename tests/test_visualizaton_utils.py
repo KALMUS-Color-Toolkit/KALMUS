@@ -1,7 +1,7 @@
 # Third-party modules
 import pytest
 import numpy as np
-import warnings
+import matplotlib.pyplot as plt
 
 # kalmus module being tested
 import kalmus.utils.visualization_utils as visualization_utils
@@ -27,6 +27,9 @@ def test_show_color_matrix(get_test_color_image):
     color_matrix = visualization_utils.show_color_matrix(color_2d_image, return_matrix=True, mode="truncate")
     assert color_matrix.shape == (color_2d_image.shape[1], color_2d_image.shape[0], color_2d_image.shape[2])
 
+    figure = visualization_utils.show_color_matrix(color_2d_image, return_figure=True)
+    assert isinstance(figure, plt.Figure)
+
 
 def test_show_colors_in_cube(get_test_color_image):
     flatten_image = get_test_color_image.reshape(-1, 3)
@@ -36,6 +39,10 @@ def test_show_colors_in_cube(get_test_color_image):
     samples = 100
     sampled_colors = visualization_utils.show_colors_in_cube(flatten_image, sampling=samples, return_sampled_colors=True)
     assert sampled_colors.size == samples * sampled_colors.shape[-1]
+
+    fig, ax = visualization_utils.show_colors_in_cube(flatten_image, sampling=samples, return_figure=True)
+    assert isinstance(fig, plt.Figure)
+    assert isinstance(ax, plt.Axes)
 
 
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")

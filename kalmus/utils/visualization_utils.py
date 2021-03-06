@@ -107,6 +107,8 @@ def show_color_matrix(color_2d_array, mode="truncate", figure_size=(9, 4),
     :return: the processed color matrix. Depending on the display mode, the return color matrix will have padding \
     white colors if mode is "padding", or the last row of color matrix will be truncated if mode is "truncate"
     """
+    assert len(color_2d_array.shape) == 3, "Only 2d array of three-channel color tuple/array accepted"
+    assert color_2d_array.shape[-1] == 3, "The number of channels of color 2d array must be 3 (R, G, B)"
     assert mode == "truncate" or mode == "padding", "Invalid mode for displaying color matrix, two" \
                                                     "modes are available 'truncate' or 'padding'"
     # If the mode is padding
