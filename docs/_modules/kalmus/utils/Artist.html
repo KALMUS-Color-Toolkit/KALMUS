@@ -668,7 +668,30 @@
     <span class="k">return</span> <span class="n">ratio</span></div>
 
 
-<div class="viewcode-block" id="grabcut_foreback_segmentation"><a class="viewcode-back" href="../../../utils/artist.html#kalmus.utils.artist.grabcut_foreback_segmentation">[docs]</a><span class="k">def</span> <span class="nf">grabcut_foreback_segmentation</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">start_row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">start_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">row_size</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">col_size</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_iter</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+<div class="viewcode-block" id="get_contrast_matrix_and_labeled_image"><a class="viewcode-back" href="../../../utils/artist.html#kalmus.utils.artist.get_contrast_matrix_and_labeled_image">[docs]</a><span class="k">def</span> <span class="nf">get_contrast_matrix_and_labeled_image</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">minimum_segment_size</span><span class="o">=</span><span class="mf">0.0004</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper function that use the watershed method to segment the input image return the matrix of the</span>
+<span class="sd">    brightness contrast of each segmented region with respect to its neighbors (adjacent segmented regions)</span>
+
+<span class="sd">    :param frame: The input frame</span>
+<span class="sd">    :param minimum_segment_size: The minimum size of the segmented region in the ratio to the whole frame. Range (0, 1)</span>
+<span class="sd">    :return: The matrix with shape (num_regions x num_regions) whose cell [i, j] represents the contrast \</span>
+<span class="sd">             between the region i and region j, and the corresponding labeled image (segmentation)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">labels</span><span class="p">,</span> <span class="n">grey_frame</span> <span class="o">=</span> <span class="n">watershed_segmentation</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">minimum_segment_size</span><span class="o">=</span><span class="n">minimum_segment_size</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">adjacency_matrix</span> <span class="o">=</span> <span class="n">rag_to_matrix</span><span class="p">(</span><span class="n">get_rag</span><span class="p">(</span><span class="n">grey_frame</span><span class="p">,</span> <span class="n">labels</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">labels</span><span class="p">)))</span>
+        <span class="n">avg_color</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">region_sizes</span> <span class="o">=</span> <span class="n">color_of_regions</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span>
+        <span class="n">contrast_matrix</span> <span class="o">=</span> <span class="n">contrast_between_regions</span><span class="p">(</span><span class="n">avg_color</span><span class="p">,</span> <span class="n">adjacency_matrix</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">contrast_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">]])</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">contrast_matrix</span><span class="p">,</span> <span class="n">labels</span></div>
+
+
+<div class="viewcode-block" id="grabcut_foreback_segmentation"><a class="viewcode-back" href="../../../utils/artist.html#kalmus.utils.artist.grabcut_foreback_segmentation">[docs]</a><span class="k">def</span> <span class="nf">grabcut_foreback_segmentation</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">start_row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">start_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">row_size</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">col_size</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_iter</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                                  <span class="n">return_masks</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Perform the GrabCut segmentation over the input image with a rectangle of possible foreground</span>
 <span class="sd">    specified by user. The GrabCut segment the image into two parts foreground and background, and</span>
@@ -680,8 +703,12 @@
 <span class="sd">    :param row_size: The vertical length of the rectangle</span>
 <span class="sd">    :param col_size: The horizontal length of the rectangle</span>
 <span class="sd">    :param num_iter: The number of iterations for GrabCut to run</span>
-<span class="sd">    :return: 1D image of the foreground part of the image, and 1D image of the background part of the image \</span>
-<span class="sd">    Expected shape== Number of pixels x channels</span>
+<span class="sd">    :param return_masks: Return the foreground and background boolean mask if True \</span>
+<span class="sd">                         Return the 1D image of foreground pixels and 1D image of background pixels if False \</span>
+<span class="sd">                         False by default</span>
+<span class="sd">    :return: If return_masks is False (default), 1D image of the foreground part of the image, and 1D image of \</span>
+<span class="sd">             the background part of the image Expected shape== Number of pixels x channels. \</span>
+<span class="sd">             If return_masks is True, return boolean masks foreground and background. Expected shape==image.shape</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">start_row</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">start_row</span> <span class="o">=</span> <span class="mi">0</span>
@@ -702,10 +729,15 @@
     <span class="n">cv2</span><span class="o">.</span><span class="n">grabCut</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="n">rectangle</span><span class="p">,</span>
                 <span class="n">background_model</span><span class="p">,</span> <span class="n">foreground_model</span><span class="p">,</span>
                 <span class="n">num_iter</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">GC_INIT_WITH_RECT</span><span class="p">)</span>
-    <span class="c1"># The obvious foreground and probable foreground are marked with 1 and 3</span>
-    <span class="n">foreground_image</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">3</span><span class="p">))]</span>
-    <span class="c1"># The obvious background and probable background are marked with 0 and 2</span>
-    <span class="n">background_image</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">2</span><span class="p">))]</span>
+    <span class="k">if</span> <span class="n">return_masks</span><span class="p">:</span>
+        <span class="c1"># The obvious foreground and probable foreground are marked with 1 and 3</span>
+        <span class="c1"># The obvious background and probable background are marked with 0 and 2</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># The obvious foreground and probable foreground are marked with 1 and 3</span>
+        <span class="n">foreground_image</span> <span class="o">=</span> <span class="n">image</span><span class="p">[(</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)]</span>
+        <span class="c1"># The obvious background and probable background are marked with 0 and 2</span>
+        <span class="n">background_image</span> <span class="o">=</span> <span class="n">image</span><span class="p">[(</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)]</span>
 
     <span class="k">return</span> <span class="n">foreground_image</span><span class="p">,</span> <span class="n">background_image</span></div>
 
@@ -810,28 +842,6 @@
             <span class="k">break</span>
 
     <span class="k">return</span> <span class="n">low_bound_ver</span><span class="p">,</span> <span class="n">high_bound_ver</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">low_bound_hor</span><span class="p">,</span> <span class="n">high_bound_hor</span> <span class="o">+</span> <span class="mi">1</span></div>
-
-
-<div class="viewcode-block" id="get_contrast_matrix_and_labeled_image"><a class="viewcode-back" href="../../../utils/artist.html#kalmus.utils.artist.get_contrast_matrix_and_labeled_image">[docs]</a><span class="k">def</span> <span class="nf">get_contrast_matrix_and_labeled_image</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">minimum_segment_size</span><span class="o">=</span><span class="mf">0.0004</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Helper function that use the watershed method to segment the input image return the matrix of the</span>
-<span class="sd">    brightness contrast of each segmented region with respect to its neighbors (adjacent segmented regions)</span>
-
-<span class="sd">    :param frame: The input frame</span>
-<span class="sd">    :param minimum_segment_size: The minimum size of the segmented region in the ratio to the whole frame. Range (0, 1)</span>
-<span class="sd">    :return: The matrix with shape (num_regions x num_regions) whose cell [i, j] represents the contrast \</span>
-<span class="sd">             between the region i and region j, and the corresponding labeled image (segmentation)</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">labels</span><span class="p">,</span> <span class="n">grey_frame</span> <span class="o">=</span> <span class="n">watershed_segmentation</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">minimum_segment_size</span><span class="o">=</span><span class="n">minimum_segment_size</span><span class="p">)</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">adjacency_matrix</span> <span class="o">=</span> <span class="n">rag_to_matrix</span><span class="p">(</span><span class="n">get_rag</span><span class="p">(</span><span class="n">grey_frame</span><span class="p">,</span> <span class="n">labels</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">labels</span><span class="p">)))</span>
-        <span class="n">avg_color</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">region_sizes</span> <span class="o">=</span> <span class="n">color_of_regions</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span>
-        <span class="n">contrast_matrix</span> <span class="o">=</span> <span class="n">contrast_between_regions</span><span class="p">(</span><span class="n">avg_color</span><span class="p">,</span> <span class="n">adjacency_matrix</span><span class="p">)</span>
-    <span class="k">except</span><span class="p">:</span>
-        <span class="n">contrast_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">]])</span>
-        <span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">contrast_matrix</span><span class="p">,</span> <span class="n">labels</span></div>
 
 
 <span class="k">def</span> <span class="nf">write_in_info</span><span class="p">(</span><span class="n">info_row</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s2">&quot;output.csv&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">):</span>

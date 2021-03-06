@@ -261,6 +261,42 @@
     <span class="k">return</span> <span class="n">result_text</span></div>
 
 
+<div class="viewcode-block" id="update_graph"><a class="viewcode-back" href="../../../tkinter_windows/gui_utils.html#kalmus.tkinter_windows.gui_utils.update_graph">[docs]</a><span class="k">def</span> <span class="nf">update_graph</span><span class="p">(</span><span class="n">barcode_1</span><span class="p">,</span> <span class="n">barcode_2</span><span class="p">,</span> <span class="n">axes</span><span class="p">,</span> <span class="n">bin_step</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Update the plotted graph (in place)</span>
+
+<span class="sd">    :param barcode_1: The barcode 1</span>
+<span class="sd">    :param barcode_2: The barcode 2</span>
+<span class="sd">    :param axes: The axes of the plotted figure</span>
+<span class="sd">    :param bin_step: The step of histogram bin</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Plot the barcode with the correct color map based on their barcode types</span>
+    <span class="k">if</span> <span class="n">barcode_1</span><span class="o">.</span><span class="n">barcode_type</span> <span class="o">==</span> <span class="s2">&quot;Brightness&quot;</span><span class="p">:</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">barcode_1</span><span class="o">.</span><span class="n">get_barcode</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;uint8&quot;</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">barcode_1</span><span class="o">.</span><span class="n">get_barcode</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;uint8&quot;</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">barcode_2</span><span class="o">.</span><span class="n">barcode_type</span> <span class="o">==</span> <span class="s2">&quot;Brightness&quot;</span><span class="p">:</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">barcode_2</span><span class="o">.</span><span class="n">get_barcode</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;uint8&quot;</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">barcode_2</span><span class="o">.</span><span class="n">get_barcode</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;uint8&quot;</span><span class="p">))</span>
+
+    <span class="c1"># Rescale the axis range</span>
+    <span class="c1"># And update the plot</span>
+    <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="n">axes</span><span class="o">.</span><span class="n">ravel</span><span class="p">():</span>
+        <span class="n">axis</span><span class="o">.</span><span class="n">relim</span><span class="p">()</span>
+        <span class="n">axis</span><span class="o">.</span><span class="n">autoscale_view</span><span class="p">()</span>
+
+    <span class="c1"># Update the title of the plotted axes</span>
+    <span class="n">update_axes_title</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">barcode_1</span><span class="p">,</span> <span class="n">barcode_2</span><span class="p">)</span>
+
+    <span class="c1"># Update the histogram of the barcode 1</span>
+    <span class="n">update_hist</span><span class="p">(</span><span class="n">barcode_1</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">bin_step</span><span class="o">=</span><span class="n">bin_step</span><span class="p">)</span>
+
+    <span class="c1"># Update the histogram of the barcode 2</span>
+    <span class="n">update_hist</span><span class="p">(</span><span class="n">barcode_2</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">bin_step</span><span class="o">=</span><span class="n">bin_step</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="update_axes_title"><a class="viewcode-back" href="../../../tkinter_windows/gui_utils.html#kalmus.tkinter_windows.gui_utils.update_axes_title">[docs]</a><span class="k">def</span> <span class="nf">update_axes_title</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">barcode_1</span><span class="p">,</span> <span class="n">barcode_2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Update the title of the plotted axes (in place)</span>
@@ -316,42 +352,6 @@
         <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">32</span><span class="p">))</span>
         <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Brightness (0 - 255)&quot;</span><span class="p">)</span>
         <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Number of frames&quot;</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="update_graph"><a class="viewcode-back" href="../../../tkinter_windows/gui_utils.html#kalmus.tkinter_windows.gui_utils.update_graph">[docs]</a><span class="k">def</span> <span class="nf">update_graph</span><span class="p">(</span><span class="n">barcode_1</span><span class="p">,</span> <span class="n">barcode_2</span><span class="p">,</span> <span class="n">axes</span><span class="p">,</span> <span class="n">bin_step</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Update the plotted graph (in place)</span>
-
-<span class="sd">    :param barcode_1: The barcode 1</span>
-<span class="sd">    :param barcode_2: The barcode 2</span>
-<span class="sd">    :param axes: The axes of the plotted figure</span>
-<span class="sd">    :param bin_step: The step of histogram bin</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Plot the barcode with the correct color map based on their barcode types</span>
-    <span class="k">if</span> <span class="n">barcode_1</span><span class="o">.</span><span class="n">barcode_type</span> <span class="o">==</span> <span class="s2">&quot;Brightness&quot;</span><span class="p">:</span>
-        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">barcode_1</span><span class="o">.</span><span class="n">get_barcode</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;uint8&quot;</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">barcode_1</span><span class="o">.</span><span class="n">get_barcode</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;uint8&quot;</span><span class="p">))</span>
-
-    <span class="k">if</span> <span class="n">barcode_2</span><span class="o">.</span><span class="n">barcode_type</span> <span class="o">==</span> <span class="s2">&quot;Brightness&quot;</span><span class="p">:</span>
-        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">barcode_2</span><span class="o">.</span><span class="n">get_barcode</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;uint8&quot;</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">barcode_2</span><span class="o">.</span><span class="n">get_barcode</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;uint8&quot;</span><span class="p">))</span>
-
-    <span class="c1"># Rescale the axis range</span>
-    <span class="c1"># And update the plot</span>
-    <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="n">axes</span><span class="o">.</span><span class="n">ravel</span><span class="p">():</span>
-        <span class="n">axis</span><span class="o">.</span><span class="n">relim</span><span class="p">()</span>
-        <span class="n">axis</span><span class="o">.</span><span class="n">autoscale_view</span><span class="p">()</span>
-
-    <span class="c1"># Update the title of the plotted axes</span>
-    <span class="n">update_axes_title</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">barcode_1</span><span class="p">,</span> <span class="n">barcode_2</span><span class="p">)</span>
-
-    <span class="c1"># Update the histogram of the barcode 1</span>
-    <span class="n">update_hist</span><span class="p">(</span><span class="n">barcode_1</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">bin_step</span><span class="o">=</span><span class="n">bin_step</span><span class="p">)</span>
-
-    <span class="c1"># Update the histogram of the barcode 2</span>
-    <span class="n">update_hist</span><span class="p">(</span><span class="n">barcode_2</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">bin_step</span><span class="o">=</span><span class="n">bin_step</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="update_hist"><a class="viewcode-back" href="../../../tkinter_windows/gui_utils.html#kalmus.tkinter_windows.gui_utils.update_hist">[docs]</a><span class="k">def</span> <span class="nf">update_hist</span><span class="p">(</span><span class="n">barcode</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">bin_step</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
@@ -436,15 +436,22 @@
     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
         <span class="c1"># Otherwise use the absolute path</span>
         <span class="k">if</span> <span class="n">relative_path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.ico&quot;</span><span class="p">):</span>
+            <span class="c1"># If the path points to .ico image</span>
             <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="s2">&quot;nt&quot;</span><span class="p">:</span>
+                <span class="c1"># If the running os is linux</span>
                 <span class="n">relative_path</span> <span class="o">=</span> <span class="n">relative_path</span><span class="p">[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
+                <span class="c1"># Replace the .ico image with image in .xbm format</span>
                 <span class="n">relative_path</span> <span class="o">+=</span> <span class="s2">&quot;xbm&quot;</span>
 
+        <span class="c1"># Join the path</span>
         <span class="n">base_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
         <span class="n">base_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_path</span><span class="p">,</span> <span class="s1">&#39;../data&#39;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">relative_path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.xbm&quot;</span><span class="p">):</span>
+            <span class="c1"># If the image is .xbm image</span>
             <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="s2">&quot;nt&quot;</span><span class="p">:</span>
+                <span class="c1"># and the running os is linux</span>
+                <span class="c1"># Add @ identifier at the front of path</span>
                 <span class="n">base_path</span> <span class="o">=</span> <span class="s2">&quot;@&quot;</span> <span class="o">+</span> <span class="n">base_path</span>
 
     <span class="c1"># Return the path</span>

@@ -11,6 +11,9 @@ build
 dist
 past_dist
 api_doc_source
+.coverage
+.gitignore
+coverage.xml
 
 _discarded
 

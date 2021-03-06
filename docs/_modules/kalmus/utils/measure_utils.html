@@ -166,24 +166,24 @@
 <span class="kn">from</span> <span class="nn">skimage.metrics</span> <span class="k">import</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">structural_similarity</span>
 
 
-<div class="viewcode-block" id="nrmse_similarity"><a class="viewcode-back" href="../../../utils/measure_utils.html#kalmus.utils.measure_utils.nrmse_similarity">[docs]</a><span class="k">def</span> <span class="nf">nrmse_similarity</span><span class="p">(</span><span class="n">image_1</span><span class="p">,</span> <span class="n">image_2</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;Average norm&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="nrmse_similarity"><a class="viewcode-back" href="../../../utils/measure_utils.html#kalmus.utils.measure_utils.nrmse_similarity">[docs]</a><span class="k">def</span> <span class="nf">nrmse_similarity</span><span class="p">(</span><span class="n">image_1</span><span class="p">,</span> <span class="n">image_2</span><span class="p">,</span> <span class="n">norm_mode</span><span class="o">=</span><span class="s2">&quot;Average norm&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Normalized root mean squared error (NRMSE).</span>
 
 <span class="sd">    :param image_1: The image 1 for comparison</span>
 <span class="sd">    :param image_2: The image 2 for comparison</span>
-<span class="sd">    :param mode: The mode for the normalization, average mode use the max (||image_1||, ||image_2||) \</span>
+<span class="sd">    :param norm_mode: The mode for the normalization, average mode use the max (||image_1||, ||image_2||) \</span>
 <span class="sd">                 Min max use the max(image_1 value range, image_2 value range)</span>
 <span class="sd">    :return: The score that measure the similarity between two images in range [0,1] using NRMSE \</span>
 <span class="sd">             0 is the least similar, 1 is the most similar (same)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">image_1</span> <span class="o">=</span> <span class="n">image_1</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">)</span>
     <span class="n">image_2</span> <span class="o">=</span> <span class="n">image_2</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;Average norm&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">norm_mode</span> <span class="o">==</span> <span class="s2">&quot;Average norm&quot;</span><span class="p">:</span>
         <span class="n">image_1_avg_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">image_1</span> <span class="o">*</span> <span class="n">image_1</span><span class="p">))</span>
         <span class="n">image_2_avg_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">image_2</span> <span class="o">*</span> <span class="n">image_2</span><span class="p">))</span>
         <span class="n">denom</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">image_1_avg_norm</span><span class="p">,</span> <span class="n">image_2_avg_norm</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;Min max&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">norm_mode</span> <span class="o">==</span> <span class="s2">&quot;Min max&quot;</span><span class="p">:</span>
         <span class="n">image_1_min_max</span> <span class="o">=</span> <span class="n">image_1</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">image_1</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
         <span class="n">image_2_min_max</span> <span class="o">=</span> <span class="n">image_2</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">image_1</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
         <span class="n">denom</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">image_1_min_max</span><span class="p">,</span> <span class="n">image_2_min_max</span><span class="p">)</span>
@@ -252,8 +252,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="n">signal_template</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">signal_source</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">&quot;The shape of two input signals/color barcodes must have the&quot;</span> \
                                                          <span class="s2">&quot;same shapes.&quot;</span>
-    <span class="n">template</span> <span class="o">=</span> <span class="n">signal_template</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">source</span> <span class="o">=</span> <span class="n">signal_source</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">template</span> <span class="o">=</span> <span class="n">signal_template</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">)</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="n">signal_source</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">)</span>
     <span class="n">template</span> <span class="o">-=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">signal_template</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal_template</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))</span>
     <span class="n">source</span> <span class="o">-=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">signal_source</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal_template</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))</span>
     <span class="n">nom</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">template</span> <span class="o">*</span> <span class="n">source</span><span class="p">)</span>
@@ -284,8 +284,8 @@
     <span class="k">if</span> <span class="n">interval_col</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">interval_col</span> <span class="o">=</span> <span class="mi">1</span>
 
-    <span class="n">template</span> <span class="o">=</span> <span class="n">signal_template</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">source</span> <span class="o">=</span> <span class="n">signal_source</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">template</span> <span class="o">=</span> <span class="n">signal_template</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">)</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="n">signal_source</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">start_row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">template</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">interval_row</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">start_col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">template</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">interval_col</span><span class="p">):</span>
             <span class="n">template</span><span class="p">[</span><span class="n">start_row</span><span class="p">:</span> <span class="n">start_row</span> <span class="o">+</span> <span class="n">interval_row</span><span class="p">,</span> <span class="n">start_col</span><span class="p">:</span> <span class="n">start_col</span> <span class="o">+</span> <span class="n">interval_col</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">-=</span> \
@@ -366,15 +366,15 @@
     <span class="k">return</span> <span class="n">string_barcode</span></div>
 
 
-<div class="viewcode-block" id="compare_needleman_wunsch"><a class="viewcode-back" href="../../../utils/measure_utils.html#kalmus.utils.measure_utils.compare_needleman_wunsch">[docs]</a><span class="k">def</span> <span class="nf">compare_needleman_wunsch</span><span class="p">(</span><span class="n">barcode_1</span><span class="p">,</span> <span class="n">barcode_2</span><span class="p">,</span> <span class="n">local_sequence_size</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
+<div class="viewcode-block" id="compare_needleman_wunsch"><a class="viewcode-back" href="../../../utils/measure_utils.html#kalmus.utils.measure_utils.compare_needleman_wunsch">[docs]</a><span class="k">def</span> <span class="nf">compare_needleman_wunsch</span><span class="p">(</span><span class="n">str_barcode_1</span><span class="p">,</span> <span class="n">str_barcode_2</span><span class="p">,</span> <span class="n">local_sequence_size</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
                              <span class="n">match_score</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">mismatch_penal</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">gap_penal</span><span class="o">=-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">extending_gap_penal</span><span class="o">=-</span><span class="mf">0.1</span><span class="p">,</span>
                              <span class="n">normalized</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Compare two input character arrays/strings (barcode)&#39;s matching score using the Needleman Wunsch method.</span>
 <span class="sd">    Needleman Wunsch: https://www.sciencedirect.com/science/article/abs/pii/0022283670900574?via%3Dihub</span>
 
-<span class="sd">    :param barcode_1: The input string representation of barcode 1</span>
-<span class="sd">    :param barcode_2: The input string representation of barcode 2</span>
+<span class="sd">    :param str_barcode_1: The input string representation of barcode 1</span>
+<span class="sd">    :param str_barcode_2: The input string representation of barcode 2</span>
 <span class="sd">    :param local_sequence_size: Divide the long barcode into several small barcode with local_sequence_size length</span>
 <span class="sd">    :param match_score: The score (bonus) for correctly matching character</span>
 <span class="sd">    :param mismatch_penal: The penalty for mismatch character</span>
@@ -383,32 +383,32 @@
 <span class="sd">    :param normalized: Whether to normalize the final matching score into range [0, 1]</span>
 <span class="sd">    :return: The match score/normalized match score</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">barcode_1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">barcode_2</span><span class="p">),</span> <span class="s2">&quot;The lengths of two barcodes have to be identical&quot;</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">str_barcode_1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">str_barcode_2</span><span class="p">),</span> <span class="s2">&quot;The lengths of two barcodes have to be identical&quot;</span>
 
     <span class="n">scores</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">start_point</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">barcode_1</span><span class="p">),</span> <span class="n">local_sequence_size</span><span class="p">):</span>
-        <span class="n">scores</span> <span class="o">+=</span> <span class="n">sequence_align</span><span class="o">.</span><span class="n">align</span><span class="o">.</span><span class="n">globalms</span><span class="p">(</span><span class="n">barcode_1</span><span class="p">[</span><span class="n">start_point</span><span class="p">:</span><span class="n">start_point</span> <span class="o">+</span> <span class="n">local_sequence_size</span><span class="p">],</span>
-                                                <span class="n">barcode_2</span><span class="p">[</span><span class="n">start_point</span><span class="p">:</span><span class="n">start_point</span> <span class="o">+</span> <span class="n">local_sequence_size</span><span class="p">],</span>
+    <span class="k">for</span> <span class="n">start_point</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">str_barcode_1</span><span class="p">),</span> <span class="n">local_sequence_size</span><span class="p">):</span>
+        <span class="n">scores</span> <span class="o">+=</span> <span class="n">sequence_align</span><span class="o">.</span><span class="n">align</span><span class="o">.</span><span class="n">globalms</span><span class="p">(</span><span class="n">str_barcode_1</span><span class="p">[</span><span class="n">start_point</span><span class="p">:</span><span class="n">start_point</span> <span class="o">+</span> <span class="n">local_sequence_size</span><span class="p">],</span>
+                                                <span class="n">str_barcode_2</span><span class="p">[</span><span class="n">start_point</span><span class="p">:</span><span class="n">start_point</span> <span class="o">+</span> <span class="n">local_sequence_size</span><span class="p">],</span>
                                                 <span class="n">match_score</span><span class="p">,</span> <span class="n">mismatch_penal</span><span class="p">,</span> <span class="n">gap_penal</span><span class="p">,</span> <span class="n">extending_gap_penal</span><span class="p">,</span>
                                                 <span class="n">score_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">normalized</span><span class="p">:</span>
-        <span class="n">denom</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">barcode_1</span><span class="p">)</span> <span class="o">*</span> <span class="n">match_score</span>
+        <span class="n">denom</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">str_barcode_1</span><span class="p">)</span> <span class="o">*</span> <span class="n">match_score</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">denom</span> <span class="o">=</span> <span class="mi">1</span>
 
     <span class="k">return</span> <span class="n">scores</span> <span class="o">/</span> <span class="n">denom</span></div>
 
 
-<div class="viewcode-block" id="compare_smith_waterman"><a class="viewcode-back" href="../../../utils/measure_utils.html#kalmus.utils.measure_utils.compare_smith_waterman">[docs]</a><span class="k">def</span> <span class="nf">compare_smith_waterman</span><span class="p">(</span><span class="n">barcode_1</span><span class="p">,</span> <span class="n">barcode_2</span><span class="p">,</span> <span class="n">local_sequence_size</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
+<div class="viewcode-block" id="compare_smith_waterman"><a class="viewcode-back" href="../../../utils/measure_utils.html#kalmus.utils.measure_utils.compare_smith_waterman">[docs]</a><span class="k">def</span> <span class="nf">compare_smith_waterman</span><span class="p">(</span><span class="n">str_barcode_1</span><span class="p">,</span> <span class="n">str_barcode_2</span><span class="p">,</span> <span class="n">local_sequence_size</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
                            <span class="n">match_score</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">mismatch_penal</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">gap_penal</span><span class="o">=-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">extending_gap_penal</span><span class="o">=-</span><span class="mf">0.1</span><span class="p">,</span>
                            <span class="n">normalized</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Compare two input character arrays/strings (barcode)&#39;s matching score using the Smith Waterman method.</span>
 <span class="sd">    Smith Waterman: https://www.sciencedirect.com/science/article/abs/pii/0022283681900875?via%3Dihub</span>
 
-<span class="sd">    :param barcode_1: The input string representation of barcode 1</span>
-<span class="sd">    :param barcode_2: The input string representation of barcode 2</span>
+<span class="sd">    :param str_barcode_1: The input string representation of barcode 1</span>
+<span class="sd">    :param str_barcode_2: The input string representation of barcode 2</span>
 <span class="sd">    :param local_sequence_size: Divide the long barcode into several small barcode with local_sequence_size length</span>
 <span class="sd">    :param match_score: The score (bonus) for correctly matching character</span>
 <span class="sd">    :param mismatch_penal: The penalty for mismatch character</span>
@@ -417,17 +417,17 @@
 <span class="sd">    :param normalized: Whether to normalize the final matching score into range [0, 1]</span>
 <span class="sd">    :return: The match score/normalized match score</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">barcode_1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">barcode_2</span><span class="p">),</span> <span class="s2">&quot;The lengths of two barcodes have to be identical&quot;</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">str_barcode_1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">str_barcode_2</span><span class="p">),</span> <span class="s2">&quot;The lengths of two barcodes have to be identical&quot;</span>
 
     <span class="n">scores</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">start_point</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">barcode_1</span><span class="p">),</span> <span class="n">local_sequence_size</span><span class="p">):</span>
-        <span class="n">scores</span> <span class="o">+=</span> <span class="n">sequence_align</span><span class="o">.</span><span class="n">align</span><span class="o">.</span><span class="n">localms</span><span class="p">(</span><span class="n">barcode_1</span><span class="p">[</span><span class="n">start_point</span><span class="p">:</span><span class="n">start_point</span> <span class="o">+</span> <span class="n">local_sequence_size</span><span class="p">],</span>
-                                               <span class="n">barcode_2</span><span class="p">[</span><span class="n">start_point</span><span class="p">:</span><span class="n">start_point</span> <span class="o">+</span> <span class="n">local_sequence_size</span><span class="p">],</span>
+    <span class="k">for</span> <span class="n">start_point</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">str_barcode_1</span><span class="p">),</span> <span class="n">local_sequence_size</span><span class="p">):</span>
+        <span class="n">scores</span> <span class="o">+=</span> <span class="n">sequence_align</span><span class="o">.</span><span class="n">align</span><span class="o">.</span><span class="n">localms</span><span class="p">(</span><span class="n">str_barcode_1</span><span class="p">[</span><span class="n">start_point</span><span class="p">:</span><span class="n">start_point</span> <span class="o">+</span> <span class="n">local_sequence_size</span><span class="p">],</span>
+                                               <span class="n">str_barcode_2</span><span class="p">[</span><span class="n">start_point</span><span class="p">:</span><span class="n">start_point</span> <span class="o">+</span> <span class="n">local_sequence_size</span><span class="p">],</span>
                                                <span class="n">match_score</span><span class="p">,</span> <span class="n">mismatch_penal</span><span class="p">,</span> <span class="n">gap_penal</span><span class="p">,</span> <span class="n">extending_gap_penal</span><span class="p">,</span>
                                                <span class="n">score_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">normalized</span><span class="p">:</span>
-        <span class="n">denom</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">barcode_1</span><span class="p">)</span> <span class="o">*</span> <span class="n">match_score</span>
+        <span class="n">denom</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">str_barcode_1</span><span class="p">)</span> <span class="o">*</span> <span class="n">match_score</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">denom</span> <span class="o">=</span> <span class="mi">1</span>
 

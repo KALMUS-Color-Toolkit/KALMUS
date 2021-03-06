@@ -190,6 +190,9 @@
         <span class="n">object_dict</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">infile</span><span class="p">)</span>
     <span class="n">infile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
+    <span class="c1"># Make sure the barcode_type is correctly capitalized</span>
+    <span class="n">barcode_type</span> <span class="o">=</span> <span class="n">barcode_type</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span>
+
     <span class="k">if</span> <span class="n">barcode_type</span> <span class="o">==</span> <span class="s2">&quot;Color&quot;</span><span class="p">:</span>
         <span class="n">barcode</span> <span class="o">=</span> <span class="n">ColorBarcode</span><span class="p">(</span><span class="n">color_metric</span><span class="o">=</span><span class="n">object_dict</span><span class="p">[</span><span class="s2">&quot;color_metric&quot;</span><span class="p">],</span> <span class="n">frame_type</span><span class="o">=</span><span class="n">object_dict</span><span class="p">[</span><span class="s2">&quot;frame_type&quot;</span><span class="p">],</span>
                                <span class="n">sampled_frame_rate</span><span class="o">=</span><span class="n">object_dict</span><span class="p">[</span><span class="s2">&quot;sampled_frame_rate&quot;</span><span class="p">],</span>

@@ -165,26 +165,32 @@
 <span class="kn">from</span> <span class="nn">kalmus.utils.artist</span> <span class="k">import</span> <span class="n">get_contrast_matrix_and_labeled_image</span>
 
 
-<div class="viewcode-block" id="show_color"><a class="viewcode-back" href="../../../utils/visualization_utils.html#kalmus.utils.visualization_utils.show_color">[docs]</a><span class="k">def</span> <span class="nf">show_color</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="n">figure_size</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Undefined Test&quot;</span><span class="p">,</span>
-               <span class="n">axis_off</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">save_image</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s2">&quot;test.png&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="show_color"><a class="viewcode-back" href="../../../utils/visualization_utils.html#kalmus.utils.visualization_utils.show_color">[docs]</a><span class="k">def</span> <span class="nf">show_color</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="n">figure_size</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+               <span class="n">axis_off</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">save_image</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s2">&quot;test.png&quot;</span><span class="p">,</span> <span class="n">return_color</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Plot the rgb color.</span>
 
 <span class="sd">    :param color: 1D array contains the R, G, and B channel values</span>
+<span class="sd">    :param figure_size: Size of the plotted figure</span>
 <span class="sd">    :param title: The title of the plotted color</span>
 <span class="sd">    :param axis_off: True to set the axis of the plot figure off. False to have the axis on the side of \</span>
 <span class="sd">    figure.</span>
 <span class="sd">    :param save_image: True to save the plot figure into the path that user provide. False not to save \</span>
 <span class="sd">    the plot figure</span>
 <span class="sd">    :param file_name: The filename of the saved figure. The default path to the saved image is test.png</span>
+<span class="sd">    :param return_color: Return the numpy array (shape==30 x 30 x 3) of color block if True. Directly plot the color if False</span>
+<span class="sd">    :return: Return the numpy array of color block if return_color is True.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Generate a block image where each pixel of this block image is the plotted RGB color</span>
     <span class="n">clr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">return_color</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">clr</span>
+
     <span class="c1"># Set up the figure</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figure_size</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">clr</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
-
     <span class="c1"># Whether to set the axis off</span>
     <span class="k">if</span> <span class="n">axis_off</span><span class="p">:</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
@@ -194,8 +200,9 @@
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="show_colors_in_sequence"><a class="viewcode-back" href="../../../utils/visualization_utils.html#kalmus.utils.visualization_utils.show_colors_in_sequence">[docs]</a><span class="k">def</span> <span class="nf">show_colors_in_sequence</span><span class="p">(</span><span class="n">colors</span><span class="p">,</span> <span class="n">figure_size</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Undefined Test&quot;</span><span class="p">,</span> <span class="n">axis_off</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> \
-                            <span class="n">save_image</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s2">&quot;test.png&quot;</span><span class="p">,</span> <span class="n">horizontal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="show_colors_in_sequence"><a class="viewcode-back" href="../../../utils/visualization_utils.html#kalmus.utils.visualization_utils.show_colors_in_sequence">[docs]</a><span class="k">def</span> <span class="nf">show_colors_in_sequence</span><span class="p">(</span><span class="n">colors</span><span class="p">,</span> <span class="n">figure_size</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">axis_off</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="n">save_image</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s2">&quot;test.png&quot;</span><span class="p">,</span> <span class="n">horizontal</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                            <span class="n">return_color_sequence</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Plot a sequence of RGB colors either horizontally or vertically in line</span>
 
@@ -205,7 +212,10 @@
 <span class="sd">    :param axis_off: True to set the axis of the figure off. False to have the axis with the figure</span>
 <span class="sd">    :param save_image: True to save the plot figure. False do not save figure</span>
 <span class="sd">    :param file_name: the path of the saved figure</span>
-<span class="sd">    :param horizontal: True to plot the sequence of colors horizontally, False to plot the sequence of colors vertically</span>
+<span class="sd">    :param horizontal: True to plot the sequence of colors horizontally, False to plot the sequence of colors \</span>
+<span class="sd">                       vertically</span>
+<span class="sd">    :param return_color_sequence: Return the numpy array (shape==30 x (30 * num_colors) x 3) of color sequence if True \</span>
+<span class="sd">                                  Directly plot the color sequence if False</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># A chain/sequence of color blocks</span>
     <span class="n">clr_chain</span> <span class="o">=</span> <span class="p">[]</span>
@@ -222,6 +232,9 @@
     <span class="k">if</span> <span class="n">horizontal</span><span class="p">:</span>
         <span class="n">clr_chain</span> <span class="o">=</span> <span class="n">clr_chain</span><span class="o">.</span><span class="n">transpose</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
 
+    <span class="k">if</span> <span class="n">return_color_sequence</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">clr_chain</span>
+
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figure_size</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">clr_chain</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
@@ -233,7 +246,7 @@
 
 
 <span class="k">def</span> <span class="nf">show_color_matrix</span><span class="p">(</span><span class="n">color_2d_array</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;truncate&quot;</span><span class="p">,</span> <span class="n">figure_size</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
-                      <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Undefined Test&quot;</span><span class="p">,</span> <span class="n">axis_off</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                      <span class="n">title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">axis_off</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                       <span class="n">save_image</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s2">&quot;Block.png&quot;</span><span class="p">,</span> <span class="n">return_matrix</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_figure</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Show a matrix of colors (color barcodes). Two modes are available &quot;truncate&quot; and &quot;padding&quot;</span>
@@ -250,7 +263,8 @@
 <span class="sd">    :param save_image: True to save the plot figure, False do not save the figure</span>
 <span class="sd">    :param file_name: the path to the saved figure</span>
 <span class="sd">    :param return_matrix: True to return the processed color matrix back False not to return anything</span>
-<span class="sd">    :return: the process color matrix. Depending on the display mode, the return color matrix will have padding \</span>
+<span class="sd">    :param return_figure: Return the plotted figure, if true. Directly plot the color matrix if false</span>
+<span class="sd">    :return: the processed color matrix. Depending on the display mode, the return color matrix will have padding \</span>
 <span class="sd">    white colors if mode is &quot;padding&quot;, or the last row of color matrix will be truncated if mode is &quot;truncate&quot;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;truncate&quot;</span> <span class="ow">or</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;padding&quot;</span><span class="p">,</span> <span class="s2">&quot;Invalid mode for displaying color matrix, two&quot;</span> \
@@ -283,6 +297,9 @@
         <span class="c1"># Transpose the matrix to have a horizontal display</span>
         <span class="n">clr_matrix</span> <span class="o">=</span> <span class="n">clr_matrix</span><span class="o">.</span><span class="n">transpose</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
 
+    <span class="k">if</span> <span class="n">return_matrix</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">clr_matrix</span>
+
     <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figure_size</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">clr_matrix</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
@@ -290,35 +307,13 @@
         <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">save_image</span><span class="p">:</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
-
     <span class="k">if</span> <span class="n">return_figure</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">fig</span>
 
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
-    <span class="k">if</span> <span class="n">return_matrix</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">clr_matrix</span>
 
-
-<div class="viewcode-block" id="show_image"><a class="viewcode-back" href="../../../utils/visualization_utils.html#kalmus.utils.visualization_utils.show_image">[docs]</a><span class="k">def</span> <span class="nf">show_image_aa</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Undefined Test&quot;</span><span class="p">,</span> <span class="n">figure_size</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">axis_off</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A wrapper of the matplotlib.pyplot.imshow method</span>
-<span class="sd">    Show the image in RGB color or in greyscale intensity</span>
-
-<span class="sd">    :param img: input multi-channel color image or single-channel greyscale image</span>
-<span class="sd">    :param title: The title of the plot image</span>
-<span class="sd">    :param figure_size: The size of the plotted figure</span>
-<span class="sd">    :param axis_off: True to set the axis of the figure to be off, False to have the axis with the figure</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figure_size</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">axis_off</span><span class="p">:</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
-
-
-<div class="viewcode-block" id="show_colors_in_cube"><a class="viewcode-back" href="../../../utils/visualization_utils.html#kalmus.utils.visualization_utils.show_colors_in_cube">[docs]</a><span class="k">def</span> <span class="nf">show_colors_in_cube</span><span class="p">(</span><span class="n">colors</span><span class="p">,</span> <span class="n">figure_size</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">return_figure</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sampling</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="show_colors_in_cube"><a class="viewcode-back" href="../../../utils/visualization_utils.html#kalmus.utils.visualization_utils.show_colors_in_cube">[docs]</a><span class="k">def</span> <span class="nf">show_colors_in_cube</span><span class="p">(</span><span class="n">colors</span><span class="p">,</span> <span class="n">figure_size</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">return_figure</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sampling</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">return_sampled_colors</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Show a sequence of RGB colors in cubic RGB space (e.g. R axis (x axis), G axis (y axis),</span>
 <span class="sd">    and B axis (z axis))</span>
@@ -327,19 +322,28 @@
 
 <span class="sd">    :param colors: A sequence of colors to display in cubic space</span>
 <span class="sd">    :param figure_size: the size of the figure</span>
+<span class="sd">    :param return_figure: Return the plotted figure and axes, if true \</span>
+<span class="sd">                          Directly plot the cube, if false</span>
+<span class="sd">    :param sampling: Number of data points plot in the 3D cube. -1 to include all data in the plot</span>
+<span class="sd">    :param return_sampled_colors: Return the sampled out colors if True. Directly plot the colors in RGB cube if False</span>
+<span class="sd">    :return: return the figure and axes with plotted figure if return_figure is True</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="n">colors</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;The input colors must be a 2D numpy array with RGB colors where &quot;</span> \
                                   <span class="s2">&quot;shape of array is number of colors x channels(3)&quot;</span>
-    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figure_size</span><span class="p">)</span>
-    <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">sampling</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">sample_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">colors</span><span class="o">.</span><span class="n">size</span> <span class="o">//</span> <span class="n">colors</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">sampling</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="n">colors</span> <span class="o">=</span> <span class="n">colors</span><span class="p">[</span><span class="n">sample_indices</span><span class="p">]</span>
 
-    <span class="c1"># Colors is the N*M x 3 version of the image.</span>
+    <span class="c1"># colors is the N*M x 3 version of the image.</span>
     <span class="n">colors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">IC</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">IC</span> <span class="ow">in</span>
                              <span class="p">[</span><span class="n">colors</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">colors</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">colors</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">ravel</span><span class="p">()]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">return_sampled_colors</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">colors</span>
+
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figure_size</span><span class="p">)</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">colors</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">colors</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">colors</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">colors</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="mi">255</span><span class="p">)</span>
@@ -357,7 +361,7 @@
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="show_high_contrast_region"><a class="viewcode-back" href="../../../utils/visualization_utils.html#kalmus.utils.visualization_utils.show_high_contrast_region">[docs]</a><span class="k">def</span> <span class="nf">show_high_contrast_region</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">minimum_segment_size</span><span class="o">=</span><span class="mf">0.0004</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">)):</span>
+<div class="viewcode-block" id="show_high_contrast_region"><a class="viewcode-back" href="../../../utils/visualization_utils.html#kalmus.utils.visualization_utils.show_high_contrast_region">[docs]</a><span class="k">def</span> <span class="nf">show_high_contrast_region</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">minimum_segment_size</span><span class="o">=</span><span class="mf">0.0004</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">return_region_image</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Plot the high contrast region (brightness contrast) of the image.</span>
 <span class="sd">    image is segmented using the gradient based watershed segmentation</span>
@@ -365,6 +369,10 @@
 <span class="sd">    :param image: input color image shape=(row (height), col (width), channel(3))</span>
 <span class="sd">    :param minimum_segment_size: The minimum size (in relative ratio [0, 1]) for the segments in the segmented image</span>
 <span class="sd">    :param figsize: the size of the plot figure</span>
+<span class="sd">    :param return_region_image: Return the image with only high contrast region if True. \</span>
+<span class="sd">                                Directly plot the image if False</span>
+<span class="sd">    :return: If return_region_image is True, return the the image with only high contrast region. \</span>
+<span class="sd">             region_image.shape == image.shape</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">contrast_matrix</span><span class="p">,</span> <span class="n">labeled_image</span> <span class="o">=</span> <span class="n">get_contrast_matrix_and_labeled_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span>
                                                                            <span class="n">minimum_segment_size</span><span class="o">=</span><span class="n">minimum_segment_size</span><span class="p">)</span>
@@ -372,25 +380,35 @@
 
     <span class="n">contrast_part</span> <span class="o">=</span> <span class="n">extract_region_with_index</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">high_contrast_region_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">labeled_image</span><span class="p">)</span>
 
+    <span class="k">if</span> <span class="n">return_region_image</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">contrast_part</span>
+
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">contrast_part</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="show_low_contrast_region"><a class="viewcode-back" href="../../../utils/visualization_utils.html#kalmus.utils.visualization_utils.show_low_contrast_region">[docs]</a><span class="k">def</span> <span class="nf">show_low_contrast_region</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">minimum_segment_size</span><span class="o">=</span><span class="mf">0.0004</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">)):</span>
+<div class="viewcode-block" id="show_low_contrast_region"><a class="viewcode-back" href="../../../utils/visualization_utils.html#kalmus.utils.visualization_utils.show_low_contrast_region">[docs]</a><span class="k">def</span> <span class="nf">show_low_contrast_region</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">minimum_segment_size</span><span class="o">=</span><span class="mf">0.0004</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">return_region_image</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Plot the low contrast region (brightness contrast) of the image.</span>
-<span class="sd">        image is segmented using the gradient based watershed segmentation</span>
+<span class="sd">    Plot the low contrast region (brightness contrast) of the image.</span>
+<span class="sd">    image is segmented using the gradient based watershed segmentation</span>
 
-<span class="sd">        :param image: input color image shape=(row (height), col (width), channel(3))</span>
-<span class="sd">        :param minimum_segment_size: The minimum size (in relative ratio [0, 1]) for the segments in the segmented image</span>
-<span class="sd">        :param figsize: the size of the plot figure</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">    :param image: input color image shape=(row (height), col (width), channel(3))</span>
+<span class="sd">    :param minimum_segment_size: The minimum size (in relative ratio [0, 1]) for the segments in the segmented image</span>
+<span class="sd">    :param figsize: the size of the plot figure</span>
+<span class="sd">    :param return_region_image: Return the image with only low contrast region if True. \</span>
+<span class="sd">                                Directly plot the image if False</span>
+<span class="sd">    :return: If return_region_image is True, return the the image with only low contrast region. \</span>
+<span class="sd">             region_image.shape == image.shape</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">contrast_matrix</span><span class="p">,</span> <span class="n">labeled_image</span> <span class="o">=</span> <span class="n">get_contrast_matrix_and_labeled_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span>
                                                                            <span class="n">minimum_segment_size</span><span class="o">=</span><span class="n">minimum_segment_size</span><span class="p">)</span>
     <span class="n">low_contrast_region_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">contrast_matrix</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">argmin</span><span class="p">()</span>
 
     <span class="n">contrast_part</span> <span class="o">=</span> <span class="n">extract_region_with_index</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">low_contrast_region_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">labeled_image</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">return_region_image</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">contrast_part</span>
 
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">contrast_part</span><span class="p">)</span>
@@ -408,13 +426,20 @@
 <span class="sd">    :return: Image with only region with corresponding index on labeled_image.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">extract_part</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="c1"># If the extracted region is bright, paint the background with black</span>
     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">image</span><span class="p">[</span><span class="n">labeled_image</span> <span class="o">==</span> <span class="n">region_index</span><span class="p">])</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">max</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">:</span>
         <span class="n">extract_part</span><span class="p">[</span><span class="n">labeled_image</span> <span class="o">!=</span> <span class="n">region_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">image</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="c1"># If the extracted region is dark, paint the background with white</span>
     <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Get the max of image</span>
         <span class="nb">max</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="c1"># If the image is 0-1 normalized</span>
         <span class="k">if</span> <span class="nb">max</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># White == [1, 1, 1]</span>
             <span class="nb">max</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="c1"># If the image is 0-255 normalzied (uint8)</span>
         <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># White == [255, 255, 255]</span>
             <span class="nb">max</span> <span class="o">=</span> <span class="mi">255</span>
         <span class="n">extract_part</span><span class="p">[</span><span class="n">labeled_image</span> <span class="o">!=</span> <span class="n">region_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">max</span><span class="p">,</span> <span class="nb">max</span><span class="p">,</span> <span class="nb">max</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">image</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
 
