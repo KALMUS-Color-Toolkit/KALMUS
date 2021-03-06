@@ -1,10 +1,39 @@
+[![Python Version](https://img.shields.io/pypi/pyversions/kalmus.svg)](https://pypi.org/project/kalmus/)
+[![PyPI Version](https://img.shields.io/pypi/v/kalmus.svg)](https://pypi.org/project/kalmus/)
+[![codecov](https://codecov.io/gh/KALMUS-Color-Toolkit/KALMUS/branch/master/graph/badge.svg)](https://codecov.io/gh/KALMUS-Color-Toolkit/KALMUS)
+[![](https://img.shields.io/pypi/l/kalmus.svg)](https://pypi.org/project/kalmus/)
+![codecov workflow](https://github.com/KALMUS-Color-Toolkit/KALMUS/actions/workflows/test-codecov.yml/badge.svg)
+![build workflow](https://github.com/KALMUS-Color-Toolkit/KALMUS/actions/workflows/python-package.yml/badge.svg)
+
 # KALMUS
 
 KALMUS is a Python package for the computational analysis of colors in films. It addresses how to best describe a film's color.  This package is optimized for two purposes:  (1) various ways to measure, calculate and compare a film's color and (2) various ways to visualize a film's color.
 
 # API Documentation
 
+The KALMUS project reference is now available on 
+[https://kalmus-color-toolkit.github.io/KALMUS/](https://kalmus-color-toolkit.github.io/KALMUS/).
+
 # Instruction
+
+The kalmus package requires a python with version 3.7 and onward.
+
+The package is released on PyPI ([Project Homepage](https://pypi.org/project/kalmus/)). After you install the
+python>=3.7, you can install the kalmus using pip (recommended)
+
+    $ pip install kalmus
+
+
+Alternatively, you could install the kalmus locally by first cloning this GitHub repo.
+Then, move to the top directory of cloned kalmus project folder and install using pip command
+
+    $ pip install .
+
+In both methods, the package's dependencies will be automatically installed. You can verify if the kalmus has been
+installed in your environment using pip command
+
+    $ pip show kalmus
+
 Once the package is installed. The functionalities of the KALMUS are accessible through the Graphic user interface (GUI) and imported kalmus module.
 
 - To start the KALMUS in GUI, use the command `kalmus-gui`. The initiation process may take minutes to be finished.

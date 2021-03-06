@@ -1,4 +1,4 @@
-name: test workflow for codecov
+name: Codecov-test
 on:
   push:
     branches:

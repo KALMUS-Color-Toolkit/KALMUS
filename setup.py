@@ -9,7 +9,7 @@ with open(path_to_md, encoding='utf-8') as f:
 f.close()
 
 setup(name='kalmus',
-      version='1.3.6',
+      version='1.3.7',
       description='kalmus film color analysis tool',
       keywords='film, color analysis, data visualization',
       long_description=readme,
@@ -22,6 +22,8 @@ setup(name='kalmus',
           "License :: OSI Approved :: MIT License",
           "Programming Language :: Python :: 3",
           "Programming Language :: Python :: 3.7",
+          "Programming Language :: Python :: 3.8",
+          "Development Status :: 5 - Production/Stable",
           "Intended Audience :: Education",
           "Intended Audience :: Science/Research",
           "Operating System :: OS Independent",
