@@ -11,7 +11,7 @@ KALMUS is a Python package for the computational analysis of colors in films. It
 
 # API Documentation
 
-The KALMUS project reference is now available on 
+The KALMUS API reference is now available on 
 [https://kalmus-color-toolkit.github.io/KALMUS/](https://kalmus-color-toolkit.github.io/KALMUS/).
 
 # Instruction
