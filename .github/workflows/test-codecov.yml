@@ -1,8 +1,9 @@
 name: Codecov-test
 on:
   push:
-    branches:
-      - main
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
   workflow_dispatch:
       # Inputs the workflow accepts.
       inputs:
