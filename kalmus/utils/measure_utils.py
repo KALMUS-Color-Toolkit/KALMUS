@@ -6,24 +6,24 @@ from skimage.color import rgb2hsv
 from skimage.metrics import mean_squared_error, structural_similarity
 
 
-def nrmse_similarity(image_1, image_2, mode="Average norm"):
+def nrmse_similarity(image_1, image_2, norm_mode="Average norm"):
     """
     Normalized root mean squared error (NRMSE).
 
     :param image_1: The image 1 for comparison
     :param image_2: The image 2 for comparison
-    :param mode: The mode for the normalization, average mode use the max (||image_1||, ||image_2||) \
+    :param norm_mode: The mode for the normalization, average mode use the max (||image_1||, ||image_2||) \
                  Min max use the max(image_1 value range, image_2 value range)
     :return: The score that measure the similarity between two images in range [0,1] using NRMSE \
              0 is the least similar, 1 is the most similar (same)
     """
     image_1 = image_1.astype("float64")
     image_2 = image_2.astype("float64")
-    if mode == "Average norm":
+    if norm_mode == "Average norm":
         image_1_avg_norm = np.sqrt(np.mean(image_1 * image_1))
         image_2_avg_norm = np.sqrt(np.mean(image_2 * image_2))
         denom = max(image_1_avg_norm, image_2_avg_norm)
-    elif mode == "Min max":
+    elif norm_mode == "Min max":
         image_1_min_max = image_1.max() - image_1.min()
         image_2_min_max = image_2.max() - image_1.min()
         denom = max(image_1_min_max, image_2_min_max)

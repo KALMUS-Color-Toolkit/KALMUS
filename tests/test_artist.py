@@ -3,6 +3,7 @@ import pytest
 import numpy as np
 import matplotlib.pyplot as plt
 import cv2
+import os
 import warnings
 
 # Filter out the warnings raised by numpy.dtype and numpy.ufunc
@@ -195,3 +196,11 @@ def test_find_letter_box_from_videos():
     assert 634 - epsilon < large_row_bound < 634 + epsilon
     assert 3 - epsilon < small_col_bound < 3 + epsilon
     assert 1274 - epsilon < large_col_bound < 1274 + epsilon
+
+
+def test_write_in_info():
+    info_row = ["Frame Index", "Average Color"]
+    filename = "kalmus_write_in_info_test.csv"
+    artist.write_in_info(info_row, filename, mode="w")
+    os.path.exists(filename)
+    os.remove(filename)

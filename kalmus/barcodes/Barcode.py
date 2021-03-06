@@ -51,9 +51,9 @@ class Barcode:
         :param total_frames: The total number of frames (computed) included in the barcode
         :param barcode_type: The type of the barcode
         """
-        self.color_metric = color_metric.capitalize()
-        self.frame_type = frame_type.capitalize()
-        self.barcode_type = barcode_type.capitalize()
+        self.color_metric = color_metric
+        self.frame_type = frame_type
+        self.barcode_type = barcode_type
         self.meta_data = {}
 
         self.sampled_frame_rate = sampled_frame_rate

@@ -46,6 +46,18 @@ def test_nrmse_similarity(get_test_color_image, get_test_gray_image):
     score = measure_utils.nrmse_similarity(color_image_1, color_image_2)
     assert np.round(score, 6) != 1
 
+    # Compared to itself (should be the most similar) using Min max normalization
+    score = measure_utils.nrmse_similarity(color_image_1, color_image_1,
+                                           norm_mode="Min max")
+
+    # Allow small precisions lost in the floating point computation
+    assert np.round(score, 6) == 1
+
+    color_image_2 = get_another_test_color_image()
+    score = measure_utils.nrmse_similarity(color_image_1, color_image_2,
+                                           norm_mode="Min max")
+    assert np.round(score, 6) != 1
+
     gray_image_1 = get_test_gray_image
     # Compared to itself (should be the most similar)
     score = measure_utils.nrmse_similarity(gray_image_1, gray_image_1)
@@ -68,6 +80,18 @@ def test_ssim_similarity(get_test_color_image, get_test_gray_image):
 
     color_image_2 = get_another_test_color_image()
     score = measure_utils.ssim_similarity(color_image_1, color_image_2)
+    assert np.round(score, 6) != 1
+
+    # Compared to itself (should be the most similar) with local window size=31
+    score = measure_utils.ssim_similarity(color_image_1, color_image_1,
+                                          window_size=31)
+
+    # Allow small precisions lost in the floating point computation
+    assert np.round(score, 6) == 1
+
+    color_image_2 = get_another_test_color_image()
+    score = measure_utils.ssim_similarity(color_image_1, color_image_2,
+                                          window_size=31)
     assert np.round(score, 6) != 1
 
     gray_image_1 = get_test_gray_image

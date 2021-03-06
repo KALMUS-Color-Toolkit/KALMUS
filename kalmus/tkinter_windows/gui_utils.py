@@ -101,6 +101,42 @@ def get_comparison_result_text(barcode_1, barcode_2):
     return result_text
 
 
+def update_graph(barcode_1, barcode_2, axes, bin_step=5):
+    """
+    Update the plotted graph (in place)
+
+    :param barcode_1: The barcode 1
+    :param barcode_2: The barcode 2
+    :param axes: The axes of the plotted figure
+    :param bin_step: The step of histogram bin
+    """
+    # Plot the barcode with the correct color map based on their barcode types
+    if barcode_1.barcode_type == "Brightness":
+        axes[0][0].imshow(barcode_1.get_barcode().astype("uint8"), cmap='gray', vmin=0, vmax=255)
+    else:
+        axes[0][0].imshow(barcode_1.get_barcode().astype("uint8"))
+
+    if barcode_2.barcode_type == "Brightness":
+        axes[1][0].imshow(barcode_2.get_barcode().astype("uint8"), cmap='gray', vmin=0, vmax=255)
+    else:
+        axes[1][0].imshow(barcode_2.get_barcode().astype("uint8"))
+
+    # Rescale the axis range
+    # And update the plot
+    for axis in axes.ravel():
+        axis.relim()
+        axis.autoscale_view()
+
+    # Update the title of the plotted axes
+    update_axes_title(axes, barcode_1, barcode_2)
+
+    # Update the histogram of the barcode 1
+    update_hist(barcode_1, ax=axes[0][1], bin_step=bin_step)
+
+    # Update the histogram of the barcode 2
+    update_hist(barcode_2, ax=axes[1][1], bin_step=bin_step)
+
+
 def update_axes_title(axes, barcode_1, barcode_2):
     """
     Update the title of the plotted axes (in place)
@@ -156,42 +192,6 @@ def update_axes_title(axes, barcode_1, barcode_2):
         axes[1][1].set_xticks(np.arange(0, 256, 32))
         axes[1][1].set_xlabel("Brightness (0 - 255)")
         axes[1][1].set_ylabel("Number of frames")
-
-
-def update_graph(barcode_1, barcode_2, axes, bin_step=5):
-    """
-    Update the plotted graph (in place)
-
-    :param barcode_1: The barcode 1
-    :param barcode_2: The barcode 2
-    :param axes: The axes of the plotted figure
-    :param bin_step: The step of histogram bin
-    """
-    # Plot the barcode with the correct color map based on their barcode types
-    if barcode_1.barcode_type == "Brightness":
-        axes[0][0].imshow(barcode_1.get_barcode().astype("uint8"), cmap='gray', vmin=0, vmax=255)
-    else:
-        axes[0][0].imshow(barcode_1.get_barcode().astype("uint8"))
-
-    if barcode_2.barcode_type == "Brightness":
-        axes[1][0].imshow(barcode_2.get_barcode().astype("uint8"), cmap='gray', vmin=0, vmax=255)
-    else:
-        axes[1][0].imshow(barcode_2.get_barcode().astype("uint8"))
-
-    # Rescale the axis range
-    # And update the plot
-    for axis in axes.ravel():
-        axis.relim()
-        axis.autoscale_view()
-
-    # Update the title of the plotted axes
-    update_axes_title(axes, barcode_1, barcode_2)
-
-    # Update the histogram of the barcode 1
-    update_hist(barcode_1, ax=axes[0][1], bin_step=bin_step)
-
-    # Update the histogram of the barcode 2
-    update_hist(barcode_2, ax=axes[1][1], bin_step=bin_step)
 
 
 def update_hist(barcode, ax, bin_step=5):
@@ -276,15 +276,22 @@ def resource_path(relative_path):
     except Exception:
         # Otherwise use the absolute path
         if relative_path.endswith(".ico"):
+            # If the path points to .ico image
             if os.name != "nt":
+                # If the running os is linux
                 relative_path = relative_path[:-3]
+                # Replace the .ico image with image in .xbm format
                 relative_path += "xbm"
 
+        # Join the path
         base_path = os.path.abspath(os.path.dirname(__file__))
         base_path = os.path.join(base_path, '../data')
 
         if relative_path.endswith(".xbm"):
+            # If the image is .xbm image
             if os.name != "nt":
+                # and the running os is linux
+                # Add @ identifier at the front of path
                 base_path = "@" + base_path
 
     # Return the path

@@ -96,9 +96,9 @@ class BarcodeGenerator():
             "Color metric Bright can not be used when the frame acquisition " \
             "methods are {:s}".format(str(frame_types[1:]))
 
-        self.frame_type = frame_type.capitalize()
-        self.color_metric = color_metric.capitalize()
-        self.barcode_type = barcode_type.capitalize()
+        self.frame_type = frame_type
+        self.color_metric = color_metric
+        self.barcode_type = barcode_type
         self.sampled_frame_rate = sampled_frame_rate
         self.skip_over = skip_over
         self.total_frames = total_frames
