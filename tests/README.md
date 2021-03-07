@@ -19,7 +19,7 @@ and upload the coverage report on [Codecov](https://app.codecov.io/gh/KALMUS-Col
 
 # Contributors
 
-We kindly ask our contributors to also include the automated tests for new functionality in this test suite. We wish 
+We kindly ask our contributors to also include the automated tests of new functionality in this test suite. We wish 
 you to make sure the existing and new tests pass locally before you open a pull-request. See our 
 [pull-request template](../.github/pull_request_template.md) for more details.
 

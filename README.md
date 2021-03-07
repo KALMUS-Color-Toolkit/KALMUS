@@ -15,8 +15,8 @@ and (2) various ways to visualize a film's color. We have named the software KAL
 Natalie Kalmus (1882 - 1965), a Technicolor Director who oversaw the color palettes of nearly 300 
 Hollywood feature films.
 
-- What is a Color Barcode: [KALMUS: tools for color analysis of films](paper/joss-paper.md)   
-- How can I install the KALMUS: [KALMUS Installation Guide](https://kalmus-color-toolkit.github.io/KALMUS/install.html) 
+- What is a Color/Brightness Barcode: [KALMUS: tools for color analysis of films](paper/joss-paper.md)   
+- How do I install the KALMUS: [KALMUS Installation Guide](https://kalmus-color-toolkit.github.io/KALMUS/install.html) 
 and [KALMUS PyPI Homepage](https://pypi.org/project/kalmus/).
 - How do I contribute to the KALMUS: [KALMUS Contribution Guidelines](CODE_OF_CONDUCT.md)
 - How to run KALMUS's automated test suite: [Auomated Test Suite](tests/)
@@ -31,7 +31,7 @@ The KALMUS API reference is now available on
 
 The kalmus package requires a python with version 3.7 or 3.8.
 
-The package is released on PyPI ([Project Homepage](https://pypi.org/project/kalmus/)). After you install the
+The package is released on PyPI ([Project Homepage](https://pypi.org/project/kalmus/)). After you installed the
 python==3.7, 3.8, you can install the kalmus using pip (recommended)
 
     $ pip install kalmus
@@ -61,7 +61,7 @@ Once the package is installed. The functionalities of the KALMUS are accessible 
 # Contribution
 
 We encourage contributions, including bug fixes and new features, from our community users. When contributing to the 
-kalmus package, please first contact the project maintainers by [email](yc015@bucknell.edu) or opening an issue. If 
+kalmus package, please first contact the project maintainers by [email]<yc015@bucknell.edu> or opening an issue. If 
 your bug fixex or new features changing the current behavior of package, please specify the changed behaviors and 
 reasons for changing in the discussion with project maintainers. 
 
