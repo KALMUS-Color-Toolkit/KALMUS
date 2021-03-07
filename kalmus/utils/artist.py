@@ -4,7 +4,8 @@ import numpy as np
 import cv2
 import csv
 from scipy import ndimage
-from skimage.morphology import watershed, disk, remove_small_objects
+from skimage.morphology import disk, remove_small_objects
+from skimage.segmentation import watershed
 from skimage.filters import rank, sobel
 from skimage.future import graph
 import scipy.stats as stats
