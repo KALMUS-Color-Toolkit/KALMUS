@@ -1,4 +1,4 @@
-KALMUS Update Log (v1.3.6)
+KALMUS Update Log (v1.3.7)
 ================================
 
 Update Log

@@ -13,6 +13,7 @@ past_dist
 api_doc_source
 .coverage
 .gitignore
+.pytest_cache
 coverage.xml
 
 _discarded

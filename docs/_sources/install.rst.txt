@@ -1,10 +1,10 @@
 Installation Guide
 =====================
 
-The kalmus package requires a python with version 3.7 and onward.
+The kalmus package requires a python with version 3.7 or 3.8.
 
 The package is released on PyPI (`Project Homepage <https://pypi.org/project/kalmus/>`_). After you install the
-python>=3.7, you can install the kalmus using pip (recommended)::
+python==3.7, 3.8, you can install the kalmus using pip (recommended)::
 
     $ pip install kalmus
 
