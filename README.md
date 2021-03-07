@@ -69,10 +69,9 @@ The project is released under the open-source MIT License.
 **Add features**
 - New console script `kalmus-generator` that allows users to automate their barcode generation process
 through this command line interface. Example usage:
-
-
+```
     $ kalmus-generator -p tests/test_data/test_color_video.mp4 --frame_type Whole_frame --color_metric Average --skip 10 --step 1 --total_frames 100 --barcode_type Color
-    
+```
 - Use `$ kalmus-generator -h` to check the description of available arguments in details.
 
 ---
