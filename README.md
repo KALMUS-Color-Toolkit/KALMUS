@@ -7,7 +7,12 @@
 
 # KALMUS
 
-KALMUS is a Python package for the computational analysis of colors in films. It addresses how to best describe a film's color.  This package is optimized for two purposes:  (1) various ways to measure, calculate and compare a film's color and (2) various ways to visualize a film's color.
+KALMUS is a Python package for the computational analysis of colors in films. 
+It provides quantitative tools to study and compare the use of film color. 
+This package serves two purposes: (1) various ways to measure, calculate and compare a film's colors 
+and (2) various ways to visualize a film's color. We have named the software KALMUS in homage to 
+Natalie Kalmus (1882 - 1965), a Technicolor Director who oversaw the color palettes of nearly 300 
+Hollywood feature films.
 
 # API Documentation
 
@@ -56,6 +61,20 @@ The project is released under the open-source MIT License.
 
 # Update Log
 
+### update 1.3.7
+**Changes**
+- The kalmus.utils.Artist module is renamed to kalmus.utils.artist
+
+**Add features**
+- New console script `kalmus-generator` that allows users to automate their barcode generation process
+through this command line interface. Example usage:
+
+
+    $ kalmus-generator -p tests/test_data/test_color_video.mp4 --frame_type Whole_frame --color_metric Average --skip 10 --step 1 --total_frames 100 --barcode_type Color
+    
+- Use `$ kalmus-generator -h` to check the description of available arguments in details.
+
+---
 ### Update 1.3.6
 **Changes**
 - The internal package structure is refactored.

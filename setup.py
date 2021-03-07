@@ -36,7 +36,8 @@ setup(name='kalmus',
       install_requires=['numpy', 'opencv-python', 'scikit-image==0.16.2', 'matplotlib==3.2.2',
                         'scikit-learn', 'biopython', 'scipy', 'kiwisolver>=1.3.1'],
       entry_points={
-          'console_scripts': ['kalmus-gui=kalmus.command_line_gui:main'],
+          'console_scripts': ['kalmus-gui=kalmus.command_line_gui:main',
+                              'kalmus-generator=kalmus.command_line_generator:main'],
       },
       include_package_data=True,
       zip_safe=False)

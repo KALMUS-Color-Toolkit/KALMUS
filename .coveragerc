@@ -9,6 +9,8 @@ omit =
     kalmus/tkinter_windows/meta_info_windows/WhichBarcodeCheckMeta.py
     # Ignore the console script for initiating GUI using command line
     kalmus/command_line_gui.py
+    # Ignore the console script for barcode generation pipeline
+    kalmus/command_line_generator.py
 
 [report]
 exclude_lines = plt.*

@@ -267,6 +267,8 @@
 <span class="sd">    :return: the processed color matrix. Depending on the display mode, the return color matrix will have padding \</span>
 <span class="sd">    white colors if mode is &quot;padding&quot;, or the last row of color matrix will be truncated if mode is &quot;truncate&quot;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">color_2d_array</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;Only 2d array of three-channel color tuple/array accepted&quot;</span>
+    <span class="k">assert</span> <span class="n">color_2d_array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;The number of channels of color 2d array must be 3 (R, G, B)&quot;</span>
     <span class="k">assert</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;truncate&quot;</span> <span class="ow">or</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;padding&quot;</span><span class="p">,</span> <span class="s2">&quot;Invalid mode for displaying color matrix, two&quot;</span> \
                                                     <span class="s2">&quot;modes are available &#39;truncate&#39; or &#39;padding&#39;&quot;</span>
     <span class="c1"># If the mode is padding</span>
