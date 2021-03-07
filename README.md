@@ -15,7 +15,12 @@ and (2) various ways to visualize a film's color. We have named the software KAL
 Natalie Kalmus (1882 - 1965), a Technicolor Director who oversaw the color palettes of nearly 300 
 Hollywood feature films.
 
-- What is a Color/Brightness Barcode: [KALMUS: tools for color analysis of films](paper/joss-paper.md)   
+KALMUS utilizes the movie barcode as a visualization of the film's color. It has a modularized pipeline for the
+ generation of barcodes using different measures of color and region of interest in each film frame. KALMUS provides
+ both a low-level API and high-level command line and Graphic user interface for audience from all backgrounds to take
+ advantage of its functionality. 
+
+- What is a Movie Barcode: [KALMUS: tools for color analysis of films](paper/joss-paper.md)   
 - How do I install the KALMUS: [KALMUS Installation Guide](https://kalmus-color-toolkit.github.io/KALMUS/install.html) 
 and [KALMUS PyPI Homepage](https://pypi.org/project/kalmus/).
 - How do I contribute to the KALMUS: [KALMUS Contribution Guidelines](CODE_OF_CONDUCT.md)

@@ -11,6 +11,8 @@ omit =
     kalmus/command_line_gui.py
     # Ignore the console script for barcode generation pipeline
     kalmus/command_line_generator.py
+    # Ignore the notebook and its utility
+    notebook/notebook_utils.py
 
 [report]
 exclude_lines = plt.*
