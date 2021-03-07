@@ -1,3 +1,4 @@
+[![Project Status](https://img.shields.io/pypi/status/kalmus.svg)](https://pypi.org/project/kalmus/)
 [![Python Version](https://img.shields.io/pypi/pyversions/kalmus.svg)](https://pypi.org/project/kalmus/)
 [![PyPI Version](https://img.shields.io/pypi/v/kalmus.svg)](https://pypi.org/project/kalmus/)
 [![codecov](https://codecov.io/gh/KALMUS-Color-Toolkit/KALMUS/branch/master/graph/badge.svg)](https://codecov.io/gh/KALMUS-Color-Toolkit/KALMUS)
@@ -21,10 +22,10 @@ The KALMUS API reference is now available on
 
 # Instruction
 
-The kalmus package requires a python with version 3.7 and onward.
+The kalmus package requires a python with version 3.7 or 3.8.
 
 The package is released on PyPI ([Project Homepage](https://pypi.org/project/kalmus/)). After you install the
-python>=3.7, you can install the kalmus using pip (recommended)
+python==3.7, 3.8, you can install the kalmus using pip (recommended)
 
     $ pip install kalmus
 
