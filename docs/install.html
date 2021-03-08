@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Installation Guide &mdash; KALMUS 1.3.6 documentation</title>
+  <title>Installation Guide &mdash; KALMUS 1.3.7 documentation</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                1.3.6
+                1.3.7
               </div>
             
           
@@ -177,6 +177,13 @@ Then, move to the top directory of cloned kalmus project folder and install usin
 <p>In both methods, the package's dependencies will be automatically installed. You can verify if the kalmus has been
 installed in your environment using pip command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip show kalmus
+</pre></div>
+</div>
+<p>Alternatively, in the version 1.3.7 and above, you can check the version of intsalled kalmus using its
+<code class="docutils literal notranslate"><span class="pre">.__version__</span></code> attribute</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">kalmus</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">kalmus</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span> <span class="c1"># Warning: The __version__ attribute is not available in the kalmus v.1.3.6 and backward</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mf">1.3</span><span class="o">.</span><span class="mi">7</span>
 </pre></div>
 </div>
 </div>

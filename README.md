@@ -17,7 +17,7 @@ Hollywood feature films.
 
 KALMUS utilizes the movie barcode as a visualization of the film's color. It has a modularized pipeline for the
  generation of barcodes using different measures of color and region of interest in each film frame. KALMUS provides
- both a low-level API and high-level command line and Graphic user interface for audience from all backgrounds to take
+ a low-level API, high-level command line, and Graphic user interface for audience from all backgrounds to take
  advantage of its functionality. 
 
 - What is a Movie Barcode: [KALMUS: tools for color analysis of films](paper/joss-paper.md)   

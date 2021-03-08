@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow &mdash; KALMUS 1.3.6 documentation</title>
+  <title>kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow &mdash; KALMUS 1.3.7 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                1.3.6
+                1.3.7
               </div>
             
           
@@ -188,7 +188,6 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">barcode</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize</span>
-
 <span class="sd">        :param barcode: The barcode that will be inspected</span>
 <span class="sd">        :param figsize: The size of the plotted figure</span>
 <span class="sd">        :param dpi: The dpi of the figure</span>
@@ -249,12 +248,14 @@
 <div class="viewcode-block" id="PlotBarcodeWindow.show_RGB_color_in_cube"><a class="viewcode-back" href="../../../../tkinter_windows/plot_barcodes_windows/PlotBarcodeWindow.html#kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.PlotBarcodeWindow.show_RGB_color_in_cube">[docs]</a>    <span class="k">def</span> <span class="nf">show_RGB_color_in_cube</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Instantiate the RGBColorCubeWindow if user press the show color in RGB cube button</span>
+<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">RGBColorCubeWindow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PlotBarcodeWindow.show_color_histogram"><a class="viewcode-back" href="../../../../tkinter_windows/plot_barcodes_windows/PlotBarcodeWindow.html#kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.PlotBarcodeWindow.show_color_histogram">[docs]</a>    <span class="k">def</span> <span class="nf">show_color_histogram</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Instantiate the ColorHistogramWindow if user press the show histogram button</span>
+<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ColorHistogramWindow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="p">)</span></div>
 
@@ -270,7 +271,6 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">barcode</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize</span>
-
 <span class="sd">        :param barcode: The input barcode</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Set up the window</span>
@@ -312,7 +312,6 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">barcode</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize</span>
-
 <span class="sd">        :param barcode: The input barcode</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span> <span class="o">=</span> <span class="n">barcode</span>
@@ -351,7 +350,6 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">barcode</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize</span>
-
 <span class="sd">        :param barcode: The barcode to output the per frame level data</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span> <span class="o">=</span> <span class="n">barcode</span>
@@ -380,6 +378,7 @@
 <div class="viewcode-block" id="OutputCSVWindow.output_csv_file"><a class="viewcode-back" href="../../../../tkinter_windows/plot_barcodes_windows/PlotBarcodeWindow.html#kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.OutputCSVWindow.output_csv_file">[docs]</a>    <span class="k">def</span> <span class="nf">output_csv_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Output the per frame level data to a csv file</span>
+<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Get the file name of the output csv file</span>
         <span class="n">csv_filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename_entry</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
@@ -438,6 +437,7 @@
 <div class="viewcode-block" id="OutputCSVWindow.browse_folder"><a class="viewcode-back" href="../../../../tkinter_windows/plot_barcodes_windows/PlotBarcodeWindow.html#kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.OutputCSVWindow.browse_folder">[docs]</a>    <span class="k">def</span> <span class="nf">browse_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Browse the folder to locate the json file</span>
+<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Get the file name from the user selection</span>
         <span class="n">filename</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">filedialog</span><span class="o">.</span><span class="n">asksaveasfilename</span><span class="p">(</span><span class="n">initialdir</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Select CSV file&quot;</span><span class="p">,</span>
