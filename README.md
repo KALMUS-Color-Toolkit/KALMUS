@@ -32,7 +32,7 @@ and [KALMUS PyPI Homepage](https://pypi.org/project/kalmus/).
 The KALMUS API reference is now available on 
 [https://kalmus-color-toolkit.github.io/KALMUS/](https://kalmus-color-toolkit.github.io/KALMUS/).
 
-# Instruction
+# Installation Instruction
 
 The kalmus package requires a python with version 3.7 or 3.8.
 
@@ -54,14 +54,15 @@ installed in your environment using pip command
 
 Once the package is installed. The functionalities of the KALMUS are accessible through the Graphic user interface (GUI) and imported kalmus module.
 
-- To start the KALMUS in GUI, use the command `$ kalmus-gui`. The initiation process may take up a minute.
-- To import the kalmus module in the python script, use `import kalmus`.
-
 ```jupyter
 >>> import kalmus
 >>> print(kalmus.__version__) # Warning: The __version__ attribute is not available in the kalmus v.1.3.6 and backward
 >>> 1.3.7 
 ```
+
+# Get Started
+
+We provides
 
 # Contribution
 
