@@ -25,7 +25,7 @@ KALMUS utilizes the movie barcode as a visualization of the film's color. It has
 and [KALMUS PyPI Homepage](https://pypi.org/project/kalmus/).
 - How do I use the KALMUS: [Notebook Tutorials for KALMUS'S API and GUI](notebooks)
 - How do I contribute to the KALMUS: [KALMUS Contribution Guidelines](CODE_OF_CONDUCT.md)
-- How to run KALMUS's automated test suite: [Auomated Test Suite](tests/)
+- How do I run the KALMUS's automated test suite: [Auomated Test Suite](tests/)
 
 
 # API Documentation
@@ -95,7 +95,7 @@ To run the test suite:
 - Go to the top directory of cloned KALMUS project
 - Use command `$ python -m pytest tests --cov=kalmus --cov-config=.coveragerc --cov-report term-missing`
 
-See [Test Suite Guide](tests/README.md) under the tests folder for more details.
+See the [Test Suite Guide](tests/README.md) for more details.
 
 # Acknowledgment
 
