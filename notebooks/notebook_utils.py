@@ -9,6 +9,25 @@ from kalmus.barcodes.BarcodeGenerator import BarcodeGenerator, frame_types
 def show_image_with_color(image, color_metric="Average", frame_type="Whole_frame",
                           color_image_width=None, add_separate_line=False, separate_line_width=3,
                           ax=None, figsize=(6, 4), title=None, axis_off=False):
+    """
+    Helper function that show the extracted image using specified frame_type along with color measured using
+    specified color_metric
+
+    :param image: Numpy.ndarray Expected image shape == (height, width, channels=3)
+    :param color_metric: The metric used to measure the color of region of interest in image. \
+                         see kalmus.barcodes.BarcodeGenerator.color_metrics for more references
+    :param frame_type: The type of region that is interested in the image. \
+                       see kalmus.barcodes.BarcodeGenerator.frame_type for more references
+    :param color_image_width: The width of color plotted on the right side of image. \
+                              By default color_image_width=None, the color image width will be 0.15 \
+                              of input image's width.
+    :param add_separate_line: Whether add a white separation line between image and color image
+    :param separate_line_width: Width of the separation line in pixels
+    :param ax: If the Axes object is given, plot on the given Axes instead
+    :param figsize: The size of the plotted figure
+    :param title: The title of the plot, by default title="{:color_metric} Color using {:frame_type}"
+    :param axis_off: Whether turn the plot's axis off or not. By default, axis is on.
+    """
     helper_generator = BarcodeGenerator(color_metric=color_metric, frame_type=frame_type)
     helper_generator.instantiate_barcode_object()
     helper_barcode = helper_generator.get_barcode()

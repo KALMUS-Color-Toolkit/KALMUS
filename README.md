@@ -23,6 +23,7 @@ KALMUS utilizes the movie barcode as a visualization of the film's color. It has
 - What is a Movie Barcode: [KALMUS: tools for color analysis of films](paper/joss-paper.md)   
 - How do I install the KALMUS: [KALMUS Installation Guide](https://kalmus-color-toolkit.github.io/KALMUS/install.html) 
 and [KALMUS PyPI Homepage](https://pypi.org/project/kalmus/).
+- How do I use the KALMUS: [Notebook Tutorials for KALMUS'S API and GUI](notebooks)
 - How do I contribute to the KALMUS: [KALMUS Contribution Guidelines](CODE_OF_CONDUCT.md)
 - How to run KALMUS's automated test suite: [Auomated Test Suite](tests/)
 
@@ -30,9 +31,9 @@ and [KALMUS PyPI Homepage](https://pypi.org/project/kalmus/).
 # API Documentation
 
 The KALMUS API reference is now available on 
-[https://kalmus-color-toolkit.github.io/KALMUS/](https://kalmus-color-toolkit.github.io/KALMUS/).
+[https://kalmus-color-toolkit.github.io/KALMUS/kalmus.html](https://kalmus-color-toolkit.github.io/KALMUS/kalmus.html).
 
-# Installation Instruction
+# Installation Guide
 
 The kalmus package requires a python with version 3.7 or 3.8.
 
@@ -52,7 +53,8 @@ installed in your environment using pip command
 
     $ pip show kalmus
 
-Once the package is installed. The functionalities of the KALMUS are accessible through the Graphic user interface (GUI) and imported kalmus module.
+Alternatively, in the version 1.3.7 and above, you can check the version of intsalled kalmus using its 
+`.__version__` attribute.
 
 ```jupyter
 >>> import kalmus
@@ -62,7 +64,16 @@ Once the package is installed. The functionalities of the KALMUS are accessible 
 
 # Get Started
 
-We provides
+KALMUS has a low-level API, high-level command line, and Graphic user interface for audience from all 
+backgrounds to take advantage of its functionality. 
+
+To get started on kalmus, we encourage you to check the Jupyter notebook tutorials in the [notebooks](notebooks) 
+folder. We currently provide the interactive notebook tutorial for users to get started on KALMUS using its API or GUI. 
+A similar tutorial on command line interface (new feature in v1.3.7) will be available soon.
+
+- [Notebook Tutorial for Graphic User Interface](notebooks/user_guide_for_kalmus_gui.ipynb)
+- [Notebook Tutorial for Application Programming Interface](notebooks/user_guide_for_kalmus_api.ipynb)
+- [ ] TODO: **Notebook/Markdown Tutorial for Command Line Interface**
 
 # Contribution
 
@@ -74,16 +85,22 @@ reasons for changing in the discussion with project maintainers.
 We encourage inclusive and friendly discussion. Please follow our [code of conduct](CODE_OF_CONDUCT.md) when 
 communicating. 
 
-# Precomputed Barcodes
+# Test suite
 
-Precomputed barcodes are accessible upon requests. Please email the Project maintainer Yida Chen <yc015@bucknell.edu> 
-about your needs. 
+We provide an auto test suite that cover the core functionality of KALMUS. Before running the auto test suite locally, 
+make sure you have installed the latest versions of [pytest](https://pypi.org/project/pytest/), [pytest-cov](https://pypi.org/project/pytest-cov/), 
+and [kalmus](https://pypi.org/project/kalmus/), and you have cloned the project repository on master branch. 
+
+To run the test suite:  
+- Go to the top directory of cloned KALMUS project
+- Use command `$ python -m pytest tests --cov=kalmus --cov-config=.coveragerc --cov-report term-missing`
+
+See [Test Suite Guide](tests/README.md) under the tests folder for more details.
 
 # Acknowledgment
 
 The authors wish to thank the Mellon Foundation, the Dalal Family Foundation, and the Bucknell University Humanities 
-Center for their support on this project.
-The project is released under the open-source MIT License.
+Center for their support on this project. The project is released under the open-source MIT License.
 
 # Update Log
 
