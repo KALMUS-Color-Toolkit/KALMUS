@@ -99,10 +99,10 @@ Equivalent to the **skip_over** in `BarcodeGenerator`
 in `BarcodeGenerator`
 
 **-t --total_frames**: The total number of frames to be included in generated barcode. Equivalent to **total_frames** in
-`BarcodeGenerator`. **Notice**: If you wish to generate barcode till the end of video, simply ignore this argument (left blank)
- or put a very large number in total_frames, e.g. total_frames = 1e8. The barcode will auto adjust the total frames 
- using film length (in frames) and your specified skip_over and sampled_frame_rate to recompute the correct number for 
- total_frames, and barcode generator collects color/brightness till the last frame of input video.
+`BarcodeGenerator`. **Notice**: If you wish to generate barcode till the end of video, simply put a very large number in 
+total_frames, e.g. total_frames = 1e8. The barcode will auto adjust the total frames using film length (in frames) and 
+your specified skip_over and sampled_frame_rate to recompute the correct number for total_frames, and barcode generator 
+collects color/brightness till the last frame of input video.
 
 **--num_thread**: Number of threads to use in barcode generation. Equivalent to **num_thread** in 
 `BarcodeGenerator.generate_barcode`. We highly recommend this if your processor supports multi-threading.
@@ -150,7 +150,7 @@ command's execution finished.
 in *./saved_barcode_cli.json*
 
 ```
-$ kalmus-generator -p notebook_example_data/i_robot_video.mp4 --frame_type Low_contrast_region --color_metric Median --step 2 --barcode_type Brightness --num_thread 2 --saved_frame_rate 0.5 --rescale_frame_factor 0.25 -o ./saved_barcode_cli.json
+$ kalmus-generator -p notebook_example_data/i_robot_video.mp4 --frame_type Low_contrast_region --color_metric Median --step 2 --total_frames 1000000 --barcode_type Brightness --num_thread 2 --saved_frame_rate 0.5 ----rescale_frame_factor 0.25 -o ./saved_barcode_cli.json
 ```
 
 A JSON file with filename: **saved_barcode_cli.json** should be generated in this folder after the 

@@ -1,8 +1,9 @@
 from kalmus.barcodes.BarcodeGenerator import BarcodeGenerator
 import argparse
+import sys
 
 
-def main():
+def parse_args_into_dict(args):
     ap = argparse.ArgumentParser(description="Command line Barcode generator")
     # Video path
     ap.add_argument("-p", "--path", required=True, type=str, help="Path to the video")
@@ -52,7 +53,12 @@ def main():
                     help="Path to the output JSON barcode. By default, path==saved_{barcode_type}_{frame_type}_"
                          "{color_metric}.json",
                     default=None)
-    args = vars(ap.parse_args())
+    return vars(ap.parse_args(args))
+
+
+def main(args=sys.argv[1:]):
+    args = parse_args_into_dict(args=args)
+
     if args["saved_frame_rate"] is None:
         saved_frame_in_generation = False
     else:
