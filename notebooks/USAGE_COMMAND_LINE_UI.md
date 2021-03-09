@@ -1,4 +1,4 @@
-# Welcome to the Interactive User Guide for KALMUS (Command-line Interface)!
+# Welcome to the User Guide for KALMUS (Command-line Interface)!
 
 In this Markdown Tutorial I will introduce:
 - **Installation of KALMUS package**
