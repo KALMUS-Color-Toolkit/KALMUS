@@ -9,16 +9,16 @@ python==3.7, 3.8, you can install the kalmus using pip (recommended)::
     $ pip install kalmus
 
 Alternatively, you could install the kalmus locally by first cloning the GitHub repo of Kalmus (`GitHub page <https://github.com/KALMUS-Color-Toolkit/KALMUS>`_).
-Then, move to the top directory of cloned kalmus project folder and install using pip command::
+Then, move to the top directory of cloned kalmus project folder and install using the pip command::
 
     $ pip install .
 
 In both methods, the package's dependencies will be automatically installed. You can verify if the kalmus has been
-installed in your environment using pip command::
+installed in your environment using the pip command::
 
     $ pip show kalmus
 
-Alternatively, in the version 1.3.7 and above, you can check the version of intsalled kalmus using its
+Alternatively, in version 1.3.7 and above, you can check the version of installed kalmus using its
 ``.__version__`` attribute
 
 .. code-block:: python
