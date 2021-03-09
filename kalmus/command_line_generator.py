@@ -57,6 +57,7 @@ def parse_args_into_dict(args):
 
 
 def main(args=sys.argv[1:]):
+    print(sys.argv)
     args = parse_args_into_dict(args=args)
 
     if args["saved_frame_rate"] is None:
