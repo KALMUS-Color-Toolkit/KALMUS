@@ -85,7 +85,7 @@ reasons for changing in the discussion with project maintainers.
 We encourage inclusive and friendly discussion. Please follow our [code of conduct](CODE_OF_CONDUCT.md) when 
 communicating. 
 
-# Test suite
+# Test Suite
 
 We provide an automated test suite that covers the core functionality of KALMUS. Before running the automated test suite locally, 
 make sure you have installed the latest versions of [pytest](https://pypi.org/project/pytest/), [pytest-cov](https://pypi.org/project/pytest-cov/), 
