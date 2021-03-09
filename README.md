@@ -23,7 +23,7 @@ KALMUS utilizes the movie barcode as a visualization of the film's color. It has
 - What is a Movie Barcode: [KALMUS: tools for color analysis of films](paper/joss-paper.md)   
 - How do I install the KALMUS: [KALMUS Installation Guide](https://kalmus-color-toolkit.github.io/KALMUS/install.html) 
 and [KALMUS PyPI Homepage](https://pypi.org/project/kalmus/).
-- How do I use the KALMUS: [Notebook Tutorials for KALMUS'S API and GUI](notebooks)
+- How do I use the KALMUS: [Notebook Tutorials for KALMUS'S API, GUI, and CLI](notebooks)
 - How do I contribute to the KALMUS: [KALMUS Contribution Guidelines](CODE_OF_CONDUCT.md)
 - How do I run the KALMUS's automated test suite: [Auomated Test Suite](tests/)
 
@@ -44,16 +44,16 @@ python==3.7, 3.8, you can install the kalmus using pip (recommended)
 
 
 Alternatively, you could install the kalmus locally by first cloning this GitHub repo.
-Then, move to the top directory of cloned kalmus project folder and install using pip command
+Then, move to the top directory of cloned kalmus project folder and install using the pip command
 
     $ pip install .
 
 In both methods, the package's dependencies will be automatically installed. You can verify if the kalmus has been
-installed in your environment using pip command
+installed in your environment using the pip command
 
     $ pip show kalmus
 
-Alternatively, in the version 1.3.7 and above, you can check the version of intsalled kalmus using its 
+Alternatively, in version 1.3.7 and above, you can check the version of installed kalmus using its 
 `.__version__` attribute.
 
 ```jupyter
@@ -67,19 +67,19 @@ Alternatively, in the version 1.3.7 and above, you can check the version of ints
 KALMUS has a low-level API, high-level command line, and Graphic user interface for audience from all 
 backgrounds to take advantage of its functionality. 
 
-To get started on kalmus, we encourage you to check the Jupyter notebook tutorials in the [notebooks](notebooks) 
+To get started on KALMUS, we encourage you to check the Jupyter notebook tutorials in the [notebooks](notebooks) 
 folder. We currently provide the interactive notebook tutorial for users to get started on KALMUS using its API or GUI. 
-A similar tutorial on command line interface (new feature in v1.3.7) will be available soon.
+Notice that the Command-line interface (CLI) is only available in KALMUS v1.3.7 or onward.
 
 - [Notebook Tutorial for Graphic User Interface](notebooks/user_guide_for_kalmus_gui.ipynb)
 - [Notebook Tutorial for Application Programming Interface](notebooks/user_guide_for_kalmus_api.ipynb)
-- [ ] TODO: **Notebook/Markdown Tutorial for Command Line Interface**
+- [Markdown Tutorial for Command-line interface](notebooks/USAGE_COMMAND_LINE_UI.md)
 
 # Contribution
 
 We encourage contributions, including bug fixes and new features, from our community users. When contributing to the 
 kalmus package, please first contact the project maintainers by email <yc015@bucknell.edu> or opening an issue. If 
-your bug fixex or new features changing the current behavior of package, please specify the changed behaviors and 
+your bug fixes or new features changing the current behavior of the package, please specify the changed behaviors and 
 reasons for changing in the discussion with project maintainers. 
 
 We encourage inclusive and friendly discussion. Please follow our [code of conduct](CODE_OF_CONDUCT.md) when 
@@ -87,9 +87,9 @@ communicating.
 
 # Test suite
 
-We provide an auto test suite that cover the core functionality of KALMUS. Before running the auto test suite locally, 
+We provide an automated test suite that covers the core functionality of KALMUS. Before running the automated test suite locally, 
 make sure you have installed the latest versions of [pytest](https://pypi.org/project/pytest/), [pytest-cov](https://pypi.org/project/pytest-cov/), 
-and [kalmus](https://pypi.org/project/kalmus/), and you have cloned the project repository on master branch. 
+and [kalmus](https://pypi.org/project/kalmus/), and you have cloned the project repository on the master branch. 
 
 To run the test suite:  
 - Go to the top directory of cloned KALMUS project
