@@ -24,7 +24,7 @@ KALMUS utilizes the movie barcode as a visualization of the film's color. It has
 - How do I install the KALMUS: [KALMUS Installation Guide](https://kalmus-color-toolkit.github.io/KALMUS/install.html) 
 and [KALMUS PyPI Homepage](https://pypi.org/project/kalmus/).
 - How do I use the KALMUS: [Notebook Tutorials for KALMUS's API, GUI, and CLI](notebooks)
-- How do I contribute to the KALMUS: [KALMUS Contribution Guidelines](CODE_OF_CONDUCT.md)
+- How do I contribute to the KALMUS: [KALMUS Contribution Guidelines](CONTRIBUTING.md)
 - How do I run the KALMUS's automated test suite: [Auomated Test Suite](tests/)
 
 

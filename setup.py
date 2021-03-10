@@ -2,14 +2,14 @@ import os
 from setuptools import setup, find_packages
 
 dir_path = os.path.abspath(os.path.dirname(__file__))
-path_to_md = os.path.join(dir_path, "README.md")
+path_to_md = os.path.join(dir_path, "PyPI_README.md")
 
 with open(path_to_md, encoding='utf-8') as f:
     readme = f.read()
 f.close()
 
 setup(name='kalmus',
-      version='1.3.7',
+      version='1.3.8',
       description='kalmus film color analysis tool',
       keywords='film, color analysis, data visualization',
       long_description=readme,

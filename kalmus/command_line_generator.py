@@ -33,7 +33,7 @@ def parse_args_into_dict(args):
     # Total frames in barcode
     ap.add_argument("-t", "--total_frames", required=False, type=int,
                     help="Total number of frames to be collected from the input video into the barcode",
-                    default=10)
+                    default=1e8)
 
     # Total frames in barcode
     ap.add_argument("--num_thread", required=False, type=int,
@@ -57,7 +57,6 @@ def parse_args_into_dict(args):
 
 
 def main(args=sys.argv[1:]):
-    print(sys.argv)
     args = parse_args_into_dict(args=args)
 
     if args["saved_frame_rate"] is None:

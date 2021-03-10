@@ -59,7 +59,7 @@ KALMUS allows users to understand a film’s color palette and compare that pale
 | Comparison metric | Range | References |
 | :---------------- | ----: | --------: |
 | Normalized root mean square error | 0 least similar, 1 most similar | @wang  |
-| Structural similarity index | -1 least similar, 1 most similar | @wang |
+| Structural similarity index | 0 least similar, 1 most similar | @wang |
 | Cross correlation | -1 anti-similar, 1 most similar | @avants|
 | Local cross correlation | -1 anti-similar, 1 most similar | @avants |
 | Needleman--Wunsch | 0 least similar, 1 most similar | @needleman |

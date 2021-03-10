@@ -58,6 +58,10 @@ def ssim_similarity(image_1, image_2, window_size=None):
     elif len(image_1.shape) > 2:
         score = structural_similarity(image_1, image_2, win_size=window_size, multichannel=True)
 
+    # Renormalize [-1, 1] score to [0, 1] range
+    score += 1
+    score /= 2
+
     return score
 
 

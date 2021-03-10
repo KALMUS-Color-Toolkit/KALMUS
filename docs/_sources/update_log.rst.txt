@@ -1,8 +1,23 @@
-KALMUS Update Log (v1.3.7)
+KALMUS Update Log (v1.3.8)
 ================================
 
 Update Log
 -----------------
+
+update 1.3.8
+^^^^^^^^^^^^^^^^
+
+**Changes**
+
+* Default normalization for NRMSE (Normalized Root Mean Squared Error) changes to "Min max" from "Average norm". ``kalmus.utils.measure_utils.nrmse_similarity``
+* SSIM is renormalized from range [-1, 1] to [0, 1] to align with the range of NRMSE for more direct comparison.
+* Default behavior of command-line generator ``kalmus-generator`` changed. By default, ``kalmus-generator`` now collects color till the end of film instead of only 10 frames in version 1.3.7
+
+**Fixes**
+
+* Fix the issue that Barcode.fps attribute in saved JSON object is not loaded when rebuilding Barcode object. Now, the rebuilt Barcode object will have the correct fps read from JSON object file.
+
+---------------------------
 
 update 1.3.7
 ^^^^^^^^^^^^^^^^

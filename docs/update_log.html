@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>KALMUS Update Log (v1.3.7) &mdash; KALMUS 1.3.7 documentation</title>
+  <title>KALMUS Update Log (v1.3.8) &mdash; KALMUS 1.3.8 documentation</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                1.3.7
+                1.3.8
               </div>
             
           
@@ -94,6 +94,7 @@
 <li class="toctree-l1"><a class="reference internal" href="kalmus.html">API Documentation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">KALMUS Update Log</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#update-log">Update Log</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#update-1-3-8">update 1.3.8</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#update-1-3-7">update 1.3.7</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#update-1-3-6">Update 1.3.6</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#update-1-3-5">Update 1.3.5</a></li>
@@ -154,7 +155,7 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>KALMUS Update Log (v1.3.7)</li>
+      <li>KALMUS Update Log (v1.3.8)</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -173,10 +174,24 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="kalmus-update-log-v1-3-7">
-<h1>KALMUS Update Log (v1.3.7)<a class="headerlink" href="#kalmus-update-log-v1-3-7" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="kalmus-update-log-v1-3-8">
+<h1>KALMUS Update Log (v1.3.8)<a class="headerlink" href="#kalmus-update-log-v1-3-8" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="update-log">
 <h2>Update Log<a class="headerlink" href="#update-log" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="update-1-3-8">
+<h3>update 1.3.8<a class="headerlink" href="#update-1-3-8" title="Permalink to this headline">¶</a></h3>
+<p><strong>Changes</strong></p>
+<ul class="simple">
+<li><p>Default normalization for NRMSE (Normalized Root Mean Squared Error) changes to &quot;Min max&quot; from &quot;Average norm&quot;. <code class="docutils literal notranslate"><span class="pre">kalmus.utils.measure_utils.nrmse_similarity</span></code></p></li>
+<li><p>SSIM is renormalized from range [-1, 1] to [0, 1] to align with the range of NRMSE for more direct comparison.</p></li>
+<li><p>Default behavior of command-line generator <code class="docutils literal notranslate"><span class="pre">kalmus-generator</span></code> changed. By default, <code class="docutils literal notranslate"><span class="pre">kalmus-generator</span></code> now collects color till the end of film instead of only 10 frames in version 1.3.7</p></li>
+</ul>
+<p><strong>Fixes</strong></p>
+<ul class="simple">
+<li><p>Fix the issue that Barcode.fps attribute in saved JSON object is not loaded when rebuilding Barcode object. Now, the rebuilt Barcode object will have the correct fps read from JSON object file.</p></li>
+</ul>
+</div>
+<hr class="docutils" />
 <div class="section" id="update-1-3-7">
 <h3>update 1.3.7<a class="headerlink" href="#update-1-3-7" title="Permalink to this headline">¶</a></h3>
 <p><strong>Changes</strong></p>
