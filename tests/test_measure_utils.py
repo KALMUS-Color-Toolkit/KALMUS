@@ -48,14 +48,14 @@ def test_nrmse_similarity(get_test_color_image, get_test_gray_image):
 
     # Compared to itself (should be the most similar) using Min max normalization
     score = measure_utils.nrmse_similarity(color_image_1, color_image_1,
-                                           norm_mode="Min max")
+                                           norm_mode="Average norm")
 
     # Allow small precisions lost in the floating point computation
     assert np.round(score, 6) == 1
 
     color_image_2 = get_another_test_color_image()
     score = measure_utils.nrmse_similarity(color_image_1, color_image_2,
-                                           norm_mode="Min max")
+                                           norm_mode="Average norm")
     assert np.round(score, 6) != 1
 
     gray_image_1 = get_test_gray_image
