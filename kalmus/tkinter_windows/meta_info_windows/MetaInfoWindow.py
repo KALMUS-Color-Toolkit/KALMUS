@@ -75,7 +75,7 @@ class MetaInfoWindow():
         :return: Text string for film length, clip start time at film, clip end time at film
         """
         if self.barcode.fps is None:
-            self.barcode.fps = 29.8
+            self.barcode.fps = 30
 
         film_length_in_secs = round(self.barcode.film_length_in_frames / self.barcode.fps)
 

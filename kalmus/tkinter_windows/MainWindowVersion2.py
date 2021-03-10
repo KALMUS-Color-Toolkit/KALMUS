@@ -37,10 +37,10 @@ matplotlib.rc('font', **font)
 
 class MainWindow():
     """
-    MainWindow Class
-    The main GUI window for user to interact with the Kalmus software
-    Has two displays for the barcodes and the histograms of their hue/brightness values
-    Has all buttons to the subwindow of the kalmus software
+    MainWindow Class.
+    The main GUI window for user to interact with the Kalmus software.
+    Has two displays for the barcodes and the histograms of their hue/brightness values.
+    Has all buttons to the subwindow of the kalmus software.
     """
 
     def __init__(self, barcode_tmp, barcode_gn, figsize=(12, 5), dpi=100):
@@ -192,8 +192,8 @@ class MainWindow():
 
     def close_window(self):
         """
-        close the Mainwindow
-        Check if the Generate Barcode window is still open before quiting the Main program
+        close the Mainwindow.
+        Check if the Generate Barcode window is still open before quiting the Main program.
         Return (cancel the quit) if the Generate Barcode window is still open.
         """
         # Check if generate barcode window is opened
