@@ -6,7 +6,7 @@ from skimage.color import rgb2hsv
 from skimage.metrics import mean_squared_error, structural_similarity
 
 
-def nrmse_similarity(image_1, image_2, norm_mode="Average norm"):
+def nrmse_similarity(image_1, image_2, norm_mode="Min max"):
     """
     Normalized root mean squared error (NRMSE).
 

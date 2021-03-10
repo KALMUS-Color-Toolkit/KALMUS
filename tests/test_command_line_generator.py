@@ -9,9 +9,9 @@ import kalmus.command_line_generator as cli
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")
 def test_cli_generator_main():
     mock_sys_args_array = ['-p', 'tests/test_data/test_color_video.mp4',
-                           '--frame_type', 'Low_contrast_region',
+                           '--frame_type', 'High_contrast_region',
                            '--color_metric', 'Median',
-                           '--barcode_type', 'Brightness',
+                           '--barcode_type', 'Color',
                            '--step', '2',
                            '--skip', '10',
                            '--total_frames', '50',
@@ -25,7 +25,7 @@ def test_cli_generator_main():
     os.remove('test_barcode_cli.json')
 
     mock_sys_args_array_no_saved_frame = ['-p', 'tests/test_data/test_color_video.mp4',
-                                          '--frame_type', 'Low_contrast_region',
+                                          '--frame_type', 'Whole_frame',
                                           '--color_metric', 'Median',
                                           '--barcode_type', 'Brightness',
                                           '--step', '2',
