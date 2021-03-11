@@ -83,44 +83,20 @@ $ usage: kalmus-generator [-h] -p PATH --color_metric COLOR_METRIC --frame_type
 
 Only the arguments marked with **(required)** must be specified in the kalmus-generator command.
 
-**-p --path (required)**: The relative or absolute path to the input media/video file. Equivalent to the **video_file_path** in 
-`BarcodeGenerator.generate_barcode`
 
-**--color_metric (required)**: The color_metric selected for barcode generation. Equivalent to the **color_metric** in `BarcodeGenerator`
-    
-**--frame_type (required)**: The frame_type selected for barcode generation. Equivalent to the **frame_type** in `BarcodeGenerator`
-
-**--barcode_type (required)**: The barcode_type of the generated barcode. Equivalent to the **barcode_type** in `BarcodeGenerator`
-
-**--skip**: The number of frames to be skipped at the start of input video before collecting color/brightness.
-Equivalent to the **skip_over** in `BarcodeGenerator`
-     
-**-s --step (required)**: The frame sampled rate. Collect color from one frame every **step** frames. Equivalent to **sampled_frame_rate** 
-in `BarcodeGenerator`
-
-**-t --total_frames**: The total number of frames to be included in generated barcode. Equivalent to **total_frames** in
-`BarcodeGenerator`. **Notice**: If you wish to generate barcode till the end of video, simply put a very large number in 
-total_frames, e.g. total_frames = 1e8. The barcode will auto adjust the total frames using film length (in frames) and 
-your specified skip_over and sampled_frame_rate to recompute the correct number for total_frames, and barcode generator 
-collects color/brightness till the last frame of input video.
-
-**--num_thread**: Number of threads to use in barcode generation. Equivalent to **num_thread** in 
-`BarcodeGenerator.generate_barcode`. We highly recommend this if your processor supports multi-threading.
-
-**--saved_frame_rate**: The rate of saving frames (thumbnail quality) in barcode generation (save rate's unit: seconds). Equivalent to **saved_frame_rate** 
-in `BarcodeGenerator.generate_barcode`. The saved frames can be very useful when visualizing barcode in [GUI](user_guide_for_kalmus_gui.ipynb) 
-as you may correlate or validate a segment of colors/brightness barcode with its corresponding frames. **However**, since
-the size of saved frames/images grows very quickly, you may wish to set this saved rate (seconds) to be low or not to 
-use this option (by default).
-
-**--rescale_frame_factor**: The factor of rescaling the frames when collecting color. Equivalent to **rescale_frame_factor** in `BarcodeGenerator.generate_barcode`.
- resize width = sqrt(rescale_frame_factor) x original width, resize height = sqrt(rescale_frame_factor) * original height. 
- We recommend you to use this option speed up the generation process if your input video's resolution is above 2K 
- (or 1K for Top-dominant, Weighted-dominant, Bright color metric and Low/High_contrast_region or Foreground/Background frame type).
-  
-**-o --output_path**: The output path to the saved JSON object. Equivalent to **filename** in `Barcode.save_as_json`. 
-By default, the generated JSON file will be stored on the current directory with filename 
-*saved_{barcode_type}_barcode_{frame_type}_{color_metric}.json* 
+| Arguments | Description |
+| :------- | :---------- |
+| **-p --path (required)**: | The relative or absolute path to the input media/video file. Equivalent to the **video_file_path** in `BarcodeGenerator.generate_barcode` |
+| **--color_metric (required)**:| The color_metric selected for barcode generation. Equivalent to the **color_metric** in `BarcodeGenerator` |
+| **--frame_type (required)**:| The frame_type selected for barcode generation. Equivalent to the **frame_type** in `BarcodeGenerator` |
+| **--barcode_type (required)**:| The barcode_type of the generated barcode. Equivalent to the **barcode_type** in `BarcodeGenerator` |
+| **--skip**:| The number of frames to be skipped at the start of input video before collecting color/brightness. Equivalent to the **skip_over** in `BarcodeGenerator` |     
+| **-s --step (required)**:| The frame sampled rate. Collect color from one frame every **step** frames. Equivalent to **sampled_frame_rate** in `BarcodeGenerator`|
+| **-t --total_frames**:| The total number of frames to be included in generated barcode. Equivalent to **total_frames** in `BarcodeGenerator`. **Notice**: If you wish to generate barcode till the end of video, simply put a very large number in  total_frames, e.g. total_frames = 1e8. The barcode will auto adjust the total frames using film length (in frames) and your specified skip_over and sampled_frame_rate to recompute the correct number for total_frames, and barcode generator collects color/brightness till the last frame of input video.|
+| **--num_thread**:| Number of threads to use in barcode generation. Equivalent to **num_thread** in `BarcodeGenerator.generate_barcode`. We highly recommend this if your processor supports multi-threading. |
+| **--saved_frame_rate**:| The rate of saving frames (thumbnail quality) in barcode generation (save rate's unit: seconds). Equivalent to **saved_frame_rate** in `BarcodeGenerator.generate_barcode`. The saved frames can be very useful when visualizing barcode in [GUI](user_guide_for_kalmus_gui.ipynb) as you may correlate or validate a segment of colors/brightness barcode with its corresponding frames. **However**, since the size of saved frames/images grows very quickly, you may wish to set this saved rate (seconds) to be low or not to use this option (by default). |
+| **--rescale_frame_factor**:| The factor of rescaling the frames when collecting color. Equivalent to **rescale_frame_factor** in `BarcodeGenerator.generate_barcode`. resize width = sqrt(rescale_frame_factor) x original width, resize height = sqrt(rescale_frame_factor) * original height. We recommend you to use this option speed up the generation process if your input video's resolution is above 2K (or 1K for Top-dominant, Weighted-dominant, Bright color metric and Low/High_contrast_region or Foreground/Background frame type). |  
+| **-o --output_path**:| The output path to the saved JSON object. Equivalent to **filename** in `Barcode.save_as_json`. By default, the generated JSON file will be stored on the current directory with filename *saved_{barcode_type}_barcode_{frame_type}_{color_metric}.json* |
 
 **The available combinations of frame_type and color_metric are the same as those in GUI and API.**
 
