@@ -3,7 +3,8 @@ MainWindow Class
 Version2
 """
 
-import tkinter
+import tkinter.ttk as ttk
+from ttkthemes import ThemedTk
 from tkinter.messagebox import askokcancel, showinfo, showerror
 
 from kalmus.tkinter_windows.GenerateBarcodeWindow import GenerateBarcodeWindow
@@ -67,9 +68,9 @@ class MainWindow():
         self.barcode_gn = barcode_gn
 
         # Initialize the window
-        self.root = tkinter.Tk()
+        self.root = ThemedTk(theme="black")
 
-        self.root.configure(bg='#85C1FA')
+        self.root.configure(bg='#5B6063')
         self.root.wm_title("KALMUS Version 1.3.8")
         self.root.iconbitmap(resource_path("kalmus_icon.ico"))
 
@@ -124,7 +125,7 @@ class MainWindow():
         self.canvas.mpl_connect('button_press_event', self.time_pick)
 
         # Use tkinter Frame to organize the figure widget
-        toolbarFrame = tkinter.Frame(master=self.root)
+        toolbarFrame = ttk.Frame(master=self.root)
         toolbarFrame.grid(row=8, column=2)
 
         # Set up the tool bar of the plotted figure
@@ -137,51 +138,51 @@ class MainWindow():
         self.generate_window_opened = False
 
         # Button to generate the barcode
-        button_generate = tkinter.Button(master=self.root, text="Generate Barcode",
+        button_generate = ttk.Button(master=self.root, text="Generate Barcode",
                                          command=self.generate_barcode)
         button_generate.grid(row=0, column=0, padx=3)
 
         # Button to load the barcode from existed json files
-        button_load = tkinter.Button(master=self.root, text="Load JSON",
+        button_load = ttk.Button(master=self.root, text="Load JSON",
                                      command=self.load_json_barcode)
         button_load.grid(row=1, column=0)
 
         # Button to load the barcode from the memory stack
-        button_load_stack = tkinter.Button(master=self.root, text="Load Memory",
+        button_load_stack = ttk.Button(master=self.root, text="Load Memory",
                                            command=self.load_stack_barcode)
         button_load_stack.grid(row=2, column=0)
 
         # Button to reshape the barcode displayed in the main window
-        button_reshape_barcode = tkinter.Button(master=self.root, text="Reshape Barcode",
+        button_reshape_barcode = ttk.Button(master=self.root, text="Reshape Barcode",
                                                 command=self.reshape_barcode)
         button_reshape_barcode.grid(row=3, column=0)
 
         # Button to save the barcode into json files
-        button_save_json = tkinter.Button(master=self.root, text="Save JSON",
+        button_save_json = ttk.Button(master=self.root, text="Save JSON",
                                           command=self.save_barcode_on_stack)
         button_save_json.grid(row=4, column=0)
 
         # Button to save the barcode displayed into the image
-        button_save_image = tkinter.Button(master=self.root, text="Save Image",
+        button_save_image = ttk.Button(master=self.root, text="Save Image",
                                            command=self.save_image_from_display)
         button_save_image.grid(row=5, column=0)
 
         # Button to inspect the barcode in details
-        button_barcode = tkinter.Button(master=self.root, text="Inspect Barcode",
+        button_barcode = ttk.Button(master=self.root, text="Inspect Barcode",
                                         command=self.show_barcode)
         button_barcode.grid(row=6, column=0)
 
         # Button to show the statistics of the barcode
-        button_stats_info = tkinter.Button(master=self.root, text="Stats Info",
+        button_stats_info = ttk.Button(master=self.root, text="Stats Info",
                                            command=self.stats_info)
         button_stats_info.grid(row=7, column=0)
 
         # Button to quit the main window
-        button_quit = tkinter.Button(master=self.root, text="Quit", command=self.close_window)
+        button_quit = ttk.Button(master=self.root, text="Quit", command=self.close_window)
         button_quit.grid(row=8, column=0)
 
         # Button to check the meta data of the displayed barcodes
-        button_check_meta = tkinter.Button(master=self.root, text="Check Meta Info", command=self.check_meta_info)
+        button_check_meta = ttk.Button(master=self.root, text="Check Meta Info", command=self.check_meta_info)
         button_check_meta.grid(row=8, column=3)
 
         # Close the window mainloop if user try to close the window

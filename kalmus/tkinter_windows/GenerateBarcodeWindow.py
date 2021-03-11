@@ -2,6 +2,8 @@
 
 import cv2
 import tkinter
+import tkinter.ttk as ttk
+from ttkthemes import ThemedTk
 import tkinter.filedialog
 from tkinter.messagebox import showerror, showwarning, showinfo
 import copy
@@ -29,7 +31,9 @@ class GenerateBarcodeWindow():
         self.barcode_stack = barcode_stack
 
         # Initialize the window
-        self.window = tkinter.Tk()
+        self.window = ThemedTk(theme="equilux")
+
+        self.window.configure(bg='#464646')
         self.window.wm_title("Barcode Generator")
         self.window.iconbitmap(resource_path("kalmus_icon.ico"))
 
@@ -40,15 +44,15 @@ class GenerateBarcodeWindow():
         self.video = None
 
         # Label prompt for the generated barcode's barcode type
-        barcode_type_label = tkinter.Label(self.window, text="Barcode Type: ")
+        barcode_type_label = ttk.Label(self.window, text="Barcode Type: ")
         barcode_type_label.grid(row=0, column=0)
 
         # Label prompt for the frame sampling type
-        frame_type_label = tkinter.Label(self.window, text="Frame Type: ")
+        frame_type_label = ttk.Label(self.window, text="Frame Type: ")
         frame_type_label.grid(row=1, column=0)
 
         # Label prompt for the color/brightness metric
-        color_metric_label = tkinter.Label(self.window, text="Color metric: ")
+        color_metric_label = ttk.Label(self.window, text="Color metric: ")
         color_metric_label.grid(row=2, column=0)
 
         # Variable that stores the user's choice of generated barcode type
@@ -56,7 +60,7 @@ class GenerateBarcodeWindow():
         self.barcode_type_var.set("Color")
 
         # Dropdown menu for the barcode type selection
-        dropdown_bar_type = tkinter.OptionMenu(self.window, self.barcode_type_var, "Color", "Brightness")
+        dropdown_bar_type = ttk.OptionMenu(self.window, self.barcode_type_var, "Color", "Brightness")
         dropdown_bar_type.grid(row=0, column=1)
 
         # Variable that stores the user's choice of frame sampling type
@@ -64,7 +68,7 @@ class GenerateBarcodeWindow():
         self.frame_type_var.set("Whole_frame")
 
         # Dropdown menu for the frame sampling type selection
-        dropdown_frame_type = tkinter.OptionMenu(self.window, self.frame_type_var, "Whole_frame", "Low_contrast_region",
+        dropdown_frame_type = ttk.OptionMenu(self.window, self.frame_type_var, "Whole_frame", "Low_contrast_region",
                                                  "High_contrast_region", "Foreground", "Background")
         dropdown_frame_type.grid(row=1, column=1)
 
@@ -73,24 +77,24 @@ class GenerateBarcodeWindow():
         self.color_metric_var.set("Average")
 
         # Dropdown menu for the color metric selection
-        dropdown_color_metric = tkinter.OptionMenu(self.window, self.color_metric_var, "Average", "Median", "Mode",
+        dropdown_color_metric = ttk.OptionMenu(self.window, self.color_metric_var, "Average", "Median", "Mode",
                                                    "Top-dominant", "Weighted-dominant", "Bright", "Brightest")
         dropdown_color_metric.grid(row=2, column=1)
 
         # Label prompt for the skip over specification
-        self.skip_over_label = tkinter.Label(self.window, text="Start at (frames): ")
+        self.skip_over_label = ttk.Label(self.window, text="Start at (frames): ")
         self.skip_over_label.grid(row=0, column=2)
 
         # Label prompt for the sample rate specification
-        self.sampled_rate_label = tkinter.Label(self.window, text="Sample every (frames): ")
+        self.sampled_rate_label = ttk.Label(self.window, text="Sample every (frames): ")
         self.sampled_rate_label.grid(row=1, column=2)
 
         # Label prompt for the total frame included specification
-        self.total_frames_label = tkinter.Label(self.window, text="Total frames: ")
+        self.total_frames_label = ttk.Label(self.window, text="Total frames: ")
         self.total_frames_label.grid(row=2, column=2)
 
         # Acquisition unit specification (in frames or in time)
-        self.acquisition_label = tkinter.Label(self.window, text="Acquistion unit")
+        self.acquisition_label = ttk.Label(self.window, text="Acquistion unit")
         self.acquisition_label.grid(row=0, column=5)
 
         # Variable that stores the user's choice of acquisition unit
@@ -98,39 +102,38 @@ class GenerateBarcodeWindow():
         self.acquisition_option.set("Frame")
 
         # Radio button for the Acquisition unit (Frame/Time) selection
-        radio_frame = tkinter.Radiobutton(self.window, text="Frame", variable=self.acquisition_option,
-                                          value="Frame", anchor='w',
+        radio_frame = ttk.Radiobutton(self.window, text="Frame", variable=self.acquisition_option,
+                                          value="Frame",
                                           command=self.frame_unit)
         radio_frame.grid(row=1, column=5, sticky=tkinter.W)
-        radio_frame.select()
 
-        radio_time = tkinter.Radiobutton(self.window, text="Time", variable=self.acquisition_option,
-                                         value="Time", anchor='w',
+        radio_time = ttk.Radiobutton(self.window, text="Time", variable=self.acquisition_option,
+                                         value="Time",
                                          command=self.time_unit)
         radio_time.grid(row=2, column=5, sticky=tkinter.W)
 
         # Text entry for the skip over specification
-        self.skip_over_entry = tkinter.Entry(self.window, textvariable="0", width=12)
+        self.skip_over_entry = ttk.Entry(self.window, textvariable="0", width=12)
         self.skip_over_entry.grid(row=0, column=3, columnspan=2)
 
         # Text entry for the sampling rate specification
-        self.sampled_rate_entry = tkinter.Entry(self.window, textvariable="1", width=12)
+        self.sampled_rate_entry = ttk.Entry(self.window, textvariable="1", width=12)
         self.sampled_rate_entry.grid(row=1, column=3, columnspan=2)
 
         # Text entry for the total frames specification
-        self.total_frames_entry = tkinter.Entry(self.window, textvariable="1000", width=12)
+        self.total_frames_entry = ttk.Entry(self.window, textvariable="1000", width=12)
         self.total_frames_entry.grid(row=2, column=3, columnspan=2)
 
         # Label prompt for the video file name input
-        video_filename_label = tkinter.Label(self.window, text="Media file path: ")
+        video_filename_label = ttk.Label(self.window, text="Media file path: ")
         video_filename_label.grid(row=3, column=0, columnspan=1)
 
         # Text entry for the video file name specification
-        self.video_filename_entry = tkinter.Entry(self.window, textvariable="", width=55)
+        self.video_filename_entry = ttk.Entry(self.window, textvariable="", width=55)
         self.video_filename_entry.grid(row=3, column=1, columnspan=3)
 
         # Button to browse the folder
-        self.browse_folder_button = tkinter.Button(self.window, text='Browse', command=self.browse_folder)
+        self.browse_folder_button = ttk.Button(self.window, text='Browse', command=self.browse_folder)
         self.browse_folder_button.grid(row=3, column=4)
 
         # Variable that stores the letter box option (automatic/user defined)
@@ -138,62 +141,61 @@ class GenerateBarcodeWindow():
         self.letterbox_option.set("Auto")  # initialize
 
         # Label prompt for the letter box remove option
-        letterbox_label = tkinter.Label(self.window, text="Remove Letterbox: ")
+        letterbox_label = ttk.Label(self.window, text="Remove Letterbox: ")
         letterbox_label.grid(row=4, column=0, columnspan=1)
 
         # Radio button for the letter box remove option
-        radio_auto = tkinter.Radiobutton(self.window, text="Auto", variable=self.letterbox_option,
-                                         value="Auto", anchor='w',
+        radio_auto = ttk.Radiobutton(self.window, text="Auto", variable=self.letterbox_option,
+                                         value="Auto",
                                          command=self.disable_setup)
         radio_auto.grid(row=5, column=0, sticky=tkinter.W)
-        radio_auto.select()
 
-        radio_manual = tkinter.Radiobutton(self.window, text="Manual", variable=self.letterbox_option,
-                                           value="Manual", anchor='w',
+        radio_manual = ttk.Radiobutton(self.window, text="Manual", variable=self.letterbox_option,
+                                           value="Manual",
                                            command=self.enable_setup)
         radio_manual.grid(row=6, column=0, sticky=tkinter.W)
 
         # User defined letter box label prompt
-        high_ver_label = tkinter.Label(self.window, text="Upper vertical: ")
+        high_ver_label = ttk.Label(self.window, text="Upper vertical: ")
         high_ver_label.grid(row=5, column=1, columnspan=1)
 
-        low_ver_label = tkinter.Label(self.window, text="Lower vertical: ")
+        low_ver_label = ttk.Label(self.window, text="Lower vertical: ")
         low_ver_label.grid(row=6, column=1, columnspan=1)
 
         # User defined letter box text entry
-        self.high_ver_entry = tkinter.Entry(self.window, textvariable="-1", width=4, state="disabled")
+        self.high_ver_entry = ttk.Entry(self.window, textvariable="-1", width=4, state="disabled")
         self.high_ver_entry.grid(row=5, column=2, columnspan=1, sticky=tkinter.W)
 
-        self.low_ver_entry = tkinter.Entry(self.window, textvariable="-2", width=4, state="disabled")
+        self.low_ver_entry = ttk.Entry(self.window, textvariable="-2", width=4, state="disabled")
         self.low_ver_entry.grid(row=6, column=2, columnspan=1, sticky=tkinter.W)
 
-        left_hor_label = tkinter.Label(self.window, text="Left horizontal: ")
+        left_hor_label = ttk.Label(self.window, text="Left horizontal: ")
         left_hor_label.grid(row=5, column=3, columnspan=1)
 
-        right_hor_label = tkinter.Label(self.window, text="right horizontal: ")
+        right_hor_label = ttk.Label(self.window, text="right horizontal: ")
         right_hor_label.grid(row=6, column=3, columnspan=1)
 
-        self.left_hor_entry = tkinter.Entry(self.window, textvariable="-3", width=4, state="disabled")
+        self.left_hor_entry = ttk.Entry(self.window, textvariable="-3", width=4, state="disabled")
         self.left_hor_entry.grid(row=5, column=4, columnspan=1)
 
-        self.right_hor_entry = tkinter.Entry(self.window, textvariable="-4", width=4, state="disabled")
+        self.right_hor_entry = ttk.Entry(self.window, textvariable="-4", width=4, state="disabled")
         self.right_hor_entry.grid(row=6, column=4, columnspan=1)
 
         # Variable that stores 0 for not saving frames during the generation 1 for saving frames during the generation
         self.var_saved_frame = tkinter.IntVar(self.window)
 
         # Checkbox for the user to choose whether save the frames or not during barcode generation
-        self.checkbox_saved_frame = tkinter.Checkbutton(self.window, text="Save Frames  ",
+        self.checkbox_saved_frame = ttk.Checkbutton(self.window, text="Save Frames  ",
                                                         variable=self.var_saved_frame,
                                                         onvalue=1, offvalue=0, command=self.update_save_frame_entry)
         self.checkbox_saved_frame.grid(row=7, column=0)
 
         # Label prompt for saving frame
-        save_frame_label = tkinter.Label(master=self.window, text="Save every (secs):")
+        save_frame_label = ttk.Label(master=self.window, text="Save every (secs):")
         save_frame_label.grid(row=7, column=1, sticky=tkinter.E)
 
         # Text entry for the saved frames rate specification
-        self.save_frame_entry = tkinter.Entry(self.window, textvariable="-8", width=4, state="normal")
+        self.save_frame_entry = ttk.Entry(self.window, textvariable="-8", width=4, state="normal")
         self.save_frame_entry.grid(row=7, column=2, sticky=tkinter.W)
         self.save_frame_entry.delete(0, tkinter.END)
         self.save_frame_entry.insert(0, "4")
@@ -204,13 +206,13 @@ class GenerateBarcodeWindow():
         self.var_rescale_frame = tkinter.IntVar(self.window)
 
         # Checkbox for the user to choose whether to rescale the frames or not during the barcode generation
-        self.checkbox_rescale_frame = tkinter.Checkbutton(self.window, text="Rescale Frames", width=12,
+        self.checkbox_rescale_frame = ttk.Checkbutton(self.window, text="Rescale Frames", width=12,
                                                           variable=self.var_rescale_frame,
                                                           onvalue=1, offvalue=0, command=self.update_rescale_entry)
         self.checkbox_rescale_frame.grid(row=7, column=3, sticky=tkinter.E)
 
         # Text entry for the rescale factor specification
-        self.rescale_factor_entry = tkinter.Entry(self.window, textvariable="-7", width=4, state="normal")
+        self.rescale_factor_entry = ttk.Entry(self.window, textvariable="-7", width=4, state="normal")
         self.rescale_factor_entry.grid(row=7, column=4)
         self.rescale_factor_entry.delete(0, tkinter.END)
         self.rescale_factor_entry.insert(0, "0.5")
@@ -220,26 +222,26 @@ class GenerateBarcodeWindow():
         self.var_multi_thread = tkinter.IntVar(self.window)
 
         # Checkbox for the user to choose whether use the multi-thread or not for barcode generation
-        self.checkbox_multi_thread = tkinter.Checkbutton(self.window, text="Multi-Thread:",
+        self.checkbox_multi_thread = ttk.Checkbutton(self.window, text="Multi-Thread:",
                                                          variable=self.var_multi_thread,
                                                          onvalue=1, offvalue=0, command=self.update_thread_entry)
 
         self.checkbox_multi_thread.grid(row=8, column=0)
 
         # Text entry for the thread specification
-        self.thread_entry = tkinter.Entry(self.window, textvariable="-6", width=4, state="normal")
+        self.thread_entry = ttk.Entry(self.window, textvariable="-6", width=4, state="normal")
         self.thread_entry.grid(row=8, column=1, sticky=tkinter.W)
         self.thread_entry.delete(0, tkinter.END)
         self.thread_entry.insert(0, "4")
         self.thread_entry.config(state="disabled")
 
         # Button to generate the barcode
-        self.generate_button = tkinter.Button(master=self.window, text="Generate Barcode",
+        self.generate_button = ttk.Button(master=self.window, text="Generate Barcode",
                                               command=self.generate_barcode_thread)
         self.generate_button.grid(row=8, column=2, sticky=tkinter.W, rowspan=1, pady=5)
 
         # Button to specify the meta data of the generated barcode
-        self.specify_data_button = tkinter.Button(master=self.window, text="Specify Meta Data",
+        self.specify_data_button = ttk.Button(master=self.window, text="Specify Meta Data",
                                                   command=self.specify_data)
         self.specify_data_button.grid(row=8, column=3, sticky=tkinter.W, rowspan=1, pady=5)
 
