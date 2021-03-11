@@ -1,6 +1,8 @@
 """ LoadJsonWindow Class """
 
 import tkinter.filedialog
+import tkinter.ttk as ttk
+from ttkthemes import ThemedTk
 from tkinter.messagebox import showerror, showinfo
 import copy
 import os
@@ -14,7 +16,7 @@ class LoadJsonWindow():
     GUI window for user to load the barcode from existed json file to replace with the barcode in the main window
     """
     def __init__(self, barcode_generator, barcode_1, barcode_2, axes,
-                 canvas, barcode_stack):
+                 canvas, barcode_stack, window_theme=None, window_color=None):
         """
         Initialize
 
@@ -36,20 +38,23 @@ class LoadJsonWindow():
         self.barcode_stack = barcode_stack
 
         # Initialize the window
-        self.window = tkinter.Tk()
+        self.window = ThemedTk(theme=window_theme)
+
+        if window_color is not None:
+            self.window.configure(bg=window_color)
         self.window.wm_title("Load JSON Barcode")
         self.window.iconbitmap(resource_path("kalmus_icon.ico"))
 
         # Label prompt for the file name/path to the json file
-        filename_label = tkinter.Label(self.window, text="JSON file path: ")
+        filename_label = ttk.Label(self.window, text="JSON file path: ")
         filename_label.grid(row=0, column=0, sticky=tkinter.W)
 
         # Text entry for user to type the file name/path to the json file
-        self.filename_entry = tkinter.Entry(self.window, textvariable="", width=40)
+        self.filename_entry = ttk.Entry(self.window, textvariable="", width=40)
         self.filename_entry.grid(row=0, column=1, columnspan=2, sticky=tkinter.W)
 
         # Label prompt for user to specify the type of the barcode they will load
-        barcode_type_label = tkinter.Label(self.window, text="Specify Barcode Type: ")
+        barcode_type_label = ttk.Label(self.window, text="Specify Barcode Type: ")
         barcode_type_label.grid(row=1, column=0, sticky=tkinter.W)
 
         # The variable that stores the type of barcode
@@ -57,15 +62,15 @@ class LoadJsonWindow():
         self.type_variable.set("Color")
 
         # The dropdown menu for user to select the type of the loaded barcode
-        dropdown_type = tkinter.OptionMenu(self.window, self.type_variable, "Color", "Brightness")
+        dropdown_type = ttk.OptionMenu(self.window, self.type_variable, "Color", "Color", "Brightness")
         dropdown_type.grid(row=1, column=1, sticky=tkinter.W)
 
         # Button to build/load the barcode using the given json file
-        self.button_build_barcode = tkinter.Button(self.window, text="Load", command=self.build_barcode)
+        self.button_build_barcode = ttk.Button(self.window, text="Load", command=self.build_barcode)
         self.button_build_barcode.grid(row=2, column=3, columnspan=1)
 
         # Button to browse the folder
-        self.button_browse_folder = tkinter.Button(self.window, text="Browse", command=self.browse_folder)
+        self.button_browse_folder = ttk.Button(self.window, text="Browse", command=self.browse_folder)
         self.button_browse_folder.grid(row=0, column=3)
 
         # Variable that stores whcih barcode in the main window to replace with
@@ -73,13 +78,12 @@ class LoadJsonWindow():
         self.barcode_option.set("Barcode 1")
 
         # Radio button for selecting which barcode in the main window to replace with
-        radio_barcode_1 = tkinter.Radiobutton(self.window, text="Barcode 1", variable=self.barcode_option,
-                                            value="Barcode 1", anchor='w')
+        radio_barcode_1 = ttk.Radiobutton(self.window, text="Barcode 1", variable=self.barcode_option,
+                                            value="Barcode 1")
         radio_barcode_1.grid(row=1, column=2, sticky=tkinter.W)
-        radio_barcode_1.select()
 
-        radio_barcode_2 = tkinter.Radiobutton(self.window, text="Barcode 2", variable=self.barcode_option,
-                                           value="Barcode 2", anchor='w')
+        radio_barcode_2 = ttk.Radiobutton(self.window, text="Barcode 2", variable=self.barcode_option,
+                                           value="Barcode 2")
         radio_barcode_2.grid(row=2, column=2, sticky=tkinter.W)
 
     def browse_folder(self):

@@ -20,7 +20,7 @@ class GenerateBarcodeWindow():
     GUI window for user to generate the barcode from a video file
     """
 
-    def __init__(self, barcode_generator, barcode_stack):
+    def __init__(self, barcode_generator, barcode_stack, window_theme=None, window_color=None):
         """
         Initialize
 
@@ -31,9 +31,10 @@ class GenerateBarcodeWindow():
         self.barcode_stack = barcode_stack
 
         # Initialize the window
-        self.window = ThemedTk(theme="equilux")
+        self.window = ThemedTk(theme=window_theme)
 
-        self.window.configure(bg='#464646')
+        if window_color is not None:
+            self.window.configure(bg=window_color)
         self.window.wm_title("Barcode Generator")
         self.window.iconbitmap(resource_path("kalmus_icon.ico"))
 
@@ -60,7 +61,7 @@ class GenerateBarcodeWindow():
         self.barcode_type_var.set("Color")
 
         # Dropdown menu for the barcode type selection
-        dropdown_bar_type = ttk.OptionMenu(self.window, self.barcode_type_var, "Color", "Brightness")
+        dropdown_bar_type = ttk.OptionMenu(self.window, self.barcode_type_var, "Color", "Color", "Brightness")
         dropdown_bar_type.grid(row=0, column=1)
 
         # Variable that stores the user's choice of frame sampling type
@@ -68,8 +69,8 @@ class GenerateBarcodeWindow():
         self.frame_type_var.set("Whole_frame")
 
         # Dropdown menu for the frame sampling type selection
-        dropdown_frame_type = ttk.OptionMenu(self.window, self.frame_type_var, "Whole_frame", "Low_contrast_region",
-                                                 "High_contrast_region", "Foreground", "Background")
+        dropdown_frame_type = ttk.OptionMenu(self.window, self.frame_type_var, "Whole_frame", "Whole_frame",
+                                             "Low_contrast_region", "High_contrast_region", "Foreground", "Background")
         dropdown_frame_type.grid(row=1, column=1)
 
         # Variable that stores the user's choice of color metric
@@ -77,8 +78,8 @@ class GenerateBarcodeWindow():
         self.color_metric_var.set("Average")
 
         # Dropdown menu for the color metric selection
-        dropdown_color_metric = ttk.OptionMenu(self.window, self.color_metric_var, "Average", "Median", "Mode",
-                                                   "Top-dominant", "Weighted-dominant", "Bright", "Brightest")
+        dropdown_color_metric = ttk.OptionMenu(self.window, self.color_metric_var, "Average", "Average", "Median",
+                                               "Mode", "Top-dominant", "Weighted-dominant", "Bright", "Brightest")
         dropdown_color_metric.grid(row=2, column=1)
 
         # Label prompt for the skip over specification
@@ -103,13 +104,13 @@ class GenerateBarcodeWindow():
 
         # Radio button for the Acquisition unit (Frame/Time) selection
         radio_frame = ttk.Radiobutton(self.window, text="Frame", variable=self.acquisition_option,
-                                          value="Frame",
-                                          command=self.frame_unit)
+                                      value="Frame",
+                                      command=self.frame_unit)
         radio_frame.grid(row=1, column=5, sticky=tkinter.W)
 
         radio_time = ttk.Radiobutton(self.window, text="Time", variable=self.acquisition_option,
-                                         value="Time",
-                                         command=self.time_unit)
+                                     value="Time",
+                                     command=self.time_unit)
         radio_time.grid(row=2, column=5, sticky=tkinter.W)
 
         # Text entry for the skip over specification
@@ -146,13 +147,13 @@ class GenerateBarcodeWindow():
 
         # Radio button for the letter box remove option
         radio_auto = ttk.Radiobutton(self.window, text="Auto", variable=self.letterbox_option,
-                                         value="Auto",
-                                         command=self.disable_setup)
+                                     value="Auto",
+                                     command=self.disable_setup)
         radio_auto.grid(row=5, column=0, sticky=tkinter.W)
 
         radio_manual = ttk.Radiobutton(self.window, text="Manual", variable=self.letterbox_option,
-                                           value="Manual",
-                                           command=self.enable_setup)
+                                       value="Manual",
+                                       command=self.enable_setup)
         radio_manual.grid(row=6, column=0, sticky=tkinter.W)
 
         # User defined letter box label prompt
@@ -186,8 +187,8 @@ class GenerateBarcodeWindow():
 
         # Checkbox for the user to choose whether save the frames or not during barcode generation
         self.checkbox_saved_frame = ttk.Checkbutton(self.window, text="Save Frames  ",
-                                                        variable=self.var_saved_frame,
-                                                        onvalue=1, offvalue=0, command=self.update_save_frame_entry)
+                                                    variable=self.var_saved_frame,
+                                                    onvalue=1, offvalue=0, command=self.update_save_frame_entry)
         self.checkbox_saved_frame.grid(row=7, column=0)
 
         # Label prompt for saving frame
@@ -207,8 +208,8 @@ class GenerateBarcodeWindow():
 
         # Checkbox for the user to choose whether to rescale the frames or not during the barcode generation
         self.checkbox_rescale_frame = ttk.Checkbutton(self.window, text="Rescale Frames", width=12,
-                                                          variable=self.var_rescale_frame,
-                                                          onvalue=1, offvalue=0, command=self.update_rescale_entry)
+                                                      variable=self.var_rescale_frame,
+                                                      onvalue=1, offvalue=0, command=self.update_rescale_entry)
         self.checkbox_rescale_frame.grid(row=7, column=3, sticky=tkinter.E)
 
         # Text entry for the rescale factor specification
@@ -223,8 +224,8 @@ class GenerateBarcodeWindow():
 
         # Checkbox for the user to choose whether use the multi-thread or not for barcode generation
         self.checkbox_multi_thread = ttk.Checkbutton(self.window, text="Multi-Thread:",
-                                                         variable=self.var_multi_thread,
-                                                         onvalue=1, offvalue=0, command=self.update_thread_entry)
+                                                     variable=self.var_multi_thread,
+                                                     onvalue=1, offvalue=0, command=self.update_thread_entry)
 
         self.checkbox_multi_thread.grid(row=8, column=0)
 
@@ -237,12 +238,12 @@ class GenerateBarcodeWindow():
 
         # Button to generate the barcode
         self.generate_button = ttk.Button(master=self.window, text="Generate Barcode",
-                                              command=self.generate_barcode_thread)
+                                          command=self.generate_barcode_thread)
         self.generate_button.grid(row=8, column=2, sticky=tkinter.W, rowspan=1, pady=5)
 
         # Button to specify the meta data of the generated barcode
         self.specify_data_button = ttk.Button(master=self.window, text="Specify Meta Data",
-                                                  command=self.specify_data)
+                                              command=self.specify_data)
         self.specify_data_button.grid(row=8, column=3, sticky=tkinter.W, rowspan=1, pady=5)
 
         self.window.protocol("WM_DELETE_WINDOW", self.quit)
@@ -514,8 +515,8 @@ class GenerateBarcodeWindow():
                 return
         elif self.letterbox_option.get() == "Auto":
             # try:
-                # If not, start the generation.
-                # The letter box will be automatically found during the generation process
+            # If not, start the generation.
+            # The letter box will be automatically found during the generation process
             self.barcode_generator.generate_barcode(video_filename, num_thread=multi_thread,
                                                     save_frames=save_frames,
                                                     rescale_frames_factor=rescale_factor,

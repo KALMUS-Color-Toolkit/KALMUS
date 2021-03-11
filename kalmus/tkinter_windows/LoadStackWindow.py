@@ -1,6 +1,8 @@
 """ LoadStackWindow Class """
 
 import tkinter
+import tkinter.ttk as ttk
+from ttkthemes import ThemedTk
 from kalmus.tkinter_windows.gui_utils import update_graph, resource_path
 import copy
 
@@ -10,7 +12,7 @@ class LoadStackWindow():
     LoadStackWindow Class
     GUI window for user to load the barcode from the memory into the main window of the kalmus
     """
-    def __init__(self, barcode_stack, barcode_1, barcode_2, axes, canvas):
+    def __init__(self, barcode_stack, barcode_1, barcode_2, axes, canvas, window_theme=None, window_color=None):
         """
         Initialize
 
@@ -27,7 +29,10 @@ class LoadStackWindow():
         self.barcode_2 = barcode_2
 
         # Initialize the window
-        self.window = tkinter.Tk()
+        self.window = ThemedTk(theme=window_theme)
+
+        if window_color is not None:
+            self.window.configure(bg=window_color)
         self.window.iconbitmap(resource_path("kalmus_icon.ico"))
         self.window.wm_title("Barcodes on Memory Stack")
 
@@ -40,7 +45,7 @@ class LoadStackWindow():
             self.listbox.insert(tkinter.END, barcode_names)
 
         # Button to load the barcode from the memory
-        self.button_load = tkinter.Button(master=self.window, text="Load Selected Barcode", command=self.load_stack)
+        self.button_load = ttk.Button(master=self.window, text="Load Selected Barcode", command=self.load_stack)
         self.button_load.grid(row=3, column=0, sticky=tkinter.W)
 
         # Option variable that stores the position which the new barcode from json will replace with
@@ -48,13 +53,12 @@ class LoadStackWindow():
         self.barcode_option.set("Barcode 1")
 
         # Radio buttons for the replaced barcode selection
-        radio_barcode_1 = tkinter.Radiobutton(self.window, text="Barcode 1", variable=self.barcode_option,
-                                              value="Barcode 1", anchor='w')
+        radio_barcode_1 = ttk.Radiobutton(self.window, text="Barcode 1", variable=self.barcode_option,
+                                              value="Barcode 1")
         radio_barcode_1.grid(row=1, column=0, sticky=tkinter.W)
-        radio_barcode_1.select()
 
-        radio_barcode_2 = tkinter.Radiobutton(self.window, text="Barcode 2", variable=self.barcode_option,
-                                              value="Barcode 2", anchor='w')
+        radio_barcode_2 = ttk.Radiobutton(self.window, text="Barcode 2", variable=self.barcode_option,
+                                              value="Barcode 2")
         radio_barcode_2.grid(row=2, column=0, sticky=tkinter.W)
 
     def load_stack(self):

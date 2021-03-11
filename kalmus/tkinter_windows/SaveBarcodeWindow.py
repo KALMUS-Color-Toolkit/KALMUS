@@ -1,6 +1,8 @@
 """ SaveBarcodeWindow Class """
 
 import tkinter
+import tkinter.ttk as ttk
+from ttkthemes import ThemedTk
 import tkinter.filedialog
 from tkinter.messagebox import showwarning, showinfo
 import os
@@ -13,7 +15,7 @@ class SaveBarcodeWindow():
     SaveBarcodeWindow Class
     GUI window for user to select the barcode to save into a json file that can be later loaded back to kalmus
     """
-    def __init__(self, barcode_stack):
+    def __init__(self, barcode_stack, window_theme=None, window_color=None):
         """
         Initialize
 
@@ -22,7 +24,10 @@ class SaveBarcodeWindow():
         self.barcode_stack = barcode_stack
 
         # Initialize the window
-        self.window = tkinter.Tk()
+        self.window = ThemedTk(theme=window_theme)
+
+        if window_color is not None:
+            self.window.configure(bg=window_color)
         self.window.iconbitmap(resource_path("kalmus_icon.ico"))
         self.window.wm_title("Save Barcode from Memory Stack")
 
@@ -35,19 +40,19 @@ class SaveBarcodeWindow():
             self.listbox.insert(tkinter.END, barcode_names)
 
         # Label prompt for the file name/path to the saved json file
-        filename_label = tkinter.Label(self.window, text="JSON file path: ")
+        filename_label = ttk.Label(self.window, text="JSON file path: ")
         filename_label.grid(row=1, column=0)
 
         # Text entry for user to specify the file name/path to the saved json file
-        self.filename_entry = tkinter.Entry(self.window, textvariable="", width=40)
+        self.filename_entry = ttk.Entry(self.window, textvariable="", width=40)
         self.filename_entry.grid(row=1, column=1, columnspan=1, sticky=tkinter.W)
 
         # Button to browse the location in a file manager
-        self.button_browse_folder = tkinter.Button(self.window, text="Browse", command=self.browse_folder)
+        self.button_browse_folder = ttk.Button(self.window, text="Browse", command=self.browse_folder)
         self.button_browse_folder.grid(row=1, column=2, sticky=tkinter.W)
 
         # Button to save the barcode into json file
-        self.button_save = tkinter.Button(master=self.window, text="Save Barcode", command=self.save_stack)
+        self.button_save = ttk.Button(master=self.window, text="Save Barcode", command=self.save_stack)
         self.button_save.grid(row=2, column=0, sticky=tkinter.W)
 
     def browse_folder(self):

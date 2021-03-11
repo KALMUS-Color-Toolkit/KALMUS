@@ -296,3 +296,29 @@ def resource_path(relative_path):
 
     # Return the path
     return os.path.join(base_path, relative_path)
+
+
+def get_gui_theme(theme="dark"):
+    if theme == "dark":
+        plot_theme = "black"
+        plot_color = "#5B6063"
+
+        sub_window_theme = "equilux"
+        sub_window_color = "#464646"
+
+        plot_dict = {'text.color': "white",
+                     'axes.labelcolor': "white",
+                     'axes.edgecolor': "white",
+                     'xtick.color': 'white',
+                     'ytick.color': 'white'}
+
+    if theme=="default":
+        plot_theme = None
+        plot_color = None
+
+        sub_window_theme = None
+        sub_window_color = None
+
+        plot_dict = {}
+
+    return plot_theme, plot_color, sub_window_theme, sub_window_color, plot_dict

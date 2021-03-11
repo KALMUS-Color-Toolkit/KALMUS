@@ -4,6 +4,8 @@ import tkinter
 import copy
 import cv2
 
+import tkinter.ttk as ttk
+from ttkthemes import ThemedTk
 from kalmus.tkinter_windows.gui_utils import update_graph, resource_path
 
 
@@ -12,7 +14,8 @@ class ReshapeBarcodeWindow():
     ReshapeBarcodeWindow Class
     GUI window for user to reshape the selected barcode into the desirable shape
     """
-    def __init__(self, barcode_1, barcode_2, axes, canvas):
+
+    def __init__(self, barcode_1, barcode_2, axes, canvas, window_theme=None, window_color=None):
         """
         Initialize
 
@@ -28,7 +31,10 @@ class ReshapeBarcodeWindow():
         self.canvas = canvas
 
         # Initialize the window
-        self.window = tkinter.Tk()
+        self.window = ThemedTk(theme=window_theme)
+
+        if window_color is not None:
+            self.window.configure(bg=window_color)
         self.window.wm_title("Reshape/Resize Barcode Config")
         self.window.iconbitmap(resource_path("kalmus_icon.ico"))
 
@@ -37,61 +43,57 @@ class ReshapeBarcodeWindow():
         self.config_option.set("Reshape")  # initialize
 
         # Prompt for the resize parameters specification
-        params_label = tkinter.Label(self.window, text="Config Params: ")
+        params_label = ttk.Label(self.window, text="Config Params: ")
         params_label.grid(row=0, column=0, columnspan=1, sticky=tkinter.W)
 
         # Label (text) prompt and entry for user to specify the resize parameters
-        column_length_label = tkinter.Label(self.window, text="Frames per Column: ")
+        column_length_label = ttk.Label(self.window, text="Frames per Column: ")
         column_length_label.grid(row=1, column=0, sticky=tkinter.W)
 
-        self.column_length_entry = tkinter.Entry(self.window, textvariable="-1", width=5)
+        self.column_length_entry = ttk.Entry(self.window, textvariable="-1", width=5)
         self.column_length_entry.grid(row=1, column=1, padx=15)
 
-        self.resize_x_label = tkinter.Label(self.window, text="Scale Width by (ratio):    ")
+        self.resize_x_label = ttk.Label(self.window, text="Scale Width by (ratio):    ")
         self.resize_x_label.grid(row=2, column=0, sticky=tkinter.W)
 
-        self.resize_x_entry = tkinter.Entry(self.window, textvariable="-2", width=5, state="disabled")
+        self.resize_x_entry = ttk.Entry(self.window, textvariable="-2", width=5, state="disabled")
         self.resize_x_entry.grid(row=2, column=1, padx=15)
 
-        self.resize_y_label = tkinter.Label(self.window, text="Scale Height by (ratio):    ")
+        self.resize_y_label = ttk.Label(self.window, text="Scale Height by (ratio):    ")
         self.resize_y_label.grid(row=3, column=0, sticky=tkinter.W)
 
-        self.resize_y_entry = tkinter.Entry(self.window, textvariable="-3", width=5, state="disabled")
+        self.resize_y_entry = ttk.Entry(self.window, textvariable="-3", width=5, state="disabled")
         self.resize_y_entry.grid(row=3, column=1, padx=15)
 
         # Label prompt for displaying the width and height of the currently selected barcode
-        self.size_label = tkinter.Label(self.window, text="Current Width = {:d}\nCurrent Height = {:d}"
-                                        .format(self.barcode_1.get_barcode().shape[1],
-                                                self.barcode_1.get_barcode().shape[0]))
+        self.size_label = ttk.Label(self.window, text="Current Width = {:d}\nCurrent Height = {:d}"
+                                    .format(self.barcode_1.get_barcode().shape[1],
+                                            self.barcode_1.get_barcode().shape[0]))
         self.size_label.grid(row=4, column=0, columnspan=1)
 
         # Button to process the resize
-        self.process_button = tkinter.Button(self.window, text="Process", command=self.reshape_resize_barcode)
+        self.process_button = ttk.Button(self.window, text="Process", command=self.reshape_resize_barcode)
         self.process_button.grid(row=4, column=2, sticky=tkinter.W)
 
         # Label prompt for the Resize type selection
-        config_label = tkinter.Label(self.window, text="Config options: ")
+        config_label = ttk.Label(self.window, text="Config options: ")
         config_label.grid(row=0, column=2, columnspan=1)
 
         # Radio button for selecting the resize type
-        radio_reshape = tkinter.Radiobutton(self.window, text="Reshape", variable=self.config_option,
-                                            value="Reshape", anchor='w',
-                                            command=self.reshape)
+        radio_reshape = ttk.Radiobutton(self.window, text="Reshape", variable=self.config_option,
+                                        value="Reshape", command=self.reshape)
         radio_reshape.grid(row=1, column=2, sticky=tkinter.W)
-        radio_reshape.select()
 
-        radio_scaling = tkinter.Radiobutton(self.window, text="Scaling", variable=self.config_option,
-                                            value="Scaling", anchor='w',
-                                            command=self.scale)
+        radio_scaling = ttk.Radiobutton(self.window, text="Scaling", variable=self.config_option,
+                                        value="Scaling", command=self.scale)
         radio_scaling.grid(row=2, column=2, sticky=tkinter.W)
 
-        radio_resize = tkinter.Radiobutton(self.window, text="Resize", variable=self.config_option,
-                                           value="Resize", anchor='w',
-                                           command=self.resize)
+        radio_resize = ttk.Radiobutton(self.window, text="Resize", variable=self.config_option,
+                                       value="Resize", command=self.resize)
         radio_resize.grid(row=3, column=2, sticky=tkinter.W)
 
         # Label prompt for selecting which barcode to resize
-        which_barcode_label = tkinter.Label(self.window, text="Barcode: ")
+        which_barcode_label = ttk.Label(self.window, text="Barcode: ")
         which_barcode_label.grid(row=0, column=3, columnspan=1)
 
         # Option variable
@@ -99,13 +101,12 @@ class ReshapeBarcodeWindow():
         self.barcode_option.set("Barcode 1")
 
         # Radio button for selecting which barcode to resize
-        radio_barcode_1 = tkinter.Radiobutton(self.window, text="Barcode 1", variable=self.barcode_option,
-                                              value="Barcode 1", command=self.update_size_label)
+        radio_barcode_1 = ttk.Radiobutton(self.window, text="Barcode 1", variable=self.barcode_option,
+                                          value="Barcode 1", command=self.update_size_label)
         radio_barcode_1.grid(row=1, column=3)
-        radio_barcode_1.select()
 
-        radio_barcode_2 = tkinter.Radiobutton(self.window, text="Barcode 2", variable=self.barcode_option,
-                                              value="Barcode 2", command=self.update_size_label)
+        radio_barcode_2 = ttk.Radiobutton(self.window, text="Barcode 2", variable=self.barcode_option,
+                                          value="Barcode 2", command=self.update_size_label)
         radio_barcode_2.grid(row=2, column=3)
 
     def update_size_label(self):

@@ -1,6 +1,8 @@
 """ StatsInfoWindow Class """
 
 import tkinter
+import tkinter.ttk as ttk
+from ttkthemes import ThemedTk
 
 from kalmus.tkinter_windows.gui_utils import get_comparison_result_text, resource_path
 
@@ -11,7 +13,8 @@ class StatsInfoWindow():
     Show the similarity scores between two barcodes using all comparing metrics
     The score are shown in text panel
     """
-    def __init__(self, barcode_1, barcode_2):
+
+    def __init__(self, barcode_1, barcode_2, window_theme=None, window_color=None):
         """
         Initialize the Window
 
@@ -22,7 +25,9 @@ class StatsInfoWindow():
         self.barcode_2 = barcode_2
 
         # Initialize the window
-        self.window = tkinter.Tk()
+        self.window = ThemedTk(theme=window_theme)
+        if window_color is not None:
+            self.window.configure(bg=window_color)
         self.window.wm_title("Barcodes Similarity Statistics")
         self.window.iconbitmap(resource_path("kalmus_icon.ico"))
 
@@ -30,6 +35,5 @@ class StatsInfoWindow():
         result_text = get_comparison_result_text(self.barcode_1, self.barcode_2)
 
         # Show the result in a Label (text panel)
-        self.info_label = tkinter.Label(self.window, text=result_text, width=35, bg='white', anchor='w',
-                                        justify=tkinter.LEFT)
+        self.info_label = ttk.Label(self.window, text=result_text, width=35, justify=tkinter.LEFT)
         self.info_label.grid(row=0, column=0, rowspan=8)

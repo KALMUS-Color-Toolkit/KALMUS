@@ -1,6 +1,8 @@
 """ SaveImageWindow Class """
 
 import tkinter
+import tkinter.ttk as ttk
+from ttkthemes import ThemedTk
 from tkinter.messagebox import showerror, showinfo
 import tkinter.filedialog
 import matplotlib.pyplot as plt
@@ -15,14 +17,18 @@ class SaveImageWindow():
     SaveImageWindow Class
     Save the barcode into the image
     """
-    def __init__(self, barcode_1, barcode_2):
+
+    def __init__(self, barcode_1, barcode_2, window_theme=None, window_color=None):
         """
         Initialize
         :param barcode_1: The barcode 1
         :param barcode_2: The barcode 2
         """
         # Initialize the window
-        self.window = tkinter.Tk()
+        self.window = ThemedTk(theme=window_theme)
+
+        if window_color is not None:
+            self.window.configure(bg=window_color)
         self.window.iconbitmap(resource_path("kalmus_icon.ico"))
         self.window.wm_title("Save Image")
 
@@ -30,7 +36,7 @@ class SaveImageWindow():
         self.barcode_2 = barcode_2
 
         # Label prompt for which barcode to save
-        which_barcode_label = tkinter.Label(self.window, text="Barcode: ")
+        which_barcode_label = ttk.Label(self.window, text="Barcode: ")
         which_barcode_label.grid(row=0, column=0, columnspan=1)
 
         # Barcode option variable
@@ -38,13 +44,12 @@ class SaveImageWindow():
         self.barcode_option.set("Barcode 1")
 
         # Radio button for which barcode to save
-        radio_barcode_1 = tkinter.Radiobutton(self.window, text="Barcode 1", variable=self.barcode_option,
-                                              value="Barcode 1", command=self.update_size_entry)
+        radio_barcode_1 = ttk.Radiobutton(self.window, text="Barcode 1", variable=self.barcode_option,
+                                          value="Barcode 1", command=self.update_size_entry)
         radio_barcode_1.grid(row=1, column=0)
-        radio_barcode_1.select()
 
-        radio_barcode_2 = tkinter.Radiobutton(self.window, text="Barcode 2", variable=self.barcode_option,
-                                              value="Barcode 2", command=self.update_size_entry)
+        radio_barcode_2 = ttk.Radiobutton(self.window, text="Barcode 2", variable=self.barcode_option,
+                                          value="Barcode 2", command=self.update_size_entry)
         radio_barcode_2.grid(row=2, column=0)
 
         # The width and height (in pixels) of the selected barcode
@@ -52,34 +57,34 @@ class SaveImageWindow():
         height = self.barcode_1.get_barcode().shape[0]
 
         # Resize the barcode into desirable size before saving
-        self.resize_x_label = tkinter.Label(self.window, text="Saved Width (pixels): ")
+        self.resize_x_label = ttk.Label(self.window, text="Saved Width (pixels): ")
         self.resize_x_label.grid(row=1, column=1, sticky=tkinter.E)
 
-        self.resize_x_entry = tkinter.Entry(self.window, textvariable=-2, width=5)
+        self.resize_x_entry = ttk.Entry(self.window, textvariable=-2, width=5)
         self.resize_x_entry.grid(row=1, column=2, padx=15, sticky=tkinter.W)
         self.resize_x_entry.insert(0, str(width))
 
-        self.resize_y_label = tkinter.Label(self.window, text="Saved Height (pixels): ")
+        self.resize_y_label = ttk.Label(self.window, text="Saved Height (pixels): ")
         self.resize_y_label.grid(row=2, column=1, sticky=tkinter.E)
 
-        self.resize_y_entry = tkinter.Entry(self.window, textvariable=-3, width=5)
+        self.resize_y_entry = ttk.Entry(self.window, textvariable=-3, width=5)
         self.resize_y_entry.grid(row=2, column=2, padx=15, sticky=tkinter.W)
         self.resize_y_entry.insert(0, str(height))
 
         # Label prompt for the file name (path) of the saved image
-        filename_label = tkinter.Label(self.window, text="Image file path: ")
+        filename_label = ttk.Label(self.window, text="Image file path: ")
         filename_label.grid(row=3, column=0)
 
         # Text entry for user to specify the path of the saved image
-        self.filename_entry = tkinter.Entry(self.window, textvariable="", width=40)
+        self.filename_entry = ttk.Entry(self.window, textvariable="", width=40)
         self.filename_entry.grid(row=3, column=1, columnspan=1, sticky=tkinter.W)
 
         # Button to browse the location in a file manager window
-        self.button_browse_folder = tkinter.Button(self.window, text="Browse", command=self.browse_folder)
+        self.button_browse_folder = ttk.Button(self.window, text="Browse", command=self.browse_folder)
         self.button_browse_folder.grid(row=3, column=2, sticky=tkinter.W)
 
         # Button to save the image into the given path using the given size
-        self.button_save_image = tkinter.Button(master=self.window, text="Save Barcode", command=self.save_image)
+        self.button_save_image = ttk.Button(master=self.window, text="Save Barcode", command=self.save_image)
         self.button_save_image.grid(row=4, column=0)
 
     def browse_folder(self):
@@ -88,8 +93,8 @@ class SaveImageWindow():
         """
         # Get the file name/path from the user input in the file manager
         filename = tkinter.filedialog.asksaveasfilename(initialdir=".", title="Save Image file",
-                                                    filetypes=(("JPEG files", "*.jpg"), ("PNG files", "*.png"),
-                                                               ("All files", "*.*")))
+                                                        filetypes=(("JPEG files", "*.jpg"), ("PNG files", "*.png"),
+                                                                   ("All files", "*.*")))
 
         # Update the file name/path to the file name entry
         self.filename_entry.delete(0, tkinter.END)

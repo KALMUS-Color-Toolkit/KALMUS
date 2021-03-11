@@ -12,7 +12,7 @@ from kalmus.tkinter_windows.SaveBarcodeWindow import SaveBarcodeWindow
 from kalmus.tkinter_windows.LoadStackWindow import LoadStackWindow
 from kalmus.tkinter_windows.LoadJsonWindow import LoadJsonWindow
 from kalmus.tkinter_windows.ReshapeBarcodeWindow import ReshapeBarcodeWindow
-from kalmus.tkinter_windows.gui_utils import paint_hue_hist, update_axes_title, resource_path
+from kalmus.tkinter_windows.gui_utils import paint_hue_hist, update_axes_title, resource_path, get_gui_theme
 from kalmus.tkinter_windows.plot_barcodes_windows.WhichBarcodeInspectWindow import WhichBarcodeInspectWindow
 from kalmus.tkinter_windows.StatsInfoWindow import StatsInfoWindow
 from kalmus.tkinter_windows.SaveImageWindow import SaveImageWindow
@@ -44,7 +44,7 @@ class MainWindow():
     Has all buttons to the subwindow of the kalmus software.
     """
 
-    def __init__(self, barcode_tmp, barcode_gn, figsize=(12, 5), dpi=100):
+    def __init__(self, barcode_tmp, barcode_gn, figsize=(12, 5), dpi=100, theme="dark"):
         """
         Initialize
 
@@ -67,12 +67,16 @@ class MainWindow():
         # Get the barcode generator
         self.barcode_gn = barcode_gn
 
-        # Initialize the window
-        self.root = ThemedTk(theme="black")
+        self.plot_theme, self.plot_color, self.sub_window_theme, self.sub_window_color, self.plot_dict = get_gui_theme(theme)
 
-        self.root.configure(bg='#5B6063')
+        # Initialize the window
+        self.root = ThemedTk(theme=self.plot_theme)
+
+        self.root.configure(bg=self.plot_color)
         self.root.wm_title("KALMUS Version 1.3.8")
         self.root.iconbitmap(resource_path("kalmus_icon.ico"))
+
+        matplotlib.rcParams.update(self.plot_dict)
 
         # Initialize the figure
         self.fig, self.ax = plt.subplots(2, 2, figsize=figsize, dpi=dpi,
@@ -115,6 +119,8 @@ class MainWindow():
         self.ax[1][1].set_xlabel("Color Hue (0 - 360)")
         self.ax[1][1].set_ylabel("Number of frames")
 
+        if self.plot_color is not None:
+            self.fig.patch.set_facecolor(self.plot_color)
         # Use tight layout
         plt.tight_layout()
 
@@ -139,42 +145,42 @@ class MainWindow():
 
         # Button to generate the barcode
         button_generate = ttk.Button(master=self.root, text="Generate Barcode",
-                                         command=self.generate_barcode)
+                                     command=self.generate_barcode)
         button_generate.grid(row=0, column=0, padx=3)
 
         # Button to load the barcode from existed json files
         button_load = ttk.Button(master=self.root, text="Load JSON",
-                                     command=self.load_json_barcode)
+                                 command=self.load_json_barcode)
         button_load.grid(row=1, column=0)
 
         # Button to load the barcode from the memory stack
         button_load_stack = ttk.Button(master=self.root, text="Load Memory",
-                                           command=self.load_stack_barcode)
+                                       command=self.load_stack_barcode)
         button_load_stack.grid(row=2, column=0)
 
         # Button to reshape the barcode displayed in the main window
         button_reshape_barcode = ttk.Button(master=self.root, text="Reshape Barcode",
-                                                command=self.reshape_barcode)
+                                            command=self.reshape_barcode)
         button_reshape_barcode.grid(row=3, column=0)
 
         # Button to save the barcode into json files
         button_save_json = ttk.Button(master=self.root, text="Save JSON",
-                                          command=self.save_barcode_on_stack)
+                                      command=self.save_barcode_on_stack)
         button_save_json.grid(row=4, column=0)
 
         # Button to save the barcode displayed into the image
         button_save_image = ttk.Button(master=self.root, text="Save Image",
-                                           command=self.save_image_from_display)
+                                       command=self.save_image_from_display)
         button_save_image.grid(row=5, column=0)
 
         # Button to inspect the barcode in details
         button_barcode = ttk.Button(master=self.root, text="Inspect Barcode",
-                                        command=self.show_barcode)
+                                    command=self.show_barcode)
         button_barcode.grid(row=6, column=0)
 
         # Button to show the statistics of the barcode
         button_stats_info = ttk.Button(master=self.root, text="Stats Info",
-                                           command=self.stats_info)
+                                       command=self.stats_info)
         button_stats_info.grid(row=7, column=0)
 
         # Button to quit the main window
@@ -206,7 +212,7 @@ class MainWindow():
 
         # Otherwise check if user want to quit the software
         quit_software = askokcancel("Quit KALMUS", "Are you sure you want to close the KALMUS?\n"
-                                                 "All unsaved results will be lost.")
+                                                   "All unsaved results will be lost.")
         # Quit if yes
         if quit_software:
             self.quit()
@@ -222,39 +228,44 @@ class MainWindow():
         """
         Instantiate the WhichBarcodeCheckMeta window
         """
-        WhichBarcodeCheckMeta(self.barcode_1, self.barcode_2, self.barcodes_stack)
+        WhichBarcodeCheckMeta(self.barcode_1, self.barcode_2, self.barcodes_stack,
+                              window_theme=self.sub_window_theme, window_color=self.sub_window_color)
 
     def show_barcode(self):
         """
         Instantiate the WhichBarcodeInspectWindow
         """
-        WhichBarcodeInspectWindow(self.barcode_1, self.barcode_2, dpi=100, figsize=(7, 4))
+        WhichBarcodeInspectWindow(self.barcode_1, self.barcode_2, dpi=100, figsize=(7, 4),
+                                  window_theme=self.sub_window_theme, window_color=self.sub_window_color)
 
     def load_json_barcode(self):
         """
         Instantiate the LoadJsonWindow
         """
         LoadJsonWindow(self.barcode_gn, self.barcode_1, self.barcode_2, self.ax,
-                       self.canvas, self.barcodes_stack)
+                       self.canvas, self.barcodes_stack,
+                       window_theme=self.sub_window_theme, window_color=self.sub_window_color)
 
     def load_stack_barcode(self):
         """
         Instantiate the LoadStackWindow
         """
         LoadStackWindow(self.barcodes_stack, self.barcode_1, self.barcode_2, self.ax,
-                        self.canvas)
+                        self.canvas, window_theme=self.sub_window_theme, window_color=self.sub_window_color)
 
     def reshape_barcode(self):
         """
         Instantiate the ReshapeBarcodeWindow
         """
-        ReshapeBarcodeWindow(self.barcode_1, self.barcode_2, self.ax, self.canvas)
+        ReshapeBarcodeWindow(self.barcode_1, self.barcode_2, self.ax, self.canvas,
+                             window_theme=self.sub_window_theme, window_color=self.sub_window_color)
 
     def stats_info(self):
         """
         Instantiate the StatsInfoWindow
         """
-        StatsInfoWindow(self.barcode_1, self.barcode_2)
+        StatsInfoWindow(self.barcode_1, self.barcode_2,
+                        window_theme=self.sub_window_theme, window_color=self.sub_window_color)
 
     def generate_barcode(self):
         """
@@ -262,7 +273,8 @@ class MainWindow():
         """
         if not self.generate_window_opened:
             self.generate_window_opened = True
-            GenerateBarcodeWindow(self.barcode_gn, self.barcodes_stack)
+            GenerateBarcodeWindow(self.barcode_gn, self.barcodes_stack,
+                                  window_theme=self.sub_window_theme, window_color=self.sub_window_color)
             self.generate_window_opened = False
         else:
             showinfo("Generate Barcode window is Opened", "Generate Barcode Window is already opened.")
@@ -271,13 +283,14 @@ class MainWindow():
         """
         Instantiate the SaveBarcodeWindow
         """
-        SaveBarcodeWindow(self.barcodes_stack)
+        SaveBarcodeWindow(self.barcodes_stack, window_theme=self.sub_window_theme, window_color=self.sub_window_color)
 
     def save_image_from_display(self):
         """
         Instantiate the SaveImageWindow
         """
-        SaveImageWindow(self.barcode_1, self.barcode_2)
+        SaveImageWindow(self.barcode_1, self.barcode_2,
+                        window_theme=self.sub_window_theme, window_color=self.sub_window_color)
 
     def time_pick(self, event):
         """
