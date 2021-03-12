@@ -25,8 +25,10 @@ def foreback_segmentation(frame):
     Segmented the input frame into two parts: foreground and background, using the GrabCut
 
     :param frame: Input frame
+    :type frame: numpy.ndarray
     :return: 1D image of the foreground part of the image, and 1D image of the background part of the image \
              Expected shape== Number of pixels x channels
+    :rtype: numpy.ndarray, numpy.ndarray
     """
     fore_frame, back_frame = Artist.grabcut_foreback_segmentation(frame, start_row=0, row_size=frame.shape[0] - 1,
                                                                   start_col=frame.shape[1] // 6,
@@ -36,20 +38,26 @@ def foreback_segmentation(frame):
 
 class Barcode:
     """
-    Barcode Class
+    Barcode Class. Base class for ColorBarcode and BrightnessBarcode
+
+    :param color_metric: The metric for computing the color of the frame
+    :type color_metric: str
+    :param frame_type: The type of frame sampling
+    :type frame_type: str
+    :param sampled_frame_rate: Frame sample rate: the frame sampled from every sampled_frame_rate.
+    :type sampled_frame_rate: int
+    :param skip_over: The number of frames to skip with at the beginning of the video
+    :type skip_over: int
+    :param total_frames: The total number of frames (computed) included in the barcode
+    :type total_frames: int
+    :param barcode_type: The type of the barcode
+    :type barcode_type: str
     """
 
     def __init__(self, color_metric, frame_type, sampled_frame_rate=1, skip_over=0, total_frames=10,
                  barcode_type=None):
         """
         Initialize the barcode with the given parameters
-
-        :param color_metric: The metric for computing the color of the frame
-        :param frame_type: The type of frame sampling
-        :param sampled_frame_rate: Frame sample rate: the frame sampled from every sampled_frame_rate.
-        :param skip_over: The number of frames to skip with at the beginning of the video
-        :param total_frames: The total number of frames (computed) included in the barcode
-        :param barcode_type: The type of the barcode
         """
         self.color_metric = color_metric
         self.frame_type = frame_type
@@ -87,6 +95,7 @@ class Barcode:
         Read in the video from the given path
 
         :param video_path_name: The path to the video file
+        :type video_path_name: str
         """
         self.video = cv2.VideoCapture(video_path_name)
 
@@ -111,6 +120,7 @@ class Barcode:
         Function run the get_letter_box_from_frames helper function by num_sample times and take the median of bounds
 
         :param num_sample: Number of times running the get_letter_box_from_frames
+        :type num_sample: int
         """
         possible_indexes = np.arange(self.film_length_in_frames // 6, self.film_length_in_frames * 5 // 6, 1)
         frame_indexes = np.random.choice(possible_indexes, num_sample, replace=True)
@@ -140,7 +150,9 @@ class Barcode:
         Remove the letter box from the frame using the known letter box bounds
 
         :param frame: Input original frame with letter box
+        :type frame: numpy.ndarray
         :return: Cropped frame without letter box
+        :rtype: numpy.ndarray
         """
         frame = frame[self.low_bound_ver: self.high_bound_ver, self.low_bound_hor: self.high_bound_hor, ...]
         return frame
@@ -150,7 +162,9 @@ class Barcode:
         Process the original frame by cropping out the letter box and resample frame using the given frame type
 
         :param frame: Input orignal frame
+        :type frame: numpy.ndarray
         :return: The processed and sampled frame
+        :rtype: numpy.ndarray
         """
         frame = self.remove_letter_box_from_frame(frame)
         if self.rescale_frames_in_generation:
@@ -182,6 +196,14 @@ class Barcode:
         return processed_frame
 
     def _resize_frame(self, frame):
+        """
+        resize the input frame with a factor of self.rescale_frame_factor
+
+        :param frame: Input frame
+        :type frame: numpy.ndarray
+        :return: resized frame
+        :rtype: numpy.ndarray
+        """
         frame = cv2.resize(frame, dsize=(0, 0), fx=self.rescale_frame_factor, fy=self.rescale_frame_factor,
                            interpolation=cv2.INTER_NEAREST)
         return frame
@@ -191,7 +213,9 @@ class Barcode:
         Compute the color of the input frame using the known color metric
 
         :param frame: Input frame
+        :type frame: numpy.ndarray
         :return: The color of the frame computed using the known color metric
+        :rtype: numpy.ndarray
         """
         if self.color_metric == "Average":
             color = Artist.compute_mean_color(frame)
@@ -225,6 +249,7 @@ class Barcode:
         Return the barcode. If not exist reshape the stored computed colors/brightness first to get the barcode
 
         :return: Return the barcode
+        :rtype: class:`kalmus.barcodes.Barcode.Barcode`
         """
         if self.barcode is None:
             self.reshape_barcode()
@@ -236,9 +261,13 @@ class Barcode:
         Manually set up the letter box bound of the film
 
         :param up_vertical_bound: The lower vertical bound
+        :type up_vertical_bound: int
         :param down_vertical_bound: The higher vertical bound
+        :type down_vertical_bound: int
         :param left_horizontal_bound: The left vertical bound
+        :type left_horizontal_bound: int
         :param right_horizontal_bound: The right vertical bound
+        :type right_horizontal_bound: int
         """
         self.enable_user_defined_letterbox()
         self.low_bound_ver = up_vertical_bound
@@ -259,6 +288,12 @@ class Barcode:
         self.find_film_letterbox()
 
     def enable_rescale_frames_in_generation(self, rescale_factor=1):
+        """
+        Rescale frames with a factor of rescale_factor for all frames processed in barcode generation
+
+        :param rescale_factor: rescale factor
+        :type rescale_factor: float
+        """
         assert rescale_factor > 0, "Rescale factor must be Positive"
         self.rescale_frames_in_generation = True
         self.rescale_frame_factor = np.sqrt(rescale_factor)
@@ -268,7 +303,9 @@ class Barcode:
         Add the meta information that describes the barcode
 
         :param key: The key for the meta information
+        :type key: str
         :param value: The value stored in that key
+        :type value: str
         """
         assert key is not None, "The key for the adding data cannot be None"
         if self.meta_data is None:
@@ -282,6 +319,7 @@ class Barcode:
         Once the barcode is generated, this attribute should not be changed.
 
         :param sampled_rate: Save 1 frame every sampled_rate seconds
+        :type sampled_rate: float
         """
         self.save_frames_in_generation = True
         self.saved_frames = []
@@ -320,8 +358,11 @@ class Barcode:
         This functions should only be invoked during the generation process.
 
         :param cur_used_frame: How many frames have been read in
+        :type cur_used_frame: int
         :param frame: Current frame (original unprocessed frame)
+        :type frame: numpy.ndarray
         :param frame_arr: Array that stored the saved frames
+        :type frame_arr: list
         """
         if cur_used_frame % self.saved_frames_sampled_rate == 0:
             frame = self.remove_letter_box_from_frame(frame)
@@ -336,6 +377,7 @@ class Barcode:
         Save the barcode into the json file
 
         :param filename: The name of the saved json file
+        :type filename: str
         """
         if self.barcode is None:
             self.reshape_barcode()
@@ -367,19 +409,25 @@ class Barcode:
 class ColorBarcode(Barcode):
     """
     Color barcode
+
+    :param color_metric: The metric for computing the color of the frame
+    :type color_metric: str
+    :param frame_type: The type of frame sampling
+    :type frame_type: str
+    :param sampled_frame_rate: Frame sample rate: the frame sampled from every sampled_frame_rate.
+    :type sampled_frame_rate: int
+    :param skip_over: The number of frames to skip with at the beginning of the video
+    :type skip_over: int
+    :param total_frames: The total number of frames (computed) included in the barcode
+    :type total_frames: int
+    :param barcode_type: The type of the barcode
+    :type barcode_type: str
     """
 
     def __init__(self, color_metric, frame_type, sampled_frame_rate=1, skip_over=0, total_frames=10,
                  barcode_type="Color"):
         """
         Initialize the barcode with the given parameters
-
-        :param color_metric: The metric for computing the color of the frame
-        :param frame_type: The type of frame sampling
-        :param sampled_frame_rate: Frame sample rate: the frame sampled from every sampled_frame_rate.
-        :param skip_over: The number of frames to skip with at the beginning of the video
-        :param total_frames: The total number of frames (computed) included in the barcode
-        :param barcode_type: The type of the barcode
         """
         super().__init__(color_metric, frame_type, sampled_frame_rate, skip_over, total_frames, barcode_type)
         self.colors = None
@@ -389,6 +437,7 @@ class ColorBarcode(Barcode):
         Collect the colors of frames from the video
 
         :param video_path_name: The path to the video file
+        :type video_path_name: str
         """
         self.read_video(video_path_name)
 
@@ -428,7 +477,9 @@ class ColorBarcode(Barcode):
         Collect the color of the input video using Multi-thread method
 
         :param video_path_name: The path to the input video
+        :type video_path_name: str
         :param num_thread: Number of threads to collect the brightness
+        :type num_thread: int
         """
         # Correct the total frames temporarily for the multi-thread generation in order to
         # be according with the definition of total frames in single thread generation
@@ -488,11 +539,17 @@ class ColorBarcode(Barcode):
         Collect the colors from the video using the multi-threads
 
         :param video: The video object
+        :type video: class:`cv2.VideoCapture`
         :param start_point: Start point for collecting the colors
+        :type start_point: int
         :param num_frames: The number of frames to collect
+        :type num_frames: int
         :param results: The placeholder for saving the results
+        :type results: list
         :param tid: The id of the thread
+        :type tid: int
         :param frame_saved: The placeholder for the saved frames
+        :type frame_saved: list
         """
         assert self.video is not None, "No video is read in to the barcode for analysis."
         cur_frame_idx = start_point
@@ -530,6 +587,7 @@ class ColorBarcode(Barcode):
         Reshape the barcode (2 dimensional with 3 channels)
 
         :param frames_per_column: Number of frames per column in the reshaped barcode
+        :type frames_per_column: int
         """
         if len(self.colors) % frames_per_column == 0:
             self.barcode = self.colors.reshape(frames_per_column, -1, self.colors.shape[-1], order='F')
@@ -543,20 +601,26 @@ class ColorBarcode(Barcode):
 
 class BrightnessBarcode(Barcode):
     """
-    Brightness Barcode Class
+    Brightness Barcode Class.
+
+    :param color_metric: The metric for computing the color of the frame
+    :type color_metric: str
+    :param frame_type: The type of frame sampling
+    :type frame_type: str
+    :param sampled_frame_rate: Frame sample rate: the frame sampled from every sampled_frame_rate.
+    :type sampled_frame_rate: int
+    :param skip_over: The number of frames to skip with at the beginning of the video
+    :type skip_over: int
+    :param total_frames: The total number of frames (computed) included in the barcode
+    :type total_frames: int
+    :param barcode_type: The type of the barcode
+    :type barcode_type: str
     """
 
     def __init__(self, color_metric, frame_type, sampled_frame_rate=1, skip_over=0, total_frames=10,
                  barcode_type="Brightness"):
         """
         Initialize the barcode with the given parameters
-
-        :param color_metric: The metric for computing the color of the frame
-        :param frame_type: The type of frame sampling
-        :param sampled_frame_rate: Frame sample rate: the frame sampled from every sampled_frame_rate.
-        :param skip_over: The number of frames to skip with at the beginning of the video
-        :param total_frames: The total number of frames (computed) included in the barcode
-        :param barcode_type: The type of the barcode
         """
         super().__init__(color_metric, frame_type, sampled_frame_rate, skip_over, total_frames, barcode_type)
         self.brightness = None
@@ -566,6 +630,7 @@ class BrightnessBarcode(Barcode):
         Collect the brightness from the input video
 
         :param video_path_name: The path to the video
+        :type video_path_name: str
         """
         self.read_video(video_path_name)
 
@@ -612,7 +677,9 @@ class BrightnessBarcode(Barcode):
         Collect the brightness of the input video using Multi-thread method
 
         :param video_path_name: The path to the input video
+        :type video_path_name: str
         :param num_thread: Number of threads to collect the brightness
+        :type num_thread: int
         """
         # Correct the total frames temporarily for the multi-thread generation in order to
         # be according with the definition of total frames in single thread generation
@@ -672,11 +739,17 @@ class BrightnessBarcode(Barcode):
         Collect the brightness from the video using the multi-threads
 
         :param video: The video object
+        :type video: class:`cv2.VideoCapture`
         :param start_point: Start point for collecting the colors
+        :type start_point: int
         :param num_frames: The number of frames to collect
+        :type num_frames: int
         :param results: The placeholder for saving the results
+        :type results: list
         :param tid: The id of the thread
+        :type tid: int
         :param frame_saved: The placeholder for the saved frames
+        :type frame_saved: list
         """
         assert self.video is not None, "No video is read in to the barcode for analysis."
         cur_frame_idx = start_point
@@ -721,6 +794,7 @@ class BrightnessBarcode(Barcode):
         Reshape the brightness barcode (2 dimensional with 1 channel)
 
         :param frames_per_column: Number of frames per column in the reshaped barcode
+        :type frames_per_column: int
         """
         if len(self.brightness) % frames_per_column == 0:
             self.barcode = self.brightness.reshape(frames_per_column, -1, order='F')

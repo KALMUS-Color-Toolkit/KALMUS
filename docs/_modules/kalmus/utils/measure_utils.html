@@ -166,7 +166,7 @@
 <span class="kn">from</span> <span class="nn">skimage.metrics</span> <span class="k">import</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">structural_similarity</span>
 
 
-<div class="viewcode-block" id="nrmse_similarity"><a class="viewcode-back" href="../../../utils/measure_utils.html#kalmus.utils.measure_utils.nrmse_similarity">[docs]</a><span class="k">def</span> <span class="nf">nrmse_similarity</span><span class="p">(</span><span class="n">image_1</span><span class="p">,</span> <span class="n">image_2</span><span class="p">,</span> <span class="n">norm_mode</span><span class="o">=</span><span class="s2">&quot;Average norm&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="nrmse_similarity"><a class="viewcode-back" href="../../../utils/measure_utils.html#kalmus.utils.measure_utils.nrmse_similarity">[docs]</a><span class="k">def</span> <span class="nf">nrmse_similarity</span><span class="p">(</span><span class="n">image_1</span><span class="p">,</span> <span class="n">image_2</span><span class="p">,</span> <span class="n">norm_mode</span><span class="o">=</span><span class="s2">&quot;Min max&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Normalized root mean squared error (NRMSE).</span>
 
@@ -217,6 +217,10 @@
         <span class="n">score</span> <span class="o">=</span> <span class="n">structural_similarity</span><span class="p">(</span><span class="n">image_1</span><span class="p">,</span> <span class="n">image_2</span><span class="p">,</span> <span class="n">win_size</span><span class="o">=</span><span class="n">window_size</span><span class="p">,</span> <span class="n">multichannel</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">image_1</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
         <span class="n">score</span> <span class="o">=</span> <span class="n">structural_similarity</span><span class="p">(</span><span class="n">image_1</span><span class="p">,</span> <span class="n">image_2</span><span class="p">,</span> <span class="n">win_size</span><span class="o">=</span><span class="n">window_size</span><span class="p">,</span> <span class="n">multichannel</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Renormalize [-1, 1] score to [0, 1] range</span>
+    <span class="n">score</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">score</span> <span class="o">/=</span> <span class="mi">2</span>
 
     <span class="k">return</span> <span class="n">score</span></div>
 

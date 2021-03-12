@@ -180,6 +180,18 @@
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">kalmus.barcodes.BarcodeGenerator.</span></code><code class="sig-name descname"><span class="pre">BarcodeGenerator</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Whole_frame'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Average'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">barcode_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Color'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampled_frame_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_over</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_frames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/barcodes/BarcodeGenerator.html#BarcodeGenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.barcodes.BarcodeGenerator.BarcodeGenerator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Barcode Generator Class</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frame_type</strong> (<em>str</em>) -- The type of the frame sampling</p></li>
+<li><p><strong>color_metric</strong> (<em>str</em>) -- The metric of computing the frame color</p></li>
+<li><p><strong>barcode_type</strong> (<em>str</em>) -- The type of the generated barcode</p></li>
+<li><p><strong>sampled_frame_rate</strong> (<em>int</em>) -- The frame sample rate     (one frame will be sampled from every sampled_frame_rate frames)</p></li>
+<li><p><strong>skip_over</strong> (<em>int</em>) -- How many frames to skip with at the beginning of the input video</p></li>
+<li><p><strong>total_frames</strong> (<em>int</em>) -- Total number of frames that will be computed (included in the barcode/sampled frames)</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt id="kalmus.barcodes.BarcodeGenerator.BarcodeGenerator.generate_barcode">
 <code class="sig-name descname"><span class="pre">generate_barcode</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">video_file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_defined_letterbox</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">low_ver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">high_ver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left_hor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right_hor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_thread</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_frames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rescale_frames_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_frames_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/barcodes/BarcodeGenerator.html#BarcodeGenerator.generate_barcode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.barcodes.BarcodeGenerator.BarcodeGenerator.generate_barcode" title="Permalink to this definition">¶</a></dt>
@@ -187,15 +199,16 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>video_file_path</strong> -- The path to the video file</p></li>
-<li><p><strong>user_defined_letterbox</strong> -- Whether use the user defined the letterbox, or use the         automatically found letterbox</p></li>
-<li><p><strong>low_ver</strong> -- The lower vertical letterbox given by user</p></li>
-<li><p><strong>high_ver</strong> -- The higher vertical letterbox given by user</p></li>
-<li><p><strong>left_hor</strong> -- The left horizontal letterbox given by user</p></li>
-<li><p><strong>right_hor</strong> -- The right horizontal letterbox given by user</p></li>
-<li><p><strong>num_thread</strong> -- Number of thread for computation. None == Single thread. num_thread &gt; 1: multi-thread</p></li>
-<li><p><strong>save_frames</strong> -- Whether to save the frames during the barcode generation</p></li>
-<li><p><strong>rescale_frames_factor</strong> -- factor to rescale the input frames during the generation</p></li>
+<li><p><strong>video_file_path</strong> (<em>str</em>) -- The path to the video file</p></li>
+<li><p><strong>user_defined_letterbox</strong> (<em>bool</em>) -- Whether use the user defined the letterbox, or use the         automatically found letterbox</p></li>
+<li><p><strong>low_ver</strong> (<em>int</em>) -- The lower vertical letterbox given by user</p></li>
+<li><p><strong>high_ver</strong> (<em>int</em>) -- The higher vertical letterbox given by user</p></li>
+<li><p><strong>left_hor</strong> (<em>int</em>) -- The left horizontal letterbox given by user</p></li>
+<li><p><strong>right_hor</strong> (<em>int</em>) -- The right horizontal letterbox given by user</p></li>
+<li><p><strong>num_thread</strong> (<em>int</em>) -- Number of thread for computation. None == Single thread. num_thread &gt; 1: multi-thread</p></li>
+<li><p><strong>save_frames</strong> (<em>bool</em>) -- Whether to save the frames during the barcode generation</p></li>
+<li><p><strong>save_frames_rate</strong> (<em>float</em>) -- The period of seconds of one frame being saved. In other words, save 1 frame every         save_frame_rate seconds in the barcode generation</p></li>
+<li><p><strong>rescale_frames_factor</strong> (<em>float</em>) -- factor to rescale the input frames during the generation</p></li>
 </ul>
 </dd>
 </dl>
@@ -208,8 +221,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>json_file_path</strong> -- the path to the json file</p></li>
-<li><p><strong>barcode_type</strong> -- the type of the barcode saved in the json file</p></li>
+<li><p><strong>json_file_path</strong> (<em>str</em>) -- the path to the json file</p></li>
+<li><p><strong>barcode_type</strong> (<em>str</em>) -- the type of the barcode saved in the json file</p></li>
 </ul>
 </dd>
 </dl>
@@ -222,6 +235,9 @@
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The generated barcode</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>class:<cite>kalmus.barcodes.Barcode.ColorBarcode</cite> or class:<cite>kalmus.barcodes.Barcode.BrightnessBarcode</cite> object</p>
 </dd>
 </dl>
 </dd></dl>
@@ -241,12 +257,15 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>path_to_json</strong> -- Path to the json file</p></li>
-<li><p><strong>barcode_type</strong> -- Type of the barcode that stored in the json file</p></li>
+<li><p><strong>path_to_json</strong> (<em>str</em>) -- Path to the json file</p></li>
+<li><p><strong>barcode_type</strong> (<em>str</em>) -- Type of the barcode that stored in the json file</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The barcode built from the json file at given path</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>class:<cite>kalmus.barcodes.Barcode.ColorBarcode</cite> or class:<cite>kalmus.barcodes.Barcode.BrightnessBarcode object</cite></p>
 </dd>
 </dl>
 </dd></dl>

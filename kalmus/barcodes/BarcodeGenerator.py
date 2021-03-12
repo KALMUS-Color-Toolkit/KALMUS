@@ -21,8 +21,11 @@ def build_barcode_from_json(path_to_json, barcode_type="Color"):
     Helper function that build a barcode object from the attributes stored in a json file
 
     :param path_to_json: Path to the json file
+    :type path_to_json: str
     :param barcode_type: Type of the barcode that stored in the json file
+    :type barcode_type: str
     :return: The barcode built from the json file at given path
+    :rtype: class:`kalmus.barcodes.Barcode.ColorBarcode` or class:`kalmus.barcodes.Barcode.BrightnessBarcode object`
     """
     assert barcode_type in barcode_types, "Invalid barcode type. The available types of " \
                                           "the barcode are {:s}".format(str(barcode_types))
@@ -76,19 +79,25 @@ def build_barcode_from_json(path_to_json, barcode_type="Color"):
 class BarcodeGenerator():
     """
     Barcode Generator Class
+
+    :param frame_type: The type of the frame sampling
+    :type frame_type: str
+    :param color_metric: The metric of computing the frame color
+    :type color_metric: str
+    :param barcode_type: The type of the generated barcode
+    :type barcode_type: str
+    :param sampled_frame_rate: The frame sample rate \
+    (one frame will be sampled from every sampled_frame_rate frames)
+    :type sampled_frame_rate: int
+    :param skip_over: How many frames to skip with at the beginning of the input video
+    :type skip_over: int
+    :param total_frames: Total number of frames that will be computed (included in the barcode/sampled frames)
+    :type total_frames: int
     """
     def __init__(self, frame_type="Whole_frame", color_metric="Average", barcode_type="Color",
                  sampled_frame_rate=1, skip_over=0, total_frames=10):
         """
         Initialize the parameters for the barcode generator
-
-        :param frame_type: The type of the frame sampling
-        :param color_metric: The metric of computing the frame color
-        :param barcode_type: The type of the generated barcode
-        :param sampled_frame_rate: The frame sample rate \
-        (one frame will be sampled from every sampled_frame_rate frames)
-        :param skip_over: How many frames to skip with at the beginning of the input video
-        :param total_frames: Total number of frames that will be computed (included in the barcode/sampled frames)
         """
         assert frame_type in frame_types, "Invalid frame acquisition method. Five types of frame acquisition" \
                                           " methods are available including {:s}".format(str(frame_types))
@@ -127,15 +136,27 @@ class BarcodeGenerator():
         Generate the barcode
 
         :param video_file_path: The path to the video file
+        :type video_file_path: str
         :param user_defined_letterbox: Whether use the user defined the letterbox, or use the \
         automatically found letterbox
+        :type user_defined_letterbox: bool
         :param low_ver: The lower vertical letterbox given by user
+        :type low_ver: int
         :param high_ver: The higher vertical letterbox given by user
+        :type high_ver: int
         :param left_hor: The left horizontal letterbox given by user
+        :type left_hor: int
         :param right_hor: The right horizontal letterbox given by user
+        :type right_hor: int
         :param num_thread: Number of thread for computation. None == Single thread. num_thread > 1: multi-thread
+        :type num_thread: int
         :param save_frames: Whether to save the frames during the barcode generation
+        :type save_frames: bool
+        :param save_frames_rate: The period of seconds of one frame being saved. In other words, save 1 frame every \
+        save_frame_rate seconds in the barcode generation
+        :type save_frames_rate: float
         :param rescale_frames_factor: factor to rescale the input frames during the generation
+        :type rescale_frames_factor: float
         """
         self.instantiate_barcode_object()
         if user_defined_letterbox:
@@ -163,7 +184,9 @@ class BarcodeGenerator():
         Generate the barcode from a json file, which contain a dictionary representation of barcode object
 
         :param json_file_path: the path to the json file
+        :type json_file_path: str
         :param barcode_type: the type of the barcode saved in the json file
+        :type barcode_type: str
         """
         if barcode_type is None:
             barcode_type = self.barcode_type
@@ -174,6 +197,7 @@ class BarcodeGenerator():
         return the barcode object stored in the Barcode generator
 
         :return: The generated barcode
+        :rtype: class:`kalmus.barcodes.Barcode.ColorBarcode` or class:`kalmus.barcodes.Barcode.BrightnessBarcode` object
         """
         assert self.barcode is not None, "There is not a generated barcode"
         return self.barcode

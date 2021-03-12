@@ -181,7 +181,19 @@ BrightnessBarcode Class</p>
 <dt id="kalmus.barcodes.Barcode.Barcode">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">kalmus.barcodes.Barcode.</span></code><code class="sig-name descname"><span class="pre">Barcode</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color_metric</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampled_frame_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_over</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_frames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">barcode_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/barcodes/Barcode.html#Barcode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.barcodes.Barcode.Barcode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Barcode Class</p>
+<p>Barcode Class. Base class for ColorBarcode and BrightnessBarcode</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>color_metric</strong> (<em>str</em>) -- The metric for computing the color of the frame</p></li>
+<li><p><strong>frame_type</strong> (<em>str</em>) -- The type of frame sampling</p></li>
+<li><p><strong>sampled_frame_rate</strong> (<em>int</em>) -- Frame sample rate: the frame sampled from every sampled_frame_rate.</p></li>
+<li><p><strong>skip_over</strong> (<em>int</em>) -- The number of frames to skip with at the beginning of the video</p></li>
+<li><p><strong>total_frames</strong> (<em>int</em>) -- The total number of frames (computed) included in the barcode</p></li>
+<li><p><strong>barcode_type</strong> (<em>str</em>) -- The type of the barcode</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt id="kalmus.barcodes.Barcode.Barcode.add_meta_data">
 <code class="sig-name descname"><span class="pre">add_meta_data</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/barcodes/Barcode.html#Barcode.add_meta_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.barcodes.Barcode.Barcode.add_meta_data" title="Permalink to this definition">¶</a></dt>
@@ -189,8 +201,8 @@ BrightnessBarcode Class</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>key</strong> -- The key for the meta information</p></li>
-<li><p><strong>value</strong> -- The value stored in that key</p></li>
+<li><p><strong>key</strong> (<em>str</em>) -- The key for the meta information</p></li>
+<li><p><strong>value</strong> (<em>str</em>) -- The value stored in that key</p></li>
 </ul>
 </dd>
 </dl>
@@ -205,7 +217,13 @@ BrightnessBarcode Class</p>
 <dl class="py method">
 <dt id="kalmus.barcodes.Barcode.Barcode.enable_rescale_frames_in_generation">
 <code class="sig-name descname"><span class="pre">enable_rescale_frames_in_generation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rescale_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/barcodes/Barcode.html#Barcode.enable_rescale_frames_in_generation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.barcodes.Barcode.Barcode.enable_rescale_frames_in_generation" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Rescale frames with a factor of rescale_factor for all frames processed in barcode generation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rescale_factor</strong> (<em>float</em>) -- rescale factor</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="kalmus.barcodes.Barcode.Barcode.enable_save_frames">
@@ -215,7 +233,7 @@ This attribute, saved_frames_in_generation, should only be modified before the g
 Once the barcode is generated, this attribute should not be changed.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>sampled_rate</strong> -- Save 1 frame every sampled_rate seconds</p>
+<dd class="field-odd"><p><strong>sampled_rate</strong> (<em>float</em>) -- Save 1 frame every sampled_rate seconds</p>
 </dd>
 </dl>
 </dd></dl>
@@ -233,7 +251,7 @@ Once the barcode is generated, this attribute should not be changed.</p>
 Function run the get_letter_box_from_frames helper function by num_sample times and take the median of bounds</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>num_sample</strong> -- Number of times running the get_letter_box_from_frames</p>
+<dd class="field-odd"><p><strong>num_sample</strong> (<em>int</em>) -- Number of times running the get_letter_box_from_frames</p>
 </dd>
 </dl>
 </dd></dl>
@@ -246,6 +264,9 @@ Function run the get_letter_box_from_frames helper function by num_sample times 
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Return the barcode</p>
 </dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>class:<cite>kalmus.barcodes.Barcode.Barcode</cite></p>
+</dd>
 </dl>
 </dd></dl>
 
@@ -255,10 +276,13 @@ Function run the get_letter_box_from_frames helper function by num_sample times 
 <dd><p>Compute the color of the input frame using the known color metric</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>frame</strong> -- Input frame</p>
+<dd class="field-odd"><p><strong>frame</strong> (<em>numpy.ndarray</em>) -- Input frame</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The color of the frame computed using the known color metric</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
 </dd>
 </dl>
 </dd></dl>
@@ -269,10 +293,13 @@ Function run the get_letter_box_from_frames helper function by num_sample times 
 <dd><p>Process the original frame by cropping out the letter box and resample frame using the given frame type</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>frame</strong> -- Input orignal frame</p>
+<dd class="field-odd"><p><strong>frame</strong> (<em>numpy.ndarray</em>) -- Input orignal frame</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The processed and sampled frame</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
 </dd>
 </dl>
 </dd></dl>
@@ -283,7 +310,7 @@ Function run the get_letter_box_from_frames helper function by num_sample times 
 <dd><p>Read in the video from the given path</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>video_path_name</strong> -- The path to the video file</p>
+<dd class="field-odd"><p><strong>video_path_name</strong> (<em>str</em>) -- The path to the video file</p>
 </dd>
 </dl>
 </dd></dl>
@@ -294,10 +321,13 @@ Function run the get_letter_box_from_frames helper function by num_sample times 
 <dd><p>Remove the letter box from the frame using the known letter box bounds</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>frame</strong> -- Input original frame with letter box</p>
+<dd class="field-odd"><p><strong>frame</strong> (<em>numpy.ndarray</em>) -- Input original frame with letter box</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Cropped frame without letter box</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
 </dd>
 </dl>
 </dd></dl>
@@ -308,7 +338,7 @@ Function run the get_letter_box_from_frames helper function by num_sample times 
 <dd><p>Save the barcode into the json file</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>filename</strong> -- The name of the saved json file</p>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) -- The name of the saved json file</p>
 </dd>
 </dl>
 </dd></dl>
@@ -322,9 +352,9 @@ This functions should only be invoked during the generation process.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cur_used_frame</strong> -- How many frames have been read in</p></li>
-<li><p><strong>frame</strong> -- Current frame (original unprocessed frame)</p></li>
-<li><p><strong>frame_arr</strong> -- Array that stored the saved frames</p></li>
+<li><p><strong>cur_used_frame</strong> (<em>int</em>) -- How many frames have been read in</p></li>
+<li><p><strong>frame</strong> (<em>numpy.ndarray</em>) -- Current frame (original unprocessed frame)</p></li>
+<li><p><strong>frame_arr</strong> (<em>list</em>) -- Array that stored the saved frames</p></li>
 </ul>
 </dd>
 </dl>
@@ -337,10 +367,10 @@ This functions should only be invoked during the generation process.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>up_vertical_bound</strong> -- The lower vertical bound</p></li>
-<li><p><strong>down_vertical_bound</strong> -- The higher vertical bound</p></li>
-<li><p><strong>left_horizontal_bound</strong> -- The left vertical bound</p></li>
-<li><p><strong>right_horizontal_bound</strong> -- The right vertical bound</p></li>
+<li><p><strong>up_vertical_bound</strong> (<em>int</em>) -- The lower vertical bound</p></li>
+<li><p><strong>down_vertical_bound</strong> (<em>int</em>) -- The higher vertical bound</p></li>
+<li><p><strong>left_horizontal_bound</strong> (<em>int</em>) -- The left vertical bound</p></li>
+<li><p><strong>right_horizontal_bound</strong> (<em>int</em>) -- The right vertical bound</p></li>
 </ul>
 </dd>
 </dl>
@@ -352,14 +382,26 @@ This functions should only be invoked during the generation process.</p>
 <dt id="kalmus.barcodes.Barcode.BrightnessBarcode">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">kalmus.barcodes.Barcode.</span></code><code class="sig-name descname"><span class="pre">BrightnessBarcode</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color_metric</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampled_frame_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_over</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_frames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">barcode_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Brightness'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/barcodes/Barcode.html#BrightnessBarcode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.barcodes.Barcode.BrightnessBarcode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#kalmus.barcodes.Barcode.Barcode" title="kalmus.barcodes.Barcode.Barcode"><code class="xref py py-class docutils literal notranslate"><span class="pre">kalmus.barcodes.Barcode.Barcode</span></code></a></p>
-<p>Brightness Barcode Class</p>
+<p>Brightness Barcode Class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>color_metric</strong> (<em>str</em>) -- The metric for computing the color of the frame</p></li>
+<li><p><strong>frame_type</strong> (<em>str</em>) -- The type of frame sampling</p></li>
+<li><p><strong>sampled_frame_rate</strong> (<em>int</em>) -- Frame sample rate: the frame sampled from every sampled_frame_rate.</p></li>
+<li><p><strong>skip_over</strong> (<em>int</em>) -- The number of frames to skip with at the beginning of the video</p></li>
+<li><p><strong>total_frames</strong> (<em>int</em>) -- The total number of frames (computed) included in the barcode</p></li>
+<li><p><strong>barcode_type</strong> (<em>str</em>) -- The type of the barcode</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt id="kalmus.barcodes.Barcode.BrightnessBarcode.collect_brightness">
 <code class="sig-name descname"><span class="pre">collect_brightness</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">video_path_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/barcodes/Barcode.html#BrightnessBarcode.collect_brightness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.barcodes.Barcode.BrightnessBarcode.collect_brightness" title="Permalink to this definition">¶</a></dt>
 <dd><p>Collect the brightness from the input video</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>video_path_name</strong> -- The path to the video</p>
+<dd class="field-odd"><p><strong>video_path_name</strong> (<em>str</em>) -- The path to the video</p>
 </dd>
 </dl>
 </dd></dl>
@@ -371,8 +413,8 @@ This functions should only be invoked during the generation process.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>video_path_name</strong> -- The path to the input video</p></li>
-<li><p><strong>num_thread</strong> -- Number of threads to collect the brightness</p></li>
+<li><p><strong>video_path_name</strong> (<em>str</em>) -- The path to the input video</p></li>
+<li><p><strong>num_thread</strong> (<em>int</em>) -- Number of threads to collect the brightness</p></li>
 </ul>
 </dd>
 </dl>
@@ -384,7 +426,7 @@ This functions should only be invoked during the generation process.</p>
 <dd><p>Reshape the brightness barcode (2 dimensional with 1 channel)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>frames_per_column</strong> -- Number of frames per column in the reshaped barcode</p>
+<dd class="field-odd"><p><strong>frames_per_column</strong> (<em>int</em>) -- Number of frames per column in the reshaped barcode</p>
 </dd>
 </dl>
 </dd></dl>
@@ -396,12 +438,12 @@ This functions should only be invoked during the generation process.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>video</strong> -- The video object</p></li>
-<li><p><strong>start_point</strong> -- Start point for collecting the colors</p></li>
-<li><p><strong>num_frames</strong> -- The number of frames to collect</p></li>
-<li><p><strong>results</strong> -- The placeholder for saving the results</p></li>
-<li><p><strong>tid</strong> -- The id of the thread</p></li>
-<li><p><strong>frame_saved</strong> -- The placeholder for the saved frames</p></li>
+<li><p><strong>video</strong> (class:<cite>cv2.VideoCapture</cite>) -- The video object</p></li>
+<li><p><strong>start_point</strong> (<em>int</em>) -- Start point for collecting the colors</p></li>
+<li><p><strong>num_frames</strong> (<em>int</em>) -- The number of frames to collect</p></li>
+<li><p><strong>results</strong> (<em>list</em>) -- The placeholder for saving the results</p></li>
+<li><p><strong>tid</strong> (<em>int</em>) -- The id of the thread</p></li>
+<li><p><strong>frame_saved</strong> (<em>list</em>) -- The placeholder for the saved frames</p></li>
 </ul>
 </dd>
 </dl>
@@ -414,13 +456,25 @@ This functions should only be invoked during the generation process.</p>
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">kalmus.barcodes.Barcode.</span></code><code class="sig-name descname"><span class="pre">ColorBarcode</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color_metric</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampled_frame_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_over</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_frames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">barcode_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Color'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/barcodes/Barcode.html#ColorBarcode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.barcodes.Barcode.ColorBarcode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#kalmus.barcodes.Barcode.Barcode" title="kalmus.barcodes.Barcode.Barcode"><code class="xref py py-class docutils literal notranslate"><span class="pre">kalmus.barcodes.Barcode.Barcode</span></code></a></p>
 <p>Color barcode</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>color_metric</strong> (<em>str</em>) -- The metric for computing the color of the frame</p></li>
+<li><p><strong>frame_type</strong> (<em>str</em>) -- The type of frame sampling</p></li>
+<li><p><strong>sampled_frame_rate</strong> (<em>int</em>) -- Frame sample rate: the frame sampled from every sampled_frame_rate.</p></li>
+<li><p><strong>skip_over</strong> (<em>int</em>) -- The number of frames to skip with at the beginning of the video</p></li>
+<li><p><strong>total_frames</strong> (<em>int</em>) -- The total number of frames (computed) included in the barcode</p></li>
+<li><p><strong>barcode_type</strong> (<em>str</em>) -- The type of the barcode</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt id="kalmus.barcodes.Barcode.ColorBarcode.collect_colors">
 <code class="sig-name descname"><span class="pre">collect_colors</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">video_path_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/barcodes/Barcode.html#ColorBarcode.collect_colors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.barcodes.Barcode.ColorBarcode.collect_colors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Collect the colors of frames from the video</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>video_path_name</strong> -- The path to the video file</p>
+<dd class="field-odd"><p><strong>video_path_name</strong> (<em>str</em>) -- The path to the video file</p>
 </dd>
 </dl>
 </dd></dl>
@@ -432,8 +486,8 @@ This functions should only be invoked during the generation process.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>video_path_name</strong> -- The path to the input video</p></li>
-<li><p><strong>num_thread</strong> -- Number of threads to collect the brightness</p></li>
+<li><p><strong>video_path_name</strong> (<em>str</em>) -- The path to the input video</p></li>
+<li><p><strong>num_thread</strong> (<em>int</em>) -- Number of threads to collect the brightness</p></li>
 </ul>
 </dd>
 </dl>
@@ -445,7 +499,7 @@ This functions should only be invoked during the generation process.</p>
 <dd><p>Reshape the barcode (2 dimensional with 3 channels)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>frames_per_column</strong> -- Number of frames per column in the reshaped barcode</p>
+<dd class="field-odd"><p><strong>frames_per_column</strong> (<em>int</em>) -- Number of frames per column in the reshaped barcode</p>
 </dd>
 </dl>
 </dd></dl>
@@ -457,12 +511,12 @@ This functions should only be invoked during the generation process.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>video</strong> -- The video object</p></li>
-<li><p><strong>start_point</strong> -- Start point for collecting the colors</p></li>
-<li><p><strong>num_frames</strong> -- The number of frames to collect</p></li>
-<li><p><strong>results</strong> -- The placeholder for saving the results</p></li>
-<li><p><strong>tid</strong> -- The id of the thread</p></li>
-<li><p><strong>frame_saved</strong> -- The placeholder for the saved frames</p></li>
+<li><p><strong>video</strong> (class:<cite>cv2.VideoCapture</cite>) -- The video object</p></li>
+<li><p><strong>start_point</strong> (<em>int</em>) -- Start point for collecting the colors</p></li>
+<li><p><strong>num_frames</strong> (<em>int</em>) -- The number of frames to collect</p></li>
+<li><p><strong>results</strong> (<em>list</em>) -- The placeholder for saving the results</p></li>
+<li><p><strong>tid</strong> (<em>int</em>) -- The id of the thread</p></li>
+<li><p><strong>frame_saved</strong> (<em>list</em>) -- The placeholder for the saved frames</p></li>
 </ul>
 </dd>
 </dl>
@@ -477,10 +531,13 @@ This functions should only be invoked during the generation process.</p>
 Segmented the input frame into two parts: foreground and background, using the GrabCut</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>frame</strong> -- Input frame</p>
+<dd class="field-odd"><p><strong>frame</strong> (<em>numpy.ndarray</em>) -- Input frame</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>1D image of the foreground part of the image, and 1D image of the background part of the image              Expected shape== Number of pixels x channels</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray, numpy.ndarray</p>
 </dd>
 </dl>
 </dd></dl>
