@@ -159,9 +159,7 @@
             
   <h1>Source code for kalmus.barcodes.Barcode</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Barcode Class</span>
-<span class="sd">ColorBarcode Class</span>
-<span class="sd">BrightnessBarcode Class</span>
+<span class="sd">Barcode Classes</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">copy</span>
@@ -179,7 +177,7 @@
                  <span class="s2">&quot;Brightest&quot;</span><span class="p">,</span> <span class="s2">&quot;Bright&quot;</span><span class="p">]</span>
 
 
-<div class="viewcode-block" id="foreback_segmentation"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.foreback_segmentation">[docs]</a><span class="k">def</span> <span class="nf">foreback_segmentation</span><span class="p">(</span><span class="n">frame</span><span class="p">):</span>
+<div class="viewcode-block" id="foreback_segmentation"><a class="viewcode-back" href="../../../barcodes/BarcodeBase.html#kalmus.barcodes.Barcode.foreback_segmentation">[docs]</a><span class="k">def</span> <span class="nf">foreback_segmentation</span><span class="p">(</span><span class="n">frame</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Helper function</span>
 <span class="sd">    Segmented the input frame into two parts: foreground and background, using the GrabCut</span>
@@ -196,7 +194,7 @@
     <span class="k">return</span> <span class="n">fore_frame</span><span class="p">,</span> <span class="n">back_frame</span></div>
 
 
-<div class="viewcode-block" id="Barcode"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.Barcode">[docs]</a><span class="k">class</span> <span class="nc">Barcode</span><span class="p">:</span>
+<div class="viewcode-block" id="Barcode"><a class="viewcode-back" href="../../../barcodes/BarcodeBase.html#kalmus.barcodes.Barcode.Barcode">[docs]</a><span class="k">class</span> <span class="nc">Barcode</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Barcode Class. Base class for ColorBarcode and BrightnessBarcode</span>
 
@@ -250,7 +248,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">rescale_frames_in_generation</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rescale_frame_factor</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 
-<div class="viewcode-block" id="Barcode.read_video"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.Barcode.read_video">[docs]</a>    <span class="k">def</span> <span class="nf">read_video</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video_path_name</span><span class="p">):</span>
+<div class="viewcode-block" id="Barcode.read_video"><a class="viewcode-back" href="../../../barcodes/BarcodeBase.html#kalmus.barcodes.Barcode.Barcode.read_video">[docs]</a>    <span class="k">def</span> <span class="nf">read_video</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video_path_name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Read in the video from the given path</span>
 
@@ -274,7 +272,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_frames_in_generation</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_determine_save_frame_param</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Barcode.find_film_letterbox"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.Barcode.find_film_letterbox">[docs]</a>    <span class="k">def</span> <span class="nf">find_film_letterbox</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_sample</span><span class="o">=</span><span class="mi">30</span><span class="p">):</span>
+<div class="viewcode-block" id="Barcode.find_film_letterbox"><a class="viewcode-back" href="../../../barcodes/BarcodeBase.html#kalmus.barcodes.Barcode.Barcode.find_film_letterbox">[docs]</a>    <span class="k">def</span> <span class="nf">find_film_letterbox</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_sample</span><span class="o">=</span><span class="mi">30</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Automatically find the letter box bounds of the film.</span>
 <span class="sd">        Function run the get_letter_box_from_frames helper function by num_sample times and take the median of bounds</span>
@@ -305,7 +303,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">low_bound_hor</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">possible_low_bound_hor</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">high_bound_hor</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">possible_high_bound_hor</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Barcode.remove_letter_box_from_frame"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.Barcode.remove_letter_box_from_frame">[docs]</a>    <span class="k">def</span> <span class="nf">remove_letter_box_from_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
+<div class="viewcode-block" id="Barcode.remove_letter_box_from_frame"><a class="viewcode-back" href="../../../barcodes/BarcodeBase.html#kalmus.barcodes.Barcode.Barcode.remove_letter_box_from_frame">[docs]</a>    <span class="k">def</span> <span class="nf">remove_letter_box_from_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove the letter box from the frame using the known letter box bounds</span>
 
@@ -317,7 +315,7 @@
         <span class="n">frame</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">low_bound_ver</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">high_bound_ver</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">low_bound_hor</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">high_bound_hor</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">frame</span></div>
 
-<div class="viewcode-block" id="Barcode.process_frame"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.Barcode.process_frame">[docs]</a>    <span class="k">def</span> <span class="nf">process_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
+<div class="viewcode-block" id="Barcode.process_frame"><a class="viewcode-back" href="../../../barcodes/BarcodeBase.html#kalmus.barcodes.Barcode.Barcode.process_frame">[docs]</a>    <span class="k">def</span> <span class="nf">process_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Process the original frame by cropping out the letter box and resample frame using the given frame type</span>
 
@@ -368,7 +366,7 @@
                            <span class="n">interpolation</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">INTER_NEAREST</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">frame</span>
 
-<div class="viewcode-block" id="Barcode.get_color_from_frame"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.Barcode.get_color_from_frame">[docs]</a>    <span class="k">def</span> <span class="nf">get_color_from_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
+<div class="viewcode-block" id="Barcode.get_color_from_frame"><a class="viewcode-back" href="../../../barcodes/BarcodeBase.html#kalmus.barcodes.Barcode.Barcode.get_color_from_frame">[docs]</a>    <span class="k">def</span> <span class="nf">get_color_from_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compute the color of the input frame using the known color metric</span>
 
@@ -404,7 +402,7 @@
 
         <span class="k">return</span> <span class="n">color</span></div>
 
-<div class="viewcode-block" id="Barcode.get_barcode"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.Barcode.get_barcode">[docs]</a>    <span class="k">def</span> <span class="nf">get_barcode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Barcode.get_barcode"><a class="viewcode-back" href="../../../barcodes/BarcodeBase.html#kalmus.barcodes.Barcode.Barcode.get_barcode">[docs]</a>    <span class="k">def</span> <span class="nf">get_barcode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the barcode. If not exist reshape the stored computed colors/brightness first to get the barcode</span>
 
@@ -415,7 +413,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">reshape_barcode</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span></div>
 
-<div class="viewcode-block" id="Barcode.set_letterbox_bound"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.Barcode.set_letterbox_bound">[docs]</a>    <span class="k">def</span> <span class="nf">set_letterbox_bound</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">up_vertical_bound</span><span class="p">,</span> <span class="n">down_vertical_bound</span><span class="p">,</span>
+<div class="viewcode-block" id="Barcode.set_letterbox_bound"><a class="viewcode-back" href="../../../barcodes/BarcodeBase.html#kalmus.barcodes.Barcode.Barcode.set_letterbox_bound">[docs]</a>    <span class="k">def</span> <span class="nf">set_letterbox_bound</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">up_vertical_bound</span><span class="p">,</span> <span class="n">down_vertical_bound</span><span class="p">,</span>
                             <span class="n">left_horizontal_bound</span><span class="p">,</span> <span class="n">right_horizontal_bound</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Manually set up the letter box bound of the film</span>
@@ -435,19 +433,19 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">low_bound_hor</span> <span class="o">=</span> <span class="n">left_horizontal_bound</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">high_bound_hor</span> <span class="o">=</span> <span class="n">right_horizontal_bound</span></div>
 
-<div class="viewcode-block" id="Barcode.enable_user_defined_letterbox"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.Barcode.enable_user_defined_letterbox">[docs]</a>    <span class="k">def</span> <span class="nf">enable_user_defined_letterbox</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Barcode.enable_user_defined_letterbox"><a class="viewcode-back" href="../../../barcodes/BarcodeBase.html#kalmus.barcodes.Barcode.Barcode.enable_user_defined_letterbox">[docs]</a>    <span class="k">def</span> <span class="nf">enable_user_defined_letterbox</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Use the user defined letter box</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">user_defined_letterbox</span> <span class="o">=</span> <span class="kc">True</span></div>
 
-<div class="viewcode-block" id="Barcode.automatic_find_letterbox"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.Barcode.automatic_find_letterbox">[docs]</a>    <span class="k">def</span> <span class="nf">automatic_find_letterbox</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Barcode.automatic_find_letterbox"><a class="viewcode-back" href="../../../barcodes/BarcodeBase.html#kalmus.barcodes.Barcode.Barcode.automatic_find_letterbox">[docs]</a>    <span class="k">def</span> <span class="nf">automatic_find_letterbox</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Automatically find the letter box</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">find_film_letterbox</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Barcode.enable_rescale_frames_in_generation"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.Barcode.enable_rescale_frames_in_generation">[docs]</a>    <span class="k">def</span> <span class="nf">enable_rescale_frames_in_generation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rescale_factor</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="Barcode.enable_rescale_frames_in_generation"><a class="viewcode-back" href="../../../barcodes/BarcodeBase.html#kalmus.barcodes.Barcode.Barcode.enable_rescale_frames_in_generation">[docs]</a>    <span class="k">def</span> <span class="nf">enable_rescale_frames_in_generation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rescale_factor</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Rescale frames with a factor of rescale_factor for all frames processed in barcode generation</span>
 
@@ -458,7 +456,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">rescale_frames_in_generation</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rescale_frame_factor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">rescale_factor</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Barcode.add_meta_data"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.Barcode.add_meta_data">[docs]</a>    <span class="k">def</span> <span class="nf">add_meta_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<div class="viewcode-block" id="Barcode.add_meta_data"><a class="viewcode-back" href="../../../barcodes/BarcodeBase.html#kalmus.barcodes.Barcode.Barcode.add_meta_data">[docs]</a>    <span class="k">def</span> <span class="nf">add_meta_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add the meta information that describes the barcode</span>
 
@@ -472,7 +470,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
 
-<div class="viewcode-block" id="Barcode.enable_save_frames"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.Barcode.enable_save_frames">[docs]</a>    <span class="k">def</span> <span class="nf">enable_save_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sampled_rate</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+<div class="viewcode-block" id="Barcode.enable_save_frames"><a class="viewcode-back" href="../../../barcodes/BarcodeBase.html#kalmus.barcodes.Barcode.Barcode.enable_save_frames">[docs]</a>    <span class="k">def</span> <span class="nf">enable_save_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sampled_rate</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the save frame in the generation of barcode to be True.</span>
 <span class="sd">        This attribute, saved_frames_in_generation, should only be modified before the generation of barcode.</span>
@@ -511,7 +509,7 @@
         <span class="n">aspect_ratio</span> <span class="o">=</span> <span class="n">height</span> <span class="o">/</span> <span class="n">width</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">saved_frame_height</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">aspect_ratio</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Barcode.save_frames"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.Barcode.save_frames">[docs]</a>    <span class="k">def</span> <span class="nf">save_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cur_used_frame</span><span class="p">,</span> <span class="n">frame</span><span class="p">,</span> <span class="n">frame_arr</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Barcode.save_frames"><a class="viewcode-back" href="../../../barcodes/BarcodeBase.html#kalmus.barcodes.Barcode.Barcode.save_frames">[docs]</a>    <span class="k">def</span> <span class="nf">save_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cur_used_frame</span><span class="p">,</span> <span class="n">frame</span><span class="p">,</span> <span class="n">frame_arr</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Private method</span>
 <span class="sd">        Save the frame during the generation process.</span>
@@ -532,7 +530,7 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">saved_frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">resized_frame</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Barcode.save_as_json"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.Barcode.save_as_json">[docs]</a>    <span class="k">def</span> <span class="nf">save_as_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Barcode.save_as_json"><a class="viewcode-back" href="../../../barcodes/BarcodeBase.html#kalmus.barcodes.Barcode.Barcode.save_as_json">[docs]</a>    <span class="k">def</span> <span class="nf">save_as_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Save the barcode into the json file</span>
 
@@ -566,7 +564,7 @@
         <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div></div>
 
 
-<div class="viewcode-block" id="ColorBarcode"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.ColorBarcode">[docs]</a><span class="k">class</span> <span class="nc">ColorBarcode</span><span class="p">(</span><span class="n">Barcode</span><span class="p">):</span>
+<div class="viewcode-block" id="ColorBarcode"><a class="viewcode-back" href="../../../barcodes/ColorBarcode.html#kalmus.barcodes.Barcode.ColorBarcode">[docs]</a><span class="k">class</span> <span class="nc">ColorBarcode</span><span class="p">(</span><span class="n">Barcode</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Color barcode</span>
 
@@ -592,7 +590,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">color_metric</span><span class="p">,</span> <span class="n">frame_type</span><span class="p">,</span> <span class="n">sampled_frame_rate</span><span class="p">,</span> <span class="n">skip_over</span><span class="p">,</span> <span class="n">total_frames</span><span class="p">,</span> <span class="n">barcode_type</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">colors</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="ColorBarcode.collect_colors"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.ColorBarcode.collect_colors">[docs]</a>    <span class="k">def</span> <span class="nf">collect_colors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video_path_name</span><span class="p">):</span>
+<div class="viewcode-block" id="ColorBarcode.collect_colors"><a class="viewcode-back" href="../../../barcodes/ColorBarcode.html#kalmus.barcodes.Barcode.ColorBarcode.collect_colors">[docs]</a>    <span class="k">def</span> <span class="nf">collect_colors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video_path_name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Collect the colors of frames from the video</span>
 
@@ -632,7 +630,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_frames_in_generation</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">saved_frames</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">saved_frames</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ColorBarcode.multi_thread_collect_colors"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.ColorBarcode.multi_thread_collect_colors">[docs]</a>    <span class="k">def</span> <span class="nf">multi_thread_collect_colors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video_path_name</span><span class="p">,</span> <span class="n">num_thread</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+<div class="viewcode-block" id="ColorBarcode.multi_thread_collect_colors"><a class="viewcode-back" href="../../../barcodes/ColorBarcode.html#kalmus.barcodes.Barcode.ColorBarcode.multi_thread_collect_colors">[docs]</a>    <span class="k">def</span> <span class="nf">multi_thread_collect_colors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video_path_name</span><span class="p">,</span> <span class="n">num_thread</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Collect the color of the input video using Multi-thread method</span>
 
@@ -694,7 +692,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">saved_frames</span> <span class="o">+=</span> <span class="n">frame_arry</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">saved_frames</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">saved_frames</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ColorBarcode.thread_collect_color_start_to_end"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.ColorBarcode.thread_collect_color_start_to_end">[docs]</a>    <span class="k">def</span> <span class="nf">thread_collect_color_start_to_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video</span><span class="p">,</span> <span class="n">start_point</span><span class="p">,</span> <span class="n">num_frames</span><span class="p">,</span> <span class="n">results</span><span class="p">,</span> <span class="n">tid</span><span class="p">,</span> <span class="n">frame_saved</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="ColorBarcode.thread_collect_color_start_to_end"><a class="viewcode-back" href="../../../barcodes/ColorBarcode.html#kalmus.barcodes.Barcode.ColorBarcode.thread_collect_color_start_to_end">[docs]</a>    <span class="k">def</span> <span class="nf">thread_collect_color_start_to_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video</span><span class="p">,</span> <span class="n">start_point</span><span class="p">,</span> <span class="n">num_frames</span><span class="p">,</span> <span class="n">results</span><span class="p">,</span> <span class="n">tid</span><span class="p">,</span> <span class="n">frame_saved</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Collect the colors from the video using the multi-threads</span>
 
@@ -742,7 +740,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_frames_in_generation</span><span class="p">:</span>
             <span class="n">frame_saved</span><span class="p">[</span><span class="n">tid</span><span class="p">]</span> <span class="o">=</span> <span class="n">frame_sequence</span></div>
 
-<div class="viewcode-block" id="ColorBarcode.reshape_barcode"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.ColorBarcode.reshape_barcode">[docs]</a>    <span class="k">def</span> <span class="nf">reshape_barcode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frames_per_column</span><span class="o">=</span><span class="mi">160</span><span class="p">):</span>
+<div class="viewcode-block" id="ColorBarcode.reshape_barcode"><a class="viewcode-back" href="../../../barcodes/ColorBarcode.html#kalmus.barcodes.Barcode.ColorBarcode.reshape_barcode">[docs]</a>    <span class="k">def</span> <span class="nf">reshape_barcode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frames_per_column</span><span class="o">=</span><span class="mi">160</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reshape the barcode (2 dimensional with 3 channels)</span>
 
@@ -759,7 +757,7 @@
                                                                 <span class="bp">self</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;F&#39;</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="BrightnessBarcode"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.BrightnessBarcode">[docs]</a><span class="k">class</span> <span class="nc">BrightnessBarcode</span><span class="p">(</span><span class="n">Barcode</span><span class="p">):</span>
+<div class="viewcode-block" id="BrightnessBarcode"><a class="viewcode-back" href="../../../barcodes/BrightnessBarcode.html#kalmus.barcodes.Barcode.BrightnessBarcode">[docs]</a><span class="k">class</span> <span class="nc">BrightnessBarcode</span><span class="p">(</span><span class="n">Barcode</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Brightness Barcode Class.</span>
 
@@ -785,7 +783,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">color_metric</span><span class="p">,</span> <span class="n">frame_type</span><span class="p">,</span> <span class="n">sampled_frame_rate</span><span class="p">,</span> <span class="n">skip_over</span><span class="p">,</span> <span class="n">total_frames</span><span class="p">,</span> <span class="n">barcode_type</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">brightness</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="BrightnessBarcode.collect_brightness"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.BrightnessBarcode.collect_brightness">[docs]</a>    <span class="k">def</span> <span class="nf">collect_brightness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video_path_name</span><span class="p">):</span>
+<div class="viewcode-block" id="BrightnessBarcode.collect_brightness"><a class="viewcode-back" href="../../../barcodes/BrightnessBarcode.html#kalmus.barcodes.Barcode.BrightnessBarcode.collect_brightness">[docs]</a>    <span class="k">def</span> <span class="nf">collect_brightness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video_path_name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Collect the brightness from the input video</span>
 
@@ -832,7 +830,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_frames_in_generation</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">saved_frames</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">saved_frames</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="BrightnessBarcode.multi_thread_collect_brightness"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.BrightnessBarcode.multi_thread_collect_brightness">[docs]</a>    <span class="k">def</span> <span class="nf">multi_thread_collect_brightness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video_path_name</span><span class="p">,</span> <span class="n">num_thread</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+<div class="viewcode-block" id="BrightnessBarcode.multi_thread_collect_brightness"><a class="viewcode-back" href="../../../barcodes/BrightnessBarcode.html#kalmus.barcodes.Barcode.BrightnessBarcode.multi_thread_collect_brightness">[docs]</a>    <span class="k">def</span> <span class="nf">multi_thread_collect_brightness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video_path_name</span><span class="p">,</span> <span class="n">num_thread</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Collect the brightness of the input video using Multi-thread method</span>
 
@@ -894,7 +892,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">saved_frames</span> <span class="o">+=</span> <span class="n">frame_arry</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">saved_frames</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">saved_frames</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="BrightnessBarcode.thread_collect_brightness_start_to_end"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.BrightnessBarcode.thread_collect_brightness_start_to_end">[docs]</a>    <span class="k">def</span> <span class="nf">thread_collect_brightness_start_to_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video</span><span class="p">,</span> <span class="n">start_point</span><span class="p">,</span> <span class="n">num_frames</span><span class="p">,</span> <span class="n">results</span><span class="p">,</span> <span class="n">tid</span><span class="p">,</span> <span class="n">frame_saved</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="BrightnessBarcode.thread_collect_brightness_start_to_end"><a class="viewcode-back" href="../../../barcodes/BrightnessBarcode.html#kalmus.barcodes.Barcode.BrightnessBarcode.thread_collect_brightness_start_to_end">[docs]</a>    <span class="k">def</span> <span class="nf">thread_collect_brightness_start_to_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video</span><span class="p">,</span> <span class="n">start_point</span><span class="p">,</span> <span class="n">num_frames</span><span class="p">,</span> <span class="n">results</span><span class="p">,</span> <span class="n">tid</span><span class="p">,</span> <span class="n">frame_saved</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Collect the brightness from the video using the multi-threads</span>
 
@@ -949,7 +947,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_frames_in_generation</span><span class="p">:</span>
             <span class="n">frame_saved</span><span class="p">[</span><span class="n">tid</span><span class="p">]</span> <span class="o">=</span> <span class="n">frame_sequence</span></div>
 
-<div class="viewcode-block" id="BrightnessBarcode.reshape_barcode"><a class="viewcode-back" href="../../../barcodes/Barcodes.html#kalmus.barcodes.Barcode.BrightnessBarcode.reshape_barcode">[docs]</a>    <span class="k">def</span> <span class="nf">reshape_barcode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frames_per_column</span><span class="o">=</span><span class="mi">160</span><span class="p">):</span>
+<div class="viewcode-block" id="BrightnessBarcode.reshape_barcode"><a class="viewcode-back" href="../../../barcodes/BrightnessBarcode.html#kalmus.barcodes.Barcode.BrightnessBarcode.reshape_barcode">[docs]</a>    <span class="k">def</span> <span class="nf">reshape_barcode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frames_per_column</span><span class="o">=</span><span class="mi">160</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reshape the brightness barcode (2 dimensional with 1 channel)</span>
 

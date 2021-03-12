@@ -1,7 +1,5 @@
 """
-Barcode Class
-ColorBarcode Class
-BrightnessBarcode Class
+Barcode Classes
 """
 
 import copy

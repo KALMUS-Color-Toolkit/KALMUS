@@ -6,7 +6,9 @@ Barcode Classes
 .. toctree::
    :maxdepth: 4
 
-   barcodes/Barcodes
+   barcodes/BarcodeBase
+   barcodes/ColorBarcode
+   barcodes/BrightnessBarcode
    barcodes/BarcodeGenerator
 
 Utils

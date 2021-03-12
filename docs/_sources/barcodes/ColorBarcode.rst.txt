@@ -1,0 +1,8 @@
+ColorBarcode Class
+*************************
+
+.. automodule:: kalmus.barcodes.Barcode
+    :members: ColorBarcode
+    :undoc-members:
+    :show-inheritance:
+    :noindex:

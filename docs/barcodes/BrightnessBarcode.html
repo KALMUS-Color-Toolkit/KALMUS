@@ -1,0 +1,303 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="python" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>BrightnessBarcode Class &mdash; KALMUS 1.3.8 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="BarcodeGenerator Class" href="BarcodeGenerator.html" />
+    <link rel="prev" title="ColorBarcode Class" href="ColorBarcode.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> KALMUS
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.3.8
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../kalmus.html">API Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../kalmus.html#barcode-classes">Barcode Classes</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="BarcodeBase.html">Barcode Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ColorBarcode.html">ColorBarcode Class</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">BrightnessBarcode Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="BarcodeGenerator.html">BarcodeGenerator Class</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../kalmus.html#utils">Utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../kalmus.html#ui-window-classes">UI Window Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../update_log.html">KALMUS Update Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../acknowledge.html">Acknowledgement</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">KALMUS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../kalmus.html">KALMUS Color Toolkit (KALMUS): API Documentation</a> &raquo;</li>
+        
+      <li>BrightnessBarcode Class</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/barcodes/BrightnessBarcode.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="brightnessbarcode-class">
+<h1>BrightnessBarcode Class<a class="headerlink" href="#brightnessbarcode-class" title="Permalink to this headline">¶</a></h1>
+<p>Barcode Classes</p>
+<dl class="py class">
+<dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">kalmus.barcodes.Barcode.</span></code><code class="sig-name descname"><span class="pre">BrightnessBarcode</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color_metric</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampled_frame_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_over</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_frames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">barcode_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Brightness'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/barcodes/Barcode.html#BrightnessBarcode"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Bases: <a class="reference internal" href="BarcodeBase.html#kalmus.barcodes.Barcode.Barcode" title="kalmus.barcodes.Barcode.Barcode"><code class="xref py py-class docutils literal notranslate"><span class="pre">kalmus.barcodes.Barcode.Barcode</span></code></a></p>
+<p>Brightness Barcode Class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>color_metric</strong> (<em>str</em>) -- The metric for computing the color of the frame</p></li>
+<li><p><strong>frame_type</strong> (<em>str</em>) -- The type of frame sampling</p></li>
+<li><p><strong>sampled_frame_rate</strong> (<em>int</em>) -- Frame sample rate: the frame sampled from every sampled_frame_rate.</p></li>
+<li><p><strong>skip_over</strong> (<em>int</em>) -- The number of frames to skip with at the beginning of the video</p></li>
+<li><p><strong>total_frames</strong> (<em>int</em>) -- The total number of frames (computed) included in the barcode</p></li>
+<li><p><strong>barcode_type</strong> (<em>str</em>) -- The type of the barcode</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt>
+<code class="sig-name descname"><span class="pre">collect_brightness</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">video_path_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/barcodes/Barcode.html#BrightnessBarcode.collect_brightness"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Collect the brightness from the input video</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>video_path_name</strong> (<em>str</em>) -- The path to the video</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt>
+<code class="sig-name descname"><span class="pre">multi_thread_collect_brightness</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">video_path_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_thread</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/barcodes/Barcode.html#BrightnessBarcode.multi_thread_collect_brightness"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Collect the brightness of the input video using Multi-thread method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>video_path_name</strong> (<em>str</em>) -- The path to the input video</p></li>
+<li><p><strong>num_thread</strong> (<em>int</em>) -- Number of threads to collect the brightness</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt>
+<code class="sig-name descname"><span class="pre">reshape_barcode</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frames_per_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">160</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/barcodes/Barcode.html#BrightnessBarcode.reshape_barcode"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Reshape the brightness barcode (2 dimensional with 1 channel)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>frames_per_column</strong> (<em>int</em>) -- Number of frames per column in the reshaped barcode</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt>
+<code class="sig-name descname"><span class="pre">thread_collect_brightness_start_to_end</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">video</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_frames</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_saved</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/barcodes/Barcode.html#BrightnessBarcode.thread_collect_brightness_start_to_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Collect the brightness from the video using the multi-threads</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>video</strong> (class:<cite>cv2.VideoCapture</cite>) -- The video object</p></li>
+<li><p><strong>start_point</strong> (<em>int</em>) -- Start point for collecting the colors</p></li>
+<li><p><strong>num_frames</strong> (<em>int</em>) -- The number of frames to collect</p></li>
+<li><p><strong>results</strong> (<em>list</em>) -- The placeholder for saving the results</p></li>
+<li><p><strong>tid</strong> (<em>int</em>) -- The id of the thread</p></li>
+<li><p><strong>frame_saved</strong> (<em>list</em>) -- The placeholder for the saved frames</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="BarcodeGenerator.html" class="btn btn-neutral float-right" title="BarcodeGenerator Class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="ColorBarcode.html" class="btn btn-neutral float-left" title="ColorBarcode Class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Yida Chen, Eric Faden, and Nathan Ryan.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
