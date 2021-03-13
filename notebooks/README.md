@@ -26,5 +26,5 @@ through the examples in notebooks!
 barcode generation.
 - Notebook Guide for how to interact with [Graphic User Interface](user_guide_for_kalmus_gui.ipynb)
 - Notebook Guide for how to interact with [Application Programming Interface](user_guide_for_kalmus_api.ipynb)
-- Markdown Guide for how to interact with [Command-line Interface](USAGE_COMMAND_LINE_UI.md)
 - Notebook Guide for [Advanced usage](advanced_gui_for_kalmus_api.ipynb) of Application Programming Interface (how to create your own Barcode Visualization)
+- Markdown Guide for how to interact with [Command-line Interface](USAGE_COMMAND_LINE_UI.md)
