@@ -104,5 +104,5 @@ Center for their support on this project. The project is released under the open
 
 # Update Log
 
-The full update log (from [v1.3.0](https://pypi.org/project/kalmus/1.3.0/) to [v1.3.7](https://pypi.org/project/kalmus/)) 
+The full update log (from [v1.3.0](https://pypi.org/project/kalmus/1.3.0/) to [v1.3.8](https://pypi.org/project/kalmus/)) 
 is now available on [https://kalmus-color-toolkit.github.io/KALMUS/update_log.html](https://kalmus-color-toolkit.github.io/KALMUS/update_log.html)
