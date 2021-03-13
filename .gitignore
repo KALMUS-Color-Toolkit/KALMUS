@@ -18,6 +18,7 @@ coverage.xml
 
 _discarded
 notebooks/under_constructed_notebooks
+notebooks/notebook_example_data/CHI_1_color.avi
 
 /KALMUS_version0.1/.idea
 /KALMUS_version0.1/add_data.txt
@@ -34,3 +35,4 @@ requirements.txt
 
 kalmus.spec
 kalmus0_2_tutorial.mp4
+

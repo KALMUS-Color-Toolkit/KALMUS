@@ -1,4 +1,4 @@
-""" Utility Artist """
+""" Utility artist """
 
 import numpy as np
 import cv2

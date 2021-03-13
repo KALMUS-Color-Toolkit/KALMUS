@@ -9,7 +9,7 @@ import cv2
 import numpy as np
 import threading
 
-from kalmus.utils import artist as Artist
+from kalmus.utils import artist as artist
 from kalmus.utils.artist import get_letter_box_from_frames, get_contrast_matrix_and_labeled_image
 
 # Available metrics for computing the color of a frame
@@ -28,7 +28,7 @@ def foreback_segmentation(frame):
              Expected shape== Number of pixels x channels
     :rtype: numpy.ndarray, numpy.ndarray
     """
-    fore_frame, back_frame = Artist.grabcut_foreback_segmentation(frame, start_row=0, row_size=frame.shape[0] - 1,
+    fore_frame, back_frame = artist.grabcut_foreback_segmentation(frame, start_row=0, row_size=frame.shape[0] - 1,
                                                                   start_col=frame.shape[1] // 6,
                                                                   col_size=frame.shape[1] * 2 // 3)
     return fore_frame, back_frame
@@ -216,29 +216,29 @@ class Barcode:
         :rtype: numpy.ndarray
         """
         if self.color_metric == "Average":
-            color = Artist.compute_mean_color(frame)
+            color = artist.compute_mean_color(frame)
         elif self.color_metric == "Median":
-            color = Artist.compute_median_color(frame)
+            color = artist.compute_median_color(frame)
         elif self.color_metric == "Mode":
-            color, count = Artist.compute_mode_color(frame)
+            color, count = artist.compute_mode_color(frame)
         elif self.color_metric == "Top-dominant":
-            colors, dominances = Artist.compute_dominant_color(frame, n_clusters=3)
+            colors, dominances = artist.compute_dominant_color(frame, n_clusters=3)
             pos = np.argsort(dominances)[-1]
             color = colors[pos]
         elif self.color_metric == "Weighted-dominant":
-            colors, dominances = Artist.compute_dominant_color(frame, n_clusters=3)
+            colors, dominances = artist.compute_dominant_color(frame, n_clusters=3)
             color = np.sum(colors * dominances.reshape(dominances.shape[0], 1), axis=0)
         elif self.color_metric == "Brightest":
             grey_frame = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
             pos = np.argwhere(grey_frame == grey_frame.max())[0]
             color = frame[pos[0], pos[1]].copy().astype("uint8")
         elif self.color_metric == "Bright":
-            labels, bright_locations, dominance = Artist.find_bright_spots(frame, n_clusters=3, return_all_pos=True)
+            labels, bright_locations, dominance = artist.find_bright_spots(frame, n_clusters=3, return_all_pos=True)
             top_bright = np.argsort(dominance)[-1]
             top_bright_pos = (labels == top_bright)[:, 0]
             pos = bright_locations[top_bright_pos]
             frame = frame[pos[:, 0], pos[:, 1]].reshape(pos.shape[0], 1, 3)
-            color = Artist.compute_mean_color(frame)
+            color = artist.compute_mean_color(frame)
 
         return color
 
