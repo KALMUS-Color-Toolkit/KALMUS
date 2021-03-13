@@ -23,6 +23,8 @@ class StatsInfoWindow():
 
         # Initialize the window
         self.window = tkinter.Tk()
+
+        self.window.configure(bg="#FFFFFF")
         self.window.wm_title("Barcodes Similarity Statistics")
         self.window.iconbitmap(resource_path("kalmus_icon.ico"))
 
