@@ -12,6 +12,7 @@ from kalmus.utils.artist import *
 from kalmus.utils.measure_utils import *
 from kalmus.utils.visualization_utils import *
 from kalmus.tkinter_windows.gui_utils import *
+from kalmus.command_line_generator import *
 ```
 
 A [GitHub Action](../.github/workflows/test-codecov.yml) will run on every push or pull-request to the master branch 
