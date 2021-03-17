@@ -34,7 +34,7 @@ There are two ways that you could install KALMUS on you local machine:
 1. (**Recommended**) Get the latest distribution of KALMUS from PyPI ([KALMUS Project Page on PyPI](https://pypi.org/project/kalmus/)).  
 Use command `$ pip install kalmus` or `$ pip install --upgrade kalmus` (if kalmus has been installed) to install the latest version of KALMUS package. All dependencies should be automatically installed during this process.
 
-2. Alternatively, you could install the KALMUS locally by first cloning the GitHub repo of Kalmus ([GitHub page](https://github.com/KALMUS-Color-Toolkit/KALMUS)). Then, move to the top directory of cloned KALMUS project and install using command `pip install .`. 
+2. Alternatively, you could install the KALMUS locally by first cloning the GitHub repo of Kalmus ([GitHub page](https://github.com/KALMUS-Color-Toolkit/KALMUS)). Then, move to the top directory of cloned KALMUS project and install using command `pip install .` 
 
 **See our [Installation Guide](https://kalmus-color-toolkit.github.io/KALMUS/install.html) for more details.**
 
