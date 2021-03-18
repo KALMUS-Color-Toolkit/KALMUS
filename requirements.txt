@@ -33,7 +33,7 @@ opencv-python==4.4.0.46
 pandocfilters==1.4.2
 parso==0.5.1
 pickleshare==0.7.5
-Pillow==8.0.1
+Pillow>=8.1.1
 prometheus-client==0.7.1
 prompt-toolkit==2.0.9
 Pygments==2.4.2
