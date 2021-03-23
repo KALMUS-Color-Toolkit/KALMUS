@@ -18,6 +18,7 @@ from kalmus.utils.visualization_utils import show_colors_in_cube
 from kalmus.tkinter_windows.gui_utils import resource_path, update_hist
 import kalmus.utils.artist
 from skimage.color import rgb2hsv
+import pandas as pd
 
 
 class PlotBarcodeWindow():
@@ -237,37 +238,39 @@ class OutputCSVWindow():
         # Generate the corresponding csv file for the type of the barcode
         if self.barcode.barcode_type == 'Color':
             # Data frame of the csv file for the color barcode
-            data_frame = ['Frame index', 'Red (0-255)', 'Green (0-255)', 'Blue (0-255)', 'Hue (0 -360)',
-                          'Saturation (0 - 1)', 'Value (lightness) (0 - 1)','Brightness']
-            kalmus.utils.artist.write_in_info(data_frame, csv_filename, mode='w')
+            colors = self.barcode.colors
+            hsvs = rgb2hsv(colors.reshape(-1, 1, 3).astype("float64") / 255)
+            hsvs[..., 0] = 360 * hsvs[..., 0]
+            colors = colors.astype("float64")
+            brightness = 0.299 * colors[..., 0] + 0.587 * colors[..., 1] + 0.114 * colors[..., 1]
 
-            cur_frame = starting_frame
-            # Get the per frame level color data
-            for color in self.barcode.colors:
-                r = int(color[0])
-                g = int(color[1])
-                b = int(color[2])
-                brightness = int(0.299 * r + 0.587 * g + 0.114 * b)
-                hsv = rgb2hsv(color.reshape(1, 1, -1).astype("float64") / 255)[0, 0]
-                h = int(hsv[0] * 360)
-                s = float(hsv[1])
-                v = float(hsv[2])
+            colors = colors.astype("uint8")
+            hsvs = hsvs.reshape(-1, 3)
+            brightness = brightness.astype("int64")
 
-                kalmus.utils.artist.write_in_info([cur_frame, r, g, b, h, s, v, brightness], csv_filename)
+            frame_indexes = np.arange(starting_frame, len(colors) * sample_rate + starting_frame, sample_rate)
 
-                cur_frame += sample_rate
+            dataframe = pd.DataFrame(data={'Frame index': frame_indexes,
+                                           'Red (0-255)': colors[..., 0],
+                                           'Green (0-255)': colors[..., 1],
+                                           'Blue (0-255)': colors[..., 2],
+                                           'Hue (0 -360)': (hsvs[..., 0]).astype("int64"),
+                                           'Saturation (0 - 1)': hsvs[..., 1],
+                                           'Value (lightness) (0 - 1)': hsvs[..., 2],
+                                           'Brightness': brightness})
 
         elif self.barcode.barcode_type == 'Brightness':
             # Data frame of the csv file for the brightness barcode
-            data_frame = ['Frame index', 'Brightness']
-            kalmus.utils.artist.write_in_info(data_frame, csv_filename, mode='w')
+            brightness = self.barcode.brightness
 
-            cur_frame = starting_frame
+            frame_indexes = np.arange(starting_frame, len(brightness) * sample_rate + starting_frame, sample_rate)
             # Get the per frame level brightness data
-            for bri in self.barcode.brightness:
-                kalmus.utils.artist.write_in_info([cur_frame, int(bri[0])], csv_filename)
+            dataframe = pd.DataFrame(data={'Frame index': frame_indexes,
+                                           'Brightness': brightness.astype("uint8").reshape(-1)})
 
-                cur_frame += sample_rate
+        dataframe = dataframe.set_index('Frame index')
+
+        dataframe.to_csv(csv_filename)
 
         # Quit the window after outputting csv file
         self.window.destroy()
