@@ -18,17 +18,23 @@ def compute_dominant_color(image, n_clusters=3, max_iter=10, threshold_error=1.0
 
     :param image: input image. Either a multi-channel color image or a grayscale image (2D image) \
     Expected shape of image is height x width x (channels)
+    :type image: numpy.ndarray
     :param n_clusters: number of clusters
+    :type n_clusters: int
     :param max_iter: maximum iterations before terminating kmeans clustering
+    :type max_iter: int
     :param threshold_error: threshold error for terminating kmeans clustering. kmean clustering terminate \
     when the errors between the current computed and previous computed cluster center is under this \
     threshold
+    :type threshold_error: float
     :param attempts: Number of attempts to rerun the Kmeans clustering with different initial cluster \
     centers. Since kmeans clustering randomly choose n number of cluster in its initialization process.
+    :type attempts: int
     :return: An array of n cluster centers and an array of relative size (in percentage) of the clusters. \
     Expected output shape: n_clusters x channels (cluster centers), n_clusters (relative size in percentage) \
     E.g. for an input color image with 3 channels and n_clusters = 3  Output can be [[255, 255, 255], \
     [126, 75, 198], [186, 145, 122]], [0.4, 0.5, 0.1]
+    :rtype: numpy.ndarray, numpy.ndarray
     """
     assert len(image.shape) >= 2, "The input must be a 2 dimensional image"
     # Flatten the image
@@ -50,7 +56,9 @@ def flatten_image(image):
     with shape==[height x width, channels]
 
     :param image: Input 2D image (either multi-channel color image or greyscale image)
+    :type image: numpy.ndarray
     :return: The flatten 1D image. shape==(height x width, channels)
+    :rtype: numpy.ndarry
     """
     assert len(image.shape) >= 2, "The input image must be a 2 Dimensional image"
     if len(image.shape) == 3:
@@ -65,10 +73,12 @@ def compute_percents_of_labels(label):
     Compute the ratio/percentage size of the labels in an labeled image
 
     :param label: the labeled 2D image
+    :type label: numpy.ndarray
     :return: An array of relative size of the labels in the image. Indices of the sizes in the array \
     is corresponding to the labels in the labeled image. E.g. output [0.2, 0.5, 0.3] means label 0's size \
     is 0.2 of the labeled image, label 1' size is 0.5 of the labeled image, and label 2's size is 0.3 of \
     the labeled image.
+    :rtype: numpy.ndarray
     """
     # Get the bins of the histogram. Since the last bin of the histogram is [label, label+1]
     # We add 1 to the number of different labels in the labeled image when generating bins
@@ -88,11 +98,14 @@ def compute_mode_color(image, bin_size=10):
 
     :param image: either a multi-channel color image or a single channel greyscale image \
     Expected shape of image: height x width x (channels)
+    :type image: numpy.ndarray
     :param bin_size: Histogramize the input image. Color/intensity of each pixel in the \
     image will be accumulate in the bins with size==bin_size. The output mode color/intensity \
     is always an integer multiple of the bin_size.
+    :type bin_size: int
     :return: The mode color of the image (modes of the channels), shape=channels, and counts of the \
     mode colors happened in the input image, shape==channels
+    :rtype: numpy.ndarray, numpy.ndarray
     """
     image = flatten_image(image)
     image = image // bin_size
@@ -105,7 +118,9 @@ def compute_mean_color(image):
     Compute the average/mean color of the input multi-channel image or greyscale image.
 
     :param image: input image. Either a multi-channel color image or a single channel greyscale image
+    :type image: numpy.ndarray
     :return: The average color of the image (averaged across the channels). shape==channels.
+    :rtype: numpy.ndarray
     """
     image = flatten_image(image)
     avg_color = np.average(image, axis=0)
@@ -117,7 +132,9 @@ def compute_median_color(image):
     Compute the median color of the input multi-channel color image or a single channel greyscale image.
 
     :param image: input image. Either a multi-channel color image or a single channel greyscale image
+    :type image: numpy.ndarray
     :return: The median color of the image (median values of channels), shape==channels
+    :rtype: numpy.ndarray
     """
     image = flatten_image(image)
     median_color = np.median(image, axis=0)
@@ -129,12 +146,18 @@ def compute_brightest_color_and_brightness(grey_image, color_image, return_min=F
     """
     Find the brightest pixel in an image and return the color and brightness at that pixel
 
-    :param blur_radius: The radius of the gaussian filter
-    :param gaussian_blur: Whether to apply a gaussian filter before finding the brightest point the grey image
     :param grey_image: The greyscale image. single channel 2D image. Expected shape==(row/height, col/width)
+    :type grey_image: numpy.ndarray
     :param color_image: The corresponding color image. Expected shape==(row/height, col/width, channels)
-    :param return_min: If true return the color and brightness of the darkest pixel as well
+    :type color_image: numpy.ndarray
+    :param return_min: If true return the darkest color and brightness (of a pixel) as well
+    :type return_min: bool
+    :param gaussian_blur: Whether to apply a gaussian filter before finding the brightest point the grey image
+    :type gaussian_blur: bool
+    :param blur_radius: The radius of the gaussian filter
+    :type blur_radius: int
     :return: The color and brightness of the brightest pixel (, color and brightness of the darkest pixel)
+    :rtype: numpy.ndarray, int, tuple
     """
     if gaussian_blur:
         grey_image = cv2.GaussianBlur(grey_image.copy(), (blur_radius, blur_radius), 0)
@@ -151,12 +174,18 @@ def find_bright_spots(image, n_clusters=3, blur_radius=21, amount_of_bright_part
     Find the indices location of the top-k brightest spots in an color image.
 
     :param image: input image. Must be an mutli-channel RGB color image
+    :type image: numpy.ndarray
     :param n_clusters: expected number of clusters/brightest spots in the input image
+    :type n_clusters: int
     :param blur_radius: radius of the Gaussian blur kernel that used to smooth the image
+    :type blur_radius: int
     :param amount_of_bright_parts: amount of bright parts in an image. Used to find the lower bound for \
     distinguishing the bright and non-bright part of the input image. Range of amount_of_bright_parts is \
     in [0, 1] (all non-bright -> all bright)
-    :return:
+    :type amount_of_bright_parts: float
+    :return: The location of centers of top-3 bright spots (with irregular shape), percentage of dominance of each spot \
+    (relative size of the spot)
+    :rtype: numpy.ndarray, numpy.ndarray
     """
     assert amount_of_bright_parts >= 0 and amount_of_bright_parts <= 1, "Range of the sample ration is in [0, 1]"
     assert n_clusters >= 1, "The number of bright spots must be larger or equal to 1"
@@ -204,7 +233,7 @@ def find_bright_spots(image, n_clusters=3, blur_radius=21, amount_of_bright_part
             return np.ones(shape=(n_clusters, 1)) * -1, np.ones(shape=(n_clusters, 1)) * -1
 
 
-def random_sample_pixels(img, sample_ratio=0, mode="row-col"):
+def random_sample_pixels(image, sample_ratio=0, mode="row-col"):
     """
     Randomly sample an amount of pixels from an image based on the given sampled ratio.
     Two sampling mode are available.
@@ -215,38 +244,43 @@ def random_sample_pixels(img, sample_ratio=0, mode="row-col"):
     are not preserved due to the flatten process, but it sample the pixels much faster than
     'row-col' mode. The distribution of the sampling result is similar to that from the 'row-col'
 
-    :param img: Input 2D image. Either a multi-channel color image or a single channel greyscale image \
+    :param image: Input 2D image. Either a multi-channel color image or a single channel greyscale image \
     Expected shape==height x width x (channels)
+    :type image: numpy.ndarray
     :param sample_ratio: The amount of pixels sampled from the image. in range [0, 1]
+    :type sample_ratio: float
     :param mode: two sampling mode are available. \
-    1) 'row-col' sampling mode 2) 'flat' sampling mode
+    1) 'row-col' sampling mode \
+    2) 'flat' sampling mode
+    :type mode: str
     :return: If mode="flat", return the resampled array of pixels (1-d flat array of data points) \
              If mode="row-col", return the resampled image
+    :rtype: numpy.ndarray
     """
     assert 0 <= sample_ratio <= 1, "The sample ratio is in the range of [0, 1]"
     if sample_ratio == 1:
-        return img
+        return image
     elif sample_ratio == 0:
-        return np.array([]).astype(img.dtype)
+        return np.array([]).astype(image.dtype)
     if mode == "row-col":
         # To keep the aspect ratio of the input image, sample equal ratio on the columns and rows
         ratio = (sample_ratio) ** (1 / 2)
         # Number of row to sample
-        row_size = int(img.shape[0] * ratio)
+        row_size = int(image.shape[0] * ratio)
         # Number of column to sample
-        col_size = int(img.shape[1] * ratio)
+        col_size = int(image.shape[1] * ratio)
         # Sample the row first
-        random_row_indices = np.sort(np.random.choice(np.arange(img.shape[0]), row_size, replace=False))
-        random_row = img[random_row_indices]
+        random_row_indices = np.sort(np.random.choice(np.arange(image.shape[0]), row_size, replace=False))
+        random_row = image[random_row_indices]
         random_pixels = []
         # Then, in each row, sampled a number of pixels/columns
         for row in random_row:
-            random_col_indices = np.sort(np.random.choice(np.arange(img.shape[1]), col_size, replace=False))
+            random_col_indices = np.sort(np.random.choice(np.arange(image.shape[1]), col_size, replace=False))
             random_pixels.append(row[random_col_indices])
         random_pixels = np.array(random_pixels)
     elif mode == "flat":
         # Flatten the image
-        flat_img = flatten_image(img)
+        flat_img = flatten_image(image)
         # Generate the possible indices
         indices = np.arange(flat_img.shape[0])
         # Generate the sampled indices
@@ -269,21 +303,28 @@ def watershed_segmentation(image, minimum_segment_size=0.0004, base_ratio=0.5, d
     adjust the critical gradient (edge gradient) with the distribution of the input image's
     intensity gradient .
 
-    :param grey_image: The input image for region segmentation
+    :param image: The input color image for region segmentation using gradient-based watershed
+    :type image: numpy.ndarray
     :param minimum_segment_size: The minimum size of the segments in the segmented image in percentage \
     (size is the relative ratio of the image) The segmented regions smaller than the minimum size will be merged \
     to its neighboring larger segmented components
+    :type minimum_segment_size: float
     :param base_ratio: Amount of regions at least in the image. The image in watershed transformation is \
     differentiated into two parts regions + boundaries. The base ratio is the ratio between the least amount of \
     pixels that are regions and the total amount of pixels in the image.
+    :type base_ratio: float
     :param denoise_disk_size: the kernel size of the denoise median filter
+    :type denoise_disk_size: int
     :param gradiant_disk_size: the kernel size of the gradient filter that is used for determining the amount of \
     boundaries
+    :type gradiant_disk_size: int
     :param marker_disk_size: the kernel size of the gradient filter that is used for generating transformation \
     marker
+    :type marker_disk_size: int
     :return: the segmented image, where shape==input_image.shape. and regions are labeled from 0 to n-1, where \
     n is the number of regions in the labeled image. Functions also return the greyscale image corresponding to \
     the original image
+    :rtype: numpy.ndarray, numpy.ndarray
     """
     assert 0 <= minimum_segment_size < 1, "The minimum size of the segments (in percentage ratio) is in range [0, 1)"
     # Gray Scale image
@@ -336,11 +377,14 @@ def get_rag(gray_image, labels):
     greyscale image with sobel filter
 
     :param gray_image: The greyscale image corresponding to the labeled image
+    :type gray_image: numpy.ndarray
     :param labels: a labeled segmented image, where the pixels in the image are labeled with index of the \
     segmented regions.
+    :type labels: numpy.ndarray
     :return: The region adjacency graph in dictionary \
     see https://scikit-image.org/docs/stable/auto_examples/segmentation/plot_rag_boundary.html for more \
     references
+    :rtype: skimage.future.graph.RAG
     """
     # Get rag of the labeled image
     edge_map = sobel(gray_image)
@@ -358,8 +402,11 @@ def rag_to_matrix(rag, num_regions):
     1,0 means region 0 and region 1 are adjacent
 
     :param rag: region adjacency dictionary
+    :type rag: skimage.future.graph.RAG
     :param num_regions: number of regions in the region adjacency graph
+    :type num_regions: int
     :return: An binary adjacency matrix with shape==num_regions x num_regions
+    :rtype: numpy.ndarray
     """
     matrix = np.zeros((num_regions, num_regions), dtype=np.int8)
     for i in range(1, num_regions + 1):
@@ -378,10 +425,13 @@ def color_of_regions(labels, original_image):
     of whole image.
 
     :param labels: The labeled image. Expected shape==height x width. Integer labels
+    :type labels: numpy.ndarray
     :param original_image: The original color image corresponding to the label image
+    :type original_image: numpy.ndarray
     :return: A list of average color of the regions, a list of brightest color of the regions, and \
     a list of sizes of the regions. The order of the regions in list is the same as they are in \
     labeled image
+    :rtype: list, list, list
     """
     # Average Color of the region
     avg_colors_list = []
@@ -424,15 +474,19 @@ def contrast_between_regions(region_colors, matrix, region_weights=None):
     and adjacency matrix
 
     :param region_colors: A list of colors of segmented regions
+    :type region_colors: list
     :param matrix: A 2D adjacency matrix that describe the spatial relationship between the regions \
     Expect a binary matrix, where 1 means adjacent and 0 means non-adjacent
+    :type matrix: numpy.ndarray
     :param region_weights: A 1D array of weights that can be applied onto the contrast calculate for each \
     regions. \
     e.g. Regions may have different sizes, and you can weight the computed contrast by the size of the \
     regions. Expected shape of the regions weight is shape==number of regions
+    :type region_weights: list
     :return: A 2D numpy matrix where each entry is the contrast between the row indexed region and column \
     indexed region. Contrast ratio >= 1, an entry with 0 means row indexed region and column indexed region \
     are non-adjacent
+    :rtype: list
     """
     assert matrix.shape[0] == matrix.shape[1], "Invalid shape of the adjacency matrix, the matrix must" \
                                                "be a 2D binary numpy array with a square shape. shape[0]" \
@@ -471,7 +525,9 @@ def _RGB2sRGB(RGB):
     see https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef for more references
 
     :param RGB: The input RGB color or colors shape== ... x 3 (R, G, and B channels)
+    :type RGB: numpy.ndarray
     :return: converted sRGB colors
+    :rtype: numpy.ndarray
     """
     sRGB = RGB / 255
     return sRGB
@@ -483,7 +539,9 @@ def _sRGB2luminance(sRGB):
     see https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef for more references
 
     :param sRGB: Input sRGB color or colors shape==... x 3 (sR, sG, and sB channels)
+    :type sRGB: numpy.ndarray
     :return: the luminance computed using the sRGB color
+    :rtype: float
     """
     lRGB = np.zeros(shape=sRGB.shape)
     lRGB[sRGB <= 0.03928] = sRGB[sRGB <= 0.03928] / 12.92
@@ -498,8 +556,11 @@ def contrast_ratio(color1, color2):
     see https://www.w3.org/TR/2008/REC-WCAG20-20081211/#contrast-ratiodef for more references
 
     :param color1: one of the 24-bits RGB colors in range [0, 255]
+    :type color1: numpy.ndarray
     :param color2: one of the 24-bits RGB colors in range [0, 255]
+    :type color2: numpy.ndarray
     :return: the contrast ratio between two 24-bits RGB colors. Contrast ratio >= 1
+    :rtype: float
     """
     luminance1 = _sRGB2luminance(_RGB2sRGB(color1))
     luminance2 = _sRGB2luminance(_RGB2sRGB(color2))
@@ -515,9 +576,12 @@ def get_contrast_matrix_and_labeled_image(frame, minimum_segment_size=0.0004):
     brightness contrast of each segmented region with respect to its neighbors (adjacent segmented regions)
 
     :param frame: The input frame
+    :type frame: numpy.ndarray
     :param minimum_segment_size: The minimum size of the segmented region in the ratio to the whole frame. Range (0, 1)
+    :type minimum_segment_size: float
     :return: The matrix with shape (num_regions x num_regions) whose cell [i, j] represents the contrast \
              between the region i and region j, and the corresponding labeled image (segmentation)
+    :rtype: list, numpy.ndarray
 
     """
     labels, grey_frame = watershed_segmentation(frame, minimum_segment_size=minimum_segment_size)
@@ -539,17 +603,26 @@ def grabcut_foreback_segmentation(image, start_row=0, start_col=0, row_size=-1, 
     the function return the 1D image of the foreground and background as the output
 
     :param image: The input image for GrabCut segmentation
+    :type image: numpy.ndarray
     :param start_row: The starting row of the foreground rectangle of possible foreground
+    :type start_row: int
     :param start_col: The starting col of the foreground rectangle of possible foreground
+    :type start_col: int
     :param row_size: The vertical length of the rectangle
+    :type row_size: int
     :param col_size: The horizontal length of the rectangle
+    :type col_size: int
     :param num_iter: The number of iterations for GrabCut to run
+    :type num_iter: int
     :param return_masks: Return the foreground and background boolean mask if True \
                          Return the 1D image of foreground pixels and 1D image of background pixels if False \
                          False by default
+    :type return_masks: bool
     :return: If return_masks is False (default), 1D image of the foreground part of the image, and 1D image of \
              the background part of the image Expected shape== Number of pixels x channels. \
              If return_masks is True, return boolean masks foreground and background. Expected shape==image.shape
+
+    :rtype:numpy.ndarray, numpy.ndarray
     """
     if start_row < 0:
         start_row = 0
@@ -593,15 +666,17 @@ def find_letter_box_from_videos(video, num_sample=30):
     Notice that the function assumes the letterbox is black or very close to black.
 
     :param video: Input video object captured by cv2.VideoCapture()
+    :type video: cv2.VideoCapture
     :param num_sample: Number of frames to sample from video for finding letterbox
+    :type num_sample: int
     :return: The smaller row index of letterbox (bound for upper horizontal letterbox), \
              the larger row index of letterbox (bound for lower horizontal letterbox), \
              the smaller col index of letterbox (bound for left vertical letterbox), \
              and the larger col index of letterbox (bound for right vertical letterbox). \
              \
-             The results are the median results on num_sample number of frames \
-             \
-             To extract the frame without letterbox from letterboxing frame, \
+             The results are the median results on num_sample number of frames
+    :rtype: int, int, int, int
+
     """
     film_length_in_frames = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
 
@@ -644,14 +719,15 @@ def get_letter_box_from_frames(frame, threshold=5):
     The function assumes the letter box of the frame is black (dark)
 
     :param frame: Input frame
+    :type frame: numpy.ndarray
     :param threshold: The brightness threshold value that distinguish \
                       the region of interest (bright) and letterbox (dark)
+    :type threshold: int
     :return: The smaller row index of letterbox (bound for upper horizontal letterbox), \
              the larger row index of letterbox (bound for lower horizontal letterbox), \
              the smaller col index of letterbox (bound for left vertical letterbox), \
-             and the larger col index of letterbox (bound for right vertical letterbox). \
-             \
-             To extract the frame without letterbox from letterboxing frame, \
+             and the larger col index of letterbox (bound for right vertical letterbox).
+    :rtype: int, int, int, int
     """
     low_bound_ver = 0
     high_bound_ver = frame.shape[0]
@@ -691,9 +767,12 @@ def write_in_info(info_row, file_name="output.csv", mode='a'):
     All the values in numpy array (such as colors) are recommended to be converted to the list
     before write into the info_row.
 
-    :param mode: The mode for using the file
     :param info_row: A row of data that will be write to the target csv file
+    :type info_row: list
     :param file_name: The name of the csv file
+    :type file_name: str
+    :param mode: The mode for using the file
+    :type mode: str
     """
     with open(file_name, newline="", mode=mode) as file:
         file_writer = csv.writer(file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
