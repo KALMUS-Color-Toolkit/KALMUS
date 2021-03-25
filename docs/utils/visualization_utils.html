@@ -184,13 +184,16 @@ region with corresponding region index in the labeled image from the input image
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>image</strong> -- input image shape=(row(height), col(width))</p></li>
-<li><p><strong>region_index</strong> -- the extracted region index in the labeled image</p></li>
-<li><p><strong>labeled_image</strong> -- the labeled image of the corresponding input image shape=image.shape</p></li>
+<li><p><strong>image</strong> (<em>numpy.ndarray</em>) -- input image shape=(row(height), col(width))</p></li>
+<li><p><strong>region_index</strong> (<em>int</em>) -- the extracted region index in the labeled image</p></li>
+<li><p><strong>labeled_image</strong> (<em>numpy.ndarray</em>) -- the labeled image of the corresponding input image shape=image.shape</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Image with only region with corresponding index on labeled_image.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
 </dd>
 </dl>
 </dd></dl>
@@ -202,17 +205,20 @@ region with corresponding region index in the labeled image from the input image
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>color</strong> -- 1D array contains the R, G, and B channel values</p></li>
-<li><p><strong>figure_size</strong> -- Size of the plotted figure</p></li>
-<li><p><strong>title</strong> -- The title of the plotted color</p></li>
-<li><p><strong>axis_off</strong> -- True to set the axis of the plot figure off. False to have the axis on the side of     figure.</p></li>
-<li><p><strong>save_image</strong> -- True to save the plot figure into the path that user provide. False not to save     the plot figure</p></li>
-<li><p><strong>file_name</strong> -- The filename of the saved figure. The default path to the saved image is test.png</p></li>
-<li><p><strong>return_color</strong> -- Return the numpy array (shape==30 x 30 x 3) of color block if True. Directly plot the color if False</p></li>
+<li><p><strong>color</strong> (<em>numpy.ndarray</em>) -- 1D array contains the R, G, and B channel values</p></li>
+<li><p><strong>figure_size</strong> (<em>tuple</em>) -- Size of the plotted figure</p></li>
+<li><p><strong>title</strong> (<em>str</em>) -- The title of the plotted color</p></li>
+<li><p><strong>axis_off</strong> (<em>bool</em>) -- True to set the axis of the plot figure off. False to have the axis on the side of     figure.</p></li>
+<li><p><strong>save_image</strong> (<em>bool</em>) -- True to save the plot figure into the path that user provide. False not to save     the plot figure</p></li>
+<li><p><strong>file_name</strong> (<em>str</em>) -- The filename of the saved figure. The default path to the saved image is test.png</p></li>
+<li><p><strong>return_color</strong> (<em>bool</em>) -- Return the numpy array (shape==30 x 30 x 3) of color block if True. Directly plot the color     if False</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Return the numpy array of color block if return_color is True.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
 </dd>
 </dl>
 </dd></dl>
@@ -227,15 +233,18 @@ ipympl is required for this function to work in the jupyter notebook</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>colors</strong> -- A sequence of colors to display in cubic space</p></li>
-<li><p><strong>figure_size</strong> -- the size of the figure</p></li>
-<li><p><strong>return_figure</strong> -- Return the plotted figure and axes, if true                           Directly plot the cube, if false</p></li>
-<li><p><strong>sampling</strong> -- Number of data points plot in the 3D cube. -1 to include all data in the plot</p></li>
-<li><p><strong>return_sampled_colors</strong> -- Return the sampled out colors if True. Directly plot the colors in RGB cube if False</p></li>
+<li><p><strong>colors</strong> (<em>numpy.ndarray</em>) -- A sequence of colors to display in cubic space</p></li>
+<li><p><strong>figure_size</strong> (<em>tuple</em>) -- the size of the figure</p></li>
+<li><p><strong>return_figure</strong> (<em>bool</em>) -- Return the plotted figure and axes, if true                           Directly plot the cube, if false</p></li>
+<li><p><strong>sampling</strong> (<em>int</em>) -- Number of data points plot in the 3D cube. -1 to include all data in the plot</p></li>
+<li><p><strong>return_sampled_colors</strong> (<em>bool</em>) -- Return the sampled out colors if True. Directly plot the colors in RGB cube if False</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>return the figure and axes with plotted figure if return_figure is True</p>
+<dd class="field-even"><p>return the figure and axes with plotted figure if return_figure is True     or, return the sampled out colors if return_sampled_colors is True</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
 </dd>
 </dl>
 </dd></dl>
@@ -247,15 +256,21 @@ ipympl is required for this function to work in the jupyter notebook</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>colors</strong> -- 2D array of RGB colors. Expected sequence shape==Number of colors x channels (3)</p></li>
-<li><p><strong>figure_size</strong> -- the size of the plot figure</p></li>
-<li><p><strong>title</strong> -- the title of the plot</p></li>
-<li><p><strong>axis_off</strong> -- True to set the axis of the figure off. False to have the axis with the figure</p></li>
-<li><p><strong>save_image</strong> -- True to save the plot figure. False do not save figure</p></li>
-<li><p><strong>file_name</strong> -- the path of the saved figure</p></li>
-<li><p><strong>horizontal</strong> -- True to plot the sequence of colors horizontally, False to plot the sequence of colors                        vertically</p></li>
-<li><p><strong>return_color_sequence</strong> -- Return the numpy array (shape==30 x (30 * num_colors) x 3) of color sequence if True                                   Directly plot the color sequence if False</p></li>
+<li><p><strong>colors</strong> (<em>numpy.ndarray</em>) -- 2D array of RGB colors. Expected sequence shape==Number of colors x channels (3)</p></li>
+<li><p><strong>figure_size</strong> (<em>tuple</em>) -- the size of the plot figure</p></li>
+<li><p><strong>title</strong> (<em>str</em>) -- the title of the plot</p></li>
+<li><p><strong>axis_off</strong> (<em>bool</em>) -- True to set the axis of the figure off. False to have the axis with the figure</p></li>
+<li><p><strong>save_image</strong> (<em>bool</em>) -- True to save the plot figure. False do not save figure</p></li>
+<li><p><strong>file_name</strong> (<em>str</em>) -- the path of the saved figure</p></li>
+<li><p><strong>horizontal</strong> (<em>bool</em>) -- True to plot the sequence of colors horizontally, False to plot the sequence of colors                        vertically</p></li>
+<li><p><strong>return_color_sequence</strong> (<em>bool</em>) -- Return the numpy array (shape==30 x (30 * num_colors) x 3) of color sequence if True                                   Directly plot the color sequence if False</p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Return the numpy array of the color sequence image if return_color_sequence is True.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
 </dd>
 </dl>
 </dd></dl>
@@ -268,14 +283,17 @@ image is segmented using the gradient based watershed segmentation</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>image</strong> -- input color image shape=(row (height), col (width), channel(3))</p></li>
-<li><p><strong>minimum_segment_size</strong> -- The minimum size (in relative ratio [0, 1]) for the segments in the segmented image</p></li>
-<li><p><strong>figsize</strong> -- the size of the plot figure</p></li>
-<li><p><strong>return_region_image</strong> -- Return the image with only high contrast region if True.                                 Directly plot the image if False</p></li>
+<li><p><strong>image</strong> (<em>numpy.ndarray</em>) -- input color image shape=(row (height), col (width), channel(3))</p></li>
+<li><p><strong>minimum_segment_size</strong> (<em>float</em>) -- The minimum size (in relative ratio [0, 1]) for the segments in the segmented image</p></li>
+<li><p><strong>figsize</strong> (<em>tuple</em>) -- the size of the plot figure</p></li>
+<li><p><strong>return_region_image</strong> (<em>bool</em>) -- Return the image with only high contrast region if True.                                 Directly plot the image if False</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>If return_region_image is True, return the the image with only high contrast region.              region_image.shape == image.shape</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
 </dd>
 </dl>
 </dd></dl>
@@ -288,14 +306,17 @@ image is segmented using the gradient based watershed segmentation</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>image</strong> -- input color image shape=(row (height), col (width), channel(3))</p></li>
-<li><p><strong>minimum_segment_size</strong> -- The minimum size (in relative ratio [0, 1]) for the segments in the segmented image</p></li>
-<li><p><strong>figsize</strong> -- the size of the plot figure</p></li>
-<li><p><strong>return_region_image</strong> -- Return the image with only low contrast region if True.                                 Directly plot the image if False</p></li>
+<li><p><strong>image</strong> (<em>numpy.ndarray</em>) -- input color image shape=(row (height), col (width), channel(3))</p></li>
+<li><p><strong>minimum_segment_size</strong> (<em>float</em>) -- The minimum size (in relative ratio [0, 1]) for the segments in the segmented image</p></li>
+<li><p><strong>figsize</strong> (<em>tuple</em>) -- the size of the plot figure</p></li>
+<li><p><strong>return_region_image</strong> (<em>bool</em>) -- Return the image with only low contrast region if True.                                 Directly plot the image if False</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>If return_region_image is True, return the the image with only low contrast region.              region_image.shape == image.shape</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
 </dd>
 </dl>
 </dd></dl>

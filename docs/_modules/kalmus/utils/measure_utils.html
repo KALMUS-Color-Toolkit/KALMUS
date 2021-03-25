@@ -198,10 +198,14 @@
 <span class="sd">    Structural similarity index measure (ssim)</span>
 
 <span class="sd">    :param image_1: The image 1 for comparison</span>
+<span class="sd">    :type image_1: numpy.ndarray</span>
 <span class="sd">    :param image_2: The image 2 for comparison</span>
+<span class="sd">    :type image_2: numpy.ndarray</span>
 <span class="sd">    :param window_size: The size of the local window, integer</span>
+<span class="sd">    :type window_size: int</span>
 <span class="sd">    :return: The Structural similarity index score in range [0,1] \</span>
 <span class="sd">             0 is the least similar, 1 is the most similar (same)</span>
+<span class="sd">    :rtype: float</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="n">image_1</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">image_2</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">&quot;The shape of two images used for computing structural similarity must &quot;</span> \
                                            <span class="s2">&quot;be the same.&quot;</span>
@@ -232,7 +236,9 @@
 <span class="sd">    extract. The indexes are equally spaced. (linear interpolation)</span>
 
 <span class="sd">    :param num_frames: The total number of frames</span>
+<span class="sd">    :type num_frames: int</span>
 <span class="sd">    :param sample_amount: How many frames that you want to sample from them</span>
+<span class="sd">    :type sample_amount: int</span>
 <span class="sd">    :return: np.array of indexes that are equally spaced from 0. The size of the array == sample_amount</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="n">num_frames</span> <span class="o">&gt;=</span> <span class="n">sample_amount</span><span class="p">,</span> <span class="s2">&quot;The number of data in&quot;</span>
@@ -250,9 +256,12 @@
 <span class="sd">    Signal matching. Cross correlation of two input signals. Signals need to be in the same shape</span>
 
 <span class="sd">    :param signal_template: The template signal</span>
+<span class="sd">    :type signal_template: numpy.ndarray</span>
 <span class="sd">    :param signal_source: The source signal</span>
+<span class="sd">    :type signal_source: numpy.ndarray</span>
 <span class="sd">    :return: The cross correlation between two input signals. High cross correlation means high similarity between \</span>
 <span class="sd">             two input signals. range in [-1, 1]</span>
+<span class="sd">    :rtype: float</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="n">signal_template</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">signal_source</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">&quot;The shape of two input signals/color barcodes must have the&quot;</span> \
                                                          <span class="s2">&quot;same shapes.&quot;</span>
@@ -272,11 +281,16 @@
 <span class="sd">    Local cross correlation between two input signals. The input signals need to be 2 dimensional for local windowing</span>
 
 <span class="sd">    :param signal_template: The template signal</span>
+<span class="sd">    :type signal_source: numpy.ndarray</span>
 <span class="sd">    :param signal_source: The source signal</span>
+<span class="sd">    :type signal_source: numpy.ndarray</span>
 <span class="sd">    :param horizontal_interval: Number of horizontal intervals (window width == signal width // horizontal intervals)</span>
+<span class="sd">    :type horizontal_interval: int</span>
 <span class="sd">    :param vertical_interval: Number of vertical intervals (window height == signal height // vertical intervals)</span>
+<span class="sd">    :type vertical_interval: int</span>
 <span class="sd">    :return: The local cross correlation between two signals. Higher local cross correlation means higher similarity \</span>
 <span class="sd">             between two signals. range in [-1, 1]</span>
+<span class="sd">    :rtype: float</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="n">signal_source</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">signal_template</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">&quot;Incompatiable shape between source and template signals&quot;</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">signal_source</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;local cross correlation requires the input signals to be 2 dimensional&quot;</span>
@@ -313,9 +327,13 @@
 <span class="sd">    [0, 255]).</span>
 
 <span class="sd">    :param color_barcode: Input color barcode, the input barcode must be a 1 dimensional color barcode with \</span>
+<span class="sd">                          ``kalmus.barcodes.ColorBarcode.colors``</span>
 <span class="sd">                          three channels (R, G, B). shape == [number of colors, 3]</span>
+<span class="sd">    :type color_barcode: numpy.ndarray</span>
 <span class="sd">    :param num_interval: The number of intervals that will be divided in the Hue ring (0 to 360 degree)</span>
+<span class="sd">    :type num_interval: int</span>
 <span class="sd">    :return: The string where each character represent the hue interval of the colors in the input RGB barcode</span>
+<span class="sd">    :rtype: str</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">color_barcode</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">color_barcode</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;The input color barcode must be a &quot;</span> \
                                                                            <span class="s2">&quot;2D array of 3-chanel RGB colors&quot;</span>
@@ -348,9 +366,13 @@
 <span class="sd">    brightness barcode.</span>
 
 <span class="sd">    :param brightness_barcode: Input 1 dimensional brightness barcode with 1 channel. \</span>
+<span class="sd">                               ``kalmus.barcodes.Barcode.BrightnessBarcode.brightness`` \</span>
 <span class="sd">                               shape == [number of brightness, 1]</span>
+<span class="sd">    :type brightness_barcode: numpy.ndarray</span>
 <span class="sd">    :param num_interval: The number of intervals that will be divided in the brightness range [0, 255]</span>
+<span class="sd">    :type num_interval: int</span>
 <span class="sd">    :return: The string where each character represents the brightness interval of the brightness in the input</span>
+<span class="sd">    :rtype: str</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">brightness_barcode</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">brightness_barcode</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> \
         <span class="s2">&quot;The input brightness barcode must be a 2D array with last channel to be 1&quot;</span>
@@ -378,14 +400,23 @@
 <span class="sd">    Needleman Wunsch: https://www.sciencedirect.com/science/article/abs/pii/0022283670900574?via%3Dihub</span>
 
 <span class="sd">    :param str_barcode_1: The input string representation of barcode 1</span>
+<span class="sd">    :type str_barcode_1: str</span>
 <span class="sd">    :param str_barcode_2: The input string representation of barcode 2</span>
+<span class="sd">    :type str_barcode_2: str</span>
 <span class="sd">    :param local_sequence_size: Divide the long barcode into several small barcode with local_sequence_size length</span>
+<span class="sd">    :type local_sequence_size: int</span>
 <span class="sd">    :param match_score: The score (bonus) for correctly matching character</span>
+<span class="sd">    :type match_score: int</span>
 <span class="sd">    :param mismatch_penal: The penalty for mismatch character</span>
+<span class="sd">    :type mismatch_penal: int</span>
 <span class="sd">    :param gap_penal: The penalty for gaps within matched sequence</span>
+<span class="sd">    :type gap_penal: int</span>
 <span class="sd">    :param extending_gap_penal: The penalty for extending gaps</span>
-<span class="sd">    :param normalized: Whether to normalize the final matching score into range [0, 1]</span>
+<span class="sd">    :type extending_gap_penal: int</span>
+<span class="sd">    :param normalized: If True normalize the final matching score into range [0, 1]. If False, return the raw score</span>
+<span class="sd">    :type normalized: bool</span>
 <span class="sd">    :return: The match score/normalized match score</span>
+<span class="sd">    :rtype: float</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">str_barcode_1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">str_barcode_2</span><span class="p">),</span> <span class="s2">&quot;The lengths of two barcodes have to be identical&quot;</span>
 
@@ -412,14 +443,23 @@
 <span class="sd">    Smith Waterman: https://www.sciencedirect.com/science/article/abs/pii/0022283681900875?via%3Dihub</span>
 
 <span class="sd">    :param str_barcode_1: The input string representation of barcode 1</span>
+<span class="sd">    :type str_barcode_1: str</span>
 <span class="sd">    :param str_barcode_2: The input string representation of barcode 2</span>
+<span class="sd">    :type str_barcode_2: str</span>
 <span class="sd">    :param local_sequence_size: Divide the long barcode into several small barcode with local_sequence_size length</span>
+<span class="sd">    :type local_sequence_size: int</span>
 <span class="sd">    :param match_score: The score (bonus) for correctly matching character</span>
+<span class="sd">    :type match_score: int</span>
 <span class="sd">    :param mismatch_penal: The penalty for mismatch character</span>
+<span class="sd">    :type mismatch_penal: int</span>
 <span class="sd">    :param gap_penal: The penalty for gaps within matched sequence</span>
+<span class="sd">    :type gap_penal: int</span>
 <span class="sd">    :param extending_gap_penal: The penalty for extending gaps</span>
-<span class="sd">    :param normalized: Whether to normalize the final matching score into range [0, 1]</span>
+<span class="sd">    :type extending_gap_penal: int</span>
+<span class="sd">    :param normalized: If True, normalize the final matching score into range [0, 1]. If False, return the raw score.</span>
+<span class="sd">    :type normalized: bool</span>
 <span class="sd">    :return: The match score/normalized match score</span>
+<span class="sd">    :rtype: float</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">str_barcode_1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">str_barcode_2</span><span class="p">),</span> <span class="s2">&quot;The lengths of two barcodes have to be identical&quot;</span>
 

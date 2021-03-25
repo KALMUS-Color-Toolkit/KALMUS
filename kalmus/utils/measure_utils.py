@@ -38,10 +38,14 @@ def ssim_similarity(image_1, image_2, window_size=None):
     Structural similarity index measure (ssim)
 
     :param image_1: The image 1 for comparison
+    :type image_1: numpy.ndarray
     :param image_2: The image 2 for comparison
+    :type image_2: numpy.ndarray
     :param window_size: The size of the local window, integer
+    :type window_size: int
     :return: The Structural similarity index score in range [0,1] \
              0 is the least similar, 1 is the most similar (same)
+    :rtype: float
     """
     assert image_1.shape == image_2.shape, "The shape of two images used for computing structural similarity must " \
                                            "be the same."
@@ -72,7 +76,9 @@ def get_resample_index(num_frames, sample_amount=10):
     extract. The indexes are equally spaced. (linear interpolation)
 
     :param num_frames: The total number of frames
+    :type num_frames: int
     :param sample_amount: How many frames that you want to sample from them
+    :type sample_amount: int
     :return: np.array of indexes that are equally spaced from 0. The size of the array == sample_amount
     """
     assert num_frames >= sample_amount, "The number of data in"
@@ -90,9 +96,12 @@ def cross_correlation(signal_template, signal_source):
     Signal matching. Cross correlation of two input signals. Signals need to be in the same shape
 
     :param signal_template: The template signal
+    :type signal_template: numpy.ndarray
     :param signal_source: The source signal
+    :type signal_source: numpy.ndarray
     :return: The cross correlation between two input signals. High cross correlation means high similarity between \
              two input signals. range in [-1, 1]
+    :rtype: float
     """
     assert signal_template.shape == signal_source.shape, "The shape of two input signals/color barcodes must have the" \
                                                          "same shapes."
@@ -112,11 +121,16 @@ def local_cross_correlation(signal_template, signal_source, horizontal_interval=
     Local cross correlation between two input signals. The input signals need to be 2 dimensional for local windowing
 
     :param signal_template: The template signal
+    :type signal_source: numpy.ndarray
     :param signal_source: The source signal
+    :type signal_source: numpy.ndarray
     :param horizontal_interval: Number of horizontal intervals (window width == signal width // horizontal intervals)
+    :type horizontal_interval: int
     :param vertical_interval: Number of vertical intervals (window height == signal height // vertical intervals)
+    :type vertical_interval: int
     :return: The local cross correlation between two signals. Higher local cross correlation means higher similarity \
              between two signals. range in [-1, 1]
+    :rtype: float
     """
     assert signal_source.shape == signal_template.shape, "Incompatiable shape between source and template signals"
     assert len(signal_source.shape) >= 2, "local cross correlation requires the input signals to be 2 dimensional"
@@ -153,9 +167,13 @@ def generate_hue_strings_from_color_barcode(color_barcode, num_interval=12):
     [0, 255]).
 
     :param color_barcode: Input color barcode, the input barcode must be a 1 dimensional color barcode with \
+                          ``kalmus.barcodes.ColorBarcode.colors``
                           three channels (R, G, B). shape == [number of colors, 3]
+    :type color_barcode: numpy.ndarray
     :param num_interval: The number of intervals that will be divided in the Hue ring (0 to 360 degree)
+    :type num_interval: int
     :return: The string where each character represent the hue interval of the colors in the input RGB barcode
+    :rtype: str
     """
     assert len(color_barcode.shape) == 2 and color_barcode.shape[-1] == 3, "The input color barcode must be a " \
                                                                            "2D array of 3-chanel RGB colors"
@@ -188,9 +206,13 @@ def generate_brightness_string_from_brightness_barcode(brightness_barcode, num_i
     brightness barcode.
 
     :param brightness_barcode: Input 1 dimensional brightness barcode with 1 channel. \
+                               ``kalmus.barcodes.Barcode.BrightnessBarcode.brightness`` \
                                shape == [number of brightness, 1]
+    :type brightness_barcode: numpy.ndarray
     :param num_interval: The number of intervals that will be divided in the brightness range [0, 255]
+    :type num_interval: int
     :return: The string where each character represents the brightness interval of the brightness in the input
+    :rtype: str
     """
     assert len(brightness_barcode.shape) == 2 and brightness_barcode.shape[-1] == 1, \
         "The input brightness barcode must be a 2D array with last channel to be 1"
@@ -218,14 +240,23 @@ def compare_needleman_wunsch(str_barcode_1, str_barcode_2, local_sequence_size=2
     Needleman Wunsch: https://www.sciencedirect.com/science/article/abs/pii/0022283670900574?via%3Dihub
 
     :param str_barcode_1: The input string representation of barcode 1
+    :type str_barcode_1: str
     :param str_barcode_2: The input string representation of barcode 2
+    :type str_barcode_2: str
     :param local_sequence_size: Divide the long barcode into several small barcode with local_sequence_size length
+    :type local_sequence_size: int
     :param match_score: The score (bonus) for correctly matching character
+    :type match_score: int
     :param mismatch_penal: The penalty for mismatch character
+    :type mismatch_penal: int
     :param gap_penal: The penalty for gaps within matched sequence
+    :type gap_penal: int
     :param extending_gap_penal: The penalty for extending gaps
-    :param normalized: Whether to normalize the final matching score into range [0, 1]
+    :type extending_gap_penal: int
+    :param normalized: If True normalize the final matching score into range [0, 1]. If False, return the raw score
+    :type normalized: bool
     :return: The match score/normalized match score
+    :rtype: float
     """
     assert len(str_barcode_1) == len(str_barcode_2), "The lengths of two barcodes have to be identical"
 
@@ -252,14 +283,23 @@ def compare_smith_waterman(str_barcode_1, str_barcode_2, local_sequence_size=200
     Smith Waterman: https://www.sciencedirect.com/science/article/abs/pii/0022283681900875?via%3Dihub
 
     :param str_barcode_1: The input string representation of barcode 1
+    :type str_barcode_1: str
     :param str_barcode_2: The input string representation of barcode 2
+    :type str_barcode_2: str
     :param local_sequence_size: Divide the long barcode into several small barcode with local_sequence_size length
+    :type local_sequence_size: int
     :param match_score: The score (bonus) for correctly matching character
+    :type match_score: int
     :param mismatch_penal: The penalty for mismatch character
+    :type mismatch_penal: int
     :param gap_penal: The penalty for gaps within matched sequence
+    :type gap_penal: int
     :param extending_gap_penal: The penalty for extending gaps
-    :param normalized: Whether to normalize the final matching score into range [0, 1]
+    :type extending_gap_penal: int
+    :param normalized: If True, normalize the final matching score into range [0, 1]. If False, return the raw score.
+    :type normalized: bool
     :return: The match score/normalized match score
+    :rtype: float
     """
     assert len(str_barcode_1) == len(str_barcode_2), "The lengths of two barcodes have to be identical"
 

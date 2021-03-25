@@ -11,15 +11,24 @@ def show_color(color, figure_size=(9, 6), title="",
     Plot the rgb color.
 
     :param color: 1D array contains the R, G, and B channel values
+    :type color: numpy.ndarray
     :param figure_size: Size of the plotted figure
+    :type figure_size: tuple
     :param title: The title of the plotted color
+    :type title: str
     :param axis_off: True to set the axis of the plot figure off. False to have the axis on the side of \
     figure.
+    :type axis_off: bool
     :param save_image: True to save the plot figure into the path that user provide. False not to save \
     the plot figure
+    :type save_image: bool
     :param file_name: The filename of the saved figure. The default path to the saved image is test.png
-    :param return_color: Return the numpy array (shape==30 x 30 x 3) of color block if True. Directly plot the color if False
+    :type file_name: str
+    :param return_color: Return the numpy array (shape==30 x 30 x 3) of color block if True. Directly plot the color \
+    if False
+    :type return_color: bool
     :return: Return the numpy array of color block if return_color is True.
+    :rtype: numpy.ndarray
     """
     # Generate a block image where each pixel of this block image is the plotted RGB color
     clr = np.ones(shape=(30, 30, 3), dtype=np.uint8) * np.uint8(color)
@@ -47,15 +56,25 @@ def show_colors_in_sequence(colors, figure_size=(9, 6), title="", axis_off=False
     Plot a sequence of RGB colors either horizontally or vertically in line
 
     :param colors: 2D array of RGB colors. Expected sequence shape==Number of colors x channels (3)
+    :type colors: numpy.ndarray
     :param figure_size: the size of the plot figure
+    :type figure_size: tuple
     :param title: the title of the plot
+    :type title: str
     :param axis_off: True to set the axis of the figure off. False to have the axis with the figure
+    :type axis_off: bool
     :param save_image: True to save the plot figure. False do not save figure
+    :type save_image: bool
     :param file_name: the path of the saved figure
+    :type file_name: str
     :param horizontal: True to plot the sequence of colors horizontally, False to plot the sequence of colors \
                        vertically
+    :type horizontal: bool
     :param return_color_sequence: Return the numpy array (shape==30 x (30 * num_colors) x 3) of color sequence if True \
                                   Directly plot the color sequence if False
+    :type return_color_sequence: bool
+    :return: Return the numpy array of the color sequence image if return_color_sequence is True.
+    :rtype: numpy.ndarray
     """
     # A chain/sequence of color blocks
     clr_chain = []
@@ -96,16 +115,27 @@ def show_color_matrix(color_2d_array, mode="truncate", figure_size=(9, 4),
 
     :param color_2d_array: the input color matrix. Expected the shape of the color matrix to be row x col x channels \
     channels should 3 (R, G, and B channels of RGB colors)
+    :type color_2d_array: numpy.ndarray
     :param mode: mode for displaying color matrix. "truncate" or "padding"
+    :type mode: str
     :param figure_size: the size of the figure
+    :type figure_size: tuple
     :param title: the title of the plot
+    :type title: str
     :param axis_off: True to set the axis of the figure off
+    :type axis_off: bool
     :param save_image: True to save the plot figure, False do not save the figure
+    :type save_image: bool
     :param file_name: the path to the saved figure
+    :type file_name: str
     :param return_matrix: True to return the processed color matrix back False not to return anything
+    :type return_matrix: bool
     :param return_figure: Return the plotted figure, if true. Directly plot the color matrix if false
+    :type return_figure: bool
     :return: the processed color matrix. Depending on the display mode, the return color matrix will have padding \
-    white colors if mode is "padding", or the last row of color matrix will be truncated if mode is "truncate"
+    white colors if mode is "padding", or the last row of color matrix will be truncated if mode is "truncate". \
+    Or, return the figure with plotted color matrix if return_figure is True.
+    :rtype: numpy.ndarray if return_matrix, matplotlib.pyplot.Figure if return_figure
     """
     assert len(color_2d_array.shape) == 3, "Only 2d array of three-channel color tuple/array accepted"
     assert color_2d_array.shape[-1] == 3, "The number of channels of color 2d array must be 3 (R, G, B)"
@@ -163,12 +193,19 @@ def show_colors_in_cube(colors, figure_size=(8, 8), return_figure=False, samplin
     ipympl is required for this function to work in the jupyter notebook
 
     :param colors: A sequence of colors to display in cubic space
+    :type colors: numpy.ndarray
     :param figure_size: the size of the figure
+    :type figure_size: tuple
     :param return_figure: Return the plotted figure and axes, if true \
                           Directly plot the cube, if false
+    :type return_figure: bool
     :param sampling: Number of data points plot in the 3D cube. -1 to include all data in the plot
+    :type sampling: int
     :param return_sampled_colors: Return the sampled out colors if True. Directly plot the colors in RGB cube if False
-    :return: return the figure and axes with plotted figure if return_figure is True
+    :type return_sampled_colors: bool
+    :return: return the figure and axes with plotted figure if return_figure is True \
+    or, return the sampled out colors if return_sampled_colors is True
+    :rtype: numpy.ndarray
     """
     assert colors.shape[-1] == 3, "The input colors must be a 2D numpy array with RGB colors where " \
                                   "shape of array is number of colors x channels(3)"
@@ -209,12 +246,17 @@ def show_high_contrast_region(image, minimum_segment_size=0.0004, figsize=(6, 4)
     image is segmented using the gradient based watershed segmentation
 
     :param image: input color image shape=(row (height), col (width), channel(3))
+    :type image: numpy.ndarray
     :param minimum_segment_size: The minimum size (in relative ratio [0, 1]) for the segments in the segmented image
+    :type minimum_segment_size: float
     :param figsize: the size of the plot figure
+    :type figsize: tuple
     :param return_region_image: Return the image with only high contrast region if True. \
                                 Directly plot the image if False
+    :type return_region_image: bool
     :return: If return_region_image is True, return the the image with only high contrast region. \
              region_image.shape == image.shape
+    :rtype: numpy.ndarray
     """
     contrast_matrix, labeled_image = get_contrast_matrix_and_labeled_image(image,
                                                                            minimum_segment_size=minimum_segment_size)
@@ -236,12 +278,17 @@ def show_low_contrast_region(image, minimum_segment_size=0.0004, figsize=(6, 4),
     image is segmented using the gradient based watershed segmentation
 
     :param image: input color image shape=(row (height), col (width), channel(3))
+    :type image: numpy.ndarray
     :param minimum_segment_size: The minimum size (in relative ratio [0, 1]) for the segments in the segmented image
+    :type minimum_segment_size: float
     :param figsize: the size of the plot figure
+    :type figsize: tuple
     :param return_region_image: Return the image with only low contrast region if True. \
                                 Directly plot the image if False
+    :type return_region_image: bool
     :return: If return_region_image is True, return the the image with only low contrast region. \
              region_image.shape == image.shape
+    :rtype: numpy.ndarray
     """
     contrast_matrix, labeled_image = get_contrast_matrix_and_labeled_image(image,
                                                                            minimum_segment_size=minimum_segment_size)
@@ -263,9 +310,13 @@ def extract_region_with_index(image, region_index, labeled_image):
     region with corresponding region index in the labeled image from the input image
 
     :param image: input image shape=(row(height), col(width))
+    :type image: numpy.ndarray
     :param region_index: the extracted region index in the labeled image
+    :type region_index: int
     :param labeled_image: the labeled image of the corresponding input image shape=image.shape
+    :type labeled_image: numpy.ndarray
     :return: Image with only region with corresponding index on labeled_image.
+    :rtype: numpy.ndarray
     """
     extract_part = image.copy()
     # If the extracted region is bright, paint the background with black
