@@ -11,11 +11,15 @@ def nrmse_similarity(image_1, image_2, norm_mode="Min max"):
     Normalized root mean squared error (NRMSE).
 
     :param image_1: The image 1 for comparison
+    :type image_1: numpy.ndarray
     :param image_2: The image 2 for comparison
+    :type image_2: numpy.ndarray
     :param norm_mode: The mode for the normalization, average mode use the max (||image_1||, ||image_2||) \
                  Min max use the max(image_1 value range, image_2 value range)
+    :type norm_mode: str
     :return: The score that measure the similarity between two images in range [0,1] using NRMSE \
              0 is the least similar, 1 is the most similar (same)
+    :rtype: float
     """
     image_1 = image_1.astype("float64")
     image_2 = image_2.astype("float64")

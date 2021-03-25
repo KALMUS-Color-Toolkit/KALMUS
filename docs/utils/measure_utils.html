@@ -324,13 +324,16 @@ three channels (R, G, B). shape == [number of colors, 3]</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>image_1</strong> -- The image 1 for comparison</p></li>
-<li><p><strong>image_2</strong> -- The image 2 for comparison</p></li>
-<li><p><strong>norm_mode</strong> -- The mode for the normalization, average mode use the max (||image_1||, ||image_2||)                  Min max use the max(image_1 value range, image_2 value range)</p></li>
+<li><p><strong>image_1</strong> (<em>numpy.ndarray</em>) -- The image 1 for comparison</p></li>
+<li><p><strong>image_2</strong> (<em>numpy.ndarray</em>) -- The image 2 for comparison</p></li>
+<li><p><strong>norm_mode</strong> (<em>str</em>) -- The mode for the normalization, average mode use the max (||image_1||, ||image_2||)                  Min max use the max(image_1 value range, image_2 value range)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The score that measure the similarity between two images in range [0,1] using NRMSE              0 is the least similar, 1 is the most similar (same)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
