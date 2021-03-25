@@ -125,7 +125,7 @@ def local_cross_correlation(signal_template, signal_source, horizontal_interval=
     Local cross correlation between two input signals. The input signals need to be 2 dimensional for local windowing
 
     :param signal_template: The template signal
-    :type signal_source: numpy.ndarray
+    :type signal_template: numpy.ndarray
     :param signal_source: The source signal
     :type signal_source: numpy.ndarray
     :param horizontal_interval: Number of horizontal intervals (window width == signal width // horizontal intervals)
