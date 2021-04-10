@@ -27,6 +27,12 @@ and [KALMUS PyPI Homepage](https://pypi.org/project/kalmus/).
 - How do I contribute to the KALMUS: [KALMUS Contribution Guidelines](CONTRIBUTING.md)
 - How do I run the KALMUS's automated test suite: [Auomated Test Suite](tests/)
 
+Examples of Barcode visualization:  
+![whole_frame_average_mission_impossible](notebooks/notebook_figures/mission_barcode_whole_frame_avg.png)  
+**Mission: Impossible (1996) color barcode using the average color of whole frame for each frame**
+
+![foreground_average_mission_impossible](notebooks/notebook_figures/mission_barcode_Foreground_avg.png)  
+**Mission: Impossible (1996) color barcode using the average color of foreground of each frame**
 
 # API Documentation
 
