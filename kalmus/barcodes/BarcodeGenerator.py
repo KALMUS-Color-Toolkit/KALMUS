@@ -25,7 +25,7 @@ def build_barcode_from_json(path_to_json, barcode_type="Color"):
     :param barcode_type: Type of the barcode that stored in the json file
     :type barcode_type: str
     :return: The barcode built from the json file at given path
-    :rtype: class:`kalmus.barcodes.Barcode.ColorBarcode` or class:`kalmus.barcodes.Barcode.BrightnessBarcode object`
+    :rtype: class:`kalmus.barcodes.Barcode.ColorBarcode` or class:`kalmus.barcodes.Barcode.BrightnessBarcode`
     """
     assert barcode_type in barcode_types, "Invalid barcode type. The available types of " \
                                           "the barcode are {:s}".format(str(barcode_types))
@@ -197,7 +197,7 @@ class BarcodeGenerator():
         return the barcode object stored in the Barcode generator
 
         :return: The generated barcode
-        :rtype: class:`kalmus.barcodes.Barcode.ColorBarcode` or class:`kalmus.barcodes.Barcode.BrightnessBarcode` object
+        :rtype: class:`kalmus.barcodes.Barcode.ColorBarcode` or class:`kalmus.barcodes.Barcode.BrightnessBarcode`
         """
         assert self.barcode is not None, "There is not a generated barcode"
         return self.barcode

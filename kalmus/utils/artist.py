@@ -34,7 +34,7 @@ def compute_dominant_color(image, n_clusters=3, max_iter=10, threshold_error=1.0
     Expected output shape: n_clusters x channels (cluster centers), n_clusters (relative size in percentage) \
     E.g. for an input color image with 3 channels and n_clusters = 3  Output can be [[255, 255, 255], \
     [126, 75, 198], [186, 145, 122]], [0.4, 0.5, 0.1]
-    :rtype: numpy.ndarray, numpy.ndarray
+    :rtype: (numpy.ndarray, numpy.ndarray)
     """
     assert len(image.shape) >= 2, "The input must be a 2 dimensional image"
     # Flatten the image
@@ -105,7 +105,7 @@ def compute_mode_color(image, bin_size=10):
     :type bin_size: int
     :return: The mode color of the image (modes of the channels), shape=channels, and counts of the \
     mode colors happened in the input image, shape==channels
-    :rtype: numpy.ndarray, numpy.ndarray
+    :rtype: (numpy.ndarray, numpy.ndarray)
     """
     image = flatten_image(image)
     image = image // bin_size
@@ -157,7 +157,7 @@ def compute_brightest_color_and_brightness(grey_image, color_image, return_min=F
     :param blur_radius: The radius of the gaussian filter
     :type blur_radius: int
     :return: The color and brightness of the brightest pixel (, color and brightness of the darkest pixel)
-    :rtype: numpy.ndarray, int, tuple
+    :rtype: (numpy.ndarray, int, tuple)
     """
     if gaussian_blur:
         grey_image = cv2.GaussianBlur(grey_image.copy(), (blur_radius, blur_radius), 0)
@@ -185,7 +185,7 @@ def find_bright_spots(image, n_clusters=3, blur_radius=21, amount_of_bright_part
     :type amount_of_bright_parts: float
     :return: The location of centers of top-3 bright spots (with irregular shape), percentage of dominance of each spot \
     (relative size of the spot)
-    :rtype: numpy.ndarray, numpy.ndarray
+    :rtype: (numpy.ndarray, numpy.ndarray)
     """
     assert amount_of_bright_parts >= 0 and amount_of_bright_parts <= 1, "Range of the sample ration is in [0, 1]"
     assert n_clusters >= 1, "The number of bright spots must be larger or equal to 1"
@@ -324,7 +324,7 @@ def watershed_segmentation(image, minimum_segment_size=0.0004, base_ratio=0.5, d
     :return: the segmented image, where shape==input_image.shape. and regions are labeled from 0 to n-1, where \
     n is the number of regions in the labeled image. Functions also return the greyscale image corresponding to \
     the original image
-    :rtype: numpy.ndarray, numpy.ndarray
+    :rtype: (numpy.ndarray, numpy.ndarray)
     """
     assert 0 <= minimum_segment_size < 1, "The minimum size of the segments (in percentage ratio) is in range [0, 1)"
     # Gray Scale image
@@ -431,7 +431,7 @@ def color_of_regions(labels, original_image):
     :return: A list of average color of the regions, a list of brightest color of the regions, and \
     a list of sizes of the regions. The order of the regions in list is the same as they are in \
     labeled image
-    :rtype: list, list, list
+    :rtype: (list, list, list)
     """
     # Average Color of the region
     avg_colors_list = []
@@ -581,7 +581,7 @@ def get_contrast_matrix_and_labeled_image(frame, minimum_segment_size=0.0004):
     :type minimum_segment_size: float
     :return: The matrix with shape (num_regions x num_regions) whose cell [i, j] represents the contrast \
              between the region i and region j, and the corresponding labeled image (segmentation)
-    :rtype: list, numpy.ndarray
+    :rtype: (list, numpy.ndarray)
 
     """
     labels, grey_frame = watershed_segmentation(frame, minimum_segment_size=minimum_segment_size)
@@ -622,7 +622,7 @@ def grabcut_foreback_segmentation(image, start_row=0, start_col=0, row_size=-1, 
              the background part of the image Expected shape== Number of pixels x channels. \
              If return_masks is True, return boolean masks foreground and background. Expected shape==image.shape
 
-    :rtype:numpy.ndarray, numpy.ndarray
+    :rtype: (numpy.ndarray, numpy.ndarray)
     """
     if start_row < 0:
         start_row = 0
@@ -675,7 +675,7 @@ def find_letter_box_from_videos(video, num_sample=30):
              and the larger col index of letterbox (bound for right vertical letterbox). \
              \
              The results are the median results on num_sample number of frames
-    :rtype: int, int, int, int
+    :rtype: (int, int, int, int)
 
     """
     film_length_in_frames = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -727,7 +727,7 @@ def get_letter_box_from_frames(frame, threshold=5):
              the larger row index of letterbox (bound for lower horizontal letterbox), \
              the smaller col index of letterbox (bound for left vertical letterbox), \
              and the larger col index of letterbox (bound for right vertical letterbox).
-    :rtype: int, int, int, int
+    :rtype: (int, int, int, int)
     """
     low_bound_ver = 0
     high_bound_ver = frame.shape[0]

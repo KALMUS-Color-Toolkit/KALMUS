@@ -4,7 +4,8 @@
 <html class="writer-html5" lang="python" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>ColorBarcode Class &mdash; KALMUS 1.3.8 documentation</title>
@@ -174,83 +175,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="colorbarcode-class">
+  <section id="colorbarcode-class">
 <h1>ColorBarcode Class<a class="headerlink" href="#colorbarcode-class" title="Permalink to this headline">¶</a></h1>
-<p>Barcode Classes</p>
-<dl class="py class">
-<dt>
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">kalmus.barcodes.Barcode.</span></code><code class="sig-name descname"><span class="pre">ColorBarcode</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color_metric</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampled_frame_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_over</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_frames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">barcode_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Color'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/barcodes/Barcode.html#ColorBarcode"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
-<dd><p>Bases: <a class="reference internal" href="BarcodeBase.html#kalmus.barcodes.Barcode.Barcode" title="kalmus.barcodes.Barcode.Barcode"><code class="xref py py-class docutils literal notranslate"><span class="pre">kalmus.barcodes.Barcode.Barcode</span></code></a></p>
-<p>Color barcode</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>color_metric</strong> (<em>str</em>) -- The metric for computing the color of the frame</p></li>
-<li><p><strong>frame_type</strong> (<em>str</em>) -- The type of frame sampling</p></li>
-<li><p><strong>sampled_frame_rate</strong> (<em>int</em>) -- Frame sample rate: the frame sampled from every sampled_frame_rate.</p></li>
-<li><p><strong>skip_over</strong> (<em>int</em>) -- The number of frames to skip with at the beginning of the video</p></li>
-<li><p><strong>total_frames</strong> (<em>int</em>) -- The total number of frames (computed) included in the barcode</p></li>
-<li><p><strong>barcode_type</strong> (<em>str</em>) -- The type of the barcode</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py method">
-<dt>
-<code class="sig-name descname"><span class="pre">collect_colors</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">video_path_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/barcodes/Barcode.html#ColorBarcode.collect_colors"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
-<dd><p>Collect the colors of frames from the video</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>video_path_name</strong> (<em>str</em>) -- The path to the video file</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt>
-<code class="sig-name descname"><span class="pre">multi_thread_collect_colors</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">video_path_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_thread</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/barcodes/Barcode.html#ColorBarcode.multi_thread_collect_colors"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
-<dd><p>Collect the color of the input video using Multi-thread method</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>video_path_name</strong> (<em>str</em>) -- The path to the input video</p></li>
-<li><p><strong>num_thread</strong> (<em>int</em>) -- Number of threads to collect the brightness</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt>
-<code class="sig-name descname"><span class="pre">reshape_barcode</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frames_per_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">160</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/barcodes/Barcode.html#ColorBarcode.reshape_barcode"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
-<dd><p>Reshape the barcode (2 dimensional with 3 channels)</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>frames_per_column</strong> (<em>int</em>) -- Number of frames per column in the reshaped barcode</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt>
-<code class="sig-name descname"><span class="pre">thread_collect_color_start_to_end</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">video</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_frames</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_saved</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/barcodes/Barcode.html#ColorBarcode.thread_collect_color_start_to_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
-<dd><p>Collect the colors from the video using the multi-threads</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>video</strong> (class:<cite>cv2.VideoCapture</cite>) -- The video object</p></li>
-<li><p><strong>start_point</strong> (<em>int</em>) -- Start point for collecting the colors</p></li>
-<li><p><strong>num_frames</strong> (<em>int</em>) -- The number of frames to collect</p></li>
-<li><p><strong>results</strong> (<em>list</em>) -- The placeholder for saving the results</p></li>
-<li><p><strong>tid</strong> (<em>int</em>) -- The id of the thread</p></li>
-<li><p><strong>frame_saved</strong> (<em>list</em>) -- The placeholder for the saved frames</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-</div>
+</section>
 
 
            </div>

@@ -26,7 +26,7 @@ def foreback_segmentation(frame):
     :type frame: numpy.ndarray
     :return: 1D image of the foreground part of the image, and 1D image of the background part of the image \
              Expected shape== Number of pixels x channels
-    :rtype: numpy.ndarray, numpy.ndarray
+    :rtype: (numpy.ndarray, numpy.ndarray)
     """
     fore_frame, back_frame = artist.grabcut_foreback_segmentation(frame, start_row=0, row_size=frame.shape[0] - 1,
                                                                   start_col=frame.shape[1] // 6,
