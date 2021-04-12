@@ -27,12 +27,15 @@ and [KALMUS PyPI Homepage](https://pypi.org/project/kalmus/).
 - How do I contribute to the KALMUS: [KALMUS Contribution Guidelines](CONTRIBUTING.md)
 - How do I run the KALMUS's automated test suite: [Auomated Test Suite](tests/)
 
-Examples of Barcode visualization:  
-![whole_frame_average_mission_impossible](notebooks/notebook_figures/mission_barcode_whole_frame_avg.png)  
-**Mission: Impossible (1996) color barcode using the average color of whole frame for each frame**
+**Examples of Barcode visualization:**
 
-![foreground_average_mission_impossible](notebooks/notebook_figures/mission_barcode_Foreground_avg.png)  
-**Mission: Impossible (1996) color barcode using the average color of foreground of each frame**
+<p align="center">
+  <img width="" height="" src="notebooks/notebook_figures/mission_barcode_whole_frame_avg.png">
+  <br>Figure 1. Mission: Impossible (1996) color barcode using the average color of whole frame for each frame</br>
+  <br>
+  <img width="" height="" src="notebooks/notebook_figures/mission_barcode_Foreground_avg.png">
+  <br>Figure 2. Mission: Impossible (1996) color barcode using the average color of foreground of each frame</br>
+</p>
 
 # API Documentation
 
@@ -85,9 +88,9 @@ Notice that the Command-line interface (CLI) is only available in KALMUS v1.3.7 
 # Contribution
 
 We encourage contributions, including bug fixes and new features, from our community users. When contributing to the 
-kalmus package, please first contact the project maintainers by email <yc015@bucknell.edu> or opening an issue. If 
-your bug fixes or new features changing the current behavior of the package, please specify the changed behaviors and 
-reasons for changing in the discussion with project maintainers. 
+kalmus package, please contact the project maintainers by email <yc015@bucknell.edu> or opening an issue. If 
+your bug fixes or new features change the current behaviors of package, please specify the changes and reasons in the 
+discussion with project maintainers. 
 
 We encourage inclusive and friendly discussion. Please follow our [code of conduct](CODE_OF_CONDUCT.md) when 
 communicating. 
