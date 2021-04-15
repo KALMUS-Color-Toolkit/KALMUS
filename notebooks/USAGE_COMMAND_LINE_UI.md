@@ -19,9 +19,9 @@ In this Markdown Tutorial I will introduce:
 # Notice
 
 The Command-line Interface of KALMUS is used specifically for **generating barcode** and **saving** it into 
-reloadable (via both [API](user_guide_for_kalmus_api.ipynb) and [GUI](user_guide_for_kalmus_gui.ipynb)) JSON object.
+reloadable (via both [API](user_guide_for_kalmus_api.ipynb) and [GUI](user_guide_for_kalmus_gui.ipynb)) JSON objects.
 
-We recommend our users to first walk through the IPython notebook Tutorials on either 
+We recommend our users first walk through the IPython notebook Tutorials on either 
 [KALMUS's Graphic user interface](user_guide_for_kalmus_gui.ipynb) or [KALMUS's Application programming interface](user_guide_for_kalmus_api.ipynb), 
 in which the full functionality of KALMUS is covered.
 
@@ -30,15 +30,15 @@ through this **Command-line interface**.
 
 # Installation Guide
 
-There are two ways that you could install KALMUS on you local machine:  
+There are two ways that you could install KALMUS on your local machine:  
 1. (**Recommended**) Get the latest distribution of KALMUS from PyPI ([KALMUS Project Page on PyPI](https://pypi.org/project/kalmus/)).  
-Use command `$ pip install kalmus` or `$ pip install --upgrade kalmus` (if kalmus has been installed) to install the latest version of KALMUS package. All dependencies should be automatically installed during this process.
+Use command `$ pip install kalmus` or `$ pip install --upgrade kalmus` (if kalmus has been installed) to install the latest version of the KALMUS package. All dependencies should be automatically installed during this process.
 
-2. Alternatively, you could install the KALMUS locally by first cloning the GitHub repo of Kalmus ([GitHub page](https://github.com/KALMUS-Color-Toolkit/KALMUS)). Then, move to the top directory of cloned KALMUS project and install using command `pip install .` 
+2. Alternatively, you could install the KALMUS locally by first cloning the GitHub repo of Kalmus ([GitHub page](https://github.com/KALMUS-Color-Toolkit/KALMUS)). Then, move to the top directory of cloned KALMUS project and install using the command `pip install .` 
 
 **See our [Installation Guide](https://kalmus-color-toolkit.github.io/KALMUS/install.html) for more details.**
 
-Once the package is installed, you could verify the version of KALMUS package using command `$ pip show kalmus`  
+Once the package is installed, you could verify the version of the KALMUS package using the command `$ pip show kalmus`  
 ![KALMUS version](notebook_figures/kalmus_version.png)
 
 Alternatively, in version 1.3.7 and above, you can check the version of installed kalmus using its 
@@ -52,7 +52,7 @@ Alternatively, in version 1.3.7 and above, you can check the version of installe
 
 ## Important!
 
-The **Command-line interface** is a new feature added into the KALMUS in its 1.3.7 version. To use Command-line 
+The **Command-line interface** is a new feature added into the KALMUS in its 1.3.7 version. To use the Command-line 
 interface, you have to make sure the version of installed KALMUS is 1.3.7 or onward.
 
 # How do I use the command-line interface?
@@ -64,7 +64,7 @@ Notice that if you have installed
 kalmus>=1.3.7 but failed to start the kalmus-generator through this command, you could find the corresponding executable 
 in your_python_directory/Scripts/ directory on Windows or .local/bin/ directory on Linux.
 
-Check the available arguments for `kalmus-generator` command using the flag `-h`:
+Check the available arguments for the `kalmus-generator` command using the flag `-h`:
 
 ```
 Windows OS
@@ -90,9 +90,9 @@ Only the arguments marked with **(required)** must be specified in the kalmus-ge
 | **--color_metric (required)**:| The color_metric selected for barcode generation. Equivalent to the **color_metric** in `BarcodeGenerator` | `str` |
 | **--frame_type (required)**:| The frame_type selected for barcode generation. Equivalent to the **frame_type** in `BarcodeGenerator` | `str` |
 | **--barcode_type (required)**:| The barcode_type of the generated barcode. Equivalent to the **barcode_type** in `BarcodeGenerator` | `str` |
-| **--skip**:| The number of frames to be skipped at the start of input video before collecting color/brightness. Equivalent to the **skip_over** in `BarcodeGenerator` | `int>=0` |    
+| **--skip**:| The number of frames to be skipped at the start of the input video before collecting color/brightness. Equivalent to the **skip_over** in `BarcodeGenerator` | `int>=0` |    
 | **-s --step (required)**:| The frame sampled rate. Collect color from one frame every **step** frames. Equivalent to **sampled_frame_rate** in `BarcodeGenerator`| `int>=1` |
-| **-t --total_frames**:| The total number of frames to be included in generated barcode. Equivalent to **total_frames** in `BarcodeGenerator`. **Notice**: If you wish to generate barcode till the end of video, simply put a very large number in  total_frames, e.g. total_frames = 1e8. The barcode will auto adjust the total frames using film length (in frames) and your specified skip_over and sampled_frame_rate to recompute the correct number for total_frames, and barcode generator collects color/brightness till the last frame of input video.| `int>=0` |
+| **-t --total_frames**:| The total number of frames to be included in generated barcode. Equivalent to **total_frames** in `BarcodeGenerator`. **Notice**: If you wish to generate a barcode till the end of video, simply put a very large number in  total_frames, e.g. total_frames = 1e8. The barcode will auto adjust the total frames using film length (in frames) and your specified skip_over and sampled_frame_rate to recompute the correct number for total_frames, and the barcode generator collects color/brightness till the last frame of the input video.| `int>=0` |
 | **--num_thread**:| Number of threads to use in barcode generation. Equivalent to **num_thread** in `BarcodeGenerator.generate_barcode`. We highly recommend this if your processor supports multi-threading. | `int>=2` |
 | **--saved_frame_rate**:| The rate of saving frames (thumbnail quality) in barcode generation (save rate's unit: seconds). Equivalent to **saved_frame_rate** in `BarcodeGenerator.generate_barcode`. The saved frames can be very useful when visualizing barcode in [GUI](user_guide_for_kalmus_gui.ipynb) as you may correlate or validate a segment of colors/brightness barcode with its corresponding frames. **However**, since the size of saved frames/images grows very quickly, you may wish to set this saved rate (seconds) to be low or not to use this option (by default). | `float>0` |
 | **--rescale_frame_factor**:| The factor of rescaling the frames when collecting color. Equivalent to **rescale_frame_factor** in `BarcodeGenerator.generate_barcode`. resize width = sqrt(rescale_frame_factor) x original width, resize height = sqrt(rescale_frame_factor) * original height. We recommend you to use this option speed up the generation process if your input video's resolution is above 2K (or 1K for Top-dominant, Weighted-dominant, Bright color metric and Low/High_contrast_region or Foreground/Background frame type). | `1>float>0` |
@@ -117,8 +117,7 @@ Only the arguments marked with **(required)** must be specified in the kalmus-ge
 $ kalmus-generator -p notebook_example_data/i_robot_video.mp4 --frame_type Whole_frame --color_metric Average --skip 10 --step 1 --total_frames 100 --barcode_type Color
 ```
 
-A JSON file with filename: **saved_Color_barcode_Whole_frame_Average.json** should be generated in this folder after the 
-command's execution finished.
+A JSON file with filename: **saved_Color_barcode_Whole_frame_Average.json** should be generated in this folder after the command's execution is finished.
 
 (2) Generate a **Brightness** Barcode using **High_contrast_region** with **Median** color from the *i_robot_video.mp4* in [notebook_example_data](notebook_example_data). 
 **Not skipping** any frames, **sampled** every 2 frames, and **include all frames till the end**. **Save frames** every 
