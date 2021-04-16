@@ -102,10 +102,10 @@ In the figures below,
 
 Below, we show two barcodes generated from a whole film (Mission: Impossible (2006)) using two different frame types.
 
-**Barcode generated using Average color and Whole_frame of each frame**
+**Barcode generated using Average color and Whole_frame of each frame**  
 ![whole_barcode](notebook_figures/mission_barcode_whole_frame_avg.png)
 
-**Barcode generated using Average color but only Foreground of each frame**
+**Barcode generated using Average color but only Foreground of each frame**  
 ![fore_barcode](notebook_figures/mission_barcode_Foreground_avg.png)
 
 **Available options for comparing different barcode visualization**
@@ -166,6 +166,8 @@ The **display (1)** and **display(2)** are clickable plots.
 
 ![main_2](notebook_figures/kalmus_gui_main_buttons.png)
 
+---
+
 ### 3.2 (6) Generate Barcode Window
 
 ![gene](notebook_figures/kalmus_gui_generate_barcode.png)
@@ -194,6 +196,8 @@ The **display (1)** and **display(2)** are clickable plots.
 
 - (14) Specify the meta information of the input video. **Warning:** Specify the input video's meta information before you press the generate barcode button! Press Update Meta Info to save the entered entries.
 
+---
+
 ### 3.3 (7) Load Json Barcode Window
 
 ![load](notebook_figures/kalmus_gui_load_json.png)
@@ -203,6 +207,8 @@ The **display (1)** and **display(2)** are clickable plots.
 - Specify which barcode display on the Main window that you will load the barcode into
 - Press the Load button to load the JSON barcode
 
+---
+
 ### 3.4 (8) Load Barcode from Memory Window
 
 ![load_mem](notebook_figures/kalmus_gui_load_memory.png)
@@ -211,6 +217,8 @@ The **display (1)** and **display(2)** are clickable plots.
 - User can load them onto the main display by selecting the name of barcode on the list
 - Specify which display on the main window that new barcode will be loaded into
 - Press the Load Selected Barcode button
+
+---
 
 ### 3.5 (9) Reshape Barcode Window
 
@@ -228,6 +236,8 @@ In the window:
 - (3) Select which Barcode to change
 - Press Process to change the Barcode using the given option and parameters
 
+---
+
 ### 3.6 (10) Save JSON Barcode Window
 
 ![save](notebook_figures/kalmus_gui_save_json.png)
@@ -239,6 +249,8 @@ Similar to the load memory window
 
 The attributes of Barcode Object will be stored in a JSON file that can be used to rebuild the Barcode Object (in GUI, you simply reload the JSON barcode through Load JSON Window **section 3.3**)
 
+---
+
 ### 3.7 (11) Save Barcode Image Window
 
 ![save](notebook_figures/kalmus_gui_save_image.png)
@@ -247,6 +259,8 @@ The attributes of Barcode Object will be stored in a JSON file that can be used 
 - The Saved width and height are automatically filled with the current width and height of barcodes. You could change to your desirable spatial size.
 - Specify the path to the saved image file in the Image file path textbox
 - Press the Save Barcode button
+
+---
 
 ### 3.8 (12) Inspect Barcode Window
 
@@ -264,6 +278,8 @@ In the inspect window there are three options to explore
 
 ![cube](notebook_figures/kalmus_gui_inspect_3.png)
 
+---
+
 ### 3.9 (13) Statistics Information Window
 
 ![stats](notebook_figures/kalmus_gui_stats.png)
@@ -273,6 +289,8 @@ The similarity comparison between the displayed barcodes using a set of six comp
 **Warning:** The initiation of this window may take tens of seconds.
 
 For more references about these six comparison metrics, please check section 2.3 above.
+
+---
 
 ### 3.10 (14) Check Meta Information Window
 
@@ -293,9 +311,13 @@ You will first be asked which barcode on the main display that you wish to check
 - Hit Refresh in Check Barcode Meta Information Window to see the updates
 - To reflect the updates on the title of plots in the main display, find the barcode with updated meta information in the memory using the Load Memory button and load the updated barcode back to the main display.
 
+---
+
 ### 3.11 (15) Quit
 
 Quit the KALMUS's GUI. **Be sure to save all the barcodes you like before you quit the program, and make sure the Generate Barcode Window is closed before quitting**.
+
+---
 
 ## 4. Thank you!
 
