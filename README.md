@@ -77,10 +77,11 @@ KALMUS has a low-level API, high-level command line, and Graphic user interface 
 backgrounds to take advantage of its functionality. 
 
 To get started on KALMUS, we encourage you to check the Jupyter notebook tutorials in the [notebooks](notebooks) 
-folder. We currently provide the interactive notebook tutorial for users to get started on KALMUS using its API, GUI, or CLI. 
+folder. We provide the interactive notebook tutorials for users to get started on KALMUS using its API, GUI, and CLI. 
 Notice that the Command-line interface (CLI) is only available in KALMUS v1.3.7 or onward.
 
 - [Notebook Tutorial for Graphic User Interface](notebooks/user_guide_for_kalmus_gui.ipynb)
+- [Markdown Tutorial for Graphic User Interface](notebooks/USAGE_GRAPHIC_USER_INTERFACE.md)
 - [Notebook Tutorial for Application Programming Interface](notebooks/user_guide_for_kalmus_api.ipynb)
 - [Markdown Tutorial for Command-line interface](notebooks/USAGE_COMMAND_LINE_UI.md)
 - [Notebook Tutorial for Advanced API Usage](notebooks/advanced_guide_for_kalmus_api.ipynb)

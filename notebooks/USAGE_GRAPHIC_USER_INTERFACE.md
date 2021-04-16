@@ -140,9 +140,9 @@ If you have installed the KALMUS package on your machine with version 1.3.0 and 
 
 Alternatively, you could import the main function of the GUI from `kalmus.command_line_gui` module.
 
-```jupyter
->>> from kalmus.command_line_gui import main
->>> main()
+```python
+from kalmus.command_line_gui import main
+main()
 ```
 
 ### 3.1 Main window of KALMUS
