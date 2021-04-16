@@ -97,7 +97,7 @@ communicating.
 
 # Test Suite
 
-We provide an automated test suite that covers the core functionality of KALMUS. Before running the automated test suite locally, 
+We provide an [automated test suite](tests/) that covers the core functionality of KALMUS. Before running the automated test suite locally, 
 make sure you have installed the latest versions of [pytest](https://pypi.org/project/pytest/), [pytest-cov](https://pypi.org/project/pytest-cov/), 
 and [kalmus](https://pypi.org/project/kalmus/), and you have cloned the project repository on master branch. 
 
