@@ -11,8 +11,7 @@ To run these notebooks, please install the latest version of Jupyter Lab
 ([Installation Instruction for JupyterLab](https://jupyterlab.readthedocs.io/en/stable/getting_started/installation.html)) 
 and the latest version of KALMUS package ([Installation Guide for KALMUS](https://kalmus-color-toolkit.github.io/KALMUS/install.html)).
  
-When running the notebooks, make sure you have cloned the project on your local machine or download the whole 
-[notebooks folder](../notebooks). Then, start the Jupyter Lab inside the notebooks folder using command:
+When running the notebooks, make sure you have downloaded the whole [notebooks folder](https://github.com/KALMUS-Color-Toolkit/KALMUS/archive/refs/heads/master.zip) or cloned the project on your local machine. Then, start the Jupyter Lab inside the notebooks folder using command:
 
 ```
 $ jupyter lab
@@ -28,3 +27,11 @@ barcode generation.
 - Notebook Guide for how to interact with [Application Programming Interface](user_guide_for_kalmus_api.ipynb)
 - Notebook Guide for [Advanced usage](advanced_guide_for_kalmus_api.ipynb) of Application Programming Interface (how to create your own Barcode Visualization)
 - Markdown Guide for how to interact with [Command-line Interface](USAGE_COMMAND_LINE_UI.md)
+
+# For general audience
+We provide the markdown version of user guides for kalmus' Command-line interface and Graphic user interface. The rendered markdown tutorials can be read directly on the GitHub.
+
+**Content:**
+- Markdown Guide for how to interact with [Graphic User Interface](USAGE_GRAPHIC_USER_INTERFACE.md)
+- Markdown Guide for how to interact with [Command-line Interface](USAGE_COMMAND_LINE_UI.md)
+
