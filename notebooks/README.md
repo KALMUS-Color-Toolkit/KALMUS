@@ -28,7 +28,7 @@ barcode generation.
 - Notebook Guide for [Advanced usage](advanced_guide_for_kalmus_api.ipynb) of Application Programming Interface (how to create your own Barcode Visualization)
 - Markdown Guide for how to interact with [Command-line Interface](USAGE_COMMAND_LINE_UI.md)
 
-# For general audience
+# For general audiences
 We provide the markdown version of user guides for kalmus' Command-line interface and Graphic user interface. The rendered markdown tutorials can be read directly on the GitHub.
 
 **Content:**
