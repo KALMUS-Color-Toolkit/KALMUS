@@ -11,7 +11,7 @@ from kalmus.tkinter_windows.SaveBarcodeWindow import SaveBarcodeWindow
 from kalmus.tkinter_windows.LoadStackWindow import LoadStackWindow
 from kalmus.tkinter_windows.LoadJsonWindow import LoadJsonWindow
 from kalmus.tkinter_windows.ReshapeBarcodeWindow import ReshapeBarcodeWindow
-from kalmus.tkinter_windows.gui_utils import paint_hue_hist, update_axes_title, resource_path
+from kalmus.tkinter_windows.gui_utils import paint_hue_hist, update_axes_title, update_axes_ticks, resource_path
 from kalmus.tkinter_windows.plot_barcodes_windows.WhichBarcodeInspectWindow import WhichBarcodeInspectWindow
 from kalmus.tkinter_windows.StatsInfoWindow import StatsInfoWindow
 from kalmus.tkinter_windows.SaveImageWindow import SaveImageWindow
@@ -117,6 +117,8 @@ class MainWindow():
         # Use tight layout
         plt.tight_layout()
 
+        update_axes_ticks(self.barcode_1, self.barcode_2, self.ax)
+
         # Draw the canvas
         self.canvas = FigureCanvasTkAgg(self.fig, master=self.root)  # A tk.DrawingArea.
         self.canvas.draw()
@@ -205,7 +207,7 @@ class MainWindow():
 
         # Otherwise check if user want to quit the software
         quit_software = askokcancel("Quit KALMUS", "Are you sure you want to close the KALMUS?\n"
-                                                 "All unsaved results will be lost.")
+                                                   "All unsaved results will be lost.")
         # Quit if yes
         if quit_software:
             self.quit()
