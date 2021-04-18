@@ -65,7 +65,7 @@ KALMUS allows users to understand a film’s color palette and compare that pale
 | Foreground	| Yes | Yes | Yes | Yes | Yes |  Yes | No |
 | Background	| Yes | Yes | Yes | Yes | Yes |  Yes | No |
 
-Table:  A summary of the various metrics one can use to calculate the color of a frame and what parts of a frame will be used to calculate the color of the frame.   
+Table 1:  A summary of the various metrics one can use to calculate the color of a frame and what parts of a frame will be used to calculate the color of the frame.   
 
 
 | Comparison metric | Range | References |
@@ -79,7 +79,7 @@ Table:  A summary of the various metrics one can use to calculate the color of a
 | Smith--Waterman | 0 least similar, 1 most similar | @smith |
 |                 |                                 | @adams |
 
-Table:  A summary of the various metrics included in KALMUS to compare the overall color of two films.
+Table 2:  A summary of the various metrics included in KALMUS to compare the overall color of two films.
 
 
 As of version 1.3.5, the software is stable.  Because the audience of potential users of KALMUS is broad, we provide access to the KALMUS package via the GUI described above but also point out that the package can be installed and used in any Python environment.
