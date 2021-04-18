@@ -56,18 +56,18 @@ KALMUS allows for the analysis of a film's color by (1) providing an interface t
 
 KALMUS allows users to understand a film’s color palette and compare that palette to other films.  See Table 1 for options on what parts of the frame a user might want to analyze and the various metrics a user can use to determine the color of a frame.  See Table 2 for information on how film colors can be compared.  Potentially, films from a certain time period or a particular genre might be aggregated to see if there are common color palettes.  While film studies as a discipline has long depended on qualitative analysis, KALMUS provides a straightforward quantitative tool that can supplement the reading of a film.  For example, in [@adams] KALMUS is used to study color trends in Hollywood movies from 1990 to 2015.  In a class taught by the second author, students used KALMUS to explore how a film's color palette signaled narrative shifts and introduced significant characters.
 
-\tiny
-|                     | Mean	| Median   | Mode	| TD	| WD	| BR	| BP |
+
+|                     | Mean	| Median   | Mode	| TD	| WD	| BR	| BP  |
 | :-------------------| ----: | -------: | ---: | --: | --: |---: | --: |
 | Whole frame	        | Yes   | Yes      | Yes  | Yes | Yes | Yes | Yes |
 | High contrast region	| Yes | Yes | Yes | Yes | Yes | Yes | No |
 | Low contrast region	| Yes | Yes | Yes | Yes | Yes |  Yes |No |
 | Foreground	| Yes | Yes | Yes | Yes | Yes |  Yes | No |
 | Background	| Yes | Yes | Yes | Yes | Yes |  Yes | No |
-\normalsize
+
 Table 1:  A summary of the various metrics one can use to determine the color of a frame and what parts of a frame will be used to calculate the color of the frame.  The first three metrics (mean, median and mode) are the corresponding statistic over all the colors in the part of the frame being analyzed.  The next two metrics, top dominant (TD) and weighted dominant (WD) are determined by applying a clustering algorithm on the set of all the colors in the part of the frame being analyzed and, in the case of the top dominant metric, the color is determined by the color of the largest cluster and, in the case of the weighted dominant metric, the color is determined by the average color of the clusters, weighted by the sizes of the clusters.  The last two metrics assign the color of the region being analyzed to be the color of the brightest region (BR) or the brightest pixel (BP) in the region.
 
-
+\small
 | Comparison metric | Range | References |
 | :---------------- | ----: | --------: |
 | Normalized root mean square error | 0 least similar, 1 most similar | @wang  |
@@ -78,7 +78,7 @@ Table 1:  A summary of the various metrics one can use to determine the color of
 |                   |                                 | @adams |
 | Smith--Waterman | 0 least similar, 1 most similar | @smith |
 |                 |                                 | @adams |
-
+\normalsize
 Table 2:  A summary of the various metrics included in KALMUS to compare the overall color of two films.
 
 
