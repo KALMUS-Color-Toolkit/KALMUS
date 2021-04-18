@@ -156,23 +156,12 @@ def update_axes_ticks(barcode1, barcode2, axes):
     axes[1][0].set_ylabel("{:.2f}s per column".format(seconds_per_column2))
 
     if np.round(seconds_per_column1, decimals=0) == np.round(seconds_per_column2, decimals=0):
-        # xticks_pos = axes[1][0].get_xticks()
-        # xticks_second = np.round(xticks_pos * seconds_per_column2, decimals=0).astype("int")
-        # xticks_label = list(map(lambda x: "{:02d}:{:02d}".format(x // 60, x % 60), xticks_second))
-
         def get_seconds_str_yticks(tick_value, pos):
             seconds = np.round(tick_value * seconds_per_column2, decimals=0).astype("int")
             return "{:02d}:{:02d}".format(seconds // 60, seconds % 60)
 
-        #axes[1][0].set_xticklabels(xticks_label)
         axes[1][0].xaxis.set_major_formatter(FuncFormatter(get_seconds_str_yticks))
-
-        # yticks_pos_1 = axes[0][0].get_yticks()
-        # yticks_pos_2 = axes[1][0].get_yticks()
-        # yticks_second_1 = yticks_pos_1 * barcode1.sampled_frame_rate * barcode1.scale_factor / barcode1.fps
-        # yticks_second_2 = yticks_pos_2 * barcode2.sampled_frame_rate * barcode2.scale_factor / barcode2.fps
-        # yticks_label_1 = list(map(lambda x: "{:.1f}s".format(x), yticks_second_1))
-        # yticks_label_2 = list(map(lambda x: "{:.1f}s".format(x), yticks_second_2))
+        axes[1][0].set_xlabel("Elapsed Time (mins:secs)")
 
         def get_seconds_str_xticks(tick_value, pos):
             seconds = tick_value * barcode1.sampled_frame_rate * barcode1.scale_factor / barcode1.fps
