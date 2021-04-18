@@ -194,7 +194,7 @@
 <span class="sd">    Expected output shape: n_clusters x channels (cluster centers), n_clusters (relative size in percentage) \</span>
 <span class="sd">    E.g. for an input color image with 3 channels and n_clusters = 3  Output can be [[255, 255, 255], \</span>
 <span class="sd">    [126, 75, 198], [186, 145, 122]], [0.4, 0.5, 0.1]</span>
-<span class="sd">    :rtype: numpy.ndarray, numpy.ndarray</span>
+<span class="sd">    :rtype: (numpy.ndarray, numpy.ndarray)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;The input must be a 2 dimensional image&quot;</span>
     <span class="c1"># Flatten the image</span>
@@ -265,7 +265,7 @@
 <span class="sd">    :type bin_size: int</span>
 <span class="sd">    :return: The mode color of the image (modes of the channels), shape=channels, and counts of the \</span>
 <span class="sd">    mode colors happened in the input image, shape==channels</span>
-<span class="sd">    :rtype: numpy.ndarray, numpy.ndarray</span>
+<span class="sd">    :rtype: (numpy.ndarray, numpy.ndarray)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">image</span> <span class="o">=</span> <span class="n">flatten_image</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
     <span class="n">image</span> <span class="o">=</span> <span class="n">image</span> <span class="o">//</span> <span class="n">bin_size</span>
@@ -317,7 +317,7 @@
 <span class="sd">    :param blur_radius: The radius of the gaussian filter</span>
 <span class="sd">    :type blur_radius: int</span>
 <span class="sd">    :return: The color and brightness of the brightest pixel (, color and brightness of the darkest pixel)</span>
-<span class="sd">    :rtype: numpy.ndarray, int, tuple</span>
+<span class="sd">    :rtype: (numpy.ndarray, int, tuple)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">gaussian_blur</span><span class="p">:</span>
         <span class="n">grey_image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">GaussianBlur</span><span class="p">(</span><span class="n">grey_image</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="p">(</span><span class="n">blur_radius</span><span class="p">,</span> <span class="n">blur_radius</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
@@ -345,7 +345,7 @@
 <span class="sd">    :type amount_of_bright_parts: float</span>
 <span class="sd">    :return: The location of centers of top-3 bright spots (with irregular shape), percentage of dominance of each spot \</span>
 <span class="sd">    (relative size of the spot)</span>
-<span class="sd">    :rtype: numpy.ndarray, numpy.ndarray</span>
+<span class="sd">    :rtype: (numpy.ndarray, numpy.ndarray)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="n">amount_of_bright_parts</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">amount_of_bright_parts</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Range of the sample ration is in [0, 1]&quot;</span>
     <span class="k">assert</span> <span class="n">n_clusters</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;The number of bright spots must be larger or equal to 1&quot;</span>
@@ -484,7 +484,7 @@
 <span class="sd">    :return: the segmented image, where shape==input_image.shape. and regions are labeled from 0 to n-1, where \</span>
 <span class="sd">    n is the number of regions in the labeled image. Functions also return the greyscale image corresponding to \</span>
 <span class="sd">    the original image</span>
-<span class="sd">    :rtype: numpy.ndarray, numpy.ndarray</span>
+<span class="sd">    :rtype: (numpy.ndarray, numpy.ndarray)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">minimum_segment_size</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;The minimum size of the segments (in percentage ratio) is in range [0, 1)&quot;</span>
     <span class="c1"># Gray Scale image</span>
@@ -591,7 +591,7 @@
 <span class="sd">    :return: A list of average color of the regions, a list of brightest color of the regions, and \</span>
 <span class="sd">    a list of sizes of the regions. The order of the regions in list is the same as they are in \</span>
 <span class="sd">    labeled image</span>
-<span class="sd">    :rtype: list, list, list</span>
+<span class="sd">    :rtype: (list, list, list)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Average Color of the region</span>
     <span class="n">avg_colors_list</span> <span class="o">=</span> <span class="p">[]</span>
@@ -741,7 +741,7 @@
 <span class="sd">    :type minimum_segment_size: float</span>
 <span class="sd">    :return: The matrix with shape (num_regions x num_regions) whose cell [i, j] represents the contrast \</span>
 <span class="sd">             between the region i and region j, and the corresponding labeled image (segmentation)</span>
-<span class="sd">    :rtype: list, numpy.ndarray</span>
+<span class="sd">    :rtype: (list, numpy.ndarray)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">labels</span><span class="p">,</span> <span class="n">grey_frame</span> <span class="o">=</span> <span class="n">watershed_segmentation</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">minimum_segment_size</span><span class="o">=</span><span class="n">minimum_segment_size</span><span class="p">)</span>
@@ -782,7 +782,7 @@
 <span class="sd">             the background part of the image Expected shape== Number of pixels x channels. \</span>
 <span class="sd">             If return_masks is True, return boolean masks foreground and background. Expected shape==image.shape</span>
 
-<span class="sd">    :rtype:numpy.ndarray, numpy.ndarray</span>
+<span class="sd">    :rtype: (numpy.ndarray, numpy.ndarray)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">start_row</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">start_row</span> <span class="o">=</span> <span class="mi">0</span>
@@ -835,7 +835,7 @@
 <span class="sd">             and the larger col index of letterbox (bound for right vertical letterbox). \</span>
 <span class="sd">             \</span>
 <span class="sd">             The results are the median results on num_sample number of frames</span>
-<span class="sd">    :rtype: int, int, int, int</span>
+<span class="sd">    :rtype: (int, int, int, int)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">film_length_in_frames</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">video</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">CAP_PROP_FRAME_COUNT</span><span class="p">))</span>
@@ -887,7 +887,7 @@
 <span class="sd">             the larger row index of letterbox (bound for lower horizontal letterbox), \</span>
 <span class="sd">             the smaller col index of letterbox (bound for left vertical letterbox), \</span>
 <span class="sd">             and the larger col index of letterbox (bound for right vertical letterbox).</span>
-<span class="sd">    :rtype: int, int, int, int</span>
+<span class="sd">    :rtype: (int, int, int, int)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">low_bound_ver</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">high_bound_ver</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>

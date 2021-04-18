@@ -174,8 +174,154 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="visualization-utility">
-<h1>Visualization Utility<a class="headerlink" href="#visualization-utility" title="Permalink to this headline">¶</a></h1>
+  <section id="module-kalmus.utils.visualization_utils">
+<span id="visualization-utility"></span><h1>Visualization Utility<a class="headerlink" href="#module-kalmus.utils.visualization_utils" title="Permalink to this headline">¶</a></h1>
+<p>Visualization Utility</p>
+<dl class="py function">
+<dt id="kalmus.utils.visualization_utils.extract_region_with_index">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.visualization_utils.</span></code><code class="sig-name descname"><span class="pre">extract_region_with_index</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">region_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labeled_image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/visualization_utils.html#extract_region_with_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.visualization_utils.extract_region_with_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function that masked the labeled image on the input image, and extract the
+region with corresponding region index in the labeled image from the input image</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>numpy.ndarray</em>) -- input image shape=(row(height), col(width))</p></li>
+<li><p><strong>region_index</strong> (<em>int</em>) -- the extracted region index in the labeled image</p></li>
+<li><p><strong>labeled_image</strong> (<em>numpy.ndarray</em>) -- the labeled image of the corresponding input image shape=image.shape</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Image with only region with corresponding index on labeled_image.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="kalmus.utils.visualization_utils.show_color">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.visualization_utils.</span></code><code class="sig-name descname"><span class="pre">show_color</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(9,</span> <span class="pre">6)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_off</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'test.png'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/visualization_utils.html#show_color"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.visualization_utils.show_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the rgb color.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>color</strong> (<em>numpy.ndarray</em>) -- 1D array contains the R, G, and B channel values</p></li>
+<li><p><strong>figure_size</strong> (<em>tuple</em>) -- Size of the plotted figure</p></li>
+<li><p><strong>title</strong> (<em>str</em>) -- The title of the plotted color</p></li>
+<li><p><strong>axis_off</strong> (<em>bool</em>) -- True to set the axis of the plot figure off. False to have the axis on the side of     figure.</p></li>
+<li><p><strong>save_image</strong> (<em>bool</em>) -- True to save the plot figure into the path that user provide. False not to save     the plot figure</p></li>
+<li><p><strong>file_name</strong> (<em>str</em>) -- The filename of the saved figure. The default path to the saved image is test.png</p></li>
+<li><p><strong>return_color</strong> (<em>bool</em>) -- Return the numpy array (shape==30 x 30 x 3) of color block if True. Directly plot the color     if False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Return the numpy array of color block if return_color is True.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="kalmus.utils.visualization_utils.show_colors_in_cube">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.visualization_utils.</span></code><code class="sig-name descname"><span class="pre">show_colors_in_cube</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">colors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(8,</span> <span class="pre">8)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_figure</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_sampled_colors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/visualization_utils.html#show_colors_in_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.visualization_utils.show_colors_in_cube" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show a sequence of RGB colors in cubic RGB space (e.g. R axis (x axis), G axis (y axis),
+and B axis (z axis))
+see <a class="reference external" href="https://matplotlib.org/3.1.1/gallery/mplot3d/scatter3d.html">https://matplotlib.org/3.1.1/gallery/mplot3d/scatter3d.html</a> for more references
+ipympl is required for this function to work in the jupyter notebook</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>colors</strong> (<em>numpy.ndarray</em>) -- A sequence of colors to display in cubic space</p></li>
+<li><p><strong>figure_size</strong> (<em>tuple</em>) -- the size of the figure</p></li>
+<li><p><strong>return_figure</strong> (<em>bool</em>) -- Return the plotted figure and axes, if true                           Directly plot the cube, if false</p></li>
+<li><p><strong>sampling</strong> (<em>int</em>) -- Number of data points plot in the 3D cube. -1 to include all data in the plot</p></li>
+<li><p><strong>return_sampled_colors</strong> (<em>bool</em>) -- Return the sampled out colors if True. Directly plot the colors in RGB cube if False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>return the figure and axes with plotted figure if return_figure is True     or, return the sampled out colors if return_sampled_colors is True</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="kalmus.utils.visualization_utils.show_colors_in_sequence">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.visualization_utils.</span></code><code class="sig-name descname"><span class="pre">show_colors_in_sequence</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">colors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(9,</span> <span class="pre">6)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_off</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'test.png'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizontal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_color_sequence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/visualization_utils.html#show_colors_in_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.visualization_utils.show_colors_in_sequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot a sequence of RGB colors either horizontally or vertically in line</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>colors</strong> (<em>numpy.ndarray</em>) -- 2D array of RGB colors. Expected sequence shape==Number of colors x channels (3)</p></li>
+<li><p><strong>figure_size</strong> (<em>tuple</em>) -- the size of the plot figure</p></li>
+<li><p><strong>title</strong> (<em>str</em>) -- the title of the plot</p></li>
+<li><p><strong>axis_off</strong> (<em>bool</em>) -- True to set the axis of the figure off. False to have the axis with the figure</p></li>
+<li><p><strong>save_image</strong> (<em>bool</em>) -- True to save the plot figure. False do not save figure</p></li>
+<li><p><strong>file_name</strong> (<em>str</em>) -- the path of the saved figure</p></li>
+<li><p><strong>horizontal</strong> (<em>bool</em>) -- True to plot the sequence of colors horizontally, False to plot the sequence of colors                        vertically</p></li>
+<li><p><strong>return_color_sequence</strong> (<em>bool</em>) -- Return the numpy array (shape==30 x (30 * num_colors) x 3) of color sequence if True                                   Directly plot the color sequence if False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Return the numpy array of the color sequence image if return_color_sequence is True.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="kalmus.utils.visualization_utils.show_high_contrast_region">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.visualization_utils.</span></code><code class="sig-name descname"><span class="pre">show_high_contrast_region</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimum_segment_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0004</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(6,</span> <span class="pre">4)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_region_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/visualization_utils.html#show_high_contrast_region"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.visualization_utils.show_high_contrast_region" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the high contrast region (brightness contrast) of the image.
+image is segmented using the gradient based watershed segmentation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>numpy.ndarray</em>) -- input color image shape=(row (height), col (width), channel(3))</p></li>
+<li><p><strong>minimum_segment_size</strong> (<em>float</em>) -- The minimum size (in relative ratio [0, 1]) for the segments in the segmented image</p></li>
+<li><p><strong>figsize</strong> (<em>tuple</em>) -- the size of the plot figure</p></li>
+<li><p><strong>return_region_image</strong> (<em>bool</em>) -- Return the image with only high contrast region if True.                                 Directly plot the image if False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>If return_region_image is True, return the the image with only high contrast region.              region_image.shape == image.shape</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="kalmus.utils.visualization_utils.show_low_contrast_region">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.visualization_utils.</span></code><code class="sig-name descname"><span class="pre">show_low_contrast_region</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimum_segment_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0004</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(6,</span> <span class="pre">4)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_region_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/visualization_utils.html#show_low_contrast_region"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.visualization_utils.show_low_contrast_region" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the low contrast region (brightness contrast) of the image.
+image is segmented using the gradient based watershed segmentation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>numpy.ndarray</em>) -- input color image shape=(row (height), col (width), channel(3))</p></li>
+<li><p><strong>minimum_segment_size</strong> (<em>float</em>) -- The minimum size (in relative ratio [0, 1]) for the segments in the segmented image</p></li>
+<li><p><strong>figsize</strong> (<em>tuple</em>) -- the size of the plot figure</p></li>
+<li><p><strong>return_region_image</strong> (<em>bool</em>) -- Return the image with only low contrast region if True.                                 Directly plot the image if False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>If return_region_image is True, return the the image with only low contrast region.              region_image.shape == image.shape</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
 

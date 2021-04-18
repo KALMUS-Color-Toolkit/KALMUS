@@ -186,7 +186,7 @@
 <span class="sd">    :type frame: numpy.ndarray</span>
 <span class="sd">    :return: 1D image of the foreground part of the image, and 1D image of the background part of the image \</span>
 <span class="sd">             Expected shape== Number of pixels x channels</span>
-<span class="sd">    :rtype: numpy.ndarray, numpy.ndarray</span>
+<span class="sd">    :rtype: (numpy.ndarray, numpy.ndarray)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">fore_frame</span><span class="p">,</span> <span class="n">back_frame</span> <span class="o">=</span> <span class="n">artist</span><span class="o">.</span><span class="n">grabcut_foreback_segmentation</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">start_row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">row_size</span><span class="o">=</span><span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
                                                                   <span class="n">start_col</span><span class="o">=</span><span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="mi">6</span><span class="p">,</span>
