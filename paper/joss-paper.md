@@ -56,15 +56,15 @@ KALMUS allows for the analysis of a film's color by (1) providing an interface t
 
 KALMUS allows users to understand a film’s color palette and compare that palette to other films.  See Table 1 for options on what parts of the frame a user might want to analyze and the various metrics a user can use to determine the color of a frame.  See Table 2 for information on how film colors can be compared.  Potentially, films from a certain time period or a particular genre might be aggregated to see if there are common color palettes.  While film studies as a discipline has long depended on qualitative analysis, KALMUS provides a straightforward quantitative tool that can supplement the reading of a film.  For example, in [@adams] KALMUS is used to study color trends in Hollywood movies from 1990 to 2015.  In a class taught by the second author, students used KALMUS to explore how a film's color palette signaled narrative shifts and introduced significant characters.
 
-
+\tiny
 | Part of frame\ Frame color 	| Average	 | Median	| Mode	| Top-dominant	| Weighted-dominant	| Brightest	| Bright |
 | :---------------- | ----: | --------: | --------: | --------: | --------: | --------: |--------: |
-| Whole_frame	| Yes | Yes | Yes | Yes | Yes | Yes | Yes |
+| Whole frame	| Yes | Yes | Yes | Yes | Yes | Yes | Yes |
 | High contrast region	| Yes | Yes | Yes | Yes | Yes | Yes | No |
 | Low contrast region	| Yes | Yes | Yes | Yes | Yes |  Yes |No |
 | Foreground	| Yes | Yes | Yes | Yes | Yes |  Yes | No |
 | Background	| Yes | Yes | Yes | Yes | Yes |  Yes | No |
-
+\normalsize
 Table 1:  A summary of the various metrics one can use to calculate the color of a frame and what parts of a frame will be used to calculate the color of the frame.   
 
 
