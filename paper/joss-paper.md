@@ -59,7 +59,7 @@ KALMUS allows users to understand a film’s color palette and compare that pale
 
 | Part of frame\ Frame color 	| Average	 | Median	| Mode	| Top-dominant	| Weighted-dominant	| Brightest	| Bright |
 | :---------------- | ----: | --------: | --------: | --------: | --------: | --------: |--------: |
-| Whole_frame	| Yes | Yes | Yes | Yes | Yes | Yes |
+| Whole_frame	| Yes | Yes | Yes | Yes | Yes | Yes | Yes |
 | High contrast region	| Yes | Yes | Yes | Yes | Yes | Yes | No |
 | Low contrast region	| Yes | Yes | Yes | Yes | Yes |  Yes |No |
 | Foreground	| Yes | Yes | Yes | Yes | Yes |  Yes | No |
