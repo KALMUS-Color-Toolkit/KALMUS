@@ -5,3 +5,7 @@ include kalmus/data/mission_impossible_Bright_Whole_frame_Color.json
 
 include requirements.txt
 include README.md
+include LICENSE
+include CONTRIBUTING
+include CODE_OF_CONDUCT
+include PyPI_README.md
