@@ -73,39 +73,7 @@ Alternatively, in version 1.3.7 and above, you can check the version of installe
 
 ## For users with Apple M1 Chip (arm64 Architecture)
 
-As @elektrobohemian mentioned in [issue #4](https://github.com/KALMUS-Color-Toolkit/KALMUS/issues/4), you may experience installation errors when using pip to install kalmus's dependencies, such as scikit-image, scikit-learn, scipy, and numpy. To resolve this issue, you need to install the kalmus's dependencies through [Miniforge](https://github.com/conda-forge/miniforge), a conda-forge maintained minimalistic conda installer. You can download and install the Miniforge for OS X system with M1 processor (arm64 Architecture) on [Miniforge's GitHub Page](https://github.com/conda-forge/miniforge#download) or click this [Download link](https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-arm64.sh).
-
-**Instructions (tentative):**
-
-* After installing the **Miniforge**, please open a terminal and create a python virtual environment through conda:
-```
-$ conda create -n your_env_name python=3.7
-```
-
-* Activate the virtual environment:
-```
-$ conda activate your_env_name
-``` 
-
-* Install the kalmus's dependencies through conda (the installed packages come from the conda-forge channel):
-```
-$ conda install numpy
-$ conda install opencv
-$ conda install matplotlib
-$ conda install scipy
-$ conda install pandas
-$ conda install biopython
-$ conda install kiwisolver
-$ conda install scikit-learn
-$ conda install scikit-image
-```
-
-* Last step, install the kalmus through pip in your virtual environment:
-```
-$ pip install kalmus
-```
-
-This is a tentative approach to resolve the installation issues on machines with arm64 Architecture. If the instructions above does not solve your problem or you are experiencing other difficulties, please open an [issue](https://github.com/KALMUS-Color-Toolkit/KALMUS/issues) of your problems in this GitHub repo.
+As @elektrobohemian mentioned in [issue #4](https://github.com/KALMUS-Color-Toolkit/KALMUS/issues/4), kalmus cannot build natively on Apple M1 processors because of kalmus's dependencies on scikit-image, scikit-learn, scipy, and numpy. You may be able to install kalmus under a Rosetta emulation with Python 3.7. 
 
 # Get Started
 
