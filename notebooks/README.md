@@ -13,9 +13,6 @@ and the latest version of KALMUS package ([Installation Guide for KALMUS](https:
  
 When running the notebooks, make sure you have downloaded the whole [notebooks folder](https://github.com/KALMUS-Color-Toolkit/KALMUS/archive/refs/heads/master.zip) or cloned the project on your local machine. Then, start the Jupyter Lab inside the notebooks folder using command:
 
-**For users with Apple M1 Processor:**  
-You may experience issues when installing kalmus through pip. Please check our [installation guide](https://github.com/KALMUS-Color-Toolkit/KALMUS#for-users-with-apple-m1-chip-arm64-architecture) for more details.
-
 ```
 $ jupyter lab
 ```
