@@ -49,20 +49,18 @@ KALMUS is built around a visualization of films known as movie barcodes; it prod
 [^1]: In OpenCV [@opencv], for example, if a frame is decimated to a single pixel, its color is determined by area interpolation, a weighted average of the RGB-values of the pixels.
 
 KALMUS allows for the analysis of a film's color by:  
-::: {.block}
 1. Providing an interface that takes in either a video file or a JSON file (a sample JSON file can be found [here](https://github.com/KALMUS-Color-Toolkit/KALMUS/blob/master/kalmus/data/mission_impossible_Bright_Whole_frame_Color.json)).
 2. Allowing for the computation of a frame's color in a number of ways (dominant, median, etc).
 3. Allowing for the computation of a film's color in a number of ways. 
 4. Providing implementations of ways to compare colors of two films. 
 5. Providing implementations of ways to visualize the color of a film.
-6. Allowing the user to download color data as a CSV or JSON file.  See Figure 2 for an explanation of KALMUS's user interface.
-:::  
+6. Allowing the user to download color data as a CSV or JSON file.  See Figure 2 for an explanation of KALMUS's user interface. 
 
 ![Image A shows barcodes for a single film in which the color of a frame was calculated in two ways:  the top one uses the frame's brightest color and the bottom one uses the frame's median color.  Image B shows the interface for generating a barcode: one can process a film in parallel, choose a sampling rate, and choose a method for determining a frame's color.  Image C is the result of selecting a pixel in a barcode to give a user an idea of where in the film they are.  Image D is a table of similarity metrics between the two barcodes.  Image E is an interactive 3D plot of the RGB values in one of the barcodes.](images-joss/kalmus-interface.jpg)
 
 
 
-KALMUS allows users to understand a film’s color palette and compare that palette to other films.  See Table 1 for options on what parts of the frame a user might want to analyze and the various metrics a user can use to determine the color of a frame.  See Table 2 for information on how film colors can be compared.  Potentially, films from a certain time period or a particular genre might be aggregated to see if there are common color palettes.  While film studies as a discipline has long depended on qualitative analysis, KALMUS provides a straightforward quantitative tool that can supplement the reading of a film.  For example, in [@adams] KALMUS is used to study color trends in Hollywood movies from 1990 to 2015.  In a class taught by the second author, students used KALMUS to explore how a film's color palette signaled narrative shifts and introduced significant characters.
+KALMUS allows users to understand a film’s color palette and compare that palette to other films.  See Table 1 for options on what parts of the frame a user might want to analyze and the various metrics a user can use to determine the color of a frame.  See Table 2 for information on how film colors can be compared.  Potentially, films from a certain time period or a particular genre might be aggregated to see if there are common color palettes.  However, users should be aware of the fact that different color gamuts used in digitizing films may affect films' original color palette.  This change to the color palette cannot be corrected by KALMUS after-the-fact so users should constraint the color gamut when digitizing their data.  While film studies as a discipline has long depended on qualitative analysis, KALMUS provides a straightforward quantitative tool that can supplement the reading of a film.  For example, in [@adams] KALMUS is used to study color trends in Hollywood movies from 1990 to 2015.  In a class taught by the second author, students used KALMUS to explore how a film's color palette signaled narrative shifts and introduced significant characters.
 
 
 |                     | Mean	| Median   | Mode	| TD	| WD	| BR	| BP  |
