@@ -62,11 +62,8 @@ def build_barcode_from_json(path_to_json, barcode_type="Color"):
 
     barcode.video = None
 
-    if "fps" in object_dict.keys():
-        if object_dict["fps"] is not None:
-            barcode.fps = float(object_dict["fps"])
-        else:
-            barcode.fps = 30
+    if ("fps" in object_dict.keys()) and (object_dict["fps"] is not None):
+        barcode.fps = float(object_dict["fps"])
     else:
         barcode.fps = 30
 
