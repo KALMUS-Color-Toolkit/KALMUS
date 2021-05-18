@@ -4,8 +4,6 @@
 [![status](https://joss.theoj.org/papers/f7a87aac389fc3cd02807d5fad6ebf50/status.svg)](https://joss.theoj.org/papers/f7a87aac389fc3cd02807d5fad6ebf50)
 [![codecov](https://codecov.io/gh/KALMUS-Color-Toolkit/KALMUS/branch/master/graph/badge.svg)](https://codecov.io/gh/KALMUS-Color-Toolkit/KALMUS)
 [![License](https://img.shields.io/pypi/l/kalmus.svg)](https://pypi.org/project/kalmus/)
-[![codecov workflow](https://github.com/KALMUS-Color-Toolkit/KALMUS/actions/workflows/test-codecov.yml/badge.svg)](https://github.com/KALMUS-Color-Toolkit/KALMUS/actions/workflows/test-codecov.yml)
-[![build workflow](https://github.com/KALMUS-Color-Toolkit/KALMUS/actions/workflows/python-package.yml/badge.svg)](https://github.com/KALMUS-Color-Toolkit/KALMUS/actions/workflows/python-package.yml)
 
 # KALMUS
 
@@ -44,6 +42,9 @@ The KALMUS API reference is now available on
 [https://kalmus-color-toolkit.github.io/KALMUS/kalmus.html](https://kalmus-color-toolkit.github.io/KALMUS/kalmus.html).
 
 # Installation Guide
+[![Python Version](https://img.shields.io/pypi/pyversions/kalmus.svg)](https://pypi.org/project/kalmus/)
+[![PyPI Version](https://img.shields.io/pypi/v/kalmus.svg)](https://pypi.org/project/kalmus/)
+[![build workflow](https://github.com/KALMUS-Color-Toolkit/KALMUS/actions/workflows/python-package.yml/badge.svg)](https://github.com/KALMUS-Color-Toolkit/KALMUS/actions/workflows/python-package.yml)
 
 The kalmus package requires a python with version 3.7 or 3.8.
 
@@ -102,6 +103,8 @@ We encourage inclusive and friendly discussion. Please follow our [code of condu
 communicating. 
 
 # Test Suite
+[![codecov](https://codecov.io/gh/KALMUS-Color-Toolkit/KALMUS/branch/master/graph/badge.svg)](https://codecov.io/gh/KALMUS-Color-Toolkit/KALMUS)
+[![codecov workflow](https://github.com/KALMUS-Color-Toolkit/KALMUS/actions/workflows/test-codecov.yml/badge.svg)](https://github.com/KALMUS-Color-Toolkit/KALMUS/actions/workflows/test-codecov.yml)
 
 We provide an [automated test suite](tests/) that covers the core functionality of KALMUS. Before running the automated test suite locally, 
 make sure you have installed the latest versions of [pytest](https://pypi.org/project/pytest/), [pytest-cov](https://pypi.org/project/pytest-cov/), 
@@ -114,6 +117,8 @@ To run the test suite:
 See the [Test Suite Guide](tests/README.md) for more details.
 
 # Citation
+[![status](https://joss.theoj.org/papers/f7a87aac389fc3cd02807d5fad6ebf50/status.svg)](https://joss.theoj.org/papers/f7a87aac389fc3cd02807d5fad6ebf50)
+
 If you find our software is useful in your work, please cite our paper that describes the usage of KALMUS in the computational analysis of colors in films. DOI: [https://doi.org/10.21105/joss.03156](https://doi.org/10.21105/joss.03156)
 
 > Chen et al., (2021). KALMUS: tools for color analysis of films. Journal of Open Source Software, 6(61), 3156, https://doi.org/10.21105/joss.03156
