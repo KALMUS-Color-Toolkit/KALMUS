@@ -7,6 +7,8 @@ import sys
 import numpy as np
 from skimage.color import hsv2rgb, rgb2hsv
 
+from matplotlib.ticker import FuncFormatter
+
 
 def compare_two_barcodes(barcode_1, barcode_2):
     """
@@ -127,6 +129,9 @@ def update_graph(barcode_1, barcode_2, axes, bin_step=5):
         axis.relim()
         axis.autoscale_view()
 
+    # Update the axis ticks of the plotted axes
+    update_axes_ticks(barcode_1, barcode_2, axes)
+
     # Update the title of the plotted axes
     update_axes_title(axes, barcode_1, barcode_2)
 
@@ -135,6 +140,35 @@ def update_graph(barcode_1, barcode_2, axes, bin_step=5):
 
     # Update the histogram of the barcode 2
     update_hist(barcode_2, ax=axes[1][1], bin_step=bin_step)
+
+
+def update_axes_ticks(barcode1, barcode2, axes):
+    frames_per_column_1 = barcode1.sampled_frame_rate * barcode1.get_barcode().shape[0] \
+                          * barcode1.scale_factor
+
+    frames_per_column_2 = barcode2.sampled_frame_rate * barcode2.get_barcode().shape[0] \
+                          * barcode2.scale_factor
+
+    seconds_per_column1 = frames_per_column_1 / barcode1.fps
+    seconds_per_column2 = frames_per_column_2 / barcode2.fps
+
+    axes[0][0].set_ylabel("{:.2f}s per column".format(seconds_per_column1))
+    axes[1][0].set_ylabel("{:.2f}s per column".format(seconds_per_column2))
+
+    if np.round(seconds_per_column1, decimals=0) == np.round(seconds_per_column2, decimals=0):
+        def get_seconds_str_yticks(tick_value, pos):
+            seconds = np.round(tick_value * seconds_per_column2, decimals=0).astype("int")
+            return "{:02d}:{:02d}".format(seconds // 60, seconds % 60)
+
+        axes[1][0].xaxis.set_major_formatter(FuncFormatter(get_seconds_str_yticks))
+        axes[1][0].set_xlabel("Elapsed Time (mins:secs)")
+
+        def get_seconds_str_xticks(tick_value, pos):
+            seconds = tick_value * barcode1.sampled_frame_rate * barcode1.scale_factor / barcode1.fps
+            return "{:.1f}s".format(seconds)
+
+        axes[0][0].yaxis.set_major_formatter(FuncFormatter(get_seconds_str_xticks))
+        axes[1][0].yaxis.set_major_formatter(FuncFormatter(get_seconds_str_xticks))
 
 
 def update_axes_title(axes, barcode_1, barcode_2):
