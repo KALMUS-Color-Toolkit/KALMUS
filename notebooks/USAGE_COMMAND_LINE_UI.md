@@ -125,7 +125,7 @@ A JSON file with filename: **saved_Color_barcode_Whole_frame_Average.json** shou
 in *./saved_barcode_cli.json*
 
 ```
-$ kalmus-generator -p notebook_example_data/i_robot_video.mp4 --frame_type Low_contrast_region --color_metric Median --step 2 --total_frames 1000000 --barcode_type Brightness --num_thread 2 --saved_frame_rate 0.5 ----rescale_frame_factor 0.25 -o ./saved_barcode_cli.json
+$ kalmus-generator -p notebook_example_data/i_robot_video.mp4 --frame_type Low_contrast_region --color_metric Median --step 2 --total_frames 1000000 --barcode_type Brightness --num_thread 2 --saved_frame_rate 0.5 --rescale_frame_factor 0.25 -o ./saved_barcode_cli.json
 ```
 
 A JSON file with filename: **saved_barcode_cli.json** should be generated in this folder after the 
