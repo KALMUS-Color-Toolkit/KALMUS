@@ -1,6 +1,7 @@
 [![Project Status](https://img.shields.io/pypi/status/kalmus.svg)](https://pypi.org/project/kalmus/)
 [![Python Version](https://img.shields.io/pypi/pyversions/kalmus.svg)](https://pypi.org/project/kalmus/)
 [![PyPI Version](https://img.shields.io/pypi/v/kalmus.svg)](https://pypi.org/project/kalmus/)
+[![status](https://joss.theoj.org/papers/f7a87aac389fc3cd02807d5fad6ebf50/status.svg)](https://joss.theoj.org/papers/f7a87aac389fc3cd02807d5fad6ebf50)
 [![codecov](https://codecov.io/gh/KALMUS-Color-Toolkit/KALMUS/branch/master/graph/badge.svg)](https://codecov.io/gh/KALMUS-Color-Toolkit/KALMUS)
 [![License](https://img.shields.io/pypi/l/kalmus.svg)](https://pypi.org/project/kalmus/)
 [![codecov workflow](https://github.com/KALMUS-Color-Toolkit/KALMUS/actions/workflows/test-codecov.yml/badge.svg)](https://github.com/KALMUS-Color-Toolkit/KALMUS/actions/workflows/test-codecov.yml)
@@ -20,7 +21,7 @@ KALMUS utilizes the movie barcode as a visualization of the film's color. It has
  a low-level API, high-level command line, and Graphic user interface for audience from all backgrounds to take
  advantage of its functionality. 
 
-- What is a Movie Barcode: [KALMUS: tools for color analysis of films](paper/joss-paper.md)   
+- What is a Movie Barcode: [KALMUS: tools for color analysis of films](https://joss.theoj.org/papers/10.21105/joss.03156). *Journal of Open Source Software*, 6(61), 3156. [https://doi.org/10.21105/joss.03156]( https://doi.org/10.21105/joss.03156)   
 - How do I install the KALMUS: [KALMUS Installation Guide](https://kalmus-color-toolkit.github.io/KALMUS/install.html) 
 and [KALMUS PyPI Homepage](https://pypi.org/project/kalmus/).
 - How do I use the KALMUS: [Notebook Tutorials for KALMUS's API, GUI, and CLI](notebooks)
@@ -111,6 +112,26 @@ To run the test suite:
 - Use command `$ python -m pytest tests --cov=kalmus --cov-config=.coveragerc --cov-report term-missing`
 
 See the [Test Suite Guide](tests/README.md) for more details.
+
+# Citation
+If you find our software is useful in your work, please cite our paper that describes the usage of KALMUS in the computational analysis of colors in films. DOI: [https://doi.org/10.21105/joss.03156](https://doi.org/10.21105/joss.03156)
+
+> Chen et al., (2021). KALMUS: tools for color analysis of films. Journal of Open Source Software, 6(61), 3156, https://doi.org/10.21105/joss.03156
+
+Here is the BibTex citation of our work:
+
+    @article{Chen2021,
+        doi = {10.21105/joss.03156},
+        url = {https://doi.org/10.21105/joss.03156},
+        year = {2021},
+        publisher = {The Open Journal},
+        volume = {6},
+        number = {61},
+        pages = {3156},
+        author = {Yida Chen and Eric Faden and Nathan C. Ryan},
+        title = {KALMUS: tools for color analysis of films},
+        journal = {Journal of Open Source Software}
+    }
 
 # Acknowledgment
 
