@@ -23,7 +23,7 @@ KALMUS is a Python package for the computational analysis of colors in films. It
 
 KALMUS utilizes the movie barcode as a visualization of the film's color. It has a modularized pipeline for the generation of barcodes using different measures of color and region of interest in each film frame. KALMUS provides a low-level API, high-level command line, and Graphic user interface for audience from all backgrounds to take advantage of its functionality.
 
-* What is a Movie Barcode: `KALMUS: tools for color analysis of films <https://github.com/KALMUS-Color-Toolkit/KALMUS/blob/master/paper/joss-paper.md>`_
+* What is a Movie Barcode: `KALMUS: tools for color analysis of films <https://joss.theoj.org/papers/10.21105/joss.03156>`_. *Journal of Open Source Software*, 6(61), 3156. `https://doi.org/10.21105/joss.03156 <https://doi.org/10.21105/joss.03156>`_
 * KALMUS's project repository: `GitHub Repository for KALMUS project <https://github.com/KALMUS-Color-Toolkit/KALMUS>`_
 * KALMUS's latest release on PyPI: `KALMUS's PyPI Homepage <https://pypi.org/project/kalmus/>`_
 * Get started on KALMUS: `Notebook Tutorials for KALMUS'S API, GUI, and CLI <https://github.com/KALMUS-Color-Toolkit/KALMUS/tree/master/notebooks>`_

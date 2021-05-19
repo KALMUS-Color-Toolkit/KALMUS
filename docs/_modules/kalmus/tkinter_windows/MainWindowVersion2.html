@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>kalmus.tkinter_windows.MainWindowVersion2 &mdash; KALMUS 1.3.8 documentation</title>
+  <title>kalmus.tkinter_windows.MainWindowVersion2 &mdash; KALMUS 1.3.9 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                1.3.8
+                1.3.9
               </div>
             
           
@@ -171,7 +171,7 @@
 <span class="kn">from</span> <span class="nn">kalmus.tkinter_windows.LoadStackWindow</span> <span class="k">import</span> <span class="n">LoadStackWindow</span>
 <span class="kn">from</span> <span class="nn">kalmus.tkinter_windows.LoadJsonWindow</span> <span class="k">import</span> <span class="n">LoadJsonWindow</span>
 <span class="kn">from</span> <span class="nn">kalmus.tkinter_windows.ReshapeBarcodeWindow</span> <span class="k">import</span> <span class="n">ReshapeBarcodeWindow</span>
-<span class="kn">from</span> <span class="nn">kalmus.tkinter_windows.gui_utils</span> <span class="k">import</span> <span class="n">paint_hue_hist</span><span class="p">,</span> <span class="n">update_axes_title</span><span class="p">,</span> <span class="n">resource_path</span>
+<span class="kn">from</span> <span class="nn">kalmus.tkinter_windows.gui_utils</span> <span class="k">import</span> <span class="n">paint_hue_hist</span><span class="p">,</span> <span class="n">update_axes_title</span><span class="p">,</span> <span class="n">update_axes_ticks</span><span class="p">,</span> <span class="n">resource_path</span>
 <span class="kn">from</span> <span class="nn">kalmus.tkinter_windows.plot_barcodes_windows.WhichBarcodeInspectWindow</span> <span class="k">import</span> <span class="n">WhichBarcodeInspectWindow</span>
 <span class="kn">from</span> <span class="nn">kalmus.tkinter_windows.StatsInfoWindow</span> <span class="k">import</span> <span class="n">StatsInfoWindow</span>
 <span class="kn">from</span> <span class="nn">kalmus.tkinter_windows.SaveImageWindow</span> <span class="k">import</span> <span class="n">SaveImageWindow</span>
@@ -230,7 +230,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">bg</span><span class="o">=</span><span class="s1">&#39;#85C1FA&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">wm_title</span><span class="p">(</span><span class="s2">&quot;KALMUS Version 1.3.8&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">wm_title</span><span class="p">(</span><span class="s2">&quot;KALMUS Version 1.3.9&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">iconbitmap</span><span class="p">(</span><span class="n">resource_path</span><span class="p">(</span><span class="s2">&quot;kalmus_icon.ico&quot;</span><span class="p">))</span>
 
         <span class="c1"># Initialize the figure</span>
@@ -276,6 +276,8 @@
 
         <span class="c1"># Use tight layout</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+        <span class="n">update_axes_ticks</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode_1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode_2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="p">)</span>
 
         <span class="c1"># Draw the canvas</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span> <span class="o">=</span> <span class="n">FigureCanvasTkAgg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="p">,</span> <span class="n">master</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>  <span class="c1"># A tk.DrawingArea.</span>
@@ -365,7 +367,7 @@
 
         <span class="c1"># Otherwise check if user want to quit the software</span>
         <span class="n">quit_software</span> <span class="o">=</span> <span class="n">askokcancel</span><span class="p">(</span><span class="s2">&quot;Quit KALMUS&quot;</span><span class="p">,</span> <span class="s2">&quot;Are you sure you want to close the KALMUS?</span><span class="se">\n</span><span class="s2">&quot;</span>
-                                                 <span class="s2">&quot;All unsaved results will be lost.&quot;</span><span class="p">)</span>
+                                                   <span class="s2">&quot;All unsaved results will be lost.&quot;</span><span class="p">)</span>
         <span class="c1"># Quit if yes</span>
         <span class="k">if</span> <span class="n">quit_software</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span></div>
