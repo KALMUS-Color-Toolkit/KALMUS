@@ -2,7 +2,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4765745.svg)](https://doi.org/10.5281/zenodo.4765745)
 
 # The Journal of Open Source Software Paper
-This folder contains the [raw markdown paper](joss-paper.md) which we submitted to the [Journal of Open Source Software](https://joss.theoj.org/). The review of the paper and software can be found here: [[REVIEW]: KALMUS: tools for color analysis of films #3156](https://github.com/openjournals/joss-reviews/issues/3156). 
+This folder contains the [raw markdown paper](joss-paper.md) which we submitted to the [Journal of Open Source Software](https://joss.theoj.org/papers/10.21105/joss.03156). The review of the paper and software can be found here: [[REVIEW]: KALMUS: tools for color analysis of films #3156](https://github.com/openjournals/joss-reviews/issues/3156). 
 
 The specific version of KALMUS reviewed by the JOSS is archived on the Zenodo: [https://zenodo.org/record/4765745#.YKP4vKhKhPY](https://zenodo.org/record/4765745#.YKP4vKhKhPY). We recommend our users, however, use the latest version of KALMUS published on [PyPI](https://pypi.org/project/kalmus/).
 
