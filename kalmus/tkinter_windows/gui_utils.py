@@ -143,6 +143,15 @@ def update_graph(barcode_1, barcode_2, axes, bin_step=5):
 
 
 def update_axes_ticks(barcode1, barcode2, axes):
+    """
+    Update the axes ticks
+    If two barcodes have the same temporal dimensions, the ticks will show the temporal position of a pixel in the
+    barcode image. Otherwise, the axes ticks will show the spatial position of a pixel.
+
+    :param barcode1: The barcode 1
+    :param barcode2: The barcode 2
+    :param axes: The axes of the plotted figure
+    """
     frames_per_column_1 = barcode1.sampled_frame_rate * barcode1.get_barcode().shape[0] \
                           * barcode1.scale_factor
 
