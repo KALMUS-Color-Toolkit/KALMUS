@@ -304,7 +304,16 @@
     <span class="n">update_hist</span><span class="p">(</span><span class="n">barcode_2</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">bin_step</span><span class="o">=</span><span class="n">bin_step</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">update_axes_ticks</span><span class="p">(</span><span class="n">barcode1</span><span class="p">,</span> <span class="n">barcode2</span><span class="p">,</span> <span class="n">axes</span><span class="p">):</span>
+<div class="viewcode-block" id="update_axes_ticks"><a class="viewcode-back" href="../../../tkinter_windows/gui_utils.html#kalmus.tkinter_windows.gui_utils.update_axes_ticks">[docs]</a><span class="k">def</span> <span class="nf">update_axes_ticks</span><span class="p">(</span><span class="n">barcode1</span><span class="p">,</span> <span class="n">barcode2</span><span class="p">,</span> <span class="n">axes</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Update the axes ticks</span>
+<span class="sd">    If two barcodes have the same temporal dimensions, the ticks will show the temporal position of a pixel in the</span>
+<span class="sd">    barcode image. Otherwise, the axes ticks will show the spatial position of a pixel.</span>
+
+<span class="sd">    :param barcode1: The barcode 1</span>
+<span class="sd">    :param barcode2: The barcode 2</span>
+<span class="sd">    :param axes: The axes of the plotted figure</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">frames_per_column_1</span> <span class="o">=</span> <span class="n">barcode1</span><span class="o">.</span><span class="n">sampled_frame_rate</span> <span class="o">*</span> <span class="n">barcode1</span><span class="o">.</span><span class="n">get_barcode</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> \
                           <span class="o">*</span> <span class="n">barcode1</span><span class="o">.</span><span class="n">scale_factor</span>
 
@@ -330,7 +339,7 @@
             <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{:.1f}</span><span class="s2">s&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span>
 
         <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">FuncFormatter</span><span class="p">(</span><span class="n">get_seconds_str_xticks</span><span class="p">))</span>
-        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">FuncFormatter</span><span class="p">(</span><span class="n">get_seconds_str_xticks</span><span class="p">))</span>
+        <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">FuncFormatter</span><span class="p">(</span><span class="n">get_seconds_str_xticks</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="update_axes_title"><a class="viewcode-back" href="../../../tkinter_windows/gui_utils.html#kalmus.tkinter_windows.gui_utils.update_axes_title">[docs]</a><span class="k">def</span> <span class="nf">update_axes_title</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">barcode_1</span><span class="p">,</span> <span class="n">barcode_2</span><span class="p">):</span>
