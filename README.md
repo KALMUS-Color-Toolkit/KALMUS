@@ -119,7 +119,7 @@ See the [Test Suite Guide](tests/README.md) for more details.
 # Citation
 [![status](https://joss.theoj.org/papers/f7a87aac389fc3cd02807d5fad6ebf50/status.svg)](https://joss.theoj.org/papers/f7a87aac389fc3cd02807d5fad6ebf50)
 
-If you find our software is useful in your work, please cite our paper that describes the usage of KALMUS in the computational analysis of colors in films. DOI: [https://doi.org/10.21105/joss.03156](https://doi.org/10.21105/joss.03156)
+If you find our software is useful in your work, please cite our paper that describes the usage of KALMUS in the analysis of film colors. DOI: [https://doi.org/10.21105/joss.03156](https://doi.org/10.21105/joss.03156)
 
 > Chen et al., (2021). KALMUS: tools for color analysis of films. Journal of Open Source Software, 6(61), 3156, https://doi.org/10.21105/joss.03156
 
@@ -129,7 +129,6 @@ Here is the BibTex citation of our work:
         doi = {10.21105/joss.03156},
         url = {https://doi.org/10.21105/joss.03156},
         year = {2021},
-        publisher = {The Open Journal},
         volume = {6},
         number = {61},
         pages = {3156},
