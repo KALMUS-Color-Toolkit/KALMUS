@@ -682,7 +682,7 @@ def find_letter_box_from_videos(video, num_sample=30):
 
     # Sampled out num_sample number of frames from input video
     possible_indexes = np.arange(film_length_in_frames // 6, film_length_in_frames * 5 // 6, 1)
-    frame_indexes = np.random.choice(possible_indexes, num_sample, replace=True)
+    frame_indexes = np.random.choice(possible_indexes, num_sample, replace=False)
 
     # list of possible smaller row indexes (bounding the upper letterbox)
     possible_low_bound_ver = []
