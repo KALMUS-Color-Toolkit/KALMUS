@@ -8,7 +8,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Visualization Utility &mdash; KALMUS 1.3.9 documentation</title>
+  <title>Visualization Utility &mdash; KALMUS 1.3.10a documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                1.3.9
+                1.3.10a
               </div>
             
           
@@ -248,6 +248,29 @@ ipympl is required for this function to work in the jupyter notebook</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="kalmus.utils.visualization_utils.show_colors_in_hue_light_scatter_plot">
+<code class="sig-prename descclassname"><span class="pre">kalmus.utils.visualization_utils.</span></code><code class="sig-name descname"><span class="pre">show_colors_in_hue_light_scatter_plot</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">colors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(10,</span> <span class="pre">5)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_figure</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_border</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/kalmus/utils/visualization_utils.html#show_colors_in_hue_light_scatter_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.utils.visualization_utils.show_colors_in_hue_light_scatter_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show a sequence of RGB colors in a Hue vs. Light Scatter Plot (Hue on x-axis and Light on y-axis). Colors are
+assumed to be in the RGB colorspace and will be converted to the HSV color space within this function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>colors</strong> (<em>numpy.ndarray</em>) -- A sequence of colors to display in cubic space</p></li>
+<li><p><strong>figure_size</strong> (<em>tuple</em>) -- the size of the figure</p></li>
+<li><p><strong>return_figure</strong> (<em>bool</em>) -- Return the plotted figure and axes, if true                           Directly plot the cube, if false</p></li>
+<li><p><strong>remove_border</strong> (<em>bool</em>) -- Remove the frame border of the plot if true                           Keep the original frame border if false</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>return the figure and axes with plotted figure if return_figure is True</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple (matplotlib.pyplot.Figure, matplotlib.pyplot.Axes)</p>
 </dd>
 </dl>
 </dd></dl>
