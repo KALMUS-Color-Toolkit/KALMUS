@@ -14,7 +14,7 @@ from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationTool
 import numpy as np
 import os
 
-from kalmus.utils.visualization_utils import show_colors_in_cube
+from kalmus.utils.visualization_utils import show_colors_in_cube, show_colors_in_hue_light_scatter_plot
 from kalmus.tkinter_windows.gui_utils import resource_path, update_hist
 import kalmus.utils.artist
 from skimage.color import rgb2hsv
@@ -26,6 +26,7 @@ class PlotBarcodeWindow():
     PlotBarcodeWindow Class
     GUI window of plotting the barcode for user to inspect in details
     """
+
     def __init__(self, barcode, figsize=(6, 4), dpi=100):
         """
         Initialize
@@ -58,7 +59,7 @@ class PlotBarcodeWindow():
 
         # Dynamic layout based on the type of the inspected barcode
         if barcode.barcode_type == "Color":
-            column_span = 3
+            column_span = 4
         else:
             column_span = 2
         self.canvas.get_tk_widget().grid(row=0, column=0, columnspan=column_span, pady=3)
@@ -78,7 +79,7 @@ class PlotBarcodeWindow():
 
         # Button to check the histogram distribution of the barcode's hue/brightness value
         self.button_hist = tkinter.Button(master=self.plot_window, text="Show Histogram",
-                                              command=self.show_color_histogram)
+                                          command=self.show_color_histogram)
         self.button_hist.grid(row=1, column=1, padx=14)
 
         # If the barcode is a color barcode, allow user to inspect the RGB color distribution in a RGB cube
@@ -87,11 +88,21 @@ class PlotBarcodeWindow():
                                               command=self.show_RGB_color_in_cube)
             self.button_cube.grid(row=1, column=2)
 
+            self.button_scatter = tkinter.Button(master=self.plot_window, text="Show Color in Hue Light Scatter",
+                                              command=self.show_color_in_scatter)
+            self.button_scatter.grid(row=1, column=3)
+
     def show_RGB_color_in_cube(self):
         """
         Instantiate the RGBColorCubeWindow if user press the show color in RGB cube button
         """
         RGBColorCubeWindow(self.barcode)
+
+    def show_color_in_scatter(self):
+        """
+        Instantiate the LightHueScatterPlotWindow if user press the show color in hue light scatter button
+        """
+        HueLightScatterPlotWindow(self.barcode)
 
     def show_color_histogram(self):
         """
@@ -108,6 +119,7 @@ class ColorHistogramWindow():
     ColorHistogramWindow Class
     GUI window that show the distribution of the barcode's hue[0, 360]/brightness[0, 255] value
     """
+
     def __init__(self, barcode):
         """
         Initialize
@@ -144,12 +156,14 @@ class ColorHistogramWindow():
         toolbar.update()
         canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
 
+
 class RGBColorCubeWindow():
     """
     RGBColorCubeWindow Class
     GUI window that shows the distribution of the barcode's RGB color in a RGB cube
     range in [0, 255] for all three channels
     """
+
     def __init__(self, barcode):
         """
         Initialize
@@ -183,12 +197,56 @@ class RGBColorCubeWindow():
         canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
 
 
+class HueLightScatterPlotWindow():
+    """
+    HueLightScatterPlotWindow Class
+    GUI window that shows the distribution of the barcode's color in a Hue (x-axis) vs. Light (y-axis)
+    scatter plot. The color of the barcode will be converted from RGB to HSV/HSL color space.
+    Hue ranges from 0 to 360 degree and light range from 0 to 1 (darkest to the brightest)
+    """
+
+    def __init__(self, barcode):
+        """
+        Initialize
+
+        :param barcode: The input barcode
+        """
+        self.barcode = barcode
+
+        # Set up the window
+        self.window = tkinter.Tk()
+        self.window.wm_title("Colors in Hue Light Scatter Plot")
+        self.window.iconbitmap(resource_path("kalmus_icon.ico"))
+
+        # Set up the plotted figure
+        fig, ax = show_colors_in_hue_light_scatter_plot(self.barcode.colors, figure_size=(9, 4.5),
+                                                        return_figure=True, remove_border=True,)
+        frame_type = barcode.frame_type
+        frame_type = frame_type.replace("_", " ")
+        frame_type = frame_type.title()
+
+        ax.set_title("{:s} Color of {:s} ({:d} frames included)".format(barcode.color_metric,
+                                                                        frame_type, len(barcode.colors)))
+        plt.tight_layout()
+
+        # Set up the canvas
+        canvas = FigureCanvasTkAgg(fig, master=self.window)  # A tk.DrawingArea.
+        canvas.draw()
+        canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
+
+        # Set up the tool bar of the figure
+        toolbar = NavigationToolbar2Tk(canvas, self.window)
+        toolbar.update()
+        canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
+
+
 class OutputCSVWindow():
     """
     OutputCSVWindow class
     GUI window that outputs the per frame level color/brightness data of the inspected barcode
     The data output are stored in the csv file, and the data frame depends on the type of the barcode
     """
+
     def __init__(self, barcode):
         """
         Initialize
@@ -284,8 +342,8 @@ class OutputCSVWindow():
         """
         # Get the file name from the user selection
         filename = tkinter.filedialog.asksaveasfilename(initialdir=".", title="Select CSV file",
-                                                      filetypes=(("csv files", "*.csv"), ("txt files", "*.txt"),
-                                                                 ("All files", "*.*")))
+                                                        filetypes=(("csv files", "*.csv"), ("txt files", "*.txt"),
+                                                                   ("All files", "*.*")))
 
         # Update the file name to the file name text entry
         self.filename_entry.delete(0, tkinter.END)

@@ -72,3 +72,16 @@ def test_extract_region_with_index(get_test_color_image):
     image_with_extracted_region_only = visualization_utils.extract_region_with_index(color_image, region_index, mask)
     assert image_with_extracted_region_only.shape == color_image.shape
     assert np.all(image_with_extracted_region_only[mask == region_index] == color_image[mask == region_index])
+
+
+@pytest.mark.filterwarnings("ignore::DeprecationWarning")
+def test_show_colors_in_hue_light_scatter_plot(get_test_color_image):
+    color_image = get_test_color_image
+    fig, ax = visualization_utils.show_colors_in_hue_light_scatter_plot(color_image, return_figure=True)
+    assert isinstance(fig, plt.Figure)
+    assert isinstance(ax, plt.Axes)
+
+    fig, ax = visualization_utils.show_colors_in_hue_light_scatter_plot(color_image, return_figure=True,
+                                                                        remove_border=True)
+    assert isinstance(fig, plt.Figure)
+    assert isinstance(ax, plt.Axes)

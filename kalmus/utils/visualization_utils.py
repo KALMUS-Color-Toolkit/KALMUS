@@ -2,6 +2,11 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+from skimage.color import hsv2rgb, rgb2hsv
+from collections import Counter
+from mpl_toolkits.axes_grid1 import make_axes_locatable
+import matplotlib as mpl
+
 from kalmus.utils.artist import get_contrast_matrix_and_labeled_image
 
 
@@ -337,3 +342,88 @@ def extract_region_with_index(image, region_index, labeled_image):
         extract_part[labeled_image != region_index] = np.array([max, max, max], dtype=image.dtype)
 
     return extract_part
+
+
+def show_colors_in_hue_light_scatter_plot(colors, figure_size=(10, 5), return_figure=False, remove_border=False):
+    """
+    Show a sequence of RGB colors in a Hue vs. Light Scatter Plot (Hue on x-axis and Light on y-axis). Colors are
+    assumed to be in the RGB colorspace and will be converted to the HSV color space within this function.
+
+    :param colors: A sequence of colors to display in cubic space
+    :type colors: numpy.ndarray
+    :param figure_size: the size of the figure
+    :type figure_size: tuple
+    :param return_figure: Return the plotted figure and axes, if true \
+                          Directly plot the cube, if false
+    :type return_figure: bool
+    :param remove_border: Remove the frame border of the plot if true \
+                          Keep the original frame border if false
+    :type remove_border: bool
+    :return: return the figure and axes with plotted figure if return_figure is True
+    :rtype: tuple (matplotlib.pyplot.Figure, matplotlib.pyplot.Axes)
+    """
+    # Convert colors to a numpy array
+    colors = np.array(colors)
+
+    # If the RGB color is in range [0, 255]
+    if colors.max() > 1:
+        # Convert it to float and normalize it to [0, 1]
+        normalized_colors = colors.astype("float") / 255
+    # Convert RGB color to HSV color space
+    hsv_colors = rgb2hsv(normalized_colors.reshape(-1, 1, 3))
+
+    # Get the Hue value of each color
+    hue = hsv_colors[..., 0] * 360
+    # Get the Light value of each color
+    bri = hsv_colors[..., 2]
+
+    # Convert them to list
+    hue_ls = hue.ravel().tolist()
+    bri_ls = bri.ravel().tolist()
+    combos = list(zip(hue_ls, bri_ls))
+
+    # Get the weights/frequency of each unique color
+    weight_counter = Counter(combos)
+
+    weights = [weight_counter[(hue_ls[i], bri_ls[i])] for i, _ in enumerate(bri_ls)]
+
+    weights = np.array(weights).astype("float")
+    weights -= weights.min()
+    weights /= weights.max()
+
+    weights *= 98
+    weights += 2
+
+    hsv_colors[..., 1] = 1
+    rgb_colors = hsv2rgb(hsv_colors)
+    rgb_colors = np.sqrt(rgb_colors)
+
+    fig, ax = plt.subplots(1, 1, figsize=figure_size)
+    ax.scatter(hue, bri, s=weights, marker="s", c=rgb_colors.reshape(-1, 3))
+
+    divider = make_axes_locatable(plt.gca())
+    ax_cb1 = divider.new_horizontal(size="5%", pad="1%")
+    ax_cb2 = divider.append_axes("bottom", size="5%", pad="12%")
+    cb1 = mpl.colorbar.ColorbarBase(ax_cb1, cmap=mpl.cm.get_cmap('binary_r', 256), orientation='vertical')
+    cb2 = mpl.colorbar.ColorbarBase(ax_cb2, cmap=mpl.cm.get_cmap('hsv', 360), orientation='horizontal')
+    cb1.set_ticks([])
+    cb2.set_ticks([])
+    ax.set_xlabel("Hue (0 - 360)")
+    ax.set_ylabel("Light (0 - 1)")
+
+    ax.set_ylim(-0.01, 1.01)
+    ax.set_xlim(0, 359)
+
+    fig.add_axes(ax_cb1)
+    fig.add_axes(ax_cb2)
+
+    if remove_border:
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        ax.spines['bottom'].set_visible(False)
+        ax.spines['left'].set_visible(False)
+
+    if return_figure:
+        return fig, ax
+    else:
+        plt.show()
