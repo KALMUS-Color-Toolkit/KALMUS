@@ -88,7 +88,7 @@ class PlotBarcodeWindow():
                                               command=self.show_RGB_color_in_cube)
             self.button_cube.grid(row=1, column=2)
 
-            self.button_scatter = tkinter.Button(master=self.plot_window, text="Show Color in Hue Light Scatter",
+            self.button_scatter = tkinter.Button(master=self.plot_window, text="Show Hue Light Scatter",
                                               command=self.show_color_in_scatter)
             self.button_scatter.grid(row=1, column=3)
 
@@ -218,15 +218,17 @@ class HueLightScatterPlotWindow():
         self.window.wm_title("Colors in Hue Light Scatter Plot")
         self.window.iconbitmap(resource_path("kalmus_icon.ico"))
 
+        saturation_threshold = 0.15
         # Set up the plotted figure
         fig, ax = show_colors_in_hue_light_scatter_plot(self.barcode.colors, figure_size=(9, 4.5),
-                                                        return_figure=True, remove_border=True,)
+                                                        return_figure=True, remove_border=True,
+                                                        saturation_threshold=saturation_threshold)
         frame_type = barcode.frame_type
         frame_type = frame_type.replace("_", " ")
         frame_type = frame_type.title()
 
-        ax.set_title("{:s} Color of {:s} ({:d} frames included)".format(barcode.color_metric,
-                                                                        frame_type, len(barcode.colors)))
+        ax.set_title("{:s} Color of {:s} (Only colors with saturation > {:.2f} are included)"
+                     .format(barcode.color_metric, frame_type, saturation_threshold))
         plt.tight_layout()
 
         # Set up the canvas

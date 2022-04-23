@@ -344,7 +344,9 @@ def extract_region_with_index(image, region_index, labeled_image):
     return extract_part
 
 
-def show_colors_in_hue_light_scatter_plot(colors, figure_size=(10, 5), return_figure=False, remove_border=False):
+def show_colors_in_hue_light_scatter_plot(colors, figure_size=(10, 5),
+                                          return_figure=False, remove_border=False,
+                                          saturation_threshold=0.1):
     """
     Show a sequence of RGB colors in a Hue vs. Light Scatter Plot (Hue on x-axis and Light on y-axis). Colors are
     assumed to be in the RGB colorspace and will be converted to the HSV color space within this function.
@@ -359,6 +361,10 @@ def show_colors_in_hue_light_scatter_plot(colors, figure_size=(10, 5), return_fi
     :param remove_border: Remove the frame border of the plot if true \
                           Keep the original frame border if false
     :type remove_border: bool
+    :param saturation_threshold: The color of which the saturation value \
+                                 is under the threshold will be excluded \
+                                 from the plots
+    :type saturation_threshold: float
     :return: return the figure and axes with plotted figure if return_figure is True
     :rtype: tuple (matplotlib.pyplot.Figure, matplotlib.pyplot.Axes)
     """
@@ -371,6 +377,7 @@ def show_colors_in_hue_light_scatter_plot(colors, figure_size=(10, 5), return_fi
         normalized_colors = colors.astype("float") / 255
     # Convert RGB color to HSV color space
     hsv_colors = rgb2hsv(normalized_colors.reshape(-1, 1, 3))
+    hsv_colors = hsv_colors[hsv_colors[..., 1] > saturation_threshold]
 
     # Get the Hue value of each color
     hue = hsv_colors[..., 0] * 360
@@ -391,8 +398,8 @@ def show_colors_in_hue_light_scatter_plot(colors, figure_size=(10, 5), return_fi
     weights -= weights.min()
     weights /= weights.max()
 
-    weights *= 98
-    weights += 2
+    weights *= 95
+    weights += 5
 
     hsv_colors[..., 1] = 1
     rgb_colors = hsv2rgb(hsv_colors)
