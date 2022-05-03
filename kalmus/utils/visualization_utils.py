@@ -346,7 +346,7 @@ def extract_region_with_index(image, region_index, labeled_image):
 
 def show_colors_in_hue_light_scatter_plot(colors, figure_size=(10, 5),
                                           return_figure=False, remove_border=False,
-                                          saturation_threshold=0.1):
+                                          saturation_threshold=0.15):
     """
     Show a sequence of RGB colors in a Hue vs. Light Scatter Plot (Hue on x-axis and Light on y-axis). Colors are
     assumed to be in the RGB colorspace and will be converted to the HSV color space within this function.

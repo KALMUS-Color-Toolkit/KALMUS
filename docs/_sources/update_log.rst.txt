@@ -1,8 +1,29 @@
-KALMUS Update Log (v1.3.9)
+KALMUS Update Log (v1.3.10)
 ================================
 
 Update Log
 -----------------
+
+update 1.3.10
+^^^^^^^^^^^^^^^^
+
+**Add features**
+
+* A new Hue vs. Light scatter plot is available in GUI and programming API. You can create it using the function ``show_colors_in_hue_light_scatter_plot`` from the ``kalmus.utils.visualization_utils``::
+
+    from kalmus.utils.visualization_utils import show_colors_in_hue_light_scatter_plot
+    show_colors_in_hue_light_scatter_plot(colors) # colors is a numpy array of RGB colors with shape (..., 3)
+
+Alternatively, you can visualize the Hue vs. Light scatter plot of a Barcode in KALMUS' GUI. In the main window of the GUI:
+
+ #. Click the **Inspect Barcode** button
+ #. Choose either barcode 1 or 2 (but it must be a color barcode)
+ #. In the Inspect Barcode window, click the **Show Hue Light Scatter** button
+ #. The Hue vs. Light scatter plot pops up
+
+The Hue vs. Light scatter plot only shows the hue and light (brightness) dimension of the colors/color barcodes, and we set the saturation of all colors to be 1 (maximum saturation) when plotting them. To avoid artifacts created from the colorless data, we exclude all colors with saturation < 0.15 in the plot by default. This threshold can be customized in the programming API using the parameter ``saturation_threshold``.
+
+---------------------------
 
 update 1.3.9
 ^^^^^^^^^^^^^^^^
@@ -10,6 +31,8 @@ update 1.3.9
 **Changes**
 
 * In the main plot of the KALMUS GUI, if two plotted barcodes have the same temporal dimension (elapsed time (seconds) per column of pixels), the x-ticks and y-ticks of the plot will show the pixel's temporal position (instead of the spatial position in the barcode image). See KALMUS's `issue #3 <https://github.com/KALMUS-Color-Toolkit/KALMUS/issues/3#issuecomment-822067438>`_ for more information.
+
+---------------------------
 
 update 1.3.8
 ^^^^^^^^^^^^^^^^
