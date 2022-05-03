@@ -1,8 +1,8 @@
 [![Project Status](https://img.shields.io/pypi/status/kalmus.svg)](https://pypi.org/project/kalmus/)
-[![Python Version](https://img.shields.io/pypi/pyversions/kalmus.svg)](https://pypi.org/project/kalmus/)
+[![Python Version](https://img.shields.io/pypi/pyversions/kalmus.svg)](https://www.python.org/downloads/release/python-380/)
 [![PyPI Version](https://img.shields.io/pypi/v/kalmus.svg)](https://pypi.org/project/kalmus/)
 [![codecov](https://codecov.io/gh/KALMUS-Color-Toolkit/KALMUS/branch/master/graph/badge.svg)](https://codecov.io/gh/KALMUS-Color-Toolkit/KALMUS)
-[![License](https://img.shields.io/pypi/l/kalmus.svg)](https://pypi.org/project/kalmus/)
+[![License](https://img.shields.io/pypi/l/kalmus.svg)](https://opensource.org/licenses/MIT)
 [![status](https://joss.theoj.org/papers/f7a87aac389fc3cd02807d5fad6ebf50/status.svg)](https://joss.theoj.org/papers/f7a87aac389fc3cd02807d5fad6ebf50)
 
 # KALMUS

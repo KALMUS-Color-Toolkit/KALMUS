@@ -1,9 +1,9 @@
 [![Project Status](https://img.shields.io/pypi/status/kalmus.svg)](https://pypi.org/project/kalmus/)
-[![Python Version](https://img.shields.io/pypi/pyversions/kalmus.svg)](https://pypi.org/project/kalmus/)
+[![Python Version](https://img.shields.io/pypi/pyversions/kalmus.svg)](https://www.python.org/downloads/release/python-380/)
 [![PyPI Version](https://img.shields.io/pypi/v/kalmus.svg)](https://pypi.org/project/kalmus/)
 [![status](https://joss.theoj.org/papers/f7a87aac389fc3cd02807d5fad6ebf50/status.svg)](https://joss.theoj.org/papers/f7a87aac389fc3cd02807d5fad6ebf50)
 [![codecov](https://codecov.io/gh/KALMUS-Color-Toolkit/KALMUS/branch/master/graph/badge.svg)](https://codecov.io/gh/KALMUS-Color-Toolkit/KALMUS)
-[![License](https://img.shields.io/pypi/l/kalmus.svg)](https://pypi.org/project/kalmus/)
+[![License](https://img.shields.io/pypi/l/kalmus.svg)](https://opensource.org/licenses/MIT)
 
 # KALMUS
 
@@ -144,5 +144,5 @@ Center for their support on this project. The project is released under the open
 
 # Update Log
 
-The full update log (from [v1.3.0](https://pypi.org/project/kalmus/1.3.0/) to [v1.3.9](https://pypi.org/project/kalmus/)) 
+The full update log (from [v1.3.0](https://pypi.org/project/kalmus/1.3.0/) to [v1.3.10](https://pypi.org/project/kalmus/)) 
 is now available on [https://kalmus-color-toolkit.github.io/KALMUS/update_log.html](https://kalmus-color-toolkit.github.io/KALMUS/update_log.html)
