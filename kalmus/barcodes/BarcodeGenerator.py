@@ -71,7 +71,7 @@ def build_barcode_from_json(path_to_json, barcode_type="Color"):
 
     if "save_frames_in_generation" in object_dict.keys():
         if object_dict["save_frames_in_generation"]:
-            barcode.save_frames_in_generationa = object_dict["save_frames_in_generation"]
+            barcode.save_frames_in_generation = object_dict["save_frames_in_generation"]
             barcode.saved_frames = np.array(object_dict["saved_frames"])
 
     return barcode

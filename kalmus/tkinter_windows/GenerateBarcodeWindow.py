@@ -98,16 +98,16 @@ class GenerateBarcodeWindow():
         self.acquisition_option.set("Frame")
 
         # Radio button for the Acquisition unit (Frame/Time) selection
-        radio_frame = tkinter.Radiobutton(self.window, text="Frame", variable=self.acquisition_option,
+        self.radio_frame = tkinter.Radiobutton(self.window, text="Frame", variable=self.acquisition_option,
                                           value="Frame", anchor='w',
                                           command=self.frame_unit)
-        radio_frame.grid(row=1, column=5, sticky=tkinter.W)
-        radio_frame.select()
+        self.radio_frame.grid(row=1, column=5, sticky=tkinter.W)
+        self.radio_frame.select()
 
-        radio_time = tkinter.Radiobutton(self.window, text="Time", variable=self.acquisition_option,
+        self.radio_time = tkinter.Radiobutton(self.window, text="Time", variable=self.acquisition_option,
                                          value="Time", anchor='w',
                                          command=self.time_unit)
-        radio_time.grid(row=2, column=5, sticky=tkinter.W)
+        self.radio_time.grid(row=2, column=5, sticky=tkinter.W)
 
         # Text entry for the skip over specification
         self.skip_over_entry = tkinter.Entry(self.window, textvariable="0", width=12)
@@ -133,51 +133,66 @@ class GenerateBarcodeWindow():
         self.browse_folder_button = tkinter.Button(self.window, text='Browse', command=self.browse_folder)
         self.browse_folder_button.grid(row=3, column=4)
 
+        # Variable that stores 0 for not saving JSON file 1 for saving generated barcode to JSON
+        self.var_save_json = tkinter.IntVar(self.window)
+
+        # Checkbox for the user to choose whether use the multi-thread or not for barcode generation
+        self.checkbox_save_json = tkinter.Checkbutton(self.window, text="Save Output:",
+                                                      variable=self.var_save_json,
+                                                      onvalue=1, offvalue=0, command=self.update_json_filename)
+
+        self.checkbox_save_json.grid(row=4, column=0)
+
+        # Text entry for the output JSON file name specification
+        self.json_filename_entry = tkinter.Entry(self.window, textvariable="", width=55)
+        self.json_filename_entry.grid(row=4, column=1, columnspan=3)
+        self.json_filename_entry.config(state="disabled")
+
         # Variable that stores the letter box option (automatic/user defined)
         self.letterbox_option = tkinter.StringVar(self.window)
         self.letterbox_option.set("Auto")  # initialize
 
         # Label prompt for the letter box remove option
         letterbox_label = tkinter.Label(self.window, text="Remove Letterbox: ")
-        letterbox_label.grid(row=4, column=0, columnspan=1)
+        letterbox_label.grid(row=5, column=0, columnspan=1)
 
         # Radio button for the letter box remove option
-        radio_auto = tkinter.Radiobutton(self.window, text="Auto", variable=self.letterbox_option,
+        self.radio_auto = tkinter.Radiobutton(self.window, text="Auto", variable=self.letterbox_option,
                                          value="Auto", anchor='w',
                                          command=self.disable_setup)
-        radio_auto.grid(row=5, column=0, sticky=tkinter.W)
-        radio_auto.select()
+        self.radio_auto.grid(row=6, column=0, sticky=tkinter.W)
+        self.radio_auto.select()
 
-        radio_manual = tkinter.Radiobutton(self.window, text="Manual", variable=self.letterbox_option,
+        self.radio_manual = tkinter.Radiobutton(self.window, text="Manual", variable=self.letterbox_option,
                                            value="Manual", anchor='w',
                                            command=self.enable_setup)
-        radio_manual.grid(row=6, column=0, sticky=tkinter.W)
+        self.radio_manual.grid(row=7, column=0, sticky=tkinter.W)
 
         # User defined letter box label prompt
         high_ver_label = tkinter.Label(self.window, text="Upper vertical: ")
-        high_ver_label.grid(row=5, column=1, columnspan=1)
+        high_ver_label.grid(row=6, column=1, columnspan=1)
 
         low_ver_label = tkinter.Label(self.window, text="Lower vertical: ")
-        low_ver_label.grid(row=6, column=1, columnspan=1)
+        low_ver_label.grid(row=7, column=1, columnspan=1)
 
         # User defined letter box text entry
         self.high_ver_entry = tkinter.Entry(self.window, textvariable="-1", width=4, state="disabled")
-        self.high_ver_entry.grid(row=5, column=2, columnspan=1, sticky=tkinter.W)
+        self.high_ver_entry.grid(row=6, column=2, columnspan=1, sticky=tkinter.W)
 
         self.low_ver_entry = tkinter.Entry(self.window, textvariable="-2", width=4, state="disabled")
-        self.low_ver_entry.grid(row=6, column=2, columnspan=1, sticky=tkinter.W)
+        self.low_ver_entry.grid(row=7, column=2, columnspan=1, sticky=tkinter.W)
 
         left_hor_label = tkinter.Label(self.window, text="Left horizontal: ")
-        left_hor_label.grid(row=5, column=3, columnspan=1)
+        left_hor_label.grid(row=6, column=3, columnspan=1)
 
         right_hor_label = tkinter.Label(self.window, text="right horizontal: ")
-        right_hor_label.grid(row=6, column=3, columnspan=1)
+        right_hor_label.grid(row=7, column=3, columnspan=1)
 
         self.left_hor_entry = tkinter.Entry(self.window, textvariable="-3", width=4, state="disabled")
-        self.left_hor_entry.grid(row=5, column=4, columnspan=1)
+        self.left_hor_entry.grid(row=6, column=4, columnspan=1)
 
         self.right_hor_entry = tkinter.Entry(self.window, textvariable="-4", width=4, state="disabled")
-        self.right_hor_entry.grid(row=6, column=4, columnspan=1)
+        self.right_hor_entry.grid(row=7, column=4, columnspan=1)
 
         # Variable that stores 0 for not saving frames during the generation 1 for saving frames during the generation
         self.var_saved_frame = tkinter.IntVar(self.window)
@@ -186,15 +201,15 @@ class GenerateBarcodeWindow():
         self.checkbox_saved_frame = tkinter.Checkbutton(self.window, text="Save Frames  ",
                                                         variable=self.var_saved_frame,
                                                         onvalue=1, offvalue=0, command=self.update_save_frame_entry)
-        self.checkbox_saved_frame.grid(row=7, column=0)
+        self.checkbox_saved_frame.grid(row=8, column=0)
 
         # Label prompt for saving frame
         save_frame_label = tkinter.Label(master=self.window, text="Save every (secs):")
-        save_frame_label.grid(row=7, column=1, sticky=tkinter.E)
+        save_frame_label.grid(row=8, column=1, sticky=tkinter.E)
 
         # Text entry for the saved frames rate specification
         self.save_frame_entry = tkinter.Entry(self.window, textvariable="-8", width=4, state="normal")
-        self.save_frame_entry.grid(row=7, column=2, sticky=tkinter.W)
+        self.save_frame_entry.grid(row=8, column=2, sticky=tkinter.W)
         self.save_frame_entry.delete(0, tkinter.END)
         self.save_frame_entry.insert(0, "4")
         self.save_frame_entry.config(state="disabled")
@@ -207,11 +222,11 @@ class GenerateBarcodeWindow():
         self.checkbox_rescale_frame = tkinter.Checkbutton(self.window, text="Rescale Frames", width=12,
                                                           variable=self.var_rescale_frame,
                                                           onvalue=1, offvalue=0, command=self.update_rescale_entry)
-        self.checkbox_rescale_frame.grid(row=7, column=3, sticky=tkinter.E)
+        self.checkbox_rescale_frame.grid(row=8, column=3, sticky=tkinter.E)
 
         # Text entry for the rescale factor specification
         self.rescale_factor_entry = tkinter.Entry(self.window, textvariable="-7", width=4, state="normal")
-        self.rescale_factor_entry.grid(row=7, column=4)
+        self.rescale_factor_entry.grid(row=8, column=4)
         self.rescale_factor_entry.delete(0, tkinter.END)
         self.rescale_factor_entry.insert(0, "0.5")
         self.rescale_factor_entry.config(state="disabled")
@@ -224,11 +239,11 @@ class GenerateBarcodeWindow():
                                                          variable=self.var_multi_thread,
                                                          onvalue=1, offvalue=0, command=self.update_thread_entry)
 
-        self.checkbox_multi_thread.grid(row=8, column=0)
+        self.checkbox_multi_thread.grid(row=9, column=0)
 
         # Text entry for the thread specification
         self.thread_entry = tkinter.Entry(self.window, textvariable="-6", width=4, state="normal")
-        self.thread_entry.grid(row=8, column=1, sticky=tkinter.W)
+        self.thread_entry.grid(row=9, column=1, sticky=tkinter.W)
         self.thread_entry.delete(0, tkinter.END)
         self.thread_entry.insert(0, "4")
         self.thread_entry.config(state="disabled")
@@ -236,12 +251,17 @@ class GenerateBarcodeWindow():
         # Button to generate the barcode
         self.generate_button = tkinter.Button(master=self.window, text="Generate Barcode",
                                               command=self.generate_barcode_thread)
-        self.generate_button.grid(row=8, column=2, sticky=tkinter.W, rowspan=1, pady=5)
+        self.generate_button.grid(row=9, column=2, sticky=tkinter.W, rowspan=1, pady=5)
 
         # Button to specify the meta data of the generated barcode
         self.specify_data_button = tkinter.Button(master=self.window, text="Specify Meta Data",
                                                   command=self.specify_data)
-        self.specify_data_button.grid(row=8, column=3, sticky=tkinter.W, rowspan=1, pady=5)
+        self.specify_data_button.grid(row=9, column=3, sticky=tkinter.W, rowspan=1, pady=5)
+
+        self.use_default_setting_button = tkinter.Button(master=self.window, text="Default Setting",
+                                                         command=self.fill_default_setting)
+        self.use_default_setting_button.grid(row=9, column=4, sticky=tkinter.E,
+                                             rowspan=1, columnspan=2, pady=5, padx=15)
 
         self.window.protocol("WM_DELETE_WINDOW", self.quit)
 
@@ -260,6 +280,51 @@ class GenerateBarcodeWindow():
         Instantiate the SpecifyMetaDataWindow
         """
         SpecifyMetaDataWindow(self.meta_data_dict)
+
+    def update_json_filename(self):
+        if self.var_save_json.get() == 0:
+            self.checkbox_save_json["text"] = "Save Output:"
+            self.json_filename_entry.config(state="disabled")
+        elif self.var_save_json.get() == 1:
+            self.checkbox_save_json["text"] = "JSON filename:"
+            self.json_filename_entry.config(state="normal")
+
+    def fill_default_setting(self):
+        self.barcode_type_var.set("Color")
+
+        self.frame_type_var.set("Whole_frame")
+
+        self.color_metric_var.set("Average")
+
+        self.acquisition_option.set("Frame")
+        self.radio_frame.select()
+        self.radio_time.deselect()
+        self.radio_frame.invoke()
+
+        self.skip_over_entry.delete(0, tkinter.END)
+        self.skip_over_entry.insert(0, "start")
+
+        self.sampled_rate_entry.delete(0, tkinter.END)
+        self.sampled_rate_entry.insert(0, "2")
+
+        self.total_frames_entry.delete(0, tkinter.END)
+        self.total_frames_entry.insert(0, "end")
+
+        self.letterbox_option.set("Auto")
+        self.radio_auto.select()
+        self.radio_manual.deselect()
+        self.radio_auto.invoke()
+
+        self.checkbox_saved_frame.deselect()
+        self.checkbox_saved_frame.invoke()
+        self.save_frame_entry.delete(0, tkinter.END)
+        self.save_frame_entry.insert(0, "4")
+
+        self.checkbox_rescale_frame.select()
+        self.checkbox_rescale_frame.invoke()
+
+        self.checkbox_save_json.deselect()
+        self.checkbox_save_json.invoke()
 
     def update_thread_entry(self):
         """
@@ -446,6 +511,15 @@ class GenerateBarcodeWindow():
         self.barcode_generator.skip_over = skip_over
         self.barcode_generator.total_frames = total_frames
 
+        if self.var_save_json.get() == 1:
+            json_filename = self.json_filename_entry.get()
+            if len(json_filename) == 0:
+                showwarning("Default Saved JSON Path is Used", "Path to the saved JSON file is not specified.\n"
+                                                               "Default save path is used.\n"
+                                                               "File will be saved in the current working directory.\n"
+                                                               "It is recommended to specify the file path.")
+                json_filename = None
+
         # Check if user choose the multi-thread or not
         if self.var_multi_thread.get() == 0:
             multi_thread = None
@@ -512,8 +586,8 @@ class GenerateBarcodeWindow():
                 return
         elif self.letterbox_option.get() == "Auto":
             # try:
-                # If not, start the generation.
-                # The letter box will be automatically found during the generation process
+            #     If not, start the generation.
+            #     The letter box will be automatically found during the generation process
             self.barcode_generator.generate_barcode(video_filename, num_thread=multi_thread,
                                                     save_frames=save_frames,
                                                     rescale_frames_factor=rescale_factor,
@@ -538,6 +612,13 @@ class GenerateBarcodeWindow():
 
         # Get the barcode from the barcode generator
         barcode = self.barcode_generator.get_barcode()
+        if self.var_save_json.get() == 1:
+            barcode.save_as_json(json_filename)
+            json_filename = "saved_{:s}_barcode_{:s}_{:s}.json" \
+                .format(barcode.barcode_type, barcode.frame_type, barcode.color_metric)
+            json_saved_success_message = "\nand is saved as a JSON object at path: {:20s}".format(json_filename)
+        else:
+            json_saved_success_message = ""
 
         # Clear the cv2 captured video object
         barcode.video = None
@@ -562,7 +643,8 @@ class GenerateBarcodeWindow():
                                                                                                     frame_type,
                                                                                                     barcode_type,
                                                                                                     video_filename,
-                                                                                                    videoname))
+                                                                                                    videoname) +
+                                          json_saved_success_message)
 
     def disable_generate_button(self):
         """

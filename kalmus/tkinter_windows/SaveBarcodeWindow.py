@@ -83,7 +83,13 @@ class SaveBarcodeWindow():
         # Saved the barcode
         for barcode_name in selected_barcode_names:
             barcode = self.barcode_stack[barcode_name]
+            if filename and (not filename.lower().endswith(".json")):
+                filename += ".json"
             barcode.save_as_json(filename)
+
+        if not filename:
+            filename = "saved_{:s}_barcode_{:s}_{:s}.json" \
+                .format(barcode.barcode_type, barcode.frame_type, barcode.color_metric)
 
         # Quit the window
         self.window.destroy()
