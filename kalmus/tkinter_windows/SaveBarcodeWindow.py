@@ -70,6 +70,9 @@ class SaveBarcodeWindow():
         # Get the dictionary key of the selected barcode
         selected_barcode_names = [self.listbox.get(idx) for idx in self.listbox.curselection()]
 
+        if len(selected_barcode_names) <= 0:
+            return
+
         # Get the file name/path to the saved json file from the user input
         filename = self.filename_entry.get()
 

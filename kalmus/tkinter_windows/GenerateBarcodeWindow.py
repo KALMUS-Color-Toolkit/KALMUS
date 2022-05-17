@@ -48,7 +48,7 @@ class GenerateBarcodeWindow():
         frame_type_label.grid(row=1, column=0)
 
         # Label prompt for the color/brightness metric
-        color_metric_label = tkinter.Label(self.window, text="Color metric: ")
+        color_metric_label = tkinter.Label(self.window, text="Color Metric: ")
         color_metric_label.grid(row=2, column=0)
 
         # Variable that stores the user's choice of generated barcode type
