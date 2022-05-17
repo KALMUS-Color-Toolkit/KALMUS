@@ -402,7 +402,7 @@ def show_colors_in_hue_light_scatter_plot(colors, figure_size=(10, 5),
     weights += 5
 
     hsv_colors[..., 1] = 1
-    rgb_colors = hsv2rgb(hsv_colors)
+    rgb_colors = hsv2rgb(hsv_colors.reshape(-1, 1, 3))
     rgb_colors = np.sqrt(rgb_colors)
 
     fig, ax = plt.subplots(1, 1, figsize=figure_size)
