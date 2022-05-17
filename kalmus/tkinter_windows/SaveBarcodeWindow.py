@@ -85,7 +85,13 @@ class SaveBarcodeWindow():
             barcode = self.barcode_stack[barcode_name]
             if filename and (not filename.lower().endswith(".json")):
                 filename += ".json"
-            barcode.save_as_json(filename)
+            try:
+                barcode.save_as_json(filename)
+            except:
+                showwarning("Error Occurred in Saving Barcode", "An unknown Error occurred in saving barcode to "
+                                                                "JSON object.\nPlease verify the file path and "
+                                                                "make sure you have the permission to save file "
+                                                                "at that directory.")
 
         if not filename:
             filename = "saved_{:s}_barcode_{:s}_{:s}.json" \

@@ -286,7 +286,7 @@ class GenerateBarcodeWindow():
             self.checkbox_save_json["text"] = "Save Output:"
             self.json_filename_entry.config(state="disabled")
         elif self.var_save_json.get() == 1:
-            self.checkbox_save_json["text"] = "JSON filename:"
+            self.checkbox_save_json["text"] = "JSON file path:"
             self.json_filename_entry.config(state="normal")
 
     def fill_default_setting(self):
@@ -325,6 +325,12 @@ class GenerateBarcodeWindow():
 
         self.checkbox_save_json.deselect()
         self.checkbox_save_json.invoke()
+
+        if len(self.json_filename_entry.get()) <= 0:
+            default_json_save_path = "saved_{:s}_barcode_{:s}_{:s}.json"\
+                .format(self.barcode_type_var.get(), self.frame_type_var.get(), self.color_metric_var.get())
+            self.json_filename_entry.delete(0, tkinter.END)
+            self.json_filename_entry.insert(0, os.path.abspath(default_json_save_path))
 
     def update_thread_entry(self):
         """
@@ -613,7 +619,13 @@ class GenerateBarcodeWindow():
         # Get the barcode from the barcode generator
         barcode = self.barcode_generator.get_barcode()
         if self.var_save_json.get() == 1:
-            barcode.save_as_json(json_filename)
+            try:
+                barcode.save_as_json(json_filename)
+            except:
+                showwarning("Error Occurred in Saving Barcode", "An unknown Error occurred in saving barcode to "
+                                                                "JSON object.\nPlease verify the file path and "
+                                                                "make sure you have the permission to save file "
+                                                                "at that directory.")
             json_filename = "saved_{:s}_barcode_{:s}_{:s}.json" \
                 .format(barcode.barcode_type, barcode.frame_type, barcode.color_metric)
             json_saved_success_message = "\nand is saved as a JSON object at path: {:20s}".format(json_filename)
