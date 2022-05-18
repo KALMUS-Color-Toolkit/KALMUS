@@ -330,6 +330,9 @@ class OutputCSVWindow():
 
         dataframe = dataframe.set_index('Frame index')
 
+        if not csv_filename.endswith(".csv"):
+            csv_filename += ".csv"
+
         dataframe.to_csv(csv_filename)
 
         # Quit the window after outputting csv file

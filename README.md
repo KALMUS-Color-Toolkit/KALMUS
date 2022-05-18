@@ -42,7 +42,7 @@ The KALMUS API reference is now available on
 [https://kalmus-color-toolkit.github.io/KALMUS/kalmus.html](https://kalmus-color-toolkit.github.io/KALMUS/kalmus.html).
 
 # Installation Guide
-[![Python Version](https://img.shields.io/pypi/pyversions/kalmus.svg)](https://pypi.org/project/kalmus/)
+[![Python Version](https://img.shields.io/pypi/pyversions/kalmus.svg)](https://www.python.org/downloads/release/python-380/)
 [![PyPI Version](https://img.shields.io/pypi/v/kalmus.svg)](https://pypi.org/project/kalmus/)
 [![build workflow](https://github.com/KALMUS-Color-Toolkit/KALMUS/actions/workflows/python-package.yml/badge.svg)](https://github.com/KALMUS-Color-Toolkit/KALMUS/actions/workflows/python-package.yml)
 
@@ -144,5 +144,5 @@ Center for their support on this project. The project is released under the open
 
 # Update Log
 
-The full update log (from [v1.3.0](https://pypi.org/project/kalmus/1.3.0/) to [v1.3.10](https://pypi.org/project/kalmus/)) 
+The full update log (from [v1.3.0](https://pypi.org/project/kalmus/1.3.0/) to [v1.3.11](https://pypi.org/project/kalmus/)) 
 is now available on [https://kalmus-color-toolkit.github.io/KALMUS/update_log.html](https://kalmus-color-toolkit.github.io/KALMUS/update_log.html)
