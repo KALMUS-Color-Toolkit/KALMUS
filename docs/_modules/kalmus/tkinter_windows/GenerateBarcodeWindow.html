@@ -687,6 +687,8 @@
                                                                <span class="s2">&quot;File will be saved in the current working directory.</span><span class="se">\n</span><span class="s2">&quot;</span>
                                                                <span class="s2">&quot;It is recommended to specify the file path.&quot;</span><span class="p">)</span>
                 <span class="n">json_filename</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">json_filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.json&quot;</span><span class="p">):</span>
+                <span class="n">json_filename</span> <span class="o">+=</span> <span class="s2">&quot;.json&quot;</span>
 
         <span class="c1"># Check if user choose the multi-thread or not</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_multi_thread</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -790,7 +792,8 @@
                                                                 <span class="s2">&quot;at that directory.&quot;</span><span class="p">)</span>
             <span class="n">json_filename</span> <span class="o">=</span> <span class="s2">&quot;saved_</span><span class="si">{:s}</span><span class="s2">_barcode_</span><span class="si">{:s}</span><span class="s2">_</span><span class="si">{:s}</span><span class="s2">.json&quot;</span> \
                 <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">barcode</span><span class="o">.</span><span class="n">barcode_type</span><span class="p">,</span> <span class="n">barcode</span><span class="o">.</span><span class="n">frame_type</span><span class="p">,</span> <span class="n">barcode</span><span class="o">.</span><span class="n">color_metric</span><span class="p">)</span>
-            <span class="n">json_saved_success_message</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">and is saved as a JSON object at path: </span><span class="si">{:20s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">json_filename</span><span class="p">)</span>
+            <span class="n">json_saved_success_message</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">and is saved as a JSON object at path: </span><span class="si">{:20s}</span><span class="s2">&quot;</span>\
+                <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">json_filename</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">json_saved_success_message</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
