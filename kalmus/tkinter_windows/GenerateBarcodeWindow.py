@@ -525,6 +525,8 @@ class GenerateBarcodeWindow():
                                                                "File will be saved in the current working directory.\n"
                                                                "It is recommended to specify the file path.")
                 json_filename = None
+            if not json_filename.endswith(".json"):
+                json_filename += ".json"
 
         # Check if user choose the multi-thread or not
         if self.var_multi_thread.get() == 0:
@@ -628,7 +630,8 @@ class GenerateBarcodeWindow():
                                                                 "at that directory.")
             json_filename = "saved_{:s}_barcode_{:s}_{:s}.json" \
                 .format(barcode.barcode_type, barcode.frame_type, barcode.color_metric)
-            json_saved_success_message = "\nand is saved as a JSON object at path: {:20s}".format(json_filename)
+            json_saved_success_message = "\nand is saved as a JSON object at path: {:20s}"\
+                .format(os.path.abspath(json_filename))
         else:
             json_saved_success_message = ""
 
