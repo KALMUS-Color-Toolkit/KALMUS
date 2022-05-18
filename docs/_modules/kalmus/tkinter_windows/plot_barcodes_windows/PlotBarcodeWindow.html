@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow &mdash; KALMUS 1.3.10 documentation</title>
+  <title>kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow &mdash; KALMUS 1.3.11 documentation</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                1.3.10
+                1.3.11
               </div>
             
           
@@ -492,6 +492,9 @@
 
         <span class="n">dataframe</span> <span class="o">=</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Frame index&#39;</span><span class="p">)</span>
 
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">csv_filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.csv&quot;</span><span class="p">):</span>
+            <span class="n">csv_filename</span> <span class="o">+=</span> <span class="s2">&quot;.csv&quot;</span>
+
         <span class="n">dataframe</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">csv_filename</span><span class="p">)</span>
 
         <span class="c1"># Quit the window after outputting csv file</span>
@@ -523,7 +526,7 @@
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2022, Yida Chen, Eric Faden, and Nathan Ryan.
+        &#169; Copyright 2021, Yida Chen, Eric Faden, and Nathan Ryan.
 
     </p>
   </div>
