@@ -144,11 +144,11 @@ class LoadJsonWindow():
         self.axes[1][1].cla()
 
         # Always plotted the barcode with longer width below
-        if self.barcode_1.get_barcode().shape[1] > self.barcode_2.get_barcode().shape[1]:
-            temp = copy.deepcopy(self.barcode_1)
-
-            self.barcode_1.__dict__ = self.barcode_2.__dict__.copy()
-            self.barcode_2.__dict__ = temp.__dict__.copy()
+        # if self.barcode_1.get_barcode().shape[1] > self.barcode_2.get_barcode().shape[1]:
+        #     temp = copy.deepcopy(self.barcode_1)
+        #
+        #     self.barcode_1.__dict__ = self.barcode_2.__dict__.copy()
+        #     self.barcode_2.__dict__ = temp.__dict__.copy()
 
         # Update the graph/plotted figure in the main window
         update_graph(barcode_1=self.barcode_1, barcode_2=self.barcode_2, axes=self.axes)

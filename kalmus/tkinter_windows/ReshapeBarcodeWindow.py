@@ -260,11 +260,11 @@ class ReshapeBarcodeWindow():
         self.axes[1][1].cla()
 
         # Update the displayed barcode and redraw the canvas
-        if self.barcode_1.get_barcode().shape[1] > self.barcode_2.get_barcode().shape[1]:
-            temp = copy.deepcopy(self.barcode_1)
-
-            self.barcode_1.__dict__ = self.barcode_2.__dict__.copy()
-            self.barcode_2.__dict__ = temp.__dict__.copy()
+        # if self.barcode_1.get_barcode().shape[1] > self.barcode_2.get_barcode().shape[1]:
+        #     temp = copy.deepcopy(self.barcode_1)
+        #
+        #     self.barcode_1.__dict__ = self.barcode_2.__dict__.copy()
+        #     self.barcode_2.__dict__ = temp.__dict__.copy()
 
         update_graph(barcode_1=self.barcode_1, barcode_2=self.barcode_2, axes=self.axes)
 

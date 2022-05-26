@@ -55,7 +55,7 @@ def build_barcode_from_json(path_to_json, barcode_type="Color"):
     barcode.set_letterbox_bound(object_dict["low_bound_ver"], object_dict["high_bound_ver"],
                                 object_dict["low_bound_hor"], object_dict["high_bound_hor"])
 
-    if "meta_data" in object_dict.keys():
+    if ("meta_data" in object_dict.keys()) and (object_dict["meta_data"] is not None):
         barcode.meta_data = object_dict["meta_data"]
 
     barcode.barcode = np.array(object_dict["barcode"])
