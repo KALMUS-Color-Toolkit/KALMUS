@@ -1,11 +1,11 @@
 """ CheckTimePointWindow Class """
 
 import tkinter
-from tkinter.messagebox import showerror
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
+import numpy as np
 
 from kalmus.tkinter_windows.gui_utils import resource_path
-from kalmus.tkinter_windows.time_points_windows.CalibrateBarcodeTimeWindow import CalibrateBarcodeTimeWindow
-from kalmus.tkinter_windows.time_points_windows.DisplaySavedFramesWindow import DisplaySavedFramesWindow
 
 
 class CheckTimePointWindow():
@@ -15,7 +15,7 @@ class CheckTimePointWindow():
     at the clicked point
     """
 
-    def __init__(self, barcode, mouse_x, mouse_y):
+    def __init__(self, barcode, mouse_x, mouse_y, figsize=(6, 0.7), dpi=100):
         """
         Initialize
 
@@ -46,6 +46,7 @@ class CheckTimePointWindow():
         self.window = tkinter.Tk()
         self.window.wm_title("At this point...")
         self.window.iconbitmap(resource_path("kalmus_icon.ico"))
+        self.window.attributes('-topmost', True)
 
         # If the clicked barcode is color barcode
         if self.barcode.barcode_type == "Color":
@@ -89,27 +90,46 @@ class CheckTimePointWindow():
                                         .format(time_hr, time_min, time_sec))
         self.time_label.grid(row=1, column=2)
 
-        # Calibrate barcode button
-        self.cali_button = tkinter.Button(master=self.window, text="Calibrate", command=self.calibrate_barcode_time)
-        self.cali_button.grid(row=2, column=1)
+        if self.barcode.saved_frames is not None:
+            # Set up the plotted figure
+            self.fig = plt.figure(figsize=figsize, dpi=dpi)
 
-        self.display_button = tkinter.Button(master=self.window, text="Display", command=self.display)
-        self.display_button.grid(row=2, column=2)
+            displayed_image = self.get_frames_image_for_display(mouse_x, mouse_y)
+            plt.imshow(displayed_image)
+            plt.axis('tight')
+            plt.axis("off")
+            plt.tight_layout()
+            self.fig.subplots_adjust(left=0,right=1,bottom=0,top=1)
 
-    def calibrate_barcode_time(self):
-        """
-        Instantiate the CalibrateBarcodeWindow
-        """
-        CalibrateBarcodeTimeWindow(self.barcode, self.time_label, self.frame_label, self.x_pos, self.y_pos)
+            # Set up the canvas for the figure
+            self.canvas = FigureCanvasTkAgg(self.fig, master=self.window)  # A tk.DrawingArea.
+            self.canvas.draw()
+            self.canvas.get_tk_widget().grid(row=2, column=0, rowspan=1, columnspan=4)
 
-    def display(self):
+    def get_frames_image_for_display(self, mouse_x, mouse_y):
         """
-        Instantiate the DisplaySavedFramesWindow if barcode has the saved frames
+        Get the frames around the clicked point
+        :param mouse_x: The x position of the clicked point
+        :param mouse_y: The y position of the clicked point
+        :return: The combined sampled frames for displaying
         """
-        # Check if barcode has the saved frames
-        if self.barcode.saved_frames is None:
-            # If barcode does not have the saved frames
-            # Show the warning
-            showerror("No Saved Frames", "This Barcode does not have\nthe saved frames to display.")
-        else:
-            DisplaySavedFramesWindow(barcode=self.barcode, mouse_x=self.x_pos, mouse_y=self.y_pos)
+        barcode_shape = self.barcode.get_barcode().shape
+        # Get the middle position of the saved frame
+        cur_pos = (mouse_x * barcode_shape[0] + mouse_y) / (barcode_shape[0] * barcode_shape[1])
+        frame_pos = round(cur_pos * len(self.barcode.saved_frames))
+
+        # Get another four frames around the middle frame
+        # Make sure the frame positions/indexes are valid
+        if frame_pos < 2:
+            frame_pos = 2
+        if frame_pos > len(self.barcode.saved_frames) - 3:
+            frame_pos = len(self.barcode.saved_frames) - 3
+        frames = self.barcode.saved_frames[frame_pos - 2: frame_pos + 3]
+
+        # Get the combined five frames image
+        combine_image = frames[0]
+        for frame in frames[1:]:
+            # Combine the frames into one image
+            combine_image = np.concatenate((combine_image, frame), axis=1)
+
+        return combine_image

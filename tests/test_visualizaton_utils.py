@@ -85,3 +85,10 @@ def test_show_colors_in_hue_light_scatter_plot(get_test_color_image):
                                                                         remove_border=True)
     assert isinstance(fig, plt.Figure)
     assert isinstance(ax, plt.Axes)
+
+
+def test_show_colors_in_hue_light_3d_bar_plot(get_test_color_image):
+    color_image = get_test_color_image
+    fig, ax = visualization_utils.show_colors_in_hue_light_3d_bar_plot(color_image, return_figure=True)
+    assert isinstance(fig, plt.Figure)
+    assert isinstance(ax, plt.Axes)

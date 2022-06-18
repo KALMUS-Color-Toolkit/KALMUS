@@ -190,7 +190,11 @@ def show_color_matrix(color_2d_array, mode="truncate", figure_size=(9, 4),
     plt.show()
 
 
-def show_colors_in_cube(colors, figure_size=(8, 8), return_figure=False, sampling=-1, return_sampled_colors=False):
+def show_colors_in_cube(colors, figure_size=(8, 8),
+                        tight_plot=True, grid_off=True,
+                        background_off=True,
+                        return_figure=False, sampling=-1,
+                        return_sampled_colors=False):
     """
     Show a sequence of RGB colors in cubic RGB space (e.g. R axis (x axis), G axis (y axis),
     and B axis (z axis))
@@ -201,6 +205,15 @@ def show_colors_in_cube(colors, figure_size=(8, 8), return_figure=False, samplin
     :type colors: numpy.ndarray
     :param figure_size: the size of the figure
     :type figure_size: tuple
+    :param tight_plot: Remove the white margin around the plot if true \
+                       Keep the original white margin if false
+    :type tight_plot: bool
+    :param grid_off: Remove the grid of plot if true \
+                     Keep the original grid if false
+    :type grid_off: bool
+    :param background_off: Use the transparent background if true \
+                           Keep the original background if false
+    :type background_off: bool
     :param return_figure: Return the plotted figure and axes, if true \
                           Directly plot the cube, if false
     :type return_figure: bool
@@ -238,6 +251,16 @@ def show_colors_in_cube(colors, figure_size=(8, 8), return_figure=False, samplin
     ax.set_xlabel('Red')
     ax.set_ylabel('Green')
     ax.set_zlabel('Blue')
+
+    ax.grid(not grid_off)
+
+    if tight_plot:
+        fig.subplots_adjust(left=0, right=1, bottom=0, top=1)
+
+    if background_off:
+        ax.xaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))
+        ax.yaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))
+        ax.zaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))
 
     if return_figure:
         return fig, ax
@@ -385,7 +408,7 @@ def show_colors_in_hue_light_scatter_plot(colors, figure_size=(10, 5),
     bri = hsv_colors[..., 2]
 
     # Convert them to list
-    hue_ls = hue.ravel().tolist()
+    hue_ls = hue.astype("int").ravel().tolist()
     bri_ls = bri.ravel().tolist()
     combos = list(zip(hue_ls, bri_ls))
 
@@ -429,6 +452,125 @@ def show_colors_in_hue_light_scatter_plot(colors, figure_size=(10, 5),
         ax.spines['right'].set_visible(False)
         ax.spines['bottom'].set_visible(False)
         ax.spines['left'].set_visible(False)
+
+    if return_figure:
+        return fig, ax
+    else:
+        plt.show()
+
+
+def show_colors_in_hue_light_3d_bar_plot(colors, figure_size=(6, 6),
+                                         hue_resolution=6,
+                                         bri_resolution=2,
+                                         return_figure=False, grid_off=True,
+                                         background_off=True, shaded=True,
+                                         tight_plot=True,
+                                         saturation_threshold=0.15):
+    """
+    Show a sequence of RGB colors in a Hue vs. Light vs. Counts 3D bar Plot (Hue on x-axis, 
+    Light on y-axis, and counts/frequency of color on z-axis). Colors are assumed to be in 
+    the RGB colorspace and will be converted to the HSV color space within this function.
+
+    :param colors: A sequence of colors to display in cubic space
+    :type colors: numpy.ndarray
+    :param figure_size: the size of the figure
+    :type figure_size: tuple
+    :param hue_resolution: Resolution of the bar plot on the hue axis (hue 0 - 360)
+    :type hue_resolution: float
+    :param bri_resolution: Resolution of the bar plot on the brightness axis (brightness 0 - 100)
+    :type bri_resolution: float
+    :param return_figure: Return the plotted figure and axes, if true \
+                          Directly plot the cube, if false
+    :type return_figure: bool
+    :param grid_off: Remove the grid of plot if true \
+                     Keep the original grid if false
+    :type grid_off: bool
+    :param background_off: Use the transparent background if true \
+                           Keep the original background if false
+    :type background_off: bool
+    :param shaded: Shaded the 3D bar object if true \
+                   Unshaded if false
+    :type shaded: bool
+    :param tight_plot: Remove the white margin around the plot if true \
+                       Keep the original white margin if false
+    :type tight_plot: bool
+    :param saturation_threshold: The color of which the saturation value \
+                                 is under the threshold will be excluded \
+                                 from the plots
+    :type saturation_threshold: float
+    :return: return the figure and axes with plotted figure if return_figure is True
+    :rtype: tuple (matplotlib.pyplot.Figure, matplotlib.pyplot.Axes)
+    """
+    # Convert colors to a numpy array
+    colors = np.array(colors)
+
+    # If the RGB color is in range [0, 255]
+    if colors.max() > 1:
+        # Convert it to float and normalize it to [0, 1]
+        normalized_colors = colors.astype("float") / 255
+    # Convert RGB color to HSV color space
+    hsv_colors = rgb2hsv(normalized_colors.reshape(-1, 1, 3))
+    hsv_colors = hsv_colors[hsv_colors[..., 1] > saturation_threshold]
+
+    # Get the Hue value of each color
+    hue = hsv_colors[..., 0] * 360
+    # Get the Light value of each color
+    bri = hsv_colors[..., 2]
+
+    # Discretizing the Hue value based on the given resolution
+    hue_int = hue / hue_resolution
+    hue_int = hue_int.astype(int)
+    hue_int = hue_int * hue_resolution
+
+    # Discretizing the brightness value based on the given resolution
+    bri_int = bri * 100
+    bri_int = bri_int / bri_resolution
+    bri_int = bri_int.astype(int)
+    bri_int = bri_int * bri_resolution
+
+    # Get the unique colors and their counts/frequency in the given colors
+    hue_bri = np.array(list(zip(hue_int, bri_int)))
+    unique_colors, counts = np.unique(hue_bri, axis=0, return_counts=True)
+
+    # Normalize the HSV colors
+    norm_colors = unique_colors.astype("float")
+    norm_colors[..., 0] = norm_colors[..., 0] / 360
+    norm_colors[..., 1] = norm_colors[..., 1] / 100
+    norm_colors
+
+    # Convert them back to the RGB colorspace
+    hsv_colors = np.hstack((norm_colors[..., 0].reshape(-1, 1),
+                            np.ones(shape=(norm_colors.shape[0], 1)),
+                            norm_colors[..., 1].reshape(-1, 1)))
+    rgb_colors = hsv2rgb(hsv_colors.reshape(-1, 1, 3))
+    rgb_colors = rgb_colors.reshape(-1, 3)
+    rgb_colors = rgb_colors ** (3 / 11)
+
+    fig = plt.figure(figsize=figure_size)
+    ax = fig.add_subplot(111, projection='3d')
+
+    x = unique_colors[..., 0]
+    y = unique_colors[..., 1]
+
+    top = counts
+    bottom = np.zeros_like(top)
+    width = hue_resolution * 0.9
+    depth = bri_resolution * 0.9
+
+    ax.bar3d(x, y, bottom, width, depth, top, shade=shaded, color=rgb_colors)
+    ax.set_xlabel("Hue (0 - 360)")
+    ax.set_ylabel("Brightness (0 - 100)")
+    ax.set_zlabel("Number of Frames")
+
+    ax.grid(not grid_off)
+
+    if tight_plot:
+        fig.subplots_adjust(left=0, right=1, bottom=0, top=1)
+
+    if background_off:
+        ax.xaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))
+        ax.yaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))
+        ax.zaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))
 
     if return_figure:
         return fig, ax
