@@ -225,7 +225,7 @@ class HueLight3DBarPlotWindow():
 
         # Set up the window
         self.window = tkinter.Tk()
-        self.window.wm_title("Colors in Hue Brightness 3D Bar Plot")
+        self.window.wm_title("Colors in Hue Light 3D Bar Plot")
         self.window.iconbitmap(resource_path("kalmus_icon.ico"))
 
         saturation_threshold = 0.15

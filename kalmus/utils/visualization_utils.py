@@ -424,9 +424,11 @@ def show_colors_in_hue_light_scatter_plot(colors, figure_size=(10, 5),
     weights *= 95
     weights += 5
 
-    hsv_colors[..., 1] = 1
-    rgb_colors = hsv2rgb(hsv_colors.reshape(-1, 1, 3))
-    rgb_colors = np.sqrt(rgb_colors)
+    hsv_colors_cp = hsv_colors.copy()
+    hsv_colors_cp[..., 1] = 1
+    hsv_colors_cp[..., 2] = hsv_colors_cp[..., 2] ** (2 / 3)
+    rgb_colors = hsv2rgb(hsv_colors_cp.reshape(-1, 1, 3))
+    rgb_colors = rgb_colors
 
     fig, ax = plt.subplots(1, 1, figsize=figure_size)
     ax.scatter(hue, bri, s=weights, marker="s", c=rgb_colors.reshape(-1, 3))
@@ -537,7 +539,8 @@ def show_colors_in_hue_light_3d_bar_plot(colors, figure_size=(6, 6),
     norm_colors = unique_colors.astype("float")
     norm_colors[..., 0] = norm_colors[..., 0] / 360
     norm_colors[..., 1] = norm_colors[..., 1] / 100
-    norm_colors
+
+    norm_colors[..., 1] = np.clip(norm_colors[..., 1] * 1.1, 0, 1) ** (2 / 3)
 
     # Convert them back to the RGB colorspace
     hsv_colors = np.hstack((norm_colors[..., 0].reshape(-1, 1),
@@ -545,7 +548,6 @@ def show_colors_in_hue_light_3d_bar_plot(colors, figure_size=(6, 6),
                             norm_colors[..., 1].reshape(-1, 1)))
     rgb_colors = hsv2rgb(hsv_colors.reshape(-1, 1, 3))
     rgb_colors = rgb_colors.reshape(-1, 3)
-    rgb_colors = rgb_colors ** (3 / 10)
 
     fig = plt.figure(figsize=figure_size)
     ax = fig.add_subplot(111, projection='3d')
