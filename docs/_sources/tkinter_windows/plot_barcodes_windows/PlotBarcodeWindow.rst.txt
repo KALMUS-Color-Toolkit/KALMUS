@@ -2,6 +2,6 @@ Plot Barcode Windows Classes
 *****************************
 
 .. automodule:: kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow
-    :members: PlotBarcodeWindow, ColorHistogramWindow, RGBColorCubeWindow, HueLightScatterPlotWindow, OutputCSVWindow
+    :members: PlotBarcodeWindow, ColorHistogramWindow, RGBColorCubeWindow, HueLightScatterPlotWindow, HueLight3DBarPlotWindow, OutputCSVWindow
     :undoc-members:
     :show-inheritance:

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>kalmus.tkinter_windows.ReshapeBarcodeWindow &mdash; KALMUS 1.3.11 documentation</title>
+  <title>kalmus.tkinter_windows.ReshapeBarcodeWindow &mdash; KALMUS 1.3.12a documentation</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                1.3.11
+                1.3.12a
               </div>
             
           
@@ -422,11 +422,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cla</span><span class="p">()</span>
 
         <span class="c1"># Update the displayed barcode and redraw the canvas</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode_1</span><span class="o">.</span><span class="n">get_barcode</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode_2</span><span class="o">.</span><span class="n">get_barcode</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
-            <span class="n">temp</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode_1</span><span class="p">)</span>
-
-            <span class="bp">self</span><span class="o">.</span><span class="n">barcode_1</span><span class="o">.</span><span class="vm">__dict__</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode_2</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">barcode_2</span><span class="o">.</span><span class="vm">__dict__</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="c1"># if self.barcode_1.get_barcode().shape[1] &gt; self.barcode_2.get_barcode().shape[1]:</span>
+        <span class="c1">#     temp = copy.deepcopy(self.barcode_1)</span>
+        <span class="c1">#</span>
+        <span class="c1">#     self.barcode_1.__dict__ = self.barcode_2.__dict__.copy()</span>
+        <span class="c1">#     self.barcode_2.__dict__ = temp.__dict__.copy()</span>
 
         <span class="n">update_graph</span><span class="p">(</span><span class="n">barcode_1</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode_1</span><span class="p">,</span> <span class="n">barcode_2</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode_2</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">)</span>
 

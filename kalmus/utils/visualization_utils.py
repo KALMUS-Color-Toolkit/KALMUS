@@ -461,7 +461,7 @@ def show_colors_in_hue_light_scatter_plot(colors, figure_size=(10, 5),
 
 def show_colors_in_hue_light_3d_bar_plot(colors, figure_size=(6, 6),
                                          hue_resolution=6,
-                                         bri_resolution=2,
+                                         bri_resolution=0.02,
                                          return_figure=False, grid_off=True,
                                          background_off=True, shaded=True,
                                          tight_plot=True,
@@ -477,7 +477,7 @@ def show_colors_in_hue_light_3d_bar_plot(colors, figure_size=(6, 6),
     :type figure_size: tuple
     :param hue_resolution: Resolution of the bar plot on the hue axis (hue 0 - 360)
     :type hue_resolution: float
-    :param bri_resolution: Resolution of the bar plot on the brightness axis (brightness 0 - 100)
+    :param bri_resolution: Resolution of the bar plot on the light axis (light 0 - 1)
     :type bri_resolution: float
     :param return_figure: Return the plotted figure and axes, if true \
                           Directly plot the cube, if false
@@ -522,14 +522,15 @@ def show_colors_in_hue_light_3d_bar_plot(colors, figure_size=(6, 6),
     hue_int = hue_int.astype(int)
     hue_int = hue_int * hue_resolution
 
-    # Discretizing the brightness value based on the given resolution
+    # Discretizing the light value based on the given resolution
+    bri_resolution = bri_resolution * 100
     bri_int = bri * 100
     bri_int = bri_int / bri_resolution
     bri_int = bri_int.astype(int)
     bri_int = bri_int * bri_resolution
 
     # Get the unique colors and their counts/frequency in the given colors
-    hue_bri = np.array(list(zip(hue_int, bri_int)))
+    hue_bri = np.array(list(zip(hue_int, bri_int))).astype("float")
     unique_colors, counts = np.unique(hue_bri, axis=0, return_counts=True)
 
     # Normalize the HSV colors
@@ -544,22 +545,22 @@ def show_colors_in_hue_light_3d_bar_plot(colors, figure_size=(6, 6),
                             norm_colors[..., 1].reshape(-1, 1)))
     rgb_colors = hsv2rgb(hsv_colors.reshape(-1, 1, 3))
     rgb_colors = rgb_colors.reshape(-1, 3)
-    rgb_colors = rgb_colors ** (3 / 11)
+    rgb_colors = rgb_colors ** (3 / 10)
 
     fig = plt.figure(figsize=figure_size)
     ax = fig.add_subplot(111, projection='3d')
 
     x = unique_colors[..., 0]
-    y = unique_colors[..., 1]
+    y = unique_colors[..., 1] / 100
 
     top = counts
     bottom = np.zeros_like(top)
     width = hue_resolution * 0.9
-    depth = bri_resolution * 0.9
+    depth = bri_resolution * 0.9 / 100
 
     ax.bar3d(x, y, bottom, width, depth, top, shade=shaded, color=rgb_colors)
     ax.set_xlabel("Hue (0 - 360)")
-    ax.set_ylabel("Brightness (0 - 100)")
+    ax.set_ylabel("Light (0 - 1)")
     ax.set_zlabel("Number of Frames")
 
     ax.grid(not grid_off)

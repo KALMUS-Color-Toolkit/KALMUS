@@ -69,13 +69,13 @@ class CheckTimePointWindow():
             # Get the brightness value (notices that r = g = b = brightness)
             r = g = b = barcode.get_barcode().astype("uint8")[self.y_pos, self.x_pos]
             brightness_value_label = tkinter.Label(master=self.window, text="Brightness: {:d}".format(r))
-            brightness_value_label.grid(row=0, column=0, sticky=tkinter.E)
+            brightness_value_label.grid(row=0, column=0)
 
             # Set up the label
             brightness_label = tkinter.Label(master=self.window, text="", bg=f'#{r:02x}{g:02x}{b:02x}',
                                              width=12, height=1)
             # Show the brightness
-            brightness_label.grid(row=0, column=1, columnspan=2, padx=5, pady=3)
+            brightness_label.grid(row=0, column=1, columnspan=1, padx=5, pady=3)
 
         # Show the position
         pos_label = tkinter.Label(master=self.window, text="Position: ({:d}, {:d}) ".format(self.x_pos, self.y_pos))

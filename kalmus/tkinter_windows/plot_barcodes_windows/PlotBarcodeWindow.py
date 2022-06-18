@@ -112,7 +112,7 @@ class PlotBarcodeWindow():
         """
         Instantiate the HueBrightness3DBarPlotWindow if user press the show color in hue light scatter button
         """
-        HueBrightness3DBarPlotWindow(self.barcode)
+        HueLight3DBarPlotWindow(self.barcode)
 
     def show_color_histogram(self):
         """
@@ -207,12 +207,12 @@ class RGBColorCubeWindow():
         canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
 
 
-class HueBrightness3DBarPlotWindow():
+class HueLight3DBarPlotWindow():
     """
-    HueBrightness3DBarPlotWindow Class
-    GUI window that shows the distribution of the barcode's color in a Hue (x-axis) vs. Brightness (y-axis)
+    HueLight3DBarPlotWindow Class
+    GUI window that shows the distribution of the barcode's color in a Hue (x-axis) vs. Light (y-axis)
     vs. Counts/Frequency (z-axis) 3D bar plot. The color of the barcode will be converted from RGB to
-    HSV/HSL color space. Hue ranges from 0 to 360 degree and Brightness range from 0 to 100 (darkest to the brightest)
+    HSV/HSL color space. Hue ranges from 0 to 360 degree and Light range from 0 to 1 (darkest to the brightest)
     """
 
     def __init__(self, barcode):
@@ -231,7 +231,7 @@ class HueBrightness3DBarPlotWindow():
         saturation_threshold = 0.15
         # Set up the plotted figure
         fig, ax = show_colors_in_hue_light_3d_bar_plot(self.barcode.colors, figure_size=(6, 6),
-                                                       return_figure=True)
+                                                       return_figure=True, shaded=False)
 
         # Set up the canvas
         canvas = FigureCanvasTkAgg(fig, master=self.window)  # A tk.DrawingArea.
