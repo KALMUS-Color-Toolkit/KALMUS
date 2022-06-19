@@ -76,12 +76,12 @@ class PlotBarcodeWindow():
         # Button to output the data in the barcode to a csv file
         self.button_output_csv = tkinter.Button(master=self.plot_window, text="Output CSV",
                                                 command=self.output_csv)
-        self.button_output_csv.grid(row=1, column=0, padx=18)
+        self.button_output_csv.grid(row=1, column=0, padx=6)
 
         # Button to check the histogram distribution of the barcode's hue/brightness value
         self.button_hist = tkinter.Button(master=self.plot_window, text="Hue Histogram",
                                           command=self.show_color_histogram)
-        self.button_hist.grid(row=1, column=1, padx=14)
+        self.button_hist.grid(row=1, column=1, padx=6)
 
         # If the barcode is a color barcode, allow user to inspect the RGB color distribution in a RGB cube
         if barcode.barcode_type == "Color":
