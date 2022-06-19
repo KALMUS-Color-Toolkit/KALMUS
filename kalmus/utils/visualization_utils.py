@@ -462,17 +462,19 @@ def show_colors_in_hue_light_scatter_plot(colors, figure_size=(10, 5),
 
 
 def show_colors_in_hue_light_3d_bar_plot(colors, figure_size=(6, 6),
-                                         hue_resolution=6,
+                                         hue_resolution=9,
                                          bri_resolution=0.02,
                                          return_figure=False, grid_off=True,
-                                         background_off=True, shaded=True,
-                                         tight_plot=True,
+                                         background_off=True, shaded=False,
+                                         tight_plot=True, axes=None,
                                          saturation_threshold=0.15):
     """
     Show a sequence of RGB colors in a Hue vs. Light vs. Counts 3D bar Plot (Hue on x-axis, 
     Light on y-axis, and counts/frequency of color on z-axis). Colors are assumed to be in 
     the RGB colorspace and will be converted to the HSV color space within this function.
 
+    :param axes: The matplotlib Axes object. If given function will plot the \
+                 bar plot in the given Axes
     :param colors: A sequence of colors to display in cubic space
     :type colors: numpy.ndarray
     :param figure_size: the size of the figure
@@ -540,7 +542,10 @@ def show_colors_in_hue_light_3d_bar_plot(colors, figure_size=(6, 6),
     norm_colors[..., 0] = norm_colors[..., 0] / 360
     norm_colors[..., 1] = norm_colors[..., 1] / 100
 
-    norm_colors[..., 1] = np.clip(norm_colors[..., 1] * 1.1, 0, 1) ** (2 / 3)
+    if shaded:
+        norm_colors[..., 1] = np.clip(norm_colors[..., 1] * 1.25, 0, 1) ** (1 / 2)
+    else:
+        norm_colors[..., 1] = np.clip(norm_colors[..., 1] * 1.1, 0, 1) ** (2 / 3)
 
     # Convert them back to the RGB colorspace
     hsv_colors = np.hstack((norm_colors[..., 0].reshape(-1, 1),
@@ -549,8 +554,11 @@ def show_colors_in_hue_light_3d_bar_plot(colors, figure_size=(6, 6),
     rgb_colors = hsv2rgb(hsv_colors.reshape(-1, 1, 3))
     rgb_colors = rgb_colors.reshape(-1, 3)
 
-    fig = plt.figure(figsize=figure_size)
-    ax = fig.add_subplot(111, projection='3d')
+    if axes is None:
+        fig = plt.figure(figsize=figure_size)
+        ax = fig.add_subplot(111, projection='3d')
+    else:
+        ax = axes
 
     x = unique_colors[..., 0]
     y = unique_colors[..., 1] / 100
@@ -567,13 +575,16 @@ def show_colors_in_hue_light_3d_bar_plot(colors, figure_size=(6, 6),
 
     ax.grid(not grid_off)
 
-    if tight_plot:
+    if tight_plot and (axes is None):
         fig.subplots_adjust(left=0, right=1, bottom=0, top=1)
 
     if background_off:
         ax.xaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))
         ax.yaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))
         ax.zaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))
+
+    if axes:
+        return
 
     if return_figure:
         return fig, ax

@@ -14,7 +14,8 @@ from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationTool
 import numpy as np
 import os
 
-from kalmus.utils.visualization_utils import show_colors_in_cube, show_colors_in_hue_light_scatter_plot, show_colors_in_hue_light_3d_bar_plot
+from kalmus.utils.visualization_utils import show_colors_in_cube, show_colors_in_hue_light_scatter_plot, \
+    show_colors_in_hue_light_3d_bar_plot
 from kalmus.tkinter_windows.gui_utils import resource_path, update_hist
 import kalmus.utils.artist
 from skimage.color import rgb2hsv
@@ -89,11 +90,11 @@ class PlotBarcodeWindow():
             self.button_cube.grid(row=1, column=2)
 
             self.button_scatter = tkinter.Button(master=self.plot_window, text="Hue vs. Light Scatter",
-                                              command=self.show_color_in_scatter)
+                                                 command=self.show_color_in_scatter)
             self.button_scatter.grid(row=1, column=3)
 
             self.button_bar = tkinter.Button(master=self.plot_window, text="Hue vs. Light Bar Plot",
-                                              command=self.show_color_in_bar)
+                                             command=self.show_color_in_bar)
             self.button_bar.grid(row=1, column=4)
 
     def show_RGB_color_in_cube(self):
@@ -228,23 +229,60 @@ class HueLight3DBarPlotWindow():
         self.window.wm_title("Colors in Hue Light 3D Bar Plot")
         self.window.iconbitmap(resource_path("kalmus_icon.ico"))
 
-        saturation_threshold = 0.15
         # Set up the plotted figure
-        fig, ax = show_colors_in_hue_light_3d_bar_plot(self.barcode.colors, figure_size=(6, 6),
-                                                       return_figure=True, shaded=False)
+        self.fig, self.ax = show_colors_in_hue_light_3d_bar_plot(self.barcode.colors,
+                                                                 figure_size=(6, 6),
+                                                                 return_figure=True,
+                                                                 shaded=False)
 
         # Set up the canvas
-        canvas = FigureCanvasTkAgg(fig, master=self.window)  # A tk.DrawingArea.
-        canvas.draw()
-        canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
+        self.canvas = FigureCanvasTkAgg(self.fig, master=self.window)  # A tk.DrawingArea.
+        self.canvas.draw()
+        self.canvas.get_tk_widget().grid(row=0, column=0, columnspan=2, pady=3)
+
+        # Use tkinter Frame to organize the figure widget
+        toolbarFrame = tkinter.Frame(master=self.window)
+        toolbarFrame.grid(row=1, column=0, columnspan=1, sticky=tkinter.W, pady=6, rowspan=2)
+
+        # Initialize the plotting tool bar
+        toolbar = NavigationToolbar2Tk(self.canvas, toolbarFrame)
+        toolbar.update()
 
         # Allow mouse events on 3D figure
-        ax.mouse_init()
+        self.ax.mouse_init()
 
-        # Set up the tool bar of the figure
-        toolbar = NavigationToolbar2Tk(canvas, self.window)
-        toolbar.update()
-        canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
+        # Reshape/Resize option
+        self.config_option = tkinter.StringVar(self.window)
+        self.config_option.set("Unshaded")  # initialize
+
+        # Radio button for selecting shaded/unshaded 3D bar object
+        radio_unshaded = tkinter.Radiobutton(self.window, text="Unshaded", variable=self.config_option,
+                                             value="Unshaded", anchor='w',
+                                             command=self.unshade_bar_plot)
+        radio_unshaded.grid(row=1, column=1, sticky=tkinter.W)
+
+        radio_shaded = tkinter.Radiobutton(self.window, text="Shaded", variable=self.config_option,
+                                           value="Shaded", anchor='w',
+                                           command=self.shade_bar_plot)
+        radio_shaded.grid(row=2, column=1, sticky=tkinter.W)
+
+    def unshade_bar_plot(self):
+        self.ax.cla()
+        show_colors_in_hue_light_3d_bar_plot(self.barcode.colors,
+                                             figure_size=(6, 6),
+                                             return_figure=True,
+                                             shaded=False,
+                                             axes=self.ax)
+        self.canvas.draw()
+
+    def shade_bar_plot(self):
+        self.ax.cla()
+        show_colors_in_hue_light_3d_bar_plot(self.barcode.colors,
+                                             figure_size=(6, 6),
+                                             return_figure=True,
+                                             shaded=True,
+                                             axes=self.ax)
+        self.canvas.draw()
 
 
 class HueLightScatterPlotWindow():
