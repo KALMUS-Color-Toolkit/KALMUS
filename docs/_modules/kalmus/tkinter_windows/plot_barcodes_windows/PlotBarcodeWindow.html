@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow &mdash; KALMUS 1.3.12a documentation</title>
+  <title>kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow &mdash; KALMUS 1.3.12 documentation</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                1.3.12a
+                1.3.12
               </div>
             
           
@@ -176,7 +176,8 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">os</span>
 
-<span class="kn">from</span> <span class="nn">kalmus.utils.visualization_utils</span> <span class="k">import</span> <span class="n">show_colors_in_cube</span><span class="p">,</span> <span class="n">show_colors_in_hue_light_scatter_plot</span><span class="p">,</span> <span class="n">show_colors_in_hue_light_3d_bar_plot</span>
+<span class="kn">from</span> <span class="nn">kalmus.utils.visualization_utils</span> <span class="k">import</span> <span class="n">show_colors_in_cube</span><span class="p">,</span> <span class="n">show_colors_in_hue_light_scatter_plot</span><span class="p">,</span> \
+    <span class="n">show_colors_in_hue_light_3d_bar_plot</span>
 <span class="kn">from</span> <span class="nn">kalmus.tkinter_windows.gui_utils</span> <span class="k">import</span> <span class="n">resource_path</span><span class="p">,</span> <span class="n">update_hist</span>
 <span class="kn">import</span> <span class="nn">kalmus.utils.artist</span>
 <span class="kn">from</span> <span class="nn">skimage.color</span> <span class="k">import</span> <span class="n">rgb2hsv</span>
@@ -237,12 +238,12 @@
         <span class="c1"># Button to output the data in the barcode to a csv file</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">button_output_csv</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Output CSV&quot;</span><span class="p">,</span>
                                                 <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">output_csv</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">button_output_csv</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_output_csv</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
 
         <span class="c1"># Button to check the histogram distribution of the barcode&#39;s hue/brightness value</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">button_hist</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Hue Histogram&quot;</span><span class="p">,</span>
                                           <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">show_color_histogram</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">button_hist</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_hist</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
 
         <span class="c1"># If the barcode is a color barcode, allow user to inspect the RGB color distribution in a RGB cube</span>
         <span class="k">if</span> <span class="n">barcode</span><span class="o">.</span><span class="n">barcode_type</span> <span class="o">==</span> <span class="s2">&quot;Color&quot;</span><span class="p">:</span>
@@ -251,11 +252,11 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">button_cube</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">button_scatter</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Hue vs. Light Scatter&quot;</span><span class="p">,</span>
-                                              <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">show_color_in_scatter</span><span class="p">)</span>
+                                                 <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">show_color_in_scatter</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">button_scatter</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">button_bar</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Hue vs. Light Bar Plot&quot;</span><span class="p">,</span>
-                                              <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">show_color_in_bar</span><span class="p">)</span>
+                                             <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">show_color_in_bar</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">button_bar</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 
 <div class="viewcode-block" id="PlotBarcodeWindow.show_RGB_color_in_cube"><a class="viewcode-back" href="../../../../tkinter_windows/plot_barcodes_windows/PlotBarcodeWindow.html#kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.PlotBarcodeWindow.show_RGB_color_in_cube">[docs]</a>    <span class="k">def</span> <span class="nf">show_RGB_color_in_cube</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -387,26 +388,63 @@
 
         <span class="c1"># Set up the window</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">wm_title</span><span class="p">(</span><span class="s2">&quot;Colors in Hue Brightness 3D Bar Plot&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">wm_title</span><span class="p">(</span><span class="s2">&quot;Colors in Hue Light 3D Bar Plot&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">iconbitmap</span><span class="p">(</span><span class="n">resource_path</span><span class="p">(</span><span class="s2">&quot;kalmus_icon.ico&quot;</span><span class="p">))</span>
 
-        <span class="n">saturation_threshold</span> <span class="o">=</span> <span class="mf">0.15</span>
         <span class="c1"># Set up the plotted figure</span>
-        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">show_colors_in_hue_light_3d_bar_plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">colors</span><span class="p">,</span> <span class="n">figure_size</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
-                                                       <span class="n">return_figure</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">shaded</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span> <span class="o">=</span> <span class="n">show_colors_in_hue_light_3d_bar_plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">colors</span><span class="p">,</span>
+                                                                 <span class="n">figure_size</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+                                                                 <span class="n">return_figure</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                                 <span class="n">shaded</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="c1"># Set up the canvas</span>
-        <span class="n">canvas</span> <span class="o">=</span> <span class="n">FigureCanvasTkAgg</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">master</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">)</span>  <span class="c1"># A tk.DrawingArea.</span>
-        <span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
-        <span class="n">canvas</span><span class="o">.</span><span class="n">get_tk_widget</span><span class="p">()</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">TOP</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">BOTH</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span> <span class="o">=</span> <span class="n">FigureCanvasTkAgg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="p">,</span> <span class="n">master</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">)</span>  <span class="c1"># A tk.DrawingArea.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">get_tk_widget</span><span class="p">()</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+        <span class="c1"># Use tkinter Frame to organize the figure widget</span>
+        <span class="n">toolbarFrame</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">)</span>
+        <span class="n">toolbarFrame</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">W</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">rowspan</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># Initialize the plotting tool bar</span>
+        <span class="n">toolbar</span> <span class="o">=</span> <span class="n">NavigationToolbar2Tk</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">,</span> <span class="n">toolbarFrame</span><span class="p">)</span>
+        <span class="n">toolbar</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
 
         <span class="c1"># Allow mouse events on 3D figure</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">mouse_init</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">mouse_init</span><span class="p">()</span>
 
-        <span class="c1"># Set up the tool bar of the figure</span>
-        <span class="n">toolbar</span> <span class="o">=</span> <span class="n">NavigationToolbar2Tk</span><span class="p">(</span><span class="n">canvas</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">)</span>
-        <span class="n">toolbar</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-        <span class="n">canvas</span><span class="o">.</span><span class="n">get_tk_widget</span><span class="p">()</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">TOP</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">BOTH</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
+        <span class="c1"># Reshape/Resize option</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config_option</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">StringVar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config_option</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;Unshaded&quot;</span><span class="p">)</span>  <span class="c1"># initialize</span>
+
+        <span class="c1"># Radio button for selecting shaded/unshaded 3D bar object</span>
+        <span class="n">radio_unshaded</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Radiobutton</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Unshaded&quot;</span><span class="p">,</span> <span class="n">variable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config_option</span><span class="p">,</span>
+                                             <span class="n">value</span><span class="o">=</span><span class="s2">&quot;Unshaded&quot;</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span>
+                                             <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">unshade_bar_plot</span><span class="p">)</span>
+        <span class="n">radio_unshaded</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
+
+        <span class="n">radio_shaded</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Radiobutton</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Shaded&quot;</span><span class="p">,</span> <span class="n">variable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config_option</span><span class="p">,</span>
+                                           <span class="n">value</span><span class="o">=</span><span class="s2">&quot;Shaded&quot;</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span>
+                                           <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">shade_bar_plot</span><span class="p">)</span>
+        <span class="n">radio_shaded</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">tkinter</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
+
+<div class="viewcode-block" id="HueLight3DBarPlotWindow.unshade_bar_plot"><a class="viewcode-back" href="../../../../tkinter_windows/plot_barcodes_windows/PlotBarcodeWindow.html#kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.HueLight3DBarPlotWindow.unshade_bar_plot">[docs]</a>    <span class="k">def</span> <span class="nf">unshade_bar_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">cla</span><span class="p">()</span>
+        <span class="n">show_colors_in_hue_light_3d_bar_plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">colors</span><span class="p">,</span>
+                                             <span class="n">figure_size</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+                                             <span class="n">return_figure</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                             <span class="n">shaded</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                             <span class="n">axes</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="HueLight3DBarPlotWindow.shade_bar_plot"><a class="viewcode-back" href="../../../../tkinter_windows/plot_barcodes_windows/PlotBarcodeWindow.html#kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.HueLight3DBarPlotWindow.shade_bar_plot">[docs]</a>    <span class="k">def</span> <span class="nf">shade_bar_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">cla</span><span class="p">()</span>
+        <span class="n">show_colors_in_hue_light_3d_bar_plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">colors</span><span class="p">,</span>
+                                             <span class="n">figure_size</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+                                             <span class="n">return_figure</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                             <span class="n">shaded</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                             <span class="n">axes</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span></div></div>
 
 
 <div class="viewcode-block" id="HueLightScatterPlotWindow"><a class="viewcode-back" href="../../../../tkinter_windows/plot_barcodes_windows/PlotBarcodeWindow.html#kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.HueLightScatterPlotWindow">[docs]</a><span class="k">class</span> <span class="nc">HueLightScatterPlotWindow</span><span class="p">():</span>

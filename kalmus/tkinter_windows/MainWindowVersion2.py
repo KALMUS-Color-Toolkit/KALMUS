@@ -70,7 +70,7 @@ class MainWindow():
         self.root = tkinter.Tk()
 
         self.root.configure(bg='#85C1FA')
-        self.root.wm_title("KALMUS Version 1.3.12b")
+        self.root.wm_title("KALMUS Version 1.3.12")
         self.root.iconbitmap(resource_path("kalmus_icon.ico"))
 
         # Initialize the figure
@@ -229,7 +229,7 @@ class MainWindow():
         """
         Instantiate the WhichBarcodeInspectWindow
         """
-        WhichBarcodeInspectWindow(self.barcode_1, self.barcode_2, dpi=100, figsize=(7, 4))
+        WhichBarcodeInspectWindow(self.barcode_1, self.barcode_2, dpi=100, figsize=(7.6, 4.3))
 
     def load_json_barcode(self):
         """
