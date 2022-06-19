@@ -544,7 +544,7 @@ def show_colors_in_hue_light_3d_bar_plot(colors, figure_size=(6, 6),
     norm_colors[..., 1] = norm_colors[..., 1] / 100
 
     if shaded:
-        norm_colors[..., 1] = np.clip(norm_colors[..., 1] * 1.25, 0, 1) ** (1 / 2)
+        norm_colors[..., 1] = np.clip((norm_colors[..., 1] ** (1 / 2)) * 1.25, 0, 1)
     else:
         norm_colors[..., 1] = np.clip(norm_colors[..., 1] * 1.1, 0, 1) ** (2 / 3)
 
