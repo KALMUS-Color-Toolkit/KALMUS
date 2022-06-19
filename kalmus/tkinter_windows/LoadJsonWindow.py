@@ -87,6 +87,8 @@ class LoadJsonWindow():
         Browse the folder to locate the json file
         """
         # Get the file name from the user selection
+        # TODO:
+        # Remove initialdir in the next release so the browse button will open the last closed dir
         filename = tkinter.filedialog.askopenfilename(initialdir=".", title="Select JSON file",
                                                       filetypes=(("json files", "*.json"), ("txt files", "*.txt"),
                                                                  ("All files", "*.*")))
