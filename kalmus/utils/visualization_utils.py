@@ -473,8 +473,6 @@ def show_colors_in_hue_light_3d_bar_plot(colors, figure_size=(6, 6),
     Light on y-axis, and counts/frequency of color on z-axis). Colors are assumed to be in 
     the RGB colorspace and will be converted to the HSV color space within this function.
 
-    :param axes: The matplotlib Axes object. If given function will plot the \
-                 bar plot in the given Axes
     :param colors: A sequence of colors to display in cubic space
     :type colors: numpy.ndarray
     :param figure_size: the size of the figure
@@ -498,6 +496,9 @@ def show_colors_in_hue_light_3d_bar_plot(colors, figure_size=(6, 6),
     :param tight_plot: Remove the white margin around the plot if true \
                        Keep the original white margin if false
     :type tight_plot: bool
+    :param axes: The matplotlib Axes object. If given function will plot the \
+                 bar plot in the given Axes
+    :type axes: matplotlib.pyplot.Axes
     :param saturation_threshold: The color of which the saturation value \
                                  is under the threshold will be excluded \
                                  from the plots
