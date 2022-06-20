@@ -384,7 +384,7 @@ class GenerateBarcodeWindow():
         Browse the folder
         """
         # Get the file name from the user specification
-        filename = tkinter.filedialog.askopenfilename(initialdir=".", title="Select Media file",
+        filename = tkinter.filedialog.askopenfilename(initialdir="", title="Select Media file",
                                                       filetypes=(("mp4 files", "*.mp4"), ("avi files", "*.avi"),
                                                                  ("m4v files", "*.m4v"), ("All files", "*.*")))
 

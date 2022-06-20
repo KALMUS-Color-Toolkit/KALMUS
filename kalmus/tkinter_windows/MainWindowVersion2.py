@@ -126,15 +126,42 @@ class MainWindow():
         self.canvas.mpl_connect('button_press_event', self.time_pick)
 
         # Use tkinter Frame to organize the figure widget
-        toolbarFrame = tkinter.Frame(master=self.root)
-        toolbarFrame.grid(row=8, column=2)
+        toolbarFrame = tkinter.Frame(master=self.root, width=500, height=40)
+        toolbarFrame.grid(row=8, column=2, sticky="ne", rowspan=2)
+        toolbarFrame.pack_propagate(False)
 
         # Set up the tool bar of the plotted figure
         self.toolbar = NavigationToolbar2Tk(self.canvas, toolbarFrame)
         self.toolbar.update()
 
         # Position the canvas/plotted figure into the window
-        self.canvas.get_tk_widget().grid(row=0, column=1, rowspan=8, columnspan=3)
+        self.canvas.get_tk_widget().grid(row=0, column=1, rowspan=8, columnspan=5)
+
+        r = g = b = 0
+        self.color_swatch = tkinter.Label(master=self.root,
+                                          text="",
+                                          bg=f'#{r:02x}{g:02x}{b:02x}',
+                                          width=4,
+                                          height=2,
+                                          borderwidth=1.5,
+                                          relief="solid")
+        self.color_swatch.grid(row=8, column=3, rowspan=1, padx=0, sticky=tkinter.E)
+
+        self.canvas.mpl_connect('motion_notify_event', self.display_color)
+
+        self.color_label = tkinter.Label(master=self.root,
+                                         text="Red = {:>3d} "
+                                              "Green = {:>3d} "
+                                              "Blue = {:>3d}\n".format(0, 0, 0) +
+                                              "Frame: {:>8d}    ".format(0) +
+                                              "Time: {:02d}:{:02d}:{:02d} ".format(0, 0, 0),
+                                         font=("Arial", 8),
+                                         width=32,
+                                         bg='#85C1FA',
+                                         padx=0,
+                                         pady=0,
+                                         justify=tkinter.LEFT)
+        self.color_label.grid(row=8, column=4, rowspan=1, padx=0, sticky=tkinter.W)
 
         self.generate_window_opened = False
 
@@ -184,7 +211,7 @@ class MainWindow():
 
         # Button to check the meta data of the displayed barcodes
         button_check_meta = tkinter.Button(master=self.root, text="Check Meta Info", command=self.check_meta_info)
-        button_check_meta.grid(row=8, column=3)
+        button_check_meta.grid(row=8, column=5, sticky=tkinter.W)
 
         # Close the window mainloop if user try to close the window
         self.root.protocol("WM_DELETE_WINDOW", self.close_window)
@@ -279,6 +306,53 @@ class MainWindow():
         Instantiate the SaveImageWindow
         """
         SaveImageWindow(self.barcode_1, self.barcode_2)
+
+    def display_color(self, event):
+        if event.xdata and event.ydata:
+            ix, iy = int(event.xdata + 0.5), int(event.ydata + 0.5)
+        else:
+            return
+
+        for i, axe in enumerate(self.ax[:, 0]):
+            if axe == event.inaxes:
+                # Check if it is plotted barcode 1 or plotted barcode 2
+                if i == 0:
+                    barcode = self.barcode_1
+                else:
+                    barcode = self.barcode_2
+
+                barcode_shape = barcode.get_barcode().shape
+                if 0 <= iy < barcode_shape[0] and 0 <= ix < barcode_shape[1]:
+                    if barcode.barcode_type == "Color":
+                        r, g, b = barcode.get_barcode().astype("uint8")[iy, ix]
+                        self.color_swatch.config(bg=f'#{r:02x}{g:02x}{b:02x}')
+                        color_label_text = "Red = {:>3d}  " \
+                                           "Green = {:>3d}  " \
+                                           "Blue = {:>3d}\n".format(r, g, b)
+                    elif barcode.barcode_type == "Brightness":
+                        r = g = b = barcode.get_barcode().astype("uint8")[iy, ix]
+                        self.color_swatch.config(bg=f'#{r:02x}{g:02x}{b:02x}')
+                        color_label_text = "Brightness = {:>3d}\n".format(r)
+
+                    # Compute the frame label
+                    frame = (barcode.skip_over + barcode.sampled_frame_rate * \
+                             ((ix * barcode.get_barcode().shape[
+                                 0]) + iy)) * barcode.scale_factor
+                    frame = int(frame)
+
+                    # If frame rate is not given, use 30 as default
+                    if barcode.fps is None:
+                        barcode.fps = 30
+
+                    # Compute the time label
+                    time_tot_sec = frame / barcode.fps
+                    time_sec = int(time_tot_sec % 60)
+                    time_min = int((time_tot_sec / 60) % 60)
+                    time_hr = int(time_tot_sec / 3600)
+
+                    color_label_text = color_label_text + "Frame: {:>8d}    ".format(frame) + \
+                                       "Time: {:02d}:{:02d}:{:02d} ".format(time_hr, time_min, time_sec)
+                    self.color_label.config(text=color_label_text)
 
     def time_pick(self, event):
         """
