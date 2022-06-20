@@ -4,6 +4,33 @@ KALMUS Update Log (v1.3.11)
 Update Log
 -----------------
 
+update 1.3.12
+^^^^^^^^^^^^^^^^
+
+**Add features**
+
+3D Bar plot of Hue vs. Light is now available in the Inspect Barcode window. Click the `Hue vs. Light Bar Plot` button to instantiate the plot.
+
+You can press the left mouse key and drag to rotate the 3D plot or press the right mouse key to zoom in and out.
+
+Users can select whether they want the 3D bar object to be shaded or not using the radio buttons below the plot.
+
+This functionality is also accessible through Programming API with call to `show_colors_in_hue_light_3d_bar_plot <https://github.com/KALMUS-Color-Toolkit/KALMUS/blob/master/kalmus/utils/visualization_utils.py#L464>`_ in `kalmus.utils.visualization_utils <https://github.com/KALMUS-Color-Toolkit/KALMUS/blob/master/kalmus/utils/visualization_utils.py>`_.
+
+**Changes**
+
+The ``Calibrate`` button has been removed from the Check Time Point window. This button was used to fix the time-pixel relation in the barcode after rescaling/resizing the barcode. However, since version 1.3.1, KALMUS GUI automatically recalibrates the barcode when its size changes. The ``Calibrate`` button is no longer needed if you are using JSON barcodes generated from version 1.3.1 and onward.
+
+Display button has been removed from the Check Time Point Window. KALMUS will always display the saved frames if they are available.
+
+The Check Time Point window is always on top once generated.
+
+**Fixes**
+
+In the previous version, KALMUS will always show the longer barcode at the bottom of the window, which can be confusing. Now, a new barcode loaded from the memory/JSON object will be plotted in the exact slot selected by users.
+
+---------------------------
+
 update 1.3.11
 ^^^^^^^^^^^^^^^^
 
@@ -37,10 +64,10 @@ KALMUS GUI checks if a user selects a barcode when they try to save it as a JSON
 
 Fixed the scikit-image ValueError which occurs when generating Hue vs. Light plot using `show_colors_in_hue_light_scatter_plot <https://github.com/KALMUS-Color-Toolkit/KALMUS/blob/master/kalmus/utils/visualization_utils.py#L347>`_.
 
+---------------------------
+
 update 1.3.10
 ^^^^^^^^^^^^^^^^
-
----------------------------
 
 **Add features**
 

@@ -97,6 +97,7 @@
 <li class="toctree-l1"><a class="reference internal" href="kalmus.html">API Documentation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">KALMUS Update Log</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#update-log">Update Log</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#update-1-3-12">update 1.3.12</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#update-1-3-11">update 1.3.11</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#update-1-3-10">update 1.3.10</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#update-1-3-9">update 1.3.9</a></li>
@@ -184,6 +185,21 @@
 <h1>KALMUS Update Log (v1.3.11)<a class="headerlink" href="#kalmus-update-log-v1-3-11" title="Permalink to this headline">¶</a></h1>
 <section id="update-log">
 <h2>Update Log<a class="headerlink" href="#update-log" title="Permalink to this headline">¶</a></h2>
+<section id="update-1-3-12">
+<h3>update 1.3.12<a class="headerlink" href="#update-1-3-12" title="Permalink to this headline">¶</a></h3>
+<p><strong>Add features</strong></p>
+<p>3D Bar plot of Hue vs. Light is now available in the Inspect Barcode window. Click the <cite>Hue vs. Light Bar Plot</cite> button to instantiate the plot.</p>
+<p>You can press the left mouse key and drag to rotate the 3D plot or press the right mouse key to zoom in and out.</p>
+<p>Users can select whether they want the 3D bar object to be shaded or not using the radio buttons below the plot.</p>
+<p>This functionality is also accessible through Programming API with call to <a class="reference external" href="https://github.com/KALMUS-Color-Toolkit/KALMUS/blob/master/kalmus/utils/visualization_utils.py#L464">show_colors_in_hue_light_3d_bar_plot</a> in <a class="reference external" href="https://github.com/KALMUS-Color-Toolkit/KALMUS/blob/master/kalmus/utils/visualization_utils.py">kalmus.utils.visualization_utils</a>.</p>
+<p><strong>Changes</strong></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Calibrate</span></code> button has been removed from the Check Time Point window. This button was used to fix the time-pixel relation in the barcode after rescaling/resizing the barcode. However, since version 1.3.1, KALMUS GUI automatically recalibrates the barcode when its size changes. The <code class="docutils literal notranslate"><span class="pre">Calibrate</span></code> button is no longer needed if you are using JSON barcodes generated from version 1.3.1 and onward.</p>
+<p>Display button has been removed from the Check Time Point Window. KALMUS will always display the saved frames if they are available.</p>
+<p>The Check Time Point window is always on top once generated.</p>
+<p><strong>Fixes</strong></p>
+<p>In the previous version, KALMUS will always show the longer barcode at the bottom of the window, which can be confusing. Now, a new barcode loaded from the memory/JSON object will be plotted in the exact slot selected by users.</p>
+</section>
+<hr class="docutils" />
 <section id="update-1-3-11">
 <h3>update 1.3.11<a class="headerlink" href="#update-1-3-11" title="Permalink to this headline">¶</a></h3>
 <p><strong>Add features</strong></p>
@@ -209,9 +225,9 @@
 <p><strong>Fixes</strong></p>
 <p>Fixed the scikit-image ValueError which occurs when generating Hue vs. Light plot using <a class="reference external" href="https://github.com/KALMUS-Color-Toolkit/KALMUS/blob/master/kalmus/utils/visualization_utils.py#L347">show_colors_in_hue_light_scatter_plot</a>.</p>
 </section>
+<hr class="docutils" />
 <section id="update-1-3-10">
 <h3>update 1.3.10<a class="headerlink" href="#update-1-3-10" title="Permalink to this headline">¶</a></h3>
-<hr class="docutils" />
 <p><strong>Add features</strong></p>
 <ul>
 <li><p>A new Hue vs. Light scatter plot is available in GUI and programming API. You can create it using the function <code class="docutils literal notranslate"><span class="pre">show_colors_in_hue_light_scatter_plot</span></code> from the <code class="docutils literal notranslate"><span class="pre">kalmus.utils.visualization_utils</span></code>:</p>
