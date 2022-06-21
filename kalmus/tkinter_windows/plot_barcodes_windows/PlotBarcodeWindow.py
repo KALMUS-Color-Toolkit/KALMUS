@@ -238,11 +238,11 @@ class HueLight3DBarPlotWindow():
         # Set up the canvas
         self.canvas = FigureCanvasTkAgg(self.fig, master=self.window)  # A tk.DrawingArea.
         self.canvas.draw()
-        self.canvas.get_tk_widget().grid(row=0, column=0, columnspan=2, pady=3)
+        self.canvas.get_tk_widget().grid(row=0, column=0, columnspan=1, pady=3, rowspan=13)
 
         # Use tkinter Frame to organize the figure widget
         toolbarFrame = tkinter.Frame(master=self.window)
-        toolbarFrame.grid(row=1, column=0, columnspan=1, sticky=tkinter.W, pady=6, rowspan=2)
+        toolbarFrame.grid(row=13, column=0, columnspan=1, sticky=tkinter.W, pady=6, rowspan=1)
 
         # Initialize the plotting tool bar
         toolbar = NavigationToolbar2Tk(self.canvas, toolbarFrame)
@@ -251,37 +251,238 @@ class HueLight3DBarPlotWindow():
         # Allow mouse events on 3D figure
         self.ax.mouse_init()
 
-        # Reshape/Resize option
-        self.config_option = tkinter.StringVar(self.window)
-        self.config_option.set("Unshaded")  # initialize
+        # Shaded/Unshaded option
+        self.config_shade = tkinter.IntVar(self.window)
+        # self.config_shade.set("Unshaded")  # initialize
+        self.config_shade.set(0)
 
-        # Radio button for selecting shaded/unshaded 3D bar object
-        radio_unshaded = tkinter.Radiobutton(self.window, text="Unshaded", variable=self.config_option,
-                                             value="Unshaded", anchor='w',
-                                             command=self.unshade_bar_plot)
-        radio_unshaded.grid(row=1, column=1, sticky=tkinter.W)
+        label_config = tkinter.Label(self.window, text="Plot Configurations:")
+        label_config.grid(row=0, column=1, columnspan=2)
 
-        radio_shaded = tkinter.Radiobutton(self.window, text="Shaded", variable=self.config_option,
-                                           value="Shaded", anchor='w',
-                                           command=self.shade_bar_plot)
-        radio_shaded.grid(row=2, column=1, sticky=tkinter.W)
+        self.checkbox_shade_object = tkinter.Checkbutton(self.window, text="Shade 3D Bar Objects",
+                                                         variable=self.config_shade,
+                                                         onvalue=1, offvalue=0, command=self.shade_bar_plot)
+        self.checkbox_shade_object.grid(row=1, column=1, sticky="nw", padx=(15, 0), columnspan=2)
 
-    def unshade_bar_plot(self):
-        self.ax.cla()
-        show_colors_in_hue_light_3d_bar_plot(self.barcode.colors,
-                                             figure_size=(6, 6),
-                                             return_figure=True,
-                                             shaded=False,
-                                             axes=self.ax)
+        # Grid on/off option
+        self.config_grid = tkinter.IntVar(self.window)
+        # self.config_shade.set("Unshaded")  # initialize
+        self.config_grid.set(0)
+
+        self.checkbox_grid = tkinter.Checkbutton(self.window, text="Turn on Grid",
+                                                 variable=self.config_grid,
+                                                 onvalue=1, offvalue=0, command=self.turn_on_plot_grid)
+        self.checkbox_grid.grid(row=2, column=1, sticky="nw", padx=(15, 0), columnspan=2)
+
+        # Axis on/off option
+        self.config_axis = tkinter.IntVar(self.window)
+        # self.config_shade.set("Unshaded")  # initialize
+        self.config_axis.set(1)
+
+        self.checkbox_axis = tkinter.Checkbutton(self.window, text="Turn on Axis",
+                                                 variable=self.config_axis,
+                                                 onvalue=1, offvalue=0, command=self.turn_on_plot_axis)
+        self.checkbox_axis.grid(row=3, column=1, sticky="nw", padx=(15, 0), columnspan=2)
+
+        label_resolution = tkinter.Label(self.window, text="Plot Resolutions:\n"
+                                                           "Changes to resolution will be effective\n"
+                                                           " after clicking the Submit Changes Button")
+        label_resolution.grid(row=4, column=1, sticky="w", padx=5, columnspan=2)
+
+        self.label_hue_resolution = tkinter.Label(self.window, text="Bar width on Hue axis:")
+        self.label_hue_resolution.grid(row=5, column=1, sticky="nw", padx=5)
+
+        # Variable that stores the user's choice of Hue resolution
+        self.var_hue_resolution = tkinter.StringVar(self.window)
+        self.var_hue_resolution.set("10")
+        self.cur_hue_res = 10
+
+        # Dropdown menu for the Hue resolution selection
+        dropdown_hue_type = tkinter.OptionMenu(self.window, self.var_hue_resolution, "5", "10", "15", "30")
+        dropdown_hue_type.grid(row=5, column=2, sticky="nw", padx=5)
+
+        self.label_hue_resolution = tkinter.Label(self.window, text="Bar width on Light axis:")
+        self.label_hue_resolution.grid(row=6, column=1, sticky="nw", padx=5)
+
+        # Variable that stores the user's choice of Brightness resolution
+        self.var_bri_resolution = tkinter.StringVar(self.window)
+        self.var_bri_resolution.set("0.02")
+        self.cur_bri_res = 0.02
+
+        # Dropdown menu for the Light resolution selection
+        dropdown_bri_type = tkinter.OptionMenu(self.window, self.var_bri_resolution, "0.01", "0.02", "0.05", "0.10")
+        dropdown_bri_type.grid(row=6, column=2, sticky="nw", padx=5)
+
+        # Button to submit the changes
+        self.button_submit = tkinter.Button(master=self.window, text="Submit Changes",
+                                            command=self.generate_new_plot_with_changes)
+        self.button_submit.grid(row=7, column=1, columnspan=2, sticky="n")
+
+        label_camera = tkinter.Label(self.window, text="Camera Views:")
+        label_camera.grid(row=8, column=1, columnspan=2)
+
+        # Variable that stores the Camera view selected
+        self.var_view_option = tkinter.StringVar(self.window)
+        self.var_view_option.set("Diag View 1")  # initialize
+
+        # Stores the original x, y, z limits
+        self.original_xlim = self.ax.get_xlim3d()
+        self.original_ylim = self.ax.get_ylim3d()
+        self.original_zlim = self.ax.get_zlim3d()
+
+        # Radio button for the Camera view selection
+        self.radio_hue_light_view_1 = tkinter.Radiobutton(self.window, text="Diag View 1",
+                                                          variable=self.var_view_option,
+                                                          value="Diag View 1",
+                                                          command=self.change_view)
+        self.radio_hue_light_view_1.grid(row=9, column=1, sticky="nw")
+        self.radio_hue_light_view_1.select()
+
+        self.radio_hue_light_view_2 = tkinter.Radiobutton(self.window, text="Diag View 2",
+                                                          variable=self.var_view_option,
+                                                          value="Diag View 2",
+                                                          command=self.change_view)
+        self.radio_hue_light_view_2.grid(row=9, column=2, sticky="nw")
+
+        self.radio_hue_view_1 = tkinter.Radiobutton(self.window, text="Hue View 1",
+                                                    variable=self.var_view_option,
+                                                    value="Hue View 1",
+                                                    command=self.change_view)
+        self.radio_hue_view_1.grid(row=10, column=1, sticky="nw")
+
+        self.radio_hue_view_2 = tkinter.Radiobutton(self.window, text="Hue View 2",
+                                                    variable=self.var_view_option,
+                                                    value="Hue View 2",
+                                                    command=self.change_view)
+        self.radio_hue_view_2.grid(row=10, column=2, sticky="nw")
+
+        self.radio_light_view_1 = tkinter.Radiobutton(self.window, text="Light View 1",
+                                                      variable=self.var_view_option,
+                                                      value="Light View 1",
+                                                      command=self.change_view)
+        self.radio_light_view_1.grid(row=11, column=1, sticky="nw")
+
+        self.radio_light_view_2 = tkinter.Radiobutton(self.window, text="Light View 2",
+                                                      variable=self.var_view_option,
+                                                      value="Light View 2",
+                                                      command=self.change_view)
+        self.radio_light_view_2.grid(row=11, column=2, sticky="nw")
+
+        self.radio_top_view = tkinter.Radiobutton(self.window, text="Top View",
+                                                  variable=self.var_view_option,
+                                                  value="Top View",
+                                                  command=self.change_view)
+        self.radio_top_view.grid(row=12, column=1, columnspan=2, sticky="n")
+
+    def change_view(self):
+        view_selected = self.var_view_option.get()
+        if view_selected == "Diag View 1":
+            self.ax.view_init(elev=30, azim=-60)
+        elif view_selected == "Diag View 2":
+            self.ax.view_init(elev=30, azim=120)
+        elif view_selected == "Hue View 1":
+            self.ax.view_init(elev=0, azim=-90)
+        elif view_selected == "Hue View 2":
+            self.ax.view_init(elev=0, azim=90)
+        elif view_selected == "Light View 1":
+            self.ax.view_init(elev=0, azim=0)
+        elif view_selected == "Light View 2":
+            self.ax.view_init(elev=0, azim=180)
+        elif view_selected == "Top View":
+            self.ax.view_init(elev=93, azim=-90)
+
+        self.ax.set_xlim3d(self.original_xlim[0], self.original_xlim[1])
+        self.ax.set_ylim3d(self.original_ylim[0], self.original_ylim[1])
+        self.ax.set_zlim3d(self.original_zlim[0], self.original_zlim[1])
         self.canvas.draw()
 
-    def shade_bar_plot(self):
+    def generate_new_plot_with_changes(self):
+        if self.config_grid.get() == 0:
+            grid_on = False
+        else:
+            grid_on = True
+
+        if self.config_shade.get() == 0:
+            shade_on = False
+        else:
+            shade_on = True
+
+        self.cur_hue_res = int(self.var_hue_resolution.get())
+        self.cur_bri_res = float(self.var_bri_resolution.get())
+
         self.ax.cla()
         show_colors_in_hue_light_3d_bar_plot(self.barcode.colors,
+                                             hue_resolution=self.cur_hue_res,
+                                             bri_resolution=self.cur_bri_res,
                                              figure_size=(6, 6),
                                              return_figure=True,
-                                             shaded=True,
+                                             shaded=shade_on,
+                                             grid_off=not grid_on,
                                              axes=self.ax)
+
+        if self.config_axis.get() == 0:
+            self.ax.axis("off")
+
+        # Stores the original x, y, z limits
+        self.original_xlim = self.ax.get_xlim3d()
+        self.original_ylim = self.ax.get_ylim3d()
+        self.original_zlim = self.ax.get_zlim3d()
+
+        self.canvas.draw()
+
+    def turn_on_plot_axis(self):
+        if self.config_axis.get() == 0:
+            self.checkbox_grid.config(state="disabled")
+            self.ax.axis("off")
+            self.canvas.draw()
+        elif self.config_axis.get() == 1:
+            self.checkbox_grid.config(state="normal")
+            self.ax.axis("on")
+            self.canvas.draw()
+
+    def turn_on_plot_grid(self):
+        if self.config_grid.get() == 0:
+            self.ax.grid(False)
+            self.canvas.draw()
+        elif self.config_grid.get() == 1:
+            self.ax.grid(True)
+            self.canvas.draw()
+
+    def shade_bar_plot(self):
+        if self.config_grid.get() == 0:
+            grid_on = False
+        else:
+            grid_on = True
+
+        if self.config_shade.get() == 0:
+            shade_on = False
+        else:
+            shade_on = True
+
+        if self.config_shade.get() == 0:
+            self.ax.cla()
+            show_colors_in_hue_light_3d_bar_plot(self.barcode.colors,
+                                                 figure_size=(6, 6),
+                                                 hue_resolution=self.cur_hue_res,
+                                                 bri_resolution=self.cur_bri_res,
+                                                 return_figure=True,
+                                                 shaded=shade_on,
+                                                 grid_off=not grid_on,
+                                                 axes=self.ax)
+        elif self.config_shade.get() == 1:
+            self.ax.cla()
+            show_colors_in_hue_light_3d_bar_plot(self.barcode.colors,
+                                                 figure_size=(6, 6),
+                                                 hue_resolution=self.cur_hue_res,
+                                                 bri_resolution=self.cur_bri_res,
+                                                 return_figure=True,
+                                                 shaded=shade_on,
+                                                 grid_off=not grid_on,
+                                                 axes=self.ax)
+
+        if self.config_axis.get() == 0:
+            self.ax.axis("off")
+
         self.canvas.draw()
 
 

@@ -462,7 +462,7 @@ def show_colors_in_hue_light_scatter_plot(colors, figure_size=(10, 5),
 
 
 def show_colors_in_hue_light_3d_bar_plot(colors, figure_size=(6, 6),
-                                         hue_resolution=9,
+                                         hue_resolution=10,
                                          bri_resolution=0.02,
                                          return_figure=False, grid_off=True,
                                          background_off=True, shaded=False,
