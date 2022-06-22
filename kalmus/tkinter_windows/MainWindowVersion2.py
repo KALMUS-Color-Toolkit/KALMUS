@@ -127,7 +127,7 @@ class MainWindow():
 
         # Use tkinter Frame to organize the figure widget
         toolbarFrame = tkinter.Frame(master=self.root, width=500, height=40)
-        toolbarFrame.grid(row=8, column=2, sticky="ne", rowspan=2)
+        toolbarFrame.grid(row=8, column=2, sticky="nse", rowspan=2)
         toolbarFrame.pack_propagate(False)
 
         # Set up the tool bar of the plotted figure
