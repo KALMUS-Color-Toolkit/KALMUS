@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
 import numpy as np
 
-from kalmus.tkinter_windows.gui_utils import resource_path
+from kalmus.tkinter_windows.gui_utils import get_time, resource_path
 
 
 class CheckTimePointWindow():
@@ -27,20 +27,7 @@ class CheckTimePointWindow():
         self.x_pos = mouse_x
         self.y_pos = mouse_y
 
-        # Compute the frame label
-        frame = (self.barcode.skip_over + self.barcode.sampled_frame_rate * \
-                ((self.x_pos * self.barcode.get_barcode().shape[0]) + self.y_pos)) * self.barcode.scale_factor
-        frame = int(frame)
-
-        # If frame rate is not given, use 30 as default
-        if self.barcode.fps is None:
-            self.barcode.fps = 30
-
-        # Compute the time label
-        time_tot_sec = frame / self.barcode.fps
-        time_sec = int(time_tot_sec % 60)
-        time_min = int((time_tot_sec / 60) % 60)
-        time_hr = int(time_tot_sec / 3600)
+        frame, time_hr, time_min, time_sec = get_time(self.barcode, self.x_pos, self.y_pos)
 
         # Initialize the window
         self.window = tkinter.Tk()

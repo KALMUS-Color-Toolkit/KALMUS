@@ -103,6 +103,30 @@ def get_comparison_result_text(barcode_1, barcode_2):
     return result_text
 
 
+def get_time(barcode, x_pos, y_pos):
+    """
+    Get the time (hr, min, sec) at a point of barcode
+
+    :param barcode: The barcode object
+    :param x_pos: The x position of the query
+    :param y_pos: The y position of the query
+    :return: time frame, hr, min, sec at the given point (x_pos, y_pos)
+    """
+    # Compute the frame label
+    frame = (barcode.skip_over + barcode.sampled_frame_rate *
+             ((x_pos * barcode.get_barcode().shape[0]) + y_pos)) * barcode.scale_factor
+    frame = int(frame)
+    # If frame rate is not given, use 30 as default
+    if barcode.fps is None:
+        barcode.fps = 30
+    # Compute the time label
+    time_tot_sec = frame / barcode.fps
+    time_sec = int(time_tot_sec % 60)
+    time_min = int((time_tot_sec / 60) % 60)
+    time_hr = int(time_tot_sec / 3600)
+    return frame, time_hr, time_min, time_sec
+
+
 def update_graph(barcode_1, barcode_2, axes, bin_step=5):
     """
     Update the plotted graph (in place)

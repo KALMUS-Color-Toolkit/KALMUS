@@ -11,7 +11,7 @@ from kalmus.tkinter_windows.SaveBarcodeWindow import SaveBarcodeWindow
 from kalmus.tkinter_windows.LoadStackWindow import LoadStackWindow
 from kalmus.tkinter_windows.LoadJsonWindow import LoadJsonWindow
 from kalmus.tkinter_windows.ReshapeBarcodeWindow import ReshapeBarcodeWindow
-from kalmus.tkinter_windows.gui_utils import paint_hue_hist, update_axes_title, update_axes_ticks, resource_path
+from kalmus.tkinter_windows.gui_utils import get_time, paint_hue_hist, update_axes_title, update_axes_ticks, resource_path
 from kalmus.tkinter_windows.plot_barcodes_windows.WhichBarcodeInspectWindow import WhichBarcodeInspectWindow
 from kalmus.tkinter_windows.StatsInfoWindow import StatsInfoWindow
 from kalmus.tkinter_windows.SaveImageWindow import SaveImageWindow
@@ -334,21 +334,7 @@ class MainWindow():
                         self.color_swatch.config(bg=f'#{r:02x}{g:02x}{b:02x}')
                         color_label_text = "Brightness = {:>3d}\n".format(r)
 
-                    # Compute the frame label
-                    frame = (barcode.skip_over + barcode.sampled_frame_rate * \
-                             ((ix * barcode.get_barcode().shape[
-                                 0]) + iy)) * barcode.scale_factor
-                    frame = int(frame)
-
-                    # If frame rate is not given, use 30 as default
-                    if barcode.fps is None:
-                        barcode.fps = 30
-
-                    # Compute the time label
-                    time_tot_sec = frame / barcode.fps
-                    time_sec = int(time_tot_sec % 60)
-                    time_min = int((time_tot_sec / 60) % 60)
-                    time_hr = int(time_tot_sec / 3600)
+                    frame, time_hr, time_min, time_sec = get_time(barcode, ix, iy)
 
                     color_label_text = color_label_text + "Frame: {:>8d}    ".format(frame) + \
                                        "Time: {:02d}:{:02d}:{:02d} ".format(time_hr, time_min, time_sec)

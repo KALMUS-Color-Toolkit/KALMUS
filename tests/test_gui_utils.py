@@ -69,6 +69,25 @@ def test_compare_two_barcodes():
     assert "ERROR" in result_text
 
 
+def test_get_time():
+    color_barcode = get_color_barcode()
+    brightness_barcode = get_brightness_barcode()
+
+    frame, hr, min, sec = gui_utils.get_time(color_barcode, 40, 100)
+
+    assert int(frame) == 13000
+    assert int(hr) == 0
+    assert int(min) == 7
+    assert int(sec) == 13
+
+    frame, hr, min, sec = gui_utils.get_time(brightness_barcode, 40, 100)
+
+    assert int(frame) == 13000
+    assert int(hr) == 0
+    assert int(min) == 7
+    assert int(sec) == 13
+
+
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")
 def test_update_graph():
     # Turn off the interactive mode of matplotlib
