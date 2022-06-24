@@ -70,7 +70,7 @@ class MainWindow():
         self.root = tkinter.Tk()
 
         self.root.configure(bg='#85C1FA')
-        self.root.wm_title("KALMUS Version 1.3.12")
+        self.root.wm_title("KALMUS Version 1.3.13a")
         self.root.iconbitmap(resource_path("kalmus_icon.ico"))
 
         # Initialize the figure
