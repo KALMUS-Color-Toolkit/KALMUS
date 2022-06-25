@@ -525,7 +525,7 @@ class GenerateBarcodeWindow():
                                                                "File will be saved in the current working directory.\n"
                                                                "It is recommended to specify the file path.")
                 json_filename = None
-            if not json_filename.endswith(".json"):
+            if json_filename and (not json_filename.endswith(".json")):
                 json_filename += ".json"
 
         # Check if user choose the multi-thread or not
@@ -623,15 +623,18 @@ class GenerateBarcodeWindow():
         if self.var_save_json.get() == 1:
             try:
                 barcode.save_as_json(json_filename)
+                if json_filename is None:
+                    json_filename = "saved_{:s}_barcode_{:s}_{:s}.json" \
+                        .format(barcode.barcode_type, barcode.frame_type, barcode.color_metric)
+                    json_filename = os.path.abspath(json_filename)
+                json_saved_success_message = "\nand is saved as a JSON object at path: {:20s}" \
+                    .format(json_filename)
             except:
                 showwarning("Error Occurred in Saving Barcode", "An unknown Error occurred in saving barcode to "
                                                                 "JSON object.\nPlease verify the file path and "
                                                                 "make sure you have the permission to save file "
                                                                 "at that directory.")
-            json_filename = "saved_{:s}_barcode_{:s}_{:s}.json" \
-                .format(barcode.barcode_type, barcode.frame_type, barcode.color_metric)
-            json_saved_success_message = "\nand is saved as a JSON object at path: {:20s}"\
-                .format(os.path.abspath(json_filename))
+                json_saved_success_message = ""
         else:
             json_saved_success_message = ""
 
