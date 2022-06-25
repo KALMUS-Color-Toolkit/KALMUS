@@ -18,4 +18,4 @@ def main():
     barcode_tmp = barcode_gn.get_barcode()
 
     # Use the default barcode and the barcode generator to Instantiate the Main window of the kalmus software (GUI)
-    MainWindow(barcode_tmp, barcode_gn)
+    MainWindow(barcode_tmp, barcode_gn, dpi=110)

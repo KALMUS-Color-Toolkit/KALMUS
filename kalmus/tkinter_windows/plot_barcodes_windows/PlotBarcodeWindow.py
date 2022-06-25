@@ -17,7 +17,6 @@ import os
 from kalmus.utils.visualization_utils import show_colors_in_cube, show_colors_in_hue_light_scatter_plot, \
     show_colors_in_hue_light_3d_bar_plot
 from kalmus.tkinter_windows.gui_utils import resource_path, update_hist
-import kalmus.utils.artist
 from skimage.color import rgb2hsv
 import pandas as pd
 
@@ -192,7 +191,8 @@ class RGBColorCubeWindow():
         sampling = 6000
         if sampling > self.barcode.colors.shape[0]:
             sampling = self.barcode.colors.shape[0]
-        fig, ax = show_colors_in_cube(self.barcode.colors, return_figure=True, figure_size=(6, 6), sampling=sampling)
+        fig, ax = show_colors_in_cube(self.barcode.colors, return_figure=True,
+                                      figure_size=(6.5, 6.5), sampling=sampling)
 
         # Set up the canvas
         canvas = FigureCanvasTkAgg(fig, master=self.window)  # A tk.DrawingArea.
@@ -216,11 +216,12 @@ class HueLight3DBarPlotWindow():
     HSV/HSL color space. Hue ranges from 0 to 360 degree and Light range from 0 to 1 (darkest to the brightest)
     """
 
-    def __init__(self, barcode):
+    def __init__(self, barcode, figure_size=(6.5, 6.5)):
         """
         Initialize
 
         :param barcode: The input barcode
+        :param figure_size: The size of the plotted figure
         """
         self.barcode = barcode
 
@@ -229,9 +230,11 @@ class HueLight3DBarPlotWindow():
         self.window.wm_title("Colors in Hue Light 3D Bar Plot")
         self.window.iconbitmap(resource_path("kalmus_icon.ico"))
 
+        self.figure_size = figure_size
+
         # Set up the plotted figure
         self.fig, self.ax = show_colors_in_hue_light_3d_bar_plot(self.barcode.colors,
-                                                                 figure_size=(6, 6),
+                                                                 figure_size=self.figure_size,
                                                                  return_figure=True,
                                                                  shaded=False)
 
@@ -414,7 +417,7 @@ class HueLight3DBarPlotWindow():
         show_colors_in_hue_light_3d_bar_plot(self.barcode.colors,
                                              hue_resolution=self.cur_hue_res,
                                              bri_resolution=self.cur_bri_res,
-                                             figure_size=(6, 6),
+                                             figure_size=self.figure_size,
                                              return_figure=True,
                                              shaded=shade_on,
                                              grid_off=not grid_on,
@@ -462,7 +465,7 @@ class HueLight3DBarPlotWindow():
         if self.config_shade.get() == 0:
             self.ax.cla()
             show_colors_in_hue_light_3d_bar_plot(self.barcode.colors,
-                                                 figure_size=(6, 6),
+                                                 figure_size=self.figure_size,
                                                  hue_resolution=self.cur_hue_res,
                                                  bri_resolution=self.cur_bri_res,
                                                  return_figure=True,
@@ -472,7 +475,7 @@ class HueLight3DBarPlotWindow():
         elif self.config_shade.get() == 1:
             self.ax.cla()
             show_colors_in_hue_light_3d_bar_plot(self.barcode.colors,
-                                                 figure_size=(6, 6),
+                                                 figure_size=self.figure_size,
                                                  hue_resolution=self.cur_hue_res,
                                                  bri_resolution=self.cur_bri_res,
                                                  return_figure=True,
