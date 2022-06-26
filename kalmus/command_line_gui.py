@@ -9,7 +9,7 @@ import sys
 
 
 def parse_args_into_dict(args):
-    ap = argparse.ArgumentParser(description="Command line Barcode generator")
+    ap = argparse.ArgumentParser(description="Command line KALMUS GUI")
     # Dpi of the main plot
     ap.add_argument("-d", "--dpi", required=False, type=int,
                     help="Resolution of the plot (default dpi=120)", default=120)

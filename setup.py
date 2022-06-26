@@ -9,14 +9,14 @@ with open(path_to_md, encoding='utf-8') as f:
 f.close()
 
 setup(name='kalmus',
-      version='1.3.13b2',
+      version='1.3.13b5',
       description='kalmus film color analysis tool',
       keywords='film, color analysis, data visualization',
       long_description=readme,
       long_description_content_type="text/markdown",
       url='https://github.com/KALMUS-Color-Toolkit/KALMUS',
       author='Yida Chen, Eric Faden, Nathan Ryan',
-      author_email='yidachen@g.harvard.edu',
+      author_email='yc015@bucknell.edu',
       license='MIT',
       classifiers=[
           "License :: OSI Approved :: MIT License",
