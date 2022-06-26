@@ -255,7 +255,7 @@ def show_colors_in_cube(colors, figure_size=(8, 8),
     ax.grid(not grid_off)
 
     if tight_plot:
-        fig.subplots_adjust(left=0.07, right=0.93, bottom=0.07, top=0.93)
+        fig.subplots_adjust(left=0.10, right=0.90, bottom=0.10, top=0.90)
 
     if background_off:
         ax.xaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))
@@ -577,7 +577,7 @@ def show_colors_in_hue_light_3d_bar_plot(colors, figure_size=(6, 6),
     ax.grid(not grid_off)
 
     if tight_plot and (axes is None):
-        fig.subplots_adjust(left=0.07, right=0.93, bottom=0.07, top=0.93)
+        fig.subplots_adjust(left=0.10, right=0.90, bottom=0.10, top=0.90)
 
     if background_off:
         ax.xaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))

@@ -4,8 +4,23 @@ from kalmus.barcodes.BarcodeGenerator import BarcodeGenerator
 from kalmus.tkinter_windows.MainWindowVersion2 import MainWindow
 import os
 
+import argparse
+import sys
 
-def main():
+
+def parse_args_into_dict(args):
+    ap = argparse.ArgumentParser(description="Command line Barcode generator")
+    # Video path
+    ap.add_argument("-d", "--dpi", required=False, type=int,
+                    help="Resolution of the plot (default dpi=120)", default=120)
+
+    return vars(ap.parse_args(args))
+
+
+def main(args=sys.argv[1:]):
+    args = parse_args_into_dict(args=args)
+    print(args)
+
     # Instantiate the barcode generator object
     barcode_gn = BarcodeGenerator()
     # Build the default barcode from the default json file
@@ -18,4 +33,4 @@ def main():
     barcode_tmp = barcode_gn.get_barcode()
 
     # Use the default barcode and the barcode generator to Instantiate the Main window of the kalmus software (GUI)
-    MainWindow(barcode_tmp, barcode_gn, dpi=110)
+    MainWindow(barcode_tmp, barcode_gn, dpi=args["dpi"])

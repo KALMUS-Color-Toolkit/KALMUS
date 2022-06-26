@@ -70,11 +70,12 @@ class MainWindow():
         self.root = tkinter.Tk()
 
         self.root.configure(bg='#85C1FA')
-        self.root.wm_title("KALMUS Version 1.3.13a4")
+        self.root.wm_title("KALMUS Version 1.3.13b2")
         self.root.iconbitmap(resource_path("kalmus_icon.ico"))
 
+        self.dpi = dpi
         # Initialize the figure
-        self.fig, self.ax = plt.subplots(2, 2, figsize=figsize, dpi=dpi,
+        self.fig, self.ax = plt.subplots(2, 2, figsize=figsize, dpi=self.dpi,
                                          gridspec_kw={'width_ratios': [2.8, 1]}, sharex='col', sharey='col')
 
         update_axes_title(self.ax, self.barcode_1, self.barcode_2)
@@ -143,7 +144,7 @@ class MainWindow():
                                           bg=f'#{r:02x}{g:02x}{b:02x}',
                                           width=4,
                                           height=2,
-                                          borderwidth=1.5,
+                                          borderwidth=2,
                                           relief="solid")
         self.color_swatch.grid(row=8, column=3, rowspan=1, padx=0, sticky=tkinter.E)
 
@@ -155,7 +156,7 @@ class MainWindow():
                                               "Blue = {:>3d}\n".format(0, 0, 0) +
                                               "Frame: {:>8d}    ".format(0) +
                                               "Time: {:02d}:{:02d}:{:02d} ".format(0, 0, 0),
-                                         font=("Arial", 8),
+                                         font=("Arial", 9),
                                          width=32,
                                          bg='#85C1FA',
                                          padx=0,
@@ -256,7 +257,7 @@ class MainWindow():
         """
         Instantiate the WhichBarcodeInspectWindow
         """
-        WhichBarcodeInspectWindow(self.barcode_1, self.barcode_2, dpi=110, figsize=(7.6, 4.3))
+        WhichBarcodeInspectWindow(self.barcode_1, self.barcode_2, dpi=self.dpi, figsize=(7.6, 4.3))
 
     def load_json_barcode(self):
         """
