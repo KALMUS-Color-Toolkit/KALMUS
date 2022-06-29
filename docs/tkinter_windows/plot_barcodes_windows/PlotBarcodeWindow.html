@@ -8,7 +8,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Plot Barcode Windows Classes &mdash; KALMUS 1.3.12 documentation</title>
+  <title>Plot Barcode Windows Classes &mdash; KALMUS 1.3.13 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                1.3.12
+                1.3.13
               </div>
             
           
@@ -207,20 +207,35 @@ GUI window that show the distribution of the barcode's hue[0, 360]/brightness[0,
 
 <dl class="py class">
 <dt id="kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.HueLight3DBarPlotWindow">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.</span></code><code class="sig-name descname"><span class="pre">HueLight3DBarPlotWindow</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">barcode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/kalmus/tkinter_windows/plot_barcodes_windows/PlotBarcodeWindow.html#HueLight3DBarPlotWindow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.HueLight3DBarPlotWindow" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.</span></code><code class="sig-name descname"><span class="pre">HueLight3DBarPlotWindow</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">barcode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(6.5,</span> <span class="pre">6.5)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/kalmus/tkinter_windows/plot_barcodes_windows/PlotBarcodeWindow.html#HueLight3DBarPlotWindow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.HueLight3DBarPlotWindow" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>HueLight3DBarPlotWindow Class
 GUI window that shows the distribution of the barcode's color in a Hue (x-axis) vs. Light (y-axis)
 vs. Counts/Frequency (z-axis) 3D bar plot. The color of the barcode will be converted from RGB to
 HSV/HSL color space. Hue ranges from 0 to 360 degree and Light range from 0 to 1 (darkest to the brightest)</p>
 <dl class="py method">
+<dt id="kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.HueLight3DBarPlotWindow.change_view">
+<code class="sig-name descname"><span class="pre">change_view</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/kalmus/tkinter_windows/plot_barcodes_windows/PlotBarcodeWindow.html#HueLight3DBarPlotWindow.change_view"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.HueLight3DBarPlotWindow.change_view" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.HueLight3DBarPlotWindow.generate_new_plot_with_changes">
+<code class="sig-name descname"><span class="pre">generate_new_plot_with_changes</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/kalmus/tkinter_windows/plot_barcodes_windows/PlotBarcodeWindow.html#HueLight3DBarPlotWindow.generate_new_plot_with_changes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.HueLight3DBarPlotWindow.generate_new_plot_with_changes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt id="kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.HueLight3DBarPlotWindow.shade_bar_plot">
 <code class="sig-name descname"><span class="pre">shade_bar_plot</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/kalmus/tkinter_windows/plot_barcodes_windows/PlotBarcodeWindow.html#HueLight3DBarPlotWindow.shade_bar_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.HueLight3DBarPlotWindow.shade_bar_plot" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.HueLight3DBarPlotWindow.unshade_bar_plot">
-<code class="sig-name descname"><span class="pre">unshade_bar_plot</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/kalmus/tkinter_windows/plot_barcodes_windows/PlotBarcodeWindow.html#HueLight3DBarPlotWindow.unshade_bar_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.HueLight3DBarPlotWindow.unshade_bar_plot" title="Permalink to this definition">¶</a></dt>
+<dt id="kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.HueLight3DBarPlotWindow.turn_on_plot_axis">
+<code class="sig-name descname"><span class="pre">turn_on_plot_axis</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/kalmus/tkinter_windows/plot_barcodes_windows/PlotBarcodeWindow.html#HueLight3DBarPlotWindow.turn_on_plot_axis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.HueLight3DBarPlotWindow.turn_on_plot_axis" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.HueLight3DBarPlotWindow.turn_on_plot_grid">
+<code class="sig-name descname"><span class="pre">turn_on_plot_grid</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/kalmus/tkinter_windows/plot_barcodes_windows/PlotBarcodeWindow.html#HueLight3DBarPlotWindow.turn_on_plot_grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kalmus.tkinter_windows.plot_barcodes_windows.PlotBarcodeWindow.HueLight3DBarPlotWindow.turn_on_plot_grid" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>

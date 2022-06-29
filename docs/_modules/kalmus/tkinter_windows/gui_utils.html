@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>kalmus.tkinter_windows.gui_utils &mdash; KALMUS 1.3.12 documentation</title>
+  <title>kalmus.tkinter_windows.gui_utils &mdash; KALMUS 1.3.13 documentation</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                1.3.12
+                1.3.13
               </div>
             
           
@@ -263,6 +263,30 @@
                   <span class="s2">&quot;Smith Waterman Similarity:     </span><span class="si">{:10.4f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nrmse</span><span class="p">,</span> <span class="n">ssim</span><span class="p">,</span> <span class="n">cross_corre</span><span class="p">,</span> <span class="n">loc_cross_corre</span><span class="p">,</span>
                                                                    <span class="n">needleman</span><span class="p">,</span> <span class="n">smith</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">result_text</span></div>
+
+
+<div class="viewcode-block" id="get_time"><a class="viewcode-back" href="../../../tkinter_windows/gui_utils.html#kalmus.tkinter_windows.gui_utils.get_time">[docs]</a><span class="k">def</span> <span class="nf">get_time</span><span class="p">(</span><span class="n">barcode</span><span class="p">,</span> <span class="n">x_pos</span><span class="p">,</span> <span class="n">y_pos</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the time (hr, min, sec) at a point of barcode</span>
+
+<span class="sd">    :param barcode: The barcode object</span>
+<span class="sd">    :param x_pos: The x position of the query</span>
+<span class="sd">    :param y_pos: The y position of the query</span>
+<span class="sd">    :return: time frame, hr, min, sec at the given point (x_pos, y_pos)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Compute the frame label</span>
+    <span class="n">frame</span> <span class="o">=</span> <span class="p">(</span><span class="n">barcode</span><span class="o">.</span><span class="n">skip_over</span> <span class="o">+</span> <span class="n">barcode</span><span class="o">.</span><span class="n">sampled_frame_rate</span> <span class="o">*</span>
+             <span class="p">((</span><span class="n">x_pos</span> <span class="o">*</span> <span class="n">barcode</span><span class="o">.</span><span class="n">get_barcode</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="n">y_pos</span><span class="p">))</span> <span class="o">*</span> <span class="n">barcode</span><span class="o">.</span><span class="n">scale_factor</span>
+    <span class="n">frame</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+    <span class="c1"># If frame rate is not given, use 30 as default</span>
+    <span class="k">if</span> <span class="n">barcode</span><span class="o">.</span><span class="n">fps</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">barcode</span><span class="o">.</span><span class="n">fps</span> <span class="o">=</span> <span class="mi">30</span>
+    <span class="c1"># Compute the time label</span>
+    <span class="n">time_tot_sec</span> <span class="o">=</span> <span class="n">frame</span> <span class="o">/</span> <span class="n">barcode</span><span class="o">.</span><span class="n">fps</span>
+    <span class="n">time_sec</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time_tot_sec</span> <span class="o">%</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="n">time_min</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">time_tot_sec</span> <span class="o">/</span> <span class="mi">60</span><span class="p">)</span> <span class="o">%</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="n">time_hr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time_tot_sec</span> <span class="o">/</span> <span class="mi">3600</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">frame</span><span class="p">,</span> <span class="n">time_hr</span><span class="p">,</span> <span class="n">time_min</span><span class="p">,</span> <span class="n">time_sec</span></div>
 
 
 <div class="viewcode-block" id="update_graph"><a class="viewcode-back" href="../../../tkinter_windows/gui_utils.html#kalmus.tkinter_windows.gui_utils.update_graph">[docs]</a><span class="k">def</span> <span class="nf">update_graph</span><span class="p">(</span><span class="n">barcode_1</span><span class="p">,</span> <span class="n">barcode_2</span><span class="p">,</span> <span class="n">axes</span><span class="p">,</span> <span class="n">bin_step</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>

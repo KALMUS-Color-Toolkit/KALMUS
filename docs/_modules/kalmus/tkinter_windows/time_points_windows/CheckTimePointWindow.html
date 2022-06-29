@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>kalmus.tkinter_windows.time_points_windows.CheckTimePointWindow &mdash; KALMUS 1.3.12 documentation</title>
+  <title>kalmus.tkinter_windows.time_points_windows.CheckTimePointWindow &mdash; KALMUS 1.3.13 documentation</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                1.3.12
+                1.3.13
               </div>
             
           
@@ -167,7 +167,7 @@
 <span class="kn">from</span> <span class="nn">matplotlib.backends.backend_tkagg</span> <span class="k">import</span> <span class="p">(</span><span class="n">FigureCanvasTkAgg</span><span class="p">,</span> <span class="n">NavigationToolbar2Tk</span><span class="p">)</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">kalmus.tkinter_windows.gui_utils</span> <span class="k">import</span> <span class="n">resource_path</span>
+<span class="kn">from</span> <span class="nn">kalmus.tkinter_windows.gui_utils</span> <span class="k">import</span> <span class="n">get_time</span><span class="p">,</span> <span class="n">resource_path</span>
 
 
 <div class="viewcode-block" id="CheckTimePointWindow"><a class="viewcode-back" href="../../../../tkinter_windows/time_points_windows/CheckTimePointWindow.html#kalmus.tkinter_windows.time_points_windows.CheckTimePointWindow.CheckTimePointWindow">[docs]</a><span class="k">class</span> <span class="nc">CheckTimePointWindow</span><span class="p">():</span>
@@ -189,20 +189,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">x_pos</span> <span class="o">=</span> <span class="n">mouse_x</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">y_pos</span> <span class="o">=</span> <span class="n">mouse_y</span>
 
-        <span class="c1"># Compute the frame label</span>
-        <span class="n">frame</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">skip_over</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">sampled_frame_rate</span> <span class="o">*</span> \
-                <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">x_pos</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">get_barcode</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_pos</span><span class="p">))</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">scale_factor</span>
-        <span class="n">frame</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
-
-        <span class="c1"># If frame rate is not given, use 30 as default</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">fps</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">fps</span> <span class="o">=</span> <span class="mi">30</span>
-
-        <span class="c1"># Compute the time label</span>
-        <span class="n">time_tot_sec</span> <span class="o">=</span> <span class="n">frame</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="o">.</span><span class="n">fps</span>
-        <span class="n">time_sec</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time_tot_sec</span> <span class="o">%</span> <span class="mi">60</span><span class="p">)</span>
-        <span class="n">time_min</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">time_tot_sec</span> <span class="o">/</span> <span class="mi">60</span><span class="p">)</span> <span class="o">%</span> <span class="mi">60</span><span class="p">)</span>
-        <span class="n">time_hr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time_tot_sec</span> <span class="o">/</span> <span class="mi">3600</span><span class="p">)</span>
+        <span class="n">frame</span><span class="p">,</span> <span class="n">time_hr</span><span class="p">,</span> <span class="n">time_min</span><span class="p">,</span> <span class="n">time_sec</span> <span class="o">=</span> <span class="n">get_time</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">barcode</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_pos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_pos</span><span class="p">)</span>
 
         <span class="c1"># Initialize the window</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>

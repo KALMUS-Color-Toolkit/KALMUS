@@ -4,6 +4,27 @@ KALMUS Update Log (v1.3.11)
 Update Log
 -----------------
 
+update 1.3.13
+^^^^^^^^^^^^^^^^
+
+**Add features**
+
+Color swatch. A small color display is now added to the main window under the barcode plots. When the user's mouse hovers over a pixel of the barcode, the color display will show the color of that pixel along with red, blue, green, frame, and time at that pixel. For the brightness barcode, the color display will show the brightness instead.
+
+More configuration available for the Hue vs. Light 3D bar plot. Users may now turn on/off the shade on 3D objects, grids, and axis. The resolution of the plot (in the other words, the dimension of a 3D bar) can also be configured in the plot resolutions section. Smaller bar width on Hue/Light axis will increase the number of 3D bars in the plot (higher resolution), providing more details. Larger width will decrease the number of 3D bars and improve the performance (e.g. the refreshing speed when spinning or zooming the plot). Users can also switch to 7 pre-defined camera positions using the Camera Views.
+
+Users can configure the plot resolution (dpi) when launching the KALMUS GUI using the -d/--dpi flag: ``$ kalmus-gui --dpi 160` or $ kalmus-gui -d 160``. The default dpi of the GUI is 120.
+
+**Changes**
+
+When users click the browse button in the Generate barcode/Load JSON barcode window, KALMUS GUI will open the last closed folder rather than the current working directory.
+
+**Fixes**
+
+Fix the crash caused by generating and saving a barcode to an invalid JSON output file path. If you are using the save output barcode to JSON function added in v1.3.11, we recommend you update KALMUS to this new release. The KALMUS GUI may crash if you give an invalid file path to the output JSON file.
+
+---------------------------
+
 update 1.3.12
 ^^^^^^^^^^^^^^^^
 
