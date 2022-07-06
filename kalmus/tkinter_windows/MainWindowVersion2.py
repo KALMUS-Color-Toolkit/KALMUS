@@ -28,6 +28,9 @@ import numpy as np
 import copy
 import matplotlib
 
+matplotlib.rcParams['keymap.back'].remove('left')
+matplotlib.rcParams['keymap.forward'].remove('right')
+
 # General setup of the figure
 font = {'family': 'DejaVu Sans',
         'size': 8}
@@ -70,7 +73,7 @@ class MainWindow():
         self.root = tkinter.Tk()
 
         self.root.configure(bg='#85C1FA')
-        self.root.wm_title("KALMUS Version 1.3.14a1")
+        self.root.wm_title("KALMUS Version 1.3.14a2")
         self.root.iconbitmap(resource_path("kalmus_icon.ico"))
 
         self.dpi = dpi
