@@ -208,6 +208,21 @@ class RGBColorCubeWindow():
         canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
 
 
+# customized toolbar for HueLight3DBarPlot
+class CustomToolbar(NavigationToolbar2Tk):
+    def __init__(self, canvas_, parent_):
+        self.toolitems = (('Home', 'Reset original view', 'home', 'home'),
+                          (None, None, None, None),
+                          ('Pan', 'Pan axes with left mouse, zoom with right', 'move',
+                           'pan'),
+                          ('Zoom', 'Zoom to rectangle', 'zoom_to_rect', 'zoom'),
+                          ('Subplots', 'Configure subplots', 'subplots', 'configure_subplots'),
+                          (None, None, None, None),
+                          ('Save', 'Save the figure', 'filesave', 'save_figure')
+                          )
+        NavigationToolbar2Tk.__init__(self, canvas_, parent_)
+
+
 class HueLight3DBarPlotWindow():
     """
     HueLight3DBarPlotWindow Class
@@ -249,7 +264,7 @@ class HueLight3DBarPlotWindow():
         toolbarFrame.grid(row=14, column=0, columnspan=1, sticky=tkinter.W, pady=6, rowspan=1)
 
         # Initialize the plotting tool bar
-        toolbar = NavigationToolbar2Tk(self.canvas, toolbarFrame)
+        toolbar = CustomToolbar(self.canvas, toolbarFrame)
         toolbar.update()
 
         # Allow mouse events on 3D figure
