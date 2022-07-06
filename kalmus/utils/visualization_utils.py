@@ -467,12 +467,16 @@ def show_colors_in_hue_light_3d_bar_plot(colors, figure_size=(6, 6),
                                          return_figure=False, grid_off=True,
                                          background_off=True, shaded=False,
                                          tight_plot=True, axes=None,
+                                         invert_light_axis=False,
                                          saturation_threshold=0.15):
     """
     Show a sequence of RGB colors in a Hue vs. Light vs. Counts 3D bar Plot (Hue on x-axis, 
     Light on y-axis, and counts/frequency of color on z-axis). Colors are assumed to be in 
     the RGB colorspace and will be converted to the HSV color space within this function.
 
+    :param invert_light_axis: Invert the light (y) axis if true otherwise keep the original \
+                              order
+    :type invert_light_axis: bool
     :param colors: A sequence of colors to display in cubic space
     :type colors: numpy.ndarray
     :param figure_size: the size of the figure
@@ -573,6 +577,10 @@ def show_colors_in_hue_light_3d_bar_plot(colors, figure_size=(6, 6),
     ax.set_xlabel("Hue (0 - 360)")
     ax.set_ylabel("Light (0 - 1)")
     ax.set_zlabel("Number of Frames")
+
+    if invert_light_axis:
+        ymin, ymax = ax.get_ylim()
+        ax.set_ylim(ymax, ymin)
 
     ax.grid(not grid_off)
 

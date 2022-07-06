@@ -236,16 +236,17 @@ class HueLight3DBarPlotWindow():
         self.fig, self.ax = show_colors_in_hue_light_3d_bar_plot(self.barcode.colors,
                                                                  figure_size=self.figure_size,
                                                                  return_figure=True,
-                                                                 shaded=False)
+                                                                 shaded=False,
+                                                                 invert_light_axis=True)
 
         # Set up the canvas
         self.canvas = FigureCanvasTkAgg(self.fig, master=self.window)  # A tk.DrawingArea.
         self.canvas.draw()
-        self.canvas.get_tk_widget().grid(row=0, column=0, columnspan=1, pady=3, rowspan=13)
+        self.canvas.get_tk_widget().grid(row=0, column=0, columnspan=1, pady=3, rowspan=14)
 
         # Use tkinter Frame to organize the figure widget
         toolbarFrame = tkinter.Frame(master=self.window)
-        toolbarFrame.grid(row=13, column=0, columnspan=1, sticky=tkinter.W, pady=6, rowspan=1)
+        toolbarFrame.grid(row=14, column=0, columnspan=1, sticky=tkinter.W, pady=6, rowspan=1)
 
         # Initialize the plotting tool bar
         toolbar = NavigationToolbar2Tk(self.canvas, toolbarFrame)
@@ -376,6 +377,76 @@ class HueLight3DBarPlotWindow():
                                                   value="Top View",
                                                   command=self.change_view)
         self.radio_top_view.grid(row=12, column=1, columnspan=2, sticky="n")
+
+        label_rotation_speed = tkinter.Label(self.window, text="Rotation Speed (Degrees):")
+        label_rotation_speed.grid(row=13, column=1, columnspan=2, sticky="s")
+
+        self.var_rotation_speed = tkinter.IntVar(self.window)
+        self.var_rotation_speed.set(5)
+        self.rotation_speed = self.var_rotation_speed.get()
+        self.slider_rotation_speed = tkinter.Scale(
+            self.window,
+            from_=1,
+            to=30,
+            orient='horizontal',
+            variable=self.var_rotation_speed,
+            command=self.update_rotation_speed,
+        )
+        self.slider_rotation_speed.grid(row=14, column=1, columnspan=2, sticky="n")
+
+        self.window.bind("<Left>", self.rotate_left)
+        self.window.bind("<Right>", self.rotate_right)
+        self.window.bind("<Up>", self.rotate_up)
+        self.window.bind("<Down>", self.rotate_down)
+
+        self.window.lift()
+
+    def update_rotation_speed(self, event):
+        self.rotation_speed = self.var_rotation_speed.get()
+
+    def rotate_left(self, event):
+        cur_elev = self.ax.elev
+        cur_azim = self.ax.azim
+
+        cur_azim += self.rotation_speed
+        if cur_azim >= 180:
+            cur_azim -= 360
+
+        self.ax.view_init(elev=cur_elev, azim=cur_azim)
+        self.canvas.draw()
+
+    def rotate_right(self, event):
+        cur_elev = self.ax.elev
+        cur_azim = self.ax.azim
+
+        cur_azim -= self.rotation_speed
+        if cur_azim < -180:
+            cur_azim += 360
+
+        self.ax.view_init(elev=cur_elev, azim=cur_azim)
+        self.canvas.draw()
+
+    def rotate_up(self, event):
+        cur_elev = self.ax.elev
+        cur_azim = self.ax.azim
+
+        cur_elev -= self.rotation_speed
+        if cur_elev < -180:
+            cur_elev += 360
+
+        self.ax.view_init(elev=cur_elev, azim=cur_azim)
+        self.canvas.draw()
+
+    def rotate_down(self, event):
+        cur_elev = self.ax.elev
+        cur_azim = self.ax.azim
+
+        cur_elev += self.rotation_speed
+        if cur_elev >= 180:
+            cur_elev -= 360
+
+        self.ax.view_init(elev=cur_elev, azim=cur_azim)
+        self.canvas.draw()
 
     def change_view(self):
         view_selected = self.var_view_option.get()
