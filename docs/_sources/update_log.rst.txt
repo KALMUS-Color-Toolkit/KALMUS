@@ -1,8 +1,23 @@
-KALMUS Update Log (v1.3.11)
+KALMUS Update Log (v1.3.14)
 ================================
 
 Update Log
 -----------------
+
+update 1.3.14
+^^^^^^^^^^^^^^^^
+
+**Add features**
+
+Now, you can rotate the 3D Bar plot in the *Colors in Hue Light 3D Bar Plot window with arrow keys. <Left> rotate counter-clockwise, <Right> rotate clockwise, <Up> from down to up, and <Down> from up to down.
+
+**Changes**
+
+Default key bindings of ``matplotlib`` plot are removed.
+
+The light axis of the 3D Bar plot is inverted. In the default view, the bright colors are now in the foreground.
+
+---------------------------
 
 update 1.3.13
 ^^^^^^^^^^^^^^^^
