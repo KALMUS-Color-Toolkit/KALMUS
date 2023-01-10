@@ -492,7 +492,8 @@ class HueLight3DBarPlotWindow():
                                              return_figure=True,
                                              shaded=shade_on,
                                              grid_off=not grid_on,
-                                             axes=self.ax)
+                                             axes=self.ax,
+                                             invert_light_axis=True)
 
         if self.config_axis.get() == 0:
             self.ax.axis("off")
@@ -542,7 +543,8 @@ class HueLight3DBarPlotWindow():
                                                  return_figure=True,
                                                  shaded=shade_on,
                                                  grid_off=not grid_on,
-                                                 axes=self.ax)
+                                                 axes=self.ax,
+                                                 invert_light_axis=True)
         elif self.config_shade.get() == 1:
             self.ax.cla()
             show_colors_in_hue_light_3d_bar_plot(self.barcode.colors,
@@ -552,7 +554,8 @@ class HueLight3DBarPlotWindow():
                                                  return_figure=True,
                                                  shaded=shade_on,
                                                  grid_off=not grid_on,
-                                                 axes=self.ax)
+                                                 axes=self.ax,
+                                                 invert_light_axis=True)
 
         if self.config_axis.get() == 0:
             self.ax.axis("off")
