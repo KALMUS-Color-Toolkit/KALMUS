@@ -7,7 +7,7 @@ from scipy import ndimage
 from skimage.morphology import disk, remove_small_objects
 from skimage.segmentation import watershed
 from skimage.filters import rank, sobel
-from skimage.future import graph
+from skimage import graph
 import scipy.stats as stats
 
 
@@ -384,7 +384,7 @@ def get_rag(gray_image, labels):
     :return: The region adjacency graph in dictionary \
     see https://scikit-image.org/docs/stable/auto_examples/segmentation/plot_rag_boundary.html for more \
     references
-    :rtype: skimage.future.graph.RAG
+    :rtype: skimage.graph.RAG
     """
     # Get rag of the labeled image
     edge_map = sobel(gray_image)
@@ -402,7 +402,7 @@ def rag_to_matrix(rag, num_regions):
     1,0 means region 0 and region 1 are adjacent
 
     :param rag: region adjacency dictionary
-    :type rag: skimage.future.graph.RAG
+    :type rag: skimage.graph.RAG
     :param num_regions: number of regions in the region adjacency graph
     :type num_regions: int
     :return: An binary adjacency matrix with shape==num_regions x num_regions
