@@ -1,9 +1,24 @@
 """ Image Comparison Utility """
 
-import Bio.pairwise2 as sequence_align
 import numpy as np
+from Bio.Align import PairwiseAligner
 from skimage.color import rgb2hsv
 from skimage.metrics import mean_squared_error, structural_similarity
+
+
+def _build_aligner(mode, match_score, mismatch_penal, gap_penal, extending_gap_penal):
+    """Construct a PairwiseAligner mirroring the pairwise2.align.{globalms,localms} scoring model.
+
+    pairwise2 applied the same gap penalty to both terminal and internal gaps; assigning
+    ``open_gap_score`` / ``extend_gap_score`` on PairwiseAligner does the same.
+    """
+    aligner = PairwiseAligner()
+    aligner.mode = mode
+    aligner.match_score = match_score
+    aligner.mismatch_score = mismatch_penal
+    aligner.open_gap_score = gap_penal
+    aligner.extend_gap_score = extending_gap_penal
+    return aligner
 
 
 def nrmse_similarity(image_1, image_2, norm_mode="Min max"):
@@ -61,10 +76,19 @@ def ssim_similarity(image_1, image_2, window_size=None):
     image_1 = image_1.astype("float64")
     image_2 = image_2.astype("float64")
 
+    # skimage requires explicit `data_range` for floating-point inputs since 0.21.
+    # Derive it from the joint value range so behaviour matches the prior int default.
+    data_range = max(image_1.max(), image_2.max()) - min(image_1.min(), image_2.min())
+    if data_range == 0:
+        data_range = 1.0
+
+    # scikit-image>=0.21 dropped the `multichannel` kwarg in favour of `channel_axis`.
     if len(image_1.shape) == 2:
-        score = structural_similarity(image_1, image_2, win_size=window_size, multichannel=False)
+        score = structural_similarity(image_1, image_2, win_size=window_size,
+                                      channel_axis=None, data_range=data_range)
     elif len(image_1.shape) > 2:
-        score = structural_similarity(image_1, image_2, win_size=window_size, multichannel=True)
+        score = structural_similarity(image_1, image_2, win_size=window_size,
+                                      channel_axis=-1, data_range=data_range)
 
     # Renormalize [-1, 1] score to [0, 1] range
     score += 1
@@ -264,12 +288,11 @@ def compare_needleman_wunsch(str_barcode_1, str_barcode_2, local_sequence_size=2
     """
     assert len(str_barcode_1) == len(str_barcode_2), "The lengths of two barcodes have to be identical"
 
+    aligner = _build_aligner("global", match_score, mismatch_penal, gap_penal, extending_gap_penal)
     scores = 0
     for start_point in range(0, len(str_barcode_1), local_sequence_size):
-        scores += sequence_align.align.globalms(str_barcode_1[start_point:start_point + local_sequence_size],
-                                                str_barcode_2[start_point:start_point + local_sequence_size],
-                                                match_score, mismatch_penal, gap_penal, extending_gap_penal,
-                                                score_only=True)
+        scores += aligner.score(str_barcode_1[start_point:start_point + local_sequence_size],
+                                str_barcode_2[start_point:start_point + local_sequence_size])
 
     if normalized:
         denom = len(str_barcode_1) * match_score
@@ -307,12 +330,11 @@ def compare_smith_waterman(str_barcode_1, str_barcode_2, local_sequence_size=200
     """
     assert len(str_barcode_1) == len(str_barcode_2), "The lengths of two barcodes have to be identical"
 
+    aligner = _build_aligner("local", match_score, mismatch_penal, gap_penal, extending_gap_penal)
     scores = 0
     for start_point in range(0, len(str_barcode_1), local_sequence_size):
-        scores += sequence_align.align.localms(str_barcode_1[start_point:start_point + local_sequence_size],
-                                               str_barcode_2[start_point:start_point + local_sequence_size],
-                                               match_score, mismatch_penal, gap_penal, extending_gap_penal,
-                                               score_only=True)
+        scores += aligner.score(str_barcode_1[start_point:start_point + local_sequence_size],
+                                str_barcode_2[start_point:start_point + local_sequence_size])
 
     if normalized:
         denom = len(str_barcode_1) * match_score

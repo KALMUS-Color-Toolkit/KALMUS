@@ -33,3 +33,7 @@ def main(args=sys.argv[1:]):
 
     # Use the default barcode and the barcode generator to Instantiate the Main window of the kalmus software (GUI)
     MainWindow(barcode_tmp, barcode_gn, dpi=args["dpi"])
+
+
+if __name__ == "__main__":
+    main()

@@ -71,3 +71,7 @@ def main(args=sys.argv[1:]):
                                        rescale_frames_factor=args["rescale_frame_factor"])
     barcode = barcode_generator.get_barcode()
     barcode.save_as_json(filename=args["output_path"])
+
+
+if __name__ == "__main__":
+    main()

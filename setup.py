@@ -21,8 +21,11 @@ setup(name='kalmus',
       classifiers=[
           "License :: OSI Approved :: MIT License",
           "Programming Language :: Python :: 3",
-          "Programming Language :: Python :: 3.7",
-          "Programming Language :: Python :: 3.8",
+          "Programming Language :: Python :: 3.10",
+          "Programming Language :: Python :: 3.11",
+          "Programming Language :: Python :: 3.12",
+          "Programming Language :: Python :: 3.13",
+          "Programming Language :: Python :: 3.14",
           "Development Status :: 5 - Production/Stable",
           "Intended Audience :: Education",
           "Intended Audience :: Science/Research",
@@ -32,9 +35,21 @@ setup(name='kalmus',
           "Topic :: Software Development :: User Interfaces"
       ],
       packages=find_packages(),
-      python_requires='>=3.7',
-      install_requires=['numpy', 'opencv-python', 'scikit-image>=0.16.2', 'matplotlib>=3.2.2',
-                        'scikit-learn', 'biopython', 'scipy', 'kiwisolver>=1.3.1', 'pandas'],
+      python_requires='>=3.10',
+      install_requires=[
+          'numpy>=1.23',
+          # headless variant: same cv2 API, no X/GL system libs required.
+          # kalmus uses cv2 only for image-processing (VideoCapture, cvtColor,
+          # kmeans, grabCut, ...); the GUI is tkinter, never cv2.imshow.
+          'opencv-python-headless>=4.6',
+          'scikit-image>=0.21',  # channel_axis kwarg replaces multichannel
+          'matplotlib>=3.5',
+          'scikit-learn>=1.1',
+          'biopython>=1.80',     # PairwiseAligner is the supported aligner
+          'scipy>=1.11',         # stats.mode keepdims default change handled
+          'kiwisolver>=1.4',
+          'pandas>=1.5',
+      ],
       entry_points={
           'console_scripts': ['kalmus-gui=kalmus.command_line_gui:main',
                               'kalmus-generator=kalmus.command_line_generator:main'],

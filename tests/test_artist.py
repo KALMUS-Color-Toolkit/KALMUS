@@ -40,7 +40,7 @@ def test_compute_mode_color(get_test_color_image):
     image = get_test_color_image
     color, count = artist.compute_mode_color(get_test_color_image)
     assert color.shape == (3,)
-    assert count.shape == (1, 3)
+    assert count.shape == (3,)
     assert np.all(count < image.size)
 
 

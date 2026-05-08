@@ -285,8 +285,9 @@ def update_hist(barcode, ax, bin_step=5):
         # Paint each bin with its corresponding color in hue
         paint_hue_hist(bin_step, patches)
     else:
-        # If the barcode type is brightness
-        N, bins, patches = ax.hist(barcode.brightness[:, 0], bins=(np.arange(0, 256, bin_step)))
+        # If the barcode type is brightness. `brightness` is stored 1-D (one scalar per
+        # sampled frame), so flatten defensively rather than indexing a phantom 2nd axis.
+        N, bins, patches = ax.hist(barcode.brightness.ravel(), bins=(np.arange(0, 256, bin_step)))
 
         # Then paint each bin with its brightness intensity
         paint_gray_hist(bin_step, patches, opacity=0.9)

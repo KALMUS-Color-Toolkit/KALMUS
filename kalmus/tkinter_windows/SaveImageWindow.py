@@ -125,6 +125,13 @@ class SaveImageWindow():
             showerror("File Name is Not Given", "Please specify the path to the saved image.")
             return
 
+        # On Linux/X11 the file dialog does not auto-append the filtered extension, and a
+        # user typing the path by hand may also omit it. Default to .jpg so the call into
+        # matplotlib/PIL has something to dispatch on.
+        _, ext = os.path.splitext(filename)
+        if ext == "":
+            filename += ".jpg"
+
         # Get which barcode to save
         if self.barcode_option.get() == "Barcode 1":
             barcode = self.barcode_1.get_barcode().astype("uint8")
@@ -137,11 +144,17 @@ class SaveImageWindow():
         barcode = cv2.resize(barcode, dsize=(int(self.resize_x_entry.get()), int(self.resize_y_entry.get())),
                              interpolation=cv2.INTER_NEAREST)
 
-        # Save the barcode with desirable color map based on its barcode type
-        if barcode_type == "Color":
-            plt.imsave(filename, barcode)
-        else:
-            plt.imsave(filename, barcode, cmap="gray")
+        # Save the barcode with desirable color map based on its barcode type. Surface any
+        # save error (unsupported extension, permission denied, ...) as a dialog instead of
+        # letting it tear up the Tk callback.
+        try:
+            if barcode_type == "Color":
+                plt.imsave(filename, barcode)
+            else:
+                plt.imsave(filename, barcode, cmap="gray")
+        except (ValueError, OSError) as exc:
+            showerror("Could Not Save Image", "Failed to save image to {:s}\n\n{:s}".format(filename, str(exc)))
+            return
 
         # Quit the window
         self.window.destroy()

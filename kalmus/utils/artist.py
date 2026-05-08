@@ -1,5 +1,6 @@
 """ Utility artist """
 
+import inspect
 import numpy as np
 import cv2
 import csv
@@ -9,6 +10,17 @@ from skimage.segmentation import watershed
 from skimage.filters import rank, sobel
 from skimage import graph
 import scipy.stats as stats
+
+
+# skimage>=0.26 deprecates `min_size` (removes objects with size < N) in favour of
+# `max_size` (removes objects with size <= N). The equivalence is `max_size = N - 1`.
+# This shim picks the right kwarg at import time so we work across both APIs.
+if "max_size" in inspect.signature(remove_small_objects).parameters:
+    def _remove_objects_smaller_than(arr, threshold):
+        return remove_small_objects(arr, max_size=threshold - 1)
+else:
+    def _remove_objects_smaller_than(arr, threshold):
+        return remove_small_objects(arr, min_size=threshold)
 
 
 def compute_dominant_color(image, n_clusters=3, max_iter=10, threshold_error=1.0, attempts=10):
@@ -109,8 +121,11 @@ def compute_mode_color(image, bin_size=10):
     """
     image = flatten_image(image)
     image = image // bin_size
-    mode_color, counts = stats.mode(image, axis=0)
-    return (mode_color[0] * bin_size), counts
+    # scipy>=1.11 changed stats.mode default to keepdims=False; pin the shape
+    # explicitly so callers that expect (channels,) keep working across versions.
+    mode_result = stats.mode(image, axis=0, keepdims=False)
+    mode_color, counts = mode_result.mode, mode_result.count
+    return mode_color * bin_size, counts
 
 
 def compute_mean_color(image):
@@ -362,7 +377,7 @@ def watershed_segmentation(image, minimum_segment_size=0.0004, base_ratio=0.5, d
     segment_min_size = int(num_of_pixels * minimum_segment_size)
     # find continuous region which marked by gradient lower than critical gradient
     markers = rank.gradient(denoised, disk(marker_disk_size)) < critical
-    markers = ndimage.label(remove_small_objects(markers, segment_min_size))[0]
+    markers = ndimage.label(_remove_objects_smaller_than(markers, segment_min_size))[0]
 
     # process the watershed transformation
     regions = watershed(gradient, markers)
